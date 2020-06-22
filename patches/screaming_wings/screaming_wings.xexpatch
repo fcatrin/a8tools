@@ -1,52 +1,55 @@
-c 4026 FC ; beach border
+s a9 ef a2 82
+r a9 fc a2 96
 
-c 402d 08 ; waves + terrain + ship surface
+; c 4026 FC ; beach border
+; c 4028 96 ; sea
 
-c 4245 D4 ; trees
+; c 402d 08 ; waves + terrain + ship surface
 
-c 4028 96 ; sea
+; c 4245 D4 ; trees
 
-c 39d0 00 80 00 08 00 00 02 00 ; wave 1
-c 39c8 02 00 00 00 00 20 00 00 ; wave 2
 
-c 3cfe bd ; better plane going down
-c 3d0b bd ; better plane going down
-c 3d35 bd ; better plane going up
-c 3d42 bd ; better plane going up
+; c 39d0 00 80 00 08 00 00 02 00 ; wave 1
+; c 39c8 02 00 00 00 00 20 00 00 ; wave 2
+
+; c 3cfe bd ; better plane going down
+; c 3d0b bd ; better plane going down
+; c 3d35 bd ; better plane going up
+; c 3d42 bd ; better plane going up
 
 ; A = blue planes (orig 96) (2x color + 1 validation)
-c 4832 82
-c 5782 82
-c 5C62 82
-c 577A 0F ; blue plane highlight
+; c 4832 82
+; c 5782 82
+; c 5C62 82
+; c 577A 0F ; blue plane highlight
 
 ; A = some red planes (orig 26) (1 color + 1 validation)
-c 5C6B 44
-c 61E6 44
-c 61e1 0F ; red plane highlight
+; c 5C6B 44
+; c 61E6 44
+; c 61e1 0F ; red plane highlight
 
 ; A = big enemy (orig F2) (2x validation + 1 color)
-c 611d 38
-c 6180 38
-c 652C 38
-c 6527 2f ; big enemy highlight
+; c 611d 38
+; c 6180 38
+; c 652C 38
+; c 6527 2f ; big enemy highlight
 
-c 637E 0E ; blue left to right enemy highlight
-c 6383 64 ; blue left to right enemy color
+; c 637E 0E ; blue left to right enemy highlight
+; c 6383 64 ; blue left to right enemy color
 
-c 4827 0E ; rotating vertical planes highlight
-c 4822 34 ; rotating vertical planes red
+; c 4827 0E ; rotating vertical planes highlight
+; c 4822 34 ; rotating vertical planes red
 
-c 4ae0 A0 ; plane color
+; c 4ae0 A0 ; plane color
 
-c 6B1A 34 ; kamikaze highlight
-c 6B1F 0F ; kamikaze color
+; c 6B1A 34 ; kamikaze highlight
+; c 6B1F 0F ; kamikaze color
 
-c 171E 94 ; quick right to left  enemy highlight
-c 1723 0f ; quick right to left  enemy color
+; c 171E 94 ; quick right to left  enemy highlight
+; c 1723 0f ; quick right to left  enemy color
 
-c 152A 82 ; biplane highlight 
-c 152F 2F ; biplane color
+; c 152A 82 ; biplane highlight 
+; c 152F 2F ; biplane color
 
-c 5C70 FF ; lone vertical enemy color
+; c 5C70 FF ; lone vertical enemy color
 
