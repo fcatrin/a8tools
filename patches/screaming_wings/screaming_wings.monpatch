@@ -50,3 +50,8 @@ c 152F 2F ; biplane color
 
 c 5C70 FF ; lone vertical enemy color
 
+c 442c 42 ; red rat
+c 4434 00 ; background
+c 4456 08 ; software
+c 4354 ff ; text color
+

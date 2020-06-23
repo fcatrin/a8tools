@@ -52,19 +52,21 @@ Color for score at bottom
 40E3: 8D 0A D4  STA $D40A   ;WSYNC
 40E6: 8D 16 D0  STA $D016   ;COLPF0
 
-
 Presentation background and foreground
-440A: A9 35     LDA #$35    ; "Red Rat"
-440C: 8D C4 02  STA $02C4   ;COLOR0
-440F: 8D C7 02  STA $02C7   ;COLOR3
-4412: A9 0E     LDA #$0E    ; WHITE
-4414: 8D C6 02  STA $02C6   ;COLOR2
-4417: 8D C8 02  STA $02C8   ;COLOR4
-4434: A9 3F     LDA #$38    ; "software"
-4436: 8D C5 02  STA $02C5   ;COLOR1
+442B: A9 35     LDA #$35    ; "Red Rat"
+442D: 8D C4 02  STA $02C4   ;COLOR0
+4430: 8D C7 02  STA $02C7   ;COLOR3
+4433: A9 0E     LDA #$0E    ; white background
+4435: 8D C6 02  STA $02C6   ;COLOR2
+4438: 8D C8 02  STA $02C8   ;COLOR4
+4455: A9 38     LDA #$38
+4457: 8D C5 02  STA $02C5   ;COLOR1
 
-c 440a 46
-c 4413 0e
+c 442c 44 ; red rat
+c 4434 00 ; background
+c 4456 06 ; software
+c 4354 ff ; text color
+
 
 NOT FOUND
 4A1A: A9 0E     LDA #$0E
