@@ -44,12 +44,20 @@ function patcher_load_line($line) {
 function patcher_apply_bytes($addr_start, $addr_end, $bytes, $patches) {
 	foreach($patches as $patch) {
 		if ($patch['cmd'] == 'c') {
-			// implement when there is a patch of this type
+			$addr = $patch['addr'];
+			if ($addr_start <= $addr && $addr <= $addr_end) {
+				$offset = $addr - $addr_start + 1; // byte array is 1 based
+				$data = $patch['data'];
+				for($i = 0; $i < count($data); $i++) {
+					echo "patch ".dechex($addr+$i)." base ".dechex($offset+$i)." = ".dechex($data[$i])."\n";
+					$bytes[$offset + $i] = $data[$i];
+				}
+			}
 		} else if ($patch['cmd'] == 's') {
 			$search = $patch['search'];
 			$search_size = count($search);
 			
-			for($i=1; $i<=count($bytes); $i++) {
+			for($i = 1; $i <= count($bytes); $i++) {
 				$search_index = 0;
 				while ($search_index < $search_size && $bytes[$i + $search_index] == $search[$search_index]) $search_index++;
 				if ($search_index == $search_size) {
