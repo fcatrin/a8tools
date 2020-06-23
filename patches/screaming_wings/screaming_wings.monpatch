@@ -37,7 +37,7 @@ c 6383 64 ; blue left to right enemy color
 c 4827 0E ; rotating vertical planes highlight
 c 4822 34 ; rotating vertical planes red
 
-c 4ae0 A0 ; plane color
+c 4ae0 A2 ; plane color
 
 c 6B1A 34 ; kamikaze highlight
 c 6B1F 0F ; kamikaze color
