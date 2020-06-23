@@ -43,9 +43,10 @@ waves + terrain + sheep surface
 c 402d 08
 
 aircraft explosion
-407D: A2 26     LDX #$26
-407F: A0 00     LDY #$00
-
+407D: A2 75     LDX #$75
+407F: A0 0E     LDY #$0E
+c 407e 00
+c 4080 ff
 
 Color for score at bottom
 40E1: A9 2F     LDA #$2F
@@ -148,7 +149,7 @@ lone vertical enemy
 5C6F: A9 EF     LDA #$EF
 5C71: 8D C3 02  STA $02C3   ;PCOLR3
 c 5C6B 26 ; lone vertical enemy hl
-c 5C70 00 ; lone vertical enemy color
+c 5C70 0f ; lone vertical enemy color
 
 CHECK THIS VALUE
 6119: AD C2 02  LDA $02C2   ;PCOLR2
@@ -219,3 +220,18 @@ c 3d35 bd
 c 3d42 bd
 
 
+big plane colror and size
+B22C: A9 26     LDA #$26
+B22E: 8D C3 02  STA $02C3   ;PCOLR3
+B231: 8D C2 02  STA $02C2   ;PCOLR2
+B234: A9 03     LDA #$03
+B236: 8D 0A D0  STA $D00A   ;SIZEP2
+B239: 8D 0B D0  STA $D00B   ;SIZEP3
+c b22d 90
+; c b235 01
+
+5C65: A9 96     LDA #$96    ; vertical blue planes
+5C67: 4C 6C 5C  JMP $5C6C
+5C6A: A9 44     LDA #$44
+5C6C: 8D C2 02  STA $02C2   ;PCOLR2
+c 5c66 74 ; vertical blue plane

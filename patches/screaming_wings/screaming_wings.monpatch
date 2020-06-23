@@ -48,10 +48,13 @@ c 1723 0f ; quick right to left  enemy color
 c 152A 82 ; biplane highlight 
 c 152F 2F ; biplane color
 
-c 5C70 FF ; lone vertical enemy color
+c 5C70 0F ; lone vertical enemy highlight
 
 c 442c 42 ; red rat
 c 4434 00 ; background
 c 4456 08 ; software
 c 4354 ff ; text color
 
+c b22d 90 ; big plane color
+
+c 5c66 74 ; vertical blue plane
