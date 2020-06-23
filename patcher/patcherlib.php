@@ -49,7 +49,7 @@ function patcher_apply_bytes($addr_start, $addr_end, $bytes, $patches) {
 				$offset = $addr - $addr_start + 1; // byte array is 1 based
 				$data = $patch['data'];
 				for($i = 0; $i < count($data); $i++) {
-					echo "patch ".dechex($addr+$i)." base ".dechex($offset+$i)." = ".dechex($data[$i])."\n";
+					echo "apply patch ".dechex($addr+$i)." base ".dechex($offset+$i)." = ".dechex($data[$i])."\n";
 					$bytes[$offset + $i] = $data[$i];
 				}
 			}
@@ -59,9 +59,13 @@ function patcher_apply_bytes($addr_start, $addr_end, $bytes, $patches) {
 			
 			for($i = 1; $i <= count($bytes); $i++) {
 				$search_index = 0;
-				while ($search_index < $search_size && $bytes[$i + $search_index] == $search[$search_index]) $search_index++;
+				while ($search_index < $search_size 
+						&& ($i + $search_index) <= count($bytes)
+						&& $bytes[$i + $search_index] == $search[$search_index]) $search_index++;
 				if ($search_index == $search_size) {
-					print("block found\n");
+					$location = ($addr_start + $i - 1);
+					print("block found at ".dechex($location)."\n");
+					
 					$replace = $patch['replace'];
 					for($replace_index = 0; $replace_index < count($replace); $replace_index++) {
 						$bytes[$i + $replace_index] = $replace[$replace_index];
