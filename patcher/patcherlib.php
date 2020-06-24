@@ -49,7 +49,9 @@ function patcher_apply_bytes($addr_start, $addr_end, $bytes, $patches) {
 				$offset = $addr - $addr_start + 1; // byte array is 1 based
 				$data = $patch['data'];
 				for($i = 0; $i < count($data); $i++) {
-					echo "apply patch ".dechex($addr+$i)." base ".dechex($offset+$i)." = ".dechex($data[$i])."\n";
+					$old = dechex($bytes[$offset + $i]);
+					$new = dechex($data[$i]);
+					echo "apply patch ".dechex($addr+$i)." base ".dechex($offset+$i)." : $old -> $new\n";
 					$bytes[$offset + $i] = $data[$i];
 				}
 			}
@@ -68,6 +70,7 @@ function patcher_apply_bytes($addr_start, $addr_end, $bytes, $patches) {
 					
 					$replace = $patch['replace'];
 					for($replace_index = 0; $replace_index < count($replace); $replace_index++) {
+						// printf("replace ".dechex($bytes[$i + $replace_index])." by ".dechex($replace[$replace_index])."\n");
 						$bytes[$i + $replace_index] = $replace[$replace_index];
 					}
 				}
