@@ -10,14 +10,25 @@ import java.util.Map;
 import xtvapps.atari.disasm.Processor.Sym;
 
 public class Disassembler {
+	private static final int MAX_MEMORY = 0x10000;
+	
 	private static Map<Integer, String> symtableUser = new HashMap<Integer, String>();
 	private static int memory[];
 	
 	private static String lblFileName;
 	private static String xexFileName;
 	
-	public static void setMemory(int memory[]) {
-		Disassembler.memory = memory;
+	public static void reset() {
+		memory = null;
+	}
+	
+	public static void setMemory(int addr, int memory[]) {
+		if (Disassembler.memory == null) {
+			Disassembler.memory = new int[MAX_MEMORY];
+		}
+		for(int i=0; i < memory.length && addr+i < MAX_MEMORY; i++) {
+			Disassembler.memory[addr + i] = memory[i];
+		}
 	}
 	
 	private static int getMemory(int position) {
@@ -225,13 +236,14 @@ public class Disassembler {
 	public static void main(String args[]) {
 		int memory[] = { 169, 0, 142, 160, 0x6A, 133, 0x6A, 133, 206, 104, 96, 16, 3, 32, 62, 63, 160, 2, 16, 254, 0};
 		
-		setMemory(memory);
+		setMemory(1536, memory);
 		
-		int addr = 0;
-		while (addr < memory.length) {
-			Instruction instruction = getInstruction(addr);
+		int addr = 1536;
+		int base = 0;
+		while (base < memory.length) {
+			Instruction instruction = getInstruction(addr + base);
 			System.out.println(instruction.text + (instruction.label != null ? (" ;  " + instruction.label) : ""));
-			addr += instruction.size;
+			base += instruction.size;
 		}
 		System.out.println("traceback tests");
 		System.out.println(String.format("%04X", traceBack(0, 10))); // 0000
