@@ -6,7 +6,7 @@ c 4245 D4 ; trees
 
 c 4028 96 ; sea
 
-c 39d0 00 80 00 08 00 00 02 00 ; wave 1
+c 39d0 00 00 80 00 00 00 02 00 ; wave 1
 c 39c8 02 00 00 00 00 20 00 00 ; wave 2
 
 c 3cfe bd ; better plane going down
@@ -45,8 +45,8 @@ c 6B1F 0F ; kamikaze color
 c 171E 94 ; quick right to left  enemy highlight
 c 1723 0f ; quick right to left  enemy color
 
-c 152A 82 ; biplane highlight 
-c 152F 2F ; biplane color
+c 152A 0F ; biplane highlight 
+c 152F 42 ; biplane color
 
 c 5C70 0F ; lone vertical enemy highlight
 
@@ -55,7 +55,9 @@ c 4434 00 ; background
 c 4456 08 ; software
 c 4354 ff ; text color
 
-c b22d 90 ; big plane color
+; big plane color (90)
+s A9 26 8D C3 02 8D C2 02 A9 03 8D 0A D0 8D 0B D0
+r A9 90 8D C3 02 8D C2 02 A9 03 8D 0A D0 8D 0B D0
 
 c 5c66 74 ; vertical blue plane
 
