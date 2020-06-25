@@ -4,6 +4,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import xtvapps.atari.disasm.Disassembler;
 import xtvapps.atari.disasm.Instruction;
@@ -69,14 +73,25 @@ public class XexDumper {
 		pw.println(MARGIN + " " + String.format("org $%04X\n", addr));
 		
 		int base = 0;
+
+		while (base < block.length) {
+			Instruction instruction = Disassembler.getInstruction(addr + base);
+			Disassembler.addUserLabel(instruction.getAddr(), "L" +  String.format("%04X", instruction.getAddr()));
+			base += instruction.getSize();
+		}
 		
+		Set<String> usedLabels = new HashSet<String>();
+		
+		base = 0;
 		while (base < block.length) {
 			Instruction instruction = Disassembler.getInstruction(addr + base);
 			int target = instruction.getTarget();
 			if (target >= 0) {
 				String targetLabel = instruction.getTargetLabel();
-				if (targetLabel == null) {
-					Disassembler.addUserLabel(target, "L" + String.format("%04X", instruction.getTarget()));
+				if (targetLabel != null) {
+					int p = targetLabel.indexOf("+");
+					if (p>0) targetLabel = targetLabel.substring(0, p);
+					usedLabels.add(targetLabel);
 				}
 			}
 			base += instruction.getSize();
@@ -85,9 +100,13 @@ public class XexDumper {
 		base = 0;
 		while (base < block.length) {
 			Instruction instruction = Disassembler.getInstruction(addr + base);
+			
 			String label = instruction.getLabel();
+			if (!usedLabels.contains(label)) label = "";
+			
 			String margin = buildMargin(label);
 			pw.println(margin + " " + instruction.getCode());
+			
 			base += instruction.getSize();
 		}
 	}
