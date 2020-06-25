@@ -9,8 +9,9 @@ import xtvapps.atari.disasm.Instruction;
 public class XexDumper {
 	public static final String LOGTAG = XexDumper.class.getSimpleName();
 
-	public XexDumper() {
-	}
+	private static final String MARGIN = "                "; 
+
+	public XexDumper() {}
 	
 	public void dump(File xexfile) throws IOException {
 		byte[] bytes = Utils.loadBytes(xexfile);
@@ -39,8 +40,18 @@ public class XexDumper {
 		}
 	}
 
+	private String buildMargin(String text) {
+		if (text == null) {
+			text = "";
+		}
+		String result =  text + MARGIN ;
+		return result.substring(0, text.length() > MARGIN.length() ? text.length() : MARGIN.length());
+	}
+	
 	private void disasm(int addr, int block[]) {
 		Disassembler.setMemory(addr, block);
+		
+		System.out.println(MARGIN + " " + String.format("org $%04X", addr));
 		
 		int base = 0;
 		
@@ -60,13 +71,7 @@ public class XexDumper {
 		while (base < block.length) {
 			Instruction instruction = Disassembler.getInstruction(addr + base);
 			String label = instruction.getLabel();
-			if (label == null) {
-				label = "";
-				
-			}
-			String margin =  label + "                " ;
-			margin = margin.substring(0, label.length() > 16 ? label.length() :  16);
-			
+			String margin = buildMargin(label);
 			System.out.println(margin + " " + instruction.getCode());
 			base += instruction.getSize();
 		}
