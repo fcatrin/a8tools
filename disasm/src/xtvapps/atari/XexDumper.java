@@ -3,6 +3,9 @@ package xtvapps.atari;
 import java.io.File;
 import java.io.IOException;
 
+import xtvapps.atari.disasm.Disassembler;
+import xtvapps.atari.disasm.Instruction;
+
 public class XexDumper {
 	public static final String LOGTAG = XexDumper.class.getSimpleName();
 
@@ -22,7 +25,7 @@ public class XexDumper {
 			int addr_end = word(bytes[index], bytes[index+1]);
 			index += 2;
 
-			Log.d(LOGTAG, String.format("fuond block %04X - %04X", addr_start, addr_end));
+			Log.d(LOGTAG, String.format("found block %04X - %04X", addr_start, addr_end));
 			
 			int blocksize = addr_end - addr_start + 1;
 			int block[] = new int[blocksize];
@@ -30,10 +33,45 @@ public class XexDumper {
 				block[i] = byte2int(bytes[index + i]);
 			}
 			
-			index += blocksize;
+			disasm(addr_start, block);
+			break;
+			// index += blocksize;
 		}
 	}
 
+	private void disasm(int addr, int block[]) {
+		Disassembler.setMemory(addr, block);
+		
+		int base = 0;
+		
+		while (base < block.length) {
+			Instruction instruction = Disassembler.getInstruction(addr + base);
+			int target = instruction.getTarget();
+			if (target >= 0) {
+				String targetLabel = instruction.getTargetLabel();
+				if (targetLabel == null) {
+					Disassembler.addUserLabel(target, "L" + String.format("%04X", instruction.getTarget()));
+				}
+			}
+			base += instruction.getSize();
+		}
+		
+		base = 0;
+		while (base < block.length) {
+			Instruction instruction = Disassembler.getInstruction(addr + base);
+			String label = instruction.getLabel();
+			if (label == null) {
+				label = "";
+				
+			}
+			String margin =  label + "                " ;
+			margin = margin.substring(0, label.length() > 16 ? label.length() :  16);
+			
+			System.out.println(margin + " " + instruction.getCode());
+			base += instruction.getSize();
+		}
+	}
+	
 	private int byte2int(byte b) {
 		return b >= 0 ? b : 256 + b;
 	}

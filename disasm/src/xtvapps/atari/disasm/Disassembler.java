@@ -41,36 +41,65 @@ public class Disassembler {
 		String mnemonic = Processor.instr6502[instr];
 		
 		String line;
+		String code;
+		String asmcode;
 		int size;
 		int value = -1;
+		
+		String targetLabel = null;
+
 		if (mnemonic.indexOf("0")>0) {
 			int op = getMemory(addr+1);
 			value = addr + 2 + (op > 127 ? (op - 256) : op);
+
+			if (mnemonic.indexOf("#") == -1 && value >= 0) {
+				targetLabel = findLabel(instr, value);
+			}
+
+			code    = mnemonic.replace("0", String.format("$%04X", value));
+			asmcode = mnemonic.replace("0", targetLabel != null ? targetLabel : String.format("$%04X", value));
 			
-			String code = mnemonic.replace("0", String.format("$%04X", value));
 			line = String.format("%04X: %02X %02X     %s", addr, instr, op, code);
 			size = 2;
 		} else if (mnemonic.indexOf("1")>0) {
 			int op = getMemory(addr+1);
 			value = op;
-			String code = mnemonic.replace("1", String.format("$%02X", op));
+
+			if (mnemonic.indexOf("#") == -1 && value >= 0) {
+				targetLabel = findLabel(instr, value);
+			}
+
+			code    = mnemonic.replace("1", String.format("$%02X", op));
+			asmcode = mnemonic.replace("1", targetLabel != null ? targetLabel : String.format("$%02X", value));
+			
 			line = String.format("%04X: %02X %02X     %s", addr, instr, op, code);
 			size = 2;
 		} else if (mnemonic.indexOf("2")>0) {
 			int op1 = getMemory(addr+1);
 			int op2 = getMemory(addr+2);
 			value = op1 + 256 * op2;
-			String code = mnemonic.replace("2", String.format("$%04X", value));
+
+			if (mnemonic.indexOf("#") == -1 && value >= 0) {
+				targetLabel = findLabel(instr, value);
+			}
+
+			code    = mnemonic.replace("2", String.format("$%04X", value));
+			asmcode = mnemonic.replace("2", targetLabel != null ? targetLabel : String.format("$%04X", value));
+			
 			line = String.format("%04X: %02X %02X %02X  %s", addr, instr, op1, op2, code);
 			size = 3;
 		} else {
-			line = String.format("%04X: %02X        %s", addr, instr, mnemonic);
+			code    = mnemonic;
+			asmcode = mnemonic;
+			
+			line = String.format("%04X: %02X        %s", addr, instr, code);
 			size = 1;
 		}
-		Instruction instruction = new Instruction(addr, line, size);
-		if (mnemonic.indexOf("#") == -1 && value >= 0) {
-			instruction.setLabel(findLabel(instr, value));
-		}
+		
+		Instruction instruction = new Instruction(addr, line, asmcode, size);
+		fillTargetAddress(instruction);
+		instruction.setTargetLabel(targetLabel);
+		instruction.setLabel(symtableUser.get(addr));
 		return instruction;
 	}
 	
@@ -231,6 +260,10 @@ public class Disassembler {
 		} finally {
 			if (br!=null) try {br.close();} catch (IOException e){}
 		}
+	}
+	
+	public static void addUserLabel(int addr, String label) {
+		symtableUser.put(addr, label);
 	}
 	
 	public static void main(String args[]) {
