@@ -206,6 +206,13 @@ public final class Utils {
 	public static boolean isEmptyString(String s) {
 		return s == null || s.trim().length() == 0;
 	}
-	
 
+	public static File changeFileExtension(File file, String ext) {
+		String path = file.getAbsolutePath();
+		
+		int p = path.lastIndexOf(".");
+		String newPath = path.substring(0, p) + "." + ext;
+		
+		return new File(newPath);
+	}
 }

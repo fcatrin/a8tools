@@ -1,7 +1,9 @@
 package xtvapps.atari;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import xtvapps.atari.disasm.Disassembler;
 import xtvapps.atari.disasm.Instruction;
@@ -9,12 +11,24 @@ import xtvapps.atari.disasm.Instruction;
 public class XexDumper {
 	public static final String LOGTAG = XexDumper.class.getSimpleName();
 
-	private static final String MARGIN = "                "; 
+	private static final String MARGIN = "                ";
 
-	public XexDumper() {}
+	private File xexFile;
+	private File asmFile;
+	private File incFile;
+	private File mapFile; 
+
+	public XexDumper(File xexFile) {
+		this.xexFile = xexFile;
+		this.asmFile = Utils.changeFileExtension(xexFile, "asm");
+		this.incFile = Utils.changeFileExtension(xexFile, "inc");
+		this.mapFile = Utils.changeFileExtension(xexFile, "map");
+	}
 	
-	public void dump(File xexfile) throws IOException {
-		byte[] bytes = Utils.loadBytes(xexfile);
+	public void dump() throws IOException {
+		byte[] bytes = Utils.loadBytes(xexFile);
+		
+		PrintWriter pwAsm = new PrintWriter(new FileWriter(asmFile));
 		
 		int index = 0;
 		while (index < bytes.length) {
@@ -34,10 +48,11 @@ public class XexDumper {
 				block[i] = byte2int(bytes[index + i]);
 			}
 			
-			disasm(addr_start, block);
+			disasm(addr_start, block, pwAsm);
 			break;
 			// index += blocksize;
 		}
+		pwAsm.close();
 	}
 
 	private String buildMargin(String text) {
@@ -48,10 +63,10 @@ public class XexDumper {
 		return result.substring(0, text.length() > MARGIN.length() ? text.length() : MARGIN.length());
 	}
 	
-	private void disasm(int addr, int block[]) {
+	private void disasm(int addr, int block[], PrintWriter pw) {
 		Disassembler.setMemory(addr, block);
 		
-		System.out.println(MARGIN + " " + String.format("org $%04X", addr));
+		pw.println(MARGIN + " " + String.format("org $%04X\n", addr));
 		
 		int base = 0;
 		
@@ -72,7 +87,7 @@ public class XexDumper {
 			Instruction instruction = Disassembler.getInstruction(addr + base);
 			String label = instruction.getLabel();
 			String margin = buildMargin(label);
-			System.out.println(margin + " " + instruction.getCode());
+			pw.println(margin + " " + instruction.getCode());
 			base += instruction.getSize();
 		}
 	}
@@ -86,8 +101,9 @@ public class XexDumper {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		XexDumper xexDumper = new XexDumper();
-		xexDumper.dump(new File("/home/fcatrin/screaming_wings.xex"));
+		File xexFile = new File("/home/fcatrin/screaming_wings.xex");
+		XexDumper xexDumper = new XexDumper(xexFile);
+		xexDumper.dump();
 	}
 
 }
