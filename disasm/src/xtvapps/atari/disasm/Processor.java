@@ -117,7 +117,7 @@ public static class Sym {
 public static Sym symtableBuiltin[] = {
 	new Sym("LNFLG",   0x0000), new Sym("NGFLAG",  0x0001), new Sym("CASINI",  0x0002), new Sym("CASINI+1",0x0003),
 	new Sym("RAMLO",   0x0004), new Sym("RAMLO+1", 0x0005), new Sym("TRAMSZ",  0x0006), new Sym("CMCMD",   0x0007),
-	new Sym("WARMST",  0x0008), new Sym("BOOT?",   0x0009), new Sym("DOSVEC",  0x000a), new Sym("DOSVEC+1",0x000b),
+	new Sym("WARMST",  0x0008), new Sym("BOOT",    0x0009), new Sym("DOSVEC",  0x000a), new Sym("DOSVEC+1",0x000b),
 	new Sym("DOSINI",  0x000c), new Sym("DOSINI+1",0x000d), new Sym("APPMHI",  0x000e), new Sym("APPMHI+1",0x000f),
 	new Sym("POKMSK",  0x0010), new Sym("BRKKEY",  0x0011), new Sym("RTCLOK",  0x0012), new Sym("RTCLOK+1",0x0013),
 	new Sym("RTCLOK+2",0x0014), new Sym("BUFADR",  0x0015), new Sym("BUFADR+1",0x0016), new Sym("ICCOMT",  0x0017),
