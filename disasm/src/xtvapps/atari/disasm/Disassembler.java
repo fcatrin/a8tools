@@ -18,6 +18,8 @@ public class Disassembler {
 	private static String lblFileName;
 	private static String xexFileName;
 	
+	private static boolean allowInvalidOpCodes = false;  
+	
 	public static void reset() {
 		memory = null;
 	}
@@ -38,17 +40,21 @@ public class Disassembler {
 	
 	public static Instruction getInstruction(int addr) {
 		int instr = getMemory(addr);
-		String mnemonic = Processor.instr6502[instr];
+		String mnemonic = !allowInvalidOpCodes && !isValidOpCode(instr) ? null : Processor.instr6502[instr];
 		
 		String line;
-		String code;
 		String asmcode;
+		String code;
 		int size;
 		int value = -1;
 		
 		String targetLabel = null;
 
-		if (mnemonic.indexOf("0")>0) {
+		if (mnemonic == null) {
+			line    = String.format("%04X: %02X        BYTE $%02X", addr, instr, instr);
+			asmcode = String.format(".byte $%02X", instr); 
+			size = 1;
+		} else if (mnemonic.indexOf("0")>0) {
 			int op = getMemory(addr+1);
 			value = addr + 2 + (op > 127 ? (op - 256) : op);
 
@@ -154,6 +160,15 @@ public class Disassembler {
 		}
 		
 		instruction.setTarget(target);
+	}
+	
+	private static boolean isValidOpCode(int opCode) {
+		for(int validCode : Processor.validops6502) {
+			if (validCode > opCode) return false;
+			
+			if (validCode == opCode) return true;
+		}
+		return false;
 	}
 	
 	private static String findLabel(int instruction, int value) {
