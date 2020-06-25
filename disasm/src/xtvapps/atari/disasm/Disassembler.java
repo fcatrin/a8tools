@@ -4,8 +4,12 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import xtvapps.atari.disasm.Processor.Sym;
 
@@ -18,10 +22,12 @@ public class Disassembler {
 	private static String lblFileName;
 	private static String xexFileName;
 	
-	private static boolean allowInvalidOpCodes = false;  
+	private static boolean allowInvalidOpCodes = false;
+	private static Set<String> usedSyms = new HashSet<String>();
 	
 	public static void reset() {
 		memory = null;
+		usedSyms.clear();
 	}
 	
 	public static void setMemory(int addr, int memory[]) {
@@ -196,10 +202,26 @@ public class Disassembler {
 			if (isWrite && i < Processor.symtableBuiltin.length - 1 && Processor.symtableBuiltin[i+1].addr == value) {
 				sym = Processor.symtableBuiltin[i+1]; 
 			}
+			
+			String symName = sym.name;
+			int p = symName.indexOf("+");
+			if (p>0) {
+				symName = symName.substring(0, p);
+			}
+			usedSyms.add(symName);
+			
 			return sym.name;
 		}
 		
 		return null;
+	}
+	
+	public static List<Sym> getUsedSyms() {
+		List<Sym> list = new ArrayList<Sym>();
+		for(Sym sym : Processor.symtableBuiltin) {
+			if (usedSyms.contains(sym.name)) list.add(sym);
+		}
+		return list;
 	}
 
 	public static int traceBack(int addr, int lines) {

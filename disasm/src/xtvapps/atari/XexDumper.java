@@ -4,13 +4,13 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
+import java.util.List;
 import java.util.Set;
 
 import xtvapps.atari.disasm.Disassembler;
 import xtvapps.atari.disasm.Instruction;
+import xtvapps.atari.disasm.Processor.Sym;
 
 public class XexDumper {
 	public static final String LOGTAG = XexDumper.class.getSimpleName();
@@ -38,6 +38,9 @@ public class XexDumper {
 		PrintWriter pwAsm = new PrintWriter(new FileWriter(asmFile));
 		PrintWriter pwDis = new PrintWriter(new FileWriter(disFile));
 		
+		String includeName = incFile.getName();
+		pwAsm.println("  icl \"" + includeName + "\"");
+		
 		int blockIndex = 1;
 		int index = 0;
 		while (index < bytes.length) {
@@ -62,6 +65,15 @@ public class XexDumper {
 		}
 		pwAsm.close();
 		pwDis.close();
+		
+		List<Sym> usedSyms = Disassembler.getUsedSyms();
+		PrintWriter pwInc = new PrintWriter(new FileWriter(incFile));
+		for(Sym sym : usedSyms) {
+			String line = buildColumns(sym.name, 10, String.format(" = $%04X", sym.addr), "");
+			pwInc.println(line);
+		}
+		pwInc.close();
+
 	}
 
 	private String buildMargin(String text) {
@@ -72,14 +84,14 @@ public class XexDumper {
 		return result.substring(0, text.length() > MARGIN.length() ? text.length() : MARGIN.length());
 	}
 	
-	private String buildColumns(String c1, int size, String c2) {
+	private String buildColumns(String c1, int size, String c2, String separator) {
 		if (c2 == null) return c1;
 		
 		String line = c1 + MARGIN;
 		if (c1.length() < size) {
 			line = line.substring(0, size);
 		}
-		return line + " ; " + c2;
+		return line + separator + c2;
 	}
 	
 	private void disasm(int blockIndex, int addr, int block[], PrintWriter pwAsm, PrintWriter pwDis) {
@@ -123,7 +135,7 @@ public class XexDumper {
 			
 			String margin = buildMargin(label);
 			pwAsm.println(margin + " " + instruction.getCode());
-			pwDis.println(buildColumns(instruction.getText(), DISASM_WIDTH, instruction.getTargetLabel()));
+			pwDis.println(buildColumns(instruction.getText(), DISASM_WIDTH, instruction.getTargetLabel(), " ; "));
 			
 			base += instruction.getSize();
 		}

@@ -124,8 +124,8 @@ public class Processor {
     when reading/writing to it, put the read name first. */
 
 public static class Sym {
-	String name;
-	int addr;
+	public String name;
+	public int addr;
 	
 	public Sym(String name, int addr) {
 		this.name = name;
