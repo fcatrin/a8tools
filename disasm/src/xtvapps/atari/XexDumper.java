@@ -15,25 +15,30 @@ import xtvapps.atari.disasm.Instruction;
 public class XexDumper {
 	public static final String LOGTAG = XexDumper.class.getSimpleName();
 
+	private static final int DISASM_WIDTH = 30;
 	private static final String MARGIN = "                ";
 
 	private File xexFile;
 	private File asmFile;
 	private File incFile;
-	private File mapFile; 
+	private File mapFile;
+	private File disFile;
 
 	public XexDumper(File xexFile) {
 		this.xexFile = xexFile;
 		this.asmFile = Utils.changeFileExtension(xexFile, "asm");
 		this.incFile = Utils.changeFileExtension(xexFile, "inc");
 		this.mapFile = Utils.changeFileExtension(xexFile, "map");
+		this.disFile = Utils.changeFileExtension(xexFile, "dis");
 	}
 	
 	public void dump() throws IOException {
 		byte[] bytes = Utils.loadBytes(xexFile);
 		
 		PrintWriter pwAsm = new PrintWriter(new FileWriter(asmFile));
+		PrintWriter pwDis = new PrintWriter(new FileWriter(disFile));
 		
+		int blockIndex = 1;
 		int index = 0;
 		while (index < bytes.length) {
 			int addr_start = word(bytes[index], bytes[index+1]);
@@ -52,11 +57,11 @@ public class XexDumper {
 				block[i] = byte2int(bytes[index + i]);
 			}
 			
-			disasm(addr_start, block, pwAsm);
-			break;
-			// index += blocksize;
+			disasm(blockIndex++, addr_start, block, pwAsm, pwDis);
+			index += blocksize;
 		}
 		pwAsm.close();
+		pwDis.close();
 	}
 
 	private String buildMargin(String text) {
@@ -67,10 +72,22 @@ public class XexDumper {
 		return result.substring(0, text.length() > MARGIN.length() ? text.length() : MARGIN.length());
 	}
 	
-	private void disasm(int addr, int block[], PrintWriter pw) {
-		Disassembler.setMemory(addr, block);
+	private String buildColumns(String c1, int size, String c2) {
+		if (c2 == null) return c1;
 		
-		pw.println(MARGIN + " " + String.format("org $%04X\n", addr));
+		String line = c1 + MARGIN;
+		if (c1.length() < size) {
+			line = line.substring(0, size);
+		}
+		return line + " ; " + c2;
+	}
+	
+	private void disasm(int blockIndex, int addr, int block[], PrintWriter pwAsm, PrintWriter pwDis) {
+		Disassembler.setMemory(addr, block);
+		pwAsm.println(String.format("\n\n; BLOCK %d\n", blockIndex));
+		pwDis.println(String.format("\n\n; BLOCK %d\n", blockIndex));
+		
+		pwAsm.println(MARGIN + " " + String.format("org $%04X\n", addr));
 		
 		int base = 0;
 
@@ -105,7 +122,8 @@ public class XexDumper {
 			if (!usedLabels.contains(label)) label = "";
 			
 			String margin = buildMargin(label);
-			pw.println(margin + " " + instruction.getCode());
+			pwAsm.println(margin + " " + instruction.getCode());
+			pwDis.println(buildColumns(instruction.getText(), DISASM_WIDTH, instruction.getTargetLabel()));
 			
 			base += instruction.getSize();
 		}
