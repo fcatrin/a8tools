@@ -100,6 +100,54 @@ code 5689
 dlst 5709
 byte 5729
 code 572D
+byte 5BF3
+code 5C00
+byte 5C31
+code 5C40
+byte 5DFE
+code 5E2D
+byte 5EBA
+code 5F00
+byte 5FE3
+code 6000
+byte 6068
+code 6069
+word 6083
+code 6085
+byte 633A
+code 6360
+byte 64E7
+code 6500
+byte 65DA
+code 6640
+byte 6791
+code 67B8
+byte 68FD
+code 6900
+byte 6A7B
+code 6A80
+byte 6B67
+code 6B6A
+byte 6B71
+code 6B80
+byte 6BD0
+code 6C00
+byte 6C61
+core 6C6D
+byte 6C89
+code 6CA0
+byte 6D2E
+code 6D3B
+byte 6F51
+code 77C0
+byte 797D
+code A000 ; looks like unused code
+byte A040
+code B200
+byte B465
+code B550
+byte B620
+code B6D0 ; looks like unused code
 
 
 

@@ -16,9 +16,9 @@
                  stx BOOT
                  dex
                  stx COLDST
-L_B715           lda L_B761+1,x
+L_B715           lda L_B75E+4,x
                  sbc #$6F
-                 sta L_B761+1,x
+                 sta L_B75E+4,x
                  inx
                  cpx #$64
                  bne L_B715
@@ -29,34 +29,57 @@ L_B715           lda L_B761+1,x
                  sta DLISTH
                  sta SDLSTH
                  ldx #$03
-L_B734           lda L_B759+5,x
+L_B734           lda L_B75E,x
                  sta COLPF0,x
                  sta COLOR0,x
                  dex
                  bpl L_B734
                  rts
+L_B741           .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $47 ; DL LMS Antic Mode 7
+                 .word L_B75E+4
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $04 ; DL Antic Mode 4
+                 .byte $70 ; DL 8 scanlines
+                 .byte $04 ; DL Antic Mode 4
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $04 ; DL Antic Mode 4
+                 .byte $41 ; DL JMP
+                 .word L_B741
+L_B75E           .byte $0E, $08, $0E, $94, $70, $70, $63, $53
+                 .byte $62, $55, $51, $5D, $59, $5E, $57, $70
+                 .byte $70, $67, $59, $5E, $57, $63, $70, $70
                  .byte $70, $70, $70, $70, $70, $70, $70, $70
-                 .byte $70, $47, $62, $B7, $70, $70, $04, $70
-                 .byte $04, $70, $70, $70, $70, $70, $70, $70
-L_B759           .byte $70, $04, $41, $41, $B7, $0E, $08, $0E
-L_B761           .byte $94, $70, $70, $63, $53, $62, $55, $51
-                 .byte $5D, $59, $5E, $57, $70, $70, $67, $59
-                 .byte $5E, $57, $63, $70, $70, $70, $70, $70
-                 .byte $70, $70, $70, $70, $70, $70, $70, $70
-                 .byte $93, $E2, $D1, $D3, $DB, $D5, $D4, $70
-                 .byte $D2, $E9, $8A, $70, $9B, $D9, $DC, $E2
-                 .byte $DF, $E9, $70, $70, $70, $70, $70, $70
+                 .byte $70, $70, $70, $93, $E2, $D1, $D3, $DB
+                 .byte $D5, $D4, $70, $D2, $E9, $8A, $70, $9B
+                 .byte $D9, $DC, $E2, $DF, $E9, $70, $70, $70
                  .byte $70, $70, $70, $70, $70, $70, $70, $70
                  .byte $70, $70, $70, $70, $70, $70, $70, $70
-                 .byte $70, $78, $A0, $79, $81, $89, $88, $86
-                 .byte $70, $9E, $7E, $91, $7E, $A0, $7E, $9F
-                 .byte $7E, $70, $70, $70, $70, $70, $70, $70
-                 .byte $70, $70, $70, $70, $70, $26, $72, $6F
-                 .byte $6D, $00, $34, $68, $65, $00, $24, $61
-                 .byte $69, $6C, $79, $00, $30, $6C, $61, $6E
-                 .byte $65, $74, $00, $22, $22, $33, $00, $08
-                 .byte $17, $11, $16, $09, $00, $18, $19, $15
-                 .byte $0D, $10, $15, $10, $18
+                 .byte $70, $70, $70, $70, $78, $A0, $79, $81
+                 .byte $89, $88, $86, $70, $9E, $7E, $91, $7E
+                 .byte $A0, $7E, $9F, $7E, $70, $70, $70, $70
+                 .byte $70, $70, $70, $70, $70, $70, $70, $70
+                 .byte $26, $72, $6F, $6D, $00, $34, $68, $65
+                 .byte $00, $24, $61, $69, $6C, $79, $00, $30
+                 .byte $6C, $61, $6E, $65, $74, $00, $22, $22
+                 .byte $33, $00, $08, $17, $11, $16, $09, $00
+                 .byte $18, $19, $15, $0D, $10, $15, $10, $18
 
 
 ; BLOCK 2
@@ -70,12 +93,12 @@ L_B761           .byte $94, $70, $70, $63, $53, $62, $55, $51
 
                  org $B700
 
-                 ldy #$00
+L_B700           ldy #$00
                  tya
                  clc
                  tax
 L_B705           txa
-                 adc L_B771+5,y
+                 adc L_B776,y
                  tax
                  iny
                  cpy #$50
@@ -98,7 +121,7 @@ L_1500           lda $0616
                  lda $0683
                  bmi L_1516
                  lda #$D0
-L_1514           bne L_1518
+                 bne L_1518
 L_1516           lda #$28
 L_1518           sta $06A0
                  sta HPOSP2
@@ -112,7 +135,7 @@ L_1518           sta $06A0
                  sta PCOLR2
                  lda #$0E
                  sta L_542E+1
-L_1538           inc $0616
+                 inc $0616
                  rts
 L_153C           lda $0625
                  bne L_155B
@@ -206,7 +229,7 @@ L_1606           lda L_2EFC+4,y
                  inx
                  iny
                  cpy #$11
-L_1616           bne L_1606
+                 bne L_1606
                  rts
 L_1619           lda L_2EFC+4,y
                  sta L_35FD+3,x
@@ -223,7 +246,7 @@ L_1630           lda $0687
                  bne L_1657
                  lda #$28
                  sta $061D
-L_163A           sta $0624
+                 sta $0624
                  lda M2PF
                  bmi L_1646
                  lda #$D0
@@ -231,7 +254,7 @@ L_163A           sta $0624
 L_1646           lda #$28
 L_1648           sta $0685
                  sta $0686
-L_164E           lda #$00
+                 lda #$00
                  sta $06C5
                  inc $0687
                  rts
@@ -421,7 +444,7 @@ L_1800           ldx $06BF
                  stx $0658
                  stx AUDC1
                  stx AUDC2
-L_1816           stx $06CE
+                 stx $06CE
                  inc $06BF
                  rts
 L_181D           inc $06C0
@@ -436,8 +459,8 @@ L_1828           lda #$00
                  bne L_1851
                  lda #$EF
                  sta $06CD
-L_1839           sta AUDC4
-L_183C           ldx $06CE
+                 sta AUDC4
+                 ldx $06CE
                  lda L_186E,x
                  sta AUDF4
                  inc $06CE
@@ -462,12 +485,12 @@ L_1864           inc $06BF
 L_186E           rts
                  adc L_606B+1,y
                  rts
-                 jmp (L_6C77+2)
+                 jmp (L_6C79)
                  rts
-                 adc L_6C77+2,y
+                 adc L_6C79,y
                  rts
                  rts
-                 jmp (L_6C77+2)
+                 jmp (L_6C79)
                  rts
 L_1880           ldx $06BB
                  bne L_1886
@@ -525,9 +548,9 @@ L_1900           lda #$00
                  sta $0673
                  sta $0675
                  lda #$07
-L_1913           sta $0671
+                 sta $0671
                  rts
-L_1917           .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
                  .byte $00
 L_1920           lda $0658
                  bne L_1926
@@ -589,7 +612,7 @@ L_19C2           .byte $40, $01, $80, $01, $40, $01, $90, $01
                  .byte $00, $40, $23, $90, $2F, $40, $2F, $80
                  .byte $1F, $40, $1F, $90, $28, $40, $1F, $80
 L_1A1A           .byte $2F, $40, $23, $90, $2F, $00, $6F
-                 sta L_975E+2,x
+                 sta L_975D+3,x
                  inx
                  cpx #$08
                  bne L_1A1A+4
@@ -597,7 +620,7 @@ L_1A1A           .byte $2F, $40, $23, $90, $2F, $00, $6F
                  lda #$00
                  sta $0641
                  ldx #$00
-                 lda L_6F94+1,x
+                 lda L_6F91+4,x
                  sta L_34AC+1,x
                  asl PTABW
                  .byte $FF
@@ -783,7 +806,7 @@ L_1C00           lda $06BB
                  sta $0666
                  lda #$E3
                  sta AUDC3
-L_1C1C           sta $0665
+                 sta $0665
 L_1C1F           ldx $0666
                  lda $0683
                  bmi L_1C34
@@ -1001,7 +1024,7 @@ L_1E01           inc $0617
                  cmp #$03
                  bmi L_1E1F
                  lda #$01
-L_1E1C           sta $0684
+                 sta $0684
 L_1E1F           lda #$04
                  sta $0668
                  lda $0669
@@ -1016,7 +1039,7 @@ L_1E2B           inc $06A0
                  cmp $060F
                  bne L_1E4D
 L_1E3D           ldx #$00
-L_1E3F           txa
+                 txa
 L_1E40           sta L_35FD+3,x
                  sta L_3700,x
                  inx
@@ -1122,7 +1145,7 @@ L_1F01           bne L_1EF1
                  rts
                  cmp #$03
                  bcs L_1F3A
-L_1F19           inc $06A0
+                 inc $06A0
                  inc $061D
 L_1F1F           stx L_16AD
                  asl $D0
@@ -1244,7 +1267,7 @@ L_202B           iny
                  jmp L_201D
 L_2035           ldx #$00
 L_2037           lda L_2A54+5,x
-                 sta L_8FDB+2,x
+                 sta L_8FDD,x
                  lda L_2B1C+5,x
                  sta L_90A5,x
                  lda L_2BE4+5,x
@@ -1280,11 +1303,11 @@ L_2088           iny
                  inc TOPSTK+1
                  jmp L_207A
 L_2092           ldx #$00
-L_2094           lda L_A997+2,x
-                 sta L_8FDB+2,x
-                 lda L_AA61,x
+L_2094           lda L_A998+1,x
+                 sta L_8FDD,x
+                 lda L_AA60+1,x
                  sta L_90A5,x
-                 lda L_AB29,x
+                 lda L_AB28+1,x
                  sta L_916D,x
                  inx
                  cpx #$C8
@@ -1336,10 +1359,10 @@ L_210C           .byte $11, $20, $20, $4C, $44, $41, $20, $31
                  .byte $15, $14, $15, $14, $15, $14, $15, $14
                  .byte $15, $14, $15, $14, $15, $15, $15, $14
                  .byte $16, $16, $15, $14, $19, $64, $65, $16
-L_221C           .byte $15, $14, $15, $14, $15, $14, $15, $14
                  .byte $15, $14, $15, $14, $15, $14, $15, $14
                  .byte $15, $14, $15, $14, $15, $14, $15, $14
-L_2234           .byte $15, $14, $15, $14, $15, $14, $15, $16
+                 .byte $15, $14, $15, $14, $15, $14, $15, $14
+                 .byte $15, $14, $15, $14, $15, $14, $15, $16
                  .byte $16, $15, $14, $15, $16, $76, $15, $14
                  .byte $16, $19, $66, $67, $14, $16, $14, $15
                  .byte $16, $14, $19, $14, $15, $16, $14, $15
@@ -1364,7 +1387,7 @@ L_2284           .byte $65, $16, $14, $14, $15, $16, $16, $16
                  .byte $15, $16, $15, $14, $15, $14, $19, $6C
                  .byte $39, $3A, $39, $6F, $14, $15, $15, $14
                  .byte $15, $14, $15, $14, $15, $14, $15, $14
-L_22FC           .byte $15, $14, $15, $14, $15, $14, $68, $69
+                 .byte $15, $14, $15, $14, $15, $14, $68, $69
                  .byte $16, $15, $6B, $15, $16, $14, $15, $14
                  .byte $15, $16, $16, $15, $14, $19, $6C, $3A
                  .byte $39, $39, $3A, $39, $72, $14, $14, $15
@@ -1396,14 +1419,14 @@ L_2334           .byte $16, $15, $14, $15, $19, $70, $39, $3A
                  .byte $16, $14, $15, $14, $16, $14, $15, $14
                  .byte $16, $14, $14, $15, $15, $19, $14, $15
                  .byte $16, $16, $15, $14, $14, $15, $16, $15
-L_23FC           .byte $16, $14, $15, $16, $19, $72, $3A, $39
+                 .byte $16, $14, $15, $16, $19, $72, $3A, $39
                  .byte $3A, $39, $75, $72, $3A, $39, $75, $15
                  .byte $16, $14, $15, $14, $16, $14, $15, $16
                  .byte $16, $16, $15, $14, $15, $18, $19, $15
                  .byte $14, $16, $16, $15, $14, $15, $16, $15
                  .byte $14, $15, $16, $15, $14, $15, $72, $73
                  .byte $74, $75, $14, $19, $72, $75, $15, $14
-L_2434           .byte $16, $14, $15, $14, $16, $14, $15, $14
+                 .byte $16, $14, $15, $14, $16, $14, $15, $14
                  .byte $16, $14, $15, $16, $15, $14, $15, $16
                  .byte $14, $15, $14, $16, $14, $15, $14, $16
                  .byte $19, $18, $14, $15, $16, $14, $15, $14
@@ -1430,7 +1453,7 @@ L_2434           .byte $16, $14, $15, $14, $16, $14, $15, $14
                  .byte $14, $15, $16, $14, $15, $14, $16, $14
                  .byte $15, $14, $76, $14, $15, $16, $19, $14
                  .byte $15, $14, $16, $15, $15, $15, $14, $15
-L_250C           .byte $16, $15, $15, $14, $16, $16, $15, $14
+                 .byte $16, $15, $15, $14, $16, $16, $15, $14
                  .byte $14, $18, $14, $14, $15, $16, $14, $15
                  .byte $15, $14, $15, $15, $15, $14, $15, $14
                  .byte $15, $14, $76, $1C, $1B, $1A, $1B, $77
@@ -1589,7 +1612,7 @@ L_250C           .byte $16, $15, $15, $14, $16, $16, $15, $14
                  .byte $14, $15, $14, $15, $16, $14, $15, $14
                  .byte $16, $14, $15, $14, $16, $14, $15, $14
                  .byte $15, $16, $14, $17, $15, $16, $14, $14
-L_2A04           .byte $15, $16, $15, $18, $14, $15, $16, $18
+                 .byte $15, $16, $15, $18, $14, $15, $16, $18
                  .byte $15, $16, $14, $15, $16, $14, $16, $14
                  .byte $15, $16, $15, $14, $15, $16, $14, $15
                  .byte $14, $16, $14, $15, $14, $16, $14, $15
@@ -1721,7 +1744,7 @@ L_2BE4           .byte $14, $15, $14, $15, $15, $19, $14, $15
                  .byte $00, $00, $00, $00, $00, $00, $00, $00
                  .byte $00, $00, $00, $00, $00, $00, $00, $00
                  .byte $00, $00, $00, $00, $00, $00, $00, $00
-L_2E24           .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
                  .byte $00, $00, $00, $00, $00, $00, $00, $00
                  .byte $00, $00, $00, $00, $00, $00, $00, $00
                  .byte $00, $00, $00, $00, $00, $00, $00, $00
@@ -1786,7 +1809,7 @@ L_300C           .byte $00, $00, $00, $00, $00, $00, $00, $00
                  .byte $00, $00, $00, $00, $00, $00, $00, $00
                  .byte $00, $00, $00, $00, $00, $00, $00, $00
                  .byte $00, $00, $00, $00, $00, $00, $00, $00
-L_302C           .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
                  .byte $00, $00, $00, $00, $00, $00, $00, $00
                  .byte $00, $00, $00, $00, $00, $00, $00, $00
                  .byte $00, $00, $00, $00, $00, $00, $00, $00
@@ -1818,7 +1841,7 @@ L_30BC           .byte $00, $00, $00, $00, $00, $00, $00, $00
                  .byte $00, $00, $00, $00, $00, $00, $00, $00
                  .byte $00, $00, $00, $00, $00, $00, $00, $00
                  .byte $00, $00, $00, $00, $00, $00, $00, $00
-L_312C           .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
                  .byte $00, $00, $00, $00, $00, $00, $00, $00
                  .byte $00, $00, $00, $00, $00, $00, $00, $00
                  .byte $00, $00, $00, $00, $00, $00, $00, $00
@@ -1889,7 +1912,7 @@ L_3300           lda $0616
                  lda #$D0
                  sta $06A0
                  sta HPOSP2
-L_3321           clc
+                 clc
                  adc #$1E
                  sta HPOSP3
                  lda #$00
@@ -1897,7 +1920,7 @@ L_3321           clc
                  lda #$90
                  sta PCOLR3
                  sta PCOLR2
-L_3334           lda #$03
+                 lda #$03
                  sta SIZEP2
                  sta SIZEP3
                  lda #$0F
@@ -2000,9 +2023,9 @@ L_3417           lda $06D1
                  jmp L_B424
 L_3421           cmp #$18
                  bcs L_3438
-L_3425           lda L_B513,x
+L_3425           lda L_B50D+6,x
                  sta L_35FD+3,y
-L_342B           lda L_B530,x
+L_342B           lda L_B52D+3,x
                  sta L_3700,y
                  iny
                  inx
@@ -2095,16 +2118,16 @@ L_34F0           ldx #$00
                  bne L_350D
 L_34FA           lda L_B465,x
                  sta L_35FD+3,y
-L_3500           lda L_B482,x
+L_3500           lda L_B47D+5,x
                  sta L_3700,y
                  iny
                  inx
                  cpx #$1D
                  bne L_34FA
 L_350C           rts
-L_350D           lda L_B49F,x
+L_350D           lda L_B49D+2,x
                  sta L_35FD+3,y
-                 lda L_B4BC,x
+                 lda L_B4B5+7,x
                  sta L_3700,y
                  iny
                  inx
@@ -2122,9 +2145,9 @@ L_351B           cpx #$1D
                  sta AUDF4
 L_3532           lda $06D2
                  bne L_354D
-L_3537           lda L_B4D9,x
+L_3537           lda L_B4D5+4,x
                  sta L_35FD+3,y
-                 lda L_B4F6,x
+                 lda L_B4F5+1,x
                  sta L_3700,y
                  iny
                  inx
@@ -2134,7 +2157,7 @@ L_3537           lda L_B4D9,x
                  rts
 L_354D           lda L_B465,x
                  sta L_35FD+3,y
-                 lda L_B482,x
+                 lda L_B47D+5,x
                  sta L_3700,y
                  iny
                  inx
@@ -2219,7 +2242,7 @@ L_36A7           lda L_B620,x
                  cpx #$08
                  bne L_36A7
                  beq L_36C1
-L_36B5           lda L_B626+2,x
+L_36B5           lda L_B628,x
                  sta L_33FE+2,y
                  iny
                  inx
@@ -2265,7 +2288,7 @@ L_370C           iny
                  cpx #$08
                  bne L_3706
                  rts
-L_3713           lda L_B626+2,x
+L_3713           lda L_B628,x
                  sta L_3500,y
                  iny
                  inx
@@ -2309,9 +2332,9 @@ L_37ED           lda VCOUNT
                  cmp #$58
                  bcc L_37ED
                  ldx #$26
-                 lda L_9D08,x
-                 sta L_9D09,x
-                 lda L_9D30,x
+                 lda L_9D05+3,x
+                 sta L_9D05+4,x
+                 lda L_9D2D+3,x
 L_37FF           sta LNFLG,x
                  .byte $00, $00, $00, $00, $00, $00, $9A, $9A
                  .byte $9A, $9A, $9A, $9A, $9A, $9A, $9A, $9A
@@ -2319,14 +2342,14 @@ L_37FF           sta LNFLG,x
                  .byte $AA, $55, $55, $AA, $AA, $AA, $A0, $A3
                  .byte $A0, $A8, $A8, $AC, $A8, $A8, $8A, $8A
                  .byte $8A, $0A, $8A, $AA, $AA, $AA, $63, $63
-L_3832           .byte $06, $0C, $18, $30, $63, $63, $00, $00
+                 .byte $06, $0C, $18, $30, $63, $63, $00, $00
                  .byte $00, $08, $08, $00, $00, $00, $FF, $FF
                  .byte $FE, $F8, $E2, $E2, $EA, $0A, $AA, $EA
                  .byte $EA, $FA, $FA, $0E, $C3, $C3, $AA, $EA
                  .byte $EA, $FA, $FA, $FE, $FF, $FF, $AA, $EA
                  .byte $FA, $FE, $FE, $FA, $EA, $EA, $AA, $AA
                  .byte $AA, $AA, $AA, $AA, $AA, $AA, $AA, $AA
-L_386A           .byte $AA, $AA, $AA, $AA, $AA, $AE, $FF, $FF
+                 .byte $AA, $AA, $AA, $AA, $AA, $AE, $FF, $FF
                  .byte $FF, $FF, $FF, $FF, $FF, $FF, $55, $6A
                  .byte $6A, $6A, $6A, $6A, $6A, $6A, $55, $A9
                  .byte $A9, $A9, $A9, $A9, $A9, $A9, $6A, $6A
@@ -2351,10 +2374,10 @@ L_38EA           .byte $FA, $FA, $86, $86, $FA, $FE, $2A, $95
                  .byte $A9, $A9, $AA, $AA, $A9, $A9, $A7, $A7
 L_3922           .byte $A7, $AB, $AB, $AB, $A7, $A7, $AB, $AF
                  .byte $B5, $F5, $D7, $DF, $DF, $DF, $EA, $FA
-L_3932           .byte $5E, $5F, $D7, $F7, $F7, $F7, $DF, $DF
-L_393A           .byte $DF, $DF, $DF, $DF, $DF, $DF, $F7, $F7
+                 .byte $5E, $5F, $D7, $F7, $F7, $F7, $DF, $DF
+                 .byte $DF, $DF, $DF, $DF, $DF, $DF, $F7, $F7
                  .byte $F7, $F7, $F7, $F7, $F7, $F7, $DF, $DF
-L_394A           .byte $DF, $D7, $F5, $B5, $AF, $AB, $F7, $F7
+                 .byte $DF, $D7, $F5, $B5, $AF, $AB, $F7, $F7
                  .byte $F7, $D7, $5F, $5E, $FA, $EA, $E2, $C8
                  .byte $F0, $BE, $BC, $AC, $AF, $AB, $AB, $AF
                  .byte $AE, $BC, $BE, $F8, $E2, $C8, $A5, $9A
@@ -2383,10 +2406,10 @@ L_39AA           .byte $AA, $AA, $AA, $AA, $55, $AA, $A7, $A7
                  .byte $0E, $3A, $3A, $EA, $EA, $C0, $AA, $AA
                  .byte $AA, $AA, $AA, $AA, $AA, $00, $C0, $B0
                  .byte $B0, $AC, $AC, $AB, $AB, $03, $03, $0E
-L_3A32           .byte $0E, $3A, $3A, $EA, $EA, $EA, $FF, $AA
-L_3A3A           .byte $AA, $AA, $AA, $AA, $AA, $AA, $C0, $B0
+                 .byte $0E, $3A, $3A, $EA, $EA, $EA, $FF, $AA
+                 .byte $AA, $AA, $AA, $AA, $AA, $AA, $C0, $B0
                  .byte $B0, $AC, $AC, $AB, $AB, $AB, $85, $15
-L_3A4A           .byte $56, $5A, $9A, $1A, $5A, $6A, $61, $96
+                 .byte $56, $5A, $9A, $1A, $5A, $6A, $61, $96
                  .byte $AA, $AA, $AA, $AA, $AA, $AA, $62, $98
                  .byte $A4, $A6, $90, $98, $A6, $A4, $A9, $A9
                  .byte $A6, $A4, $A6, $A9, $A9, $A6, $96, $4A
@@ -2434,7 +2457,7 @@ L_3AF5           lda #$01
                  rts
 L_3AFB           lda #$FF
                  sta MVLNG+1
-L_3AFF           ldy #$FF
+                 ldy #$FF
                  ldx L_37FF+2
                  lda L_37FF+1
                  jsr L_227C+4
@@ -2484,7 +2507,7 @@ L_3C5A           .byte $00, $00, $00, $00, $00, $DB, $24, $3C
 L_3C62           .byte $7E, $3C, $00, $00, $00, $00, $00, $00
                  .byte $00, $00, $7E, $FF, $7E, $00, $00, $00
 L_3C72           .byte $00, $00, $00, $00, $00, $00, $00, $3C
-L_3C7A           .byte $7E, $3C, $24, $DB, $3C, $00, $00, $00
+                 .byte $7E, $3C, $24, $DB, $3C, $00, $00, $00
 L_3C82           .byte $00, $00, $00, $00, $00, $18, $3C, $24
 L_3C8A           .byte $5A, $3C, $18, $00, $00, $00, $00, $00
                  .byte $00, $00, $00, $18, $66, $FF, $5A, $00
@@ -2605,7 +2628,7 @@ L_4000           lda VCOUNT
                  lda #$20
                  sta VDSLST
                  lda #$40
-L_4013           sta VDSLST+1
+                 sta VDSLST+1
                  lda #$C0
                  sta NMIEN
                  rts
@@ -2729,14 +2752,14 @@ L_407D           ldx #$75
                  cmp #$90
                  bne L_4137
                  lda #$81
-                 sta L_9C24
+                 sta L_9C1D+7
                  lda #$8C
                  sta L_9C25
                  jmp L_4169+1
-L_4137           lda L_9C24
+L_4137           lda L_9C1D+7
                  cmp #$01
                  bne L_4152
-L_413E           lda L_AD25
+L_413E           lda L_AD20+5
                  .byte $52, $06
                  cmp #$01
                  bne L_4153
@@ -2807,7 +2830,7 @@ L_4215           lda #$00
                  jmp L_42D9
 L_4224           lda #$07
                  sta $0680
-                 lda L_9C24
+                 lda L_9C1D+7
                  cmp #$35
                  bne L_424C
                  lda L_9C25
@@ -2821,7 +2844,7 @@ L_4224           lda #$07
 L_4244           lda #$D4
                  sta L_4029+1
                  jmp L_426F
-L_424C           lda L_9C24
+L_424C           lda L_9C1D+7
                  cmp #$B7
                  bne L_426F
                  lda L_9C25
@@ -2837,29 +2860,29 @@ L_4267           lda #$05
                  jmp L_426F
 L_426F           lda #$00
                  sta $0681
-                 lda L_9C24
+                 lda L_9C1D+7
                  cmp #$05
                  bne L_428F
                  lda L_9C25
                  cmp #$90
                  bne L_428F
                  lda #$81
-                 sta L_9C24
+                 sta L_9C1D+7
                  lda #$8C
                  sta L_9C25
                  jmp L_42C5
-L_428F           lda L_9C24
+L_428F           lda L_9C1D+7
                  cmp #$01
                  bne L_42AA
                  lda L_9C25
                  cmp #$80
                  bne L_42AA
                  lda #$DF
-                 sta L_9C24
+                 sta L_9C1D+7
                  lda #$7C
                  sta L_9C25
                  jmp L_42C5
-L_42AA           lda L_9C24
+L_42AA           lda L_9C1D+7
                  cmp #$BF
                  bne L_42C5
                  lda L_9C25
@@ -2867,13 +2890,13 @@ L_42AA           lda L_9C24
                  bne L_42C5
                  inc $06AB
                  lda #$75
-                 sta L_9C24
+                 sta L_9C1D+7
                  lda #$98
                  sta L_9C25
-L_42C5           lda L_9C24
+L_42C5           lda L_9C1D+7
                  sec
                  sbc #$28
-                 sta L_9C24
+                 sta L_9C1D+7
                  bcc L_42D3
                  jmp L_42DC
 L_42D3           dec L_9C25
@@ -3027,27 +3050,27 @@ L_440A           lda #$99
                  sta COLOR4
                  ldx #$00
 L_443D           lda $065E,x
-                 sta L_765B,x
-L_4443           inx
-L_4444           cpx #$05
+                 sta L_7659+2,x
+                 inx
+                 cpx #$05
                  bne L_443D
                  ldx #$05
 L_444A           lda $0606,x
-                 sta L_7676,x
+                 sta L_7671+5,x
                  dex
                  cpx #$FF
                  bne L_444A
                  lda #$08
                  sta COLOR1
                  ldx #$00
-L_445C           lda L_7400,x
-                 sta L_9C40,x
-                 lda L_7500,x
-                 sta L_9D40,x
-                 lda L_7600,x
-L_446B           sta L_9E40,x
-                 lda L_7700,x
-                 sta L_9F40,x
+L_445C           lda L_73F9+7,x
+                 sta L_9C3D+3,x
+                 lda L_74F9+7,x
+                 sta L_9D3D+3,x
+                 lda L_75F9+7,x
+                 sta L_9E3D+3,x
+                 lda L_76F9+7,x
+                 sta L_9F3D+3,x
                  inx
                  bne L_445C
                  lda #$40
@@ -3057,15 +3080,15 @@ L_446B           sta L_9E40,x
                  lda #$43
                  sta VDSLST+1
                  lda #$06
-                 sta L_9C27
-                 sta L_9C27+1
+                 sta L_9C25+2
+                 sta L_9C25+3
                  sta L_9C35
                  sta L_9C35+1
                  lda #$82
-                 sta L_9C2B
+                 sta L_9C25+6
                  lda #$07
-                 sta L_9C30
-                 sta L_9C31
+                 sta L_9C2D+3
+                 sta L_9C2D+4
                  lda #$C0
                  sta NMIEN
                  lda #$00
@@ -3087,12 +3110,12 @@ L_44B4           lda STRIG0
                  lda $0658
                  bne L_44EC
                  sta L_7641+1
-                 sta L_9E81+1
+                 sta L_9E7D+5
                  lda #$01
                  sta $0658
                  lda #$2E
                  sta L_7641
-                 sta L_9E81
+                 sta L_9E7D+4
                  jsr L_1900
                  bne L_4505
 L_44EC           lda #$00
@@ -3101,9 +3124,9 @@ L_44EC           lda #$00
                  sta AUDF2
                  lda #$26
                  sta L_7641
-                 sta L_9E81
+                 sta L_9E7D+4
                  sta L_7641+1
-                 sta L_9E81+1
+                 sta L_9E7D+5
 L_4505           lda #$FF
                  sta CH
 L_450A           inc $064C
@@ -3135,30 +3158,30 @@ L_4542           stx $0637
                  stx $06B2
                  stx $06B6
                  txa
-L_4558           sta L_9BA0,x
-                 sta L_9C9E+2,x
-                 sta L_9DA0,x
+L_4558           sta L_9B9D+3,x
+                 sta L_9C9D+3,x
+                 sta L_9D9D+3,x
                  inx
                  bne L_4558
                  ldx #$00
                  txa
-L_4567           sta L_9F60,x
+L_4567           sta L_9F5D+3,x
                  inx
                  cpx #$50
                  bne L_4567
                  ldx #$00
 L_4571           lda #$10
-                 sta L_9F9C,x
+                 sta L_9F95+7,x
                  sta $0600,x
                  sta $069C,x
                  lda $0606,x
-                 sta L_9FA8,x
+                 sta L_9FA5+3,x
                  inx
                  cpx #$06
                  bne L_4571
                  lda #$10
-                 sta L_9FA2
-                 sta L_9FAE
+                 sta L_9F9D+5
+                 sta L_9FAD+1
                  sta $069A
                  lda #$11
                  sta $069B
@@ -3167,7 +3190,7 @@ L_4571           lda #$10
                  sta $062E
                  ldx #$00
 L_45A1           lda L_45ED,x
-                 sta L_9F76,x
+                 sta L_9F75+1,x
                  inx
                  cpx #$0F
                  bne L_45A1
@@ -3275,7 +3298,7 @@ L_47EA           jsr L_5760
                  jmp L_42EA
                  sta $099D,x
                  sta L_30BC+1,x
-L_47FE           sta L_AD9D,x
+L_47FE           sta L_AD98+5,x
                  asl TRAMSZ,x
                  bne L_4847
                  lda #$20
@@ -3403,7 +3426,7 @@ L_491E           lda L_3D2A+6,y
                  jmp L_4945
 L_4933           lda L_3D3A+3,y
                  sta L_33FE+2,x
-L_4939           lda L_3D52+5,y
+                 lda L_3D52+5,y
                  sta L_3500,x
                  inx
                  iny
@@ -3436,7 +3459,7 @@ L_4956           sta L_35FD+3,x
                  .byte $45, $00, $00, $00, $00, $00, $00
 L_4980           ldx #$00
 L_4982           lda L_49BC,x
-                 sta L_9C20,x
+                 sta L_9C1D+3,x
                  inx
                  cpx #$22
                  bne L_4982
@@ -3460,23 +3483,51 @@ L_4982           lda L_49BC,x
                  lda #$FF
                  sta COLOR3
                  rts
-L_49BC           .byte $70, $70, $70, $C2, $75, $98, $24, $24
-                 .byte $24, $24, $24, $24, $24, $24, $24, $24
-                 .byte $A4, $24, $24, $24, $24, $24, $24, $24
-                 .byte $84, $46, $60, $9F, $06, $86, $06, $86
-                 .byte $41, $20, $9C, $AD, $9C, $1E, $00, $00
+L_49BC           .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $C2 ; DL LMS DLI Antic Mode 2
+                 .word L_9875
+                 .byte $24 ; DL Horizontal Scroll Antic Mode 4
+                 .byte $24 ; DL Horizontal Scroll Antic Mode 4
+                 .byte $24 ; DL Horizontal Scroll Antic Mode 4
+                 .byte $24 ; DL Horizontal Scroll Antic Mode 4
+                 .byte $24 ; DL Horizontal Scroll Antic Mode 4
+                 .byte $24 ; DL Horizontal Scroll Antic Mode 4
+                 .byte $24 ; DL Horizontal Scroll Antic Mode 4
+                 .byte $24 ; DL Horizontal Scroll Antic Mode 4
+                 .byte $24 ; DL Horizontal Scroll Antic Mode 4
+                 .byte $24 ; DL Horizontal Scroll Antic Mode 4
+                 .byte $A4 ; DL DLI Horizontal Scroll Antic Mode 4
+                 .byte $24 ; DL Horizontal Scroll Antic Mode 4
+                 .byte $24 ; DL Horizontal Scroll Antic Mode 4
+                 .byte $24 ; DL Horizontal Scroll Antic Mode 4
+                 .byte $24 ; DL Horizontal Scroll Antic Mode 4
+                 .byte $24 ; DL Horizontal Scroll Antic Mode 4
+                 .byte $24 ; DL Horizontal Scroll Antic Mode 4
+                 .byte $24 ; DL Horizontal Scroll Antic Mode 4
+                 .byte $84 ; DL DLI Antic Mode 4
+                 .byte $46 ; DL LMS Antic Mode 6
+                 .word L_9F5D+3
+                 .byte $06 ; DL Antic Mode 6
+                 .byte $86 ; DL DLI Antic Mode 6
+                 .byte $06 ; DL Antic Mode 6
+                 .byte $86 ; DL DLI Antic Mode 6
+                 .byte $41 ; DL JMP
+                 .word L_9C1D+3
+                 .byte $AD, $9C, $1E, $00, $00, $00, $00, $00
                  .byte $00, $00, $00, $00, $00, $00, $00, $00
                  .byte $00, $00, $00, $00, $00, $00, $00, $00
                  .byte $00, $00, $00, $00, $00, $00, $00, $00
-                 .byte $00, $00, $00, $00
+                 .byte $00
                  lda $0617
                  bne L_4A23
                  lda #$2A
                  sta HPOSP1
-L_4A0A           sta $061F
+                 sta $061F
                  ldx #$00
 L_4A0F           lda L_4A6D,x
-                 sta L_9553,x
+                 sta L_954D+6,x
                  inx
                  cpx #$0B
                  bne L_4A0F
@@ -3496,7 +3547,7 @@ L_4A36           cmp #$50
                  bne L_4A48
                  ldx #$00
 L_4A3C           lda L_4A75+3,x
-                 sta L_9553,x
+                 sta L_954D+6,x
                  inx
                  cpx #$0B
                  bne L_4A3C
@@ -3505,7 +3556,7 @@ L_4A48           cmp #$78
                  bne L_4A5A
                  ldx #$00
 L_4A4E           lda L_4A7D+6,x
-                 sta L_9553,x
+                 sta L_954D+6,x
                  inx
                  cpx #$0B
                  bne L_4A4E
@@ -3515,7 +3566,7 @@ L_4A5A           cmp #$A0
                  rts
 L_4A5F           ldx #$00
 L_4A61           lda L_4A8D+1,x
-                 sta L_9553,x
+                 sta L_954D+6,x
                  inx
                  cpx #$0B
                  bne L_4A61
@@ -3585,7 +3636,7 @@ L_4B05           sta HPOSP0,x
                  sta $0610
                  lda #$20
                  sta $0611
-L_4B4A           lda GPRIOR
+                 lda GPRIOR
                  ora #$10
                  sta GPRIOR
                  lda #$05
@@ -3790,7 +3841,7 @@ L_4D29           dec $0690
                  bcs L_4D3B
                  lda #$00
                  sta $0625
-L_4D38           jmp L_4CB5
+                 jmp L_4CB5
 L_4D3B           lda $0625
                  bne L_4D43
                  jmp L_4D74
@@ -3890,7 +3941,7 @@ L_4E29           cmp #$05
                  ldx $0691
                  ldy #$00
 L_4E37           lda L_3D2A+1,y
-L_4E3A           sta L_3406+1,x
+                 sta L_3406+1,x
                  inx
                  iny
                  cpy #$04
@@ -3995,7 +4046,7 @@ L_4F1F           lda L_3CF2+5,y
                  jmp L_4FCA
 L_4F34           lda L_3D02+2,y
                  sta L_35FD+3,x
-L_4F3A           lda L_3D1A+4,y
+                 lda L_3D1A+4,y
                  sta L_3700,x
                  inx
                  iny
@@ -4082,17 +4133,17 @@ L_5008           jsr L_4AC0
                  lda $0653
                  beq L_5017
                  lda #$24
-                 sta L_9F86
+                 sta L_9F85+1
                  bne L_501C
 L_5017           lda #$00
-                 sta L_9F86
+                 sta L_9F85+1
 L_501C           lda $0635
                  beq L_5028
                  lda #$2A
-                 sta L_9F74
+                 sta L_9F6D+7
                  bne L_502D
 L_5028           lda #$00
-                 sta L_9F74
+                 sta L_9F6D+7
 L_502D           jsr L_1880
                  lda $0652
                  beq L_5038
@@ -4105,7 +4156,7 @@ L_5038           jsr L_6900
                  bne L_5000
                  jmp L_51A4
 L_504B           lda $0613
-L_504E           beq L_5056
+                 beq L_5056
                  jsr L_1B00
                  jmp L_5162
 L_5056           lda $06AB
@@ -4194,9 +4245,9 @@ L_5113           jsr L_4B80
                  ldx $062A
                  bmi L_5145
                  lda #$00
-                 sta L_9F7C,x
+                 sta L_9F75+7,x
                  dec $062A
-                 jsr L_6C80
+                 jsr L_6C79+7
                  lda #$FF
                  sta CH
                  jmp L_5162
@@ -4229,7 +4280,7 @@ L_5181           cmp #$07
 L_5185           lda #$28
                  sta PCOLR2
                  jsr L_53C8
-L_518D           jsr L_5FFE+2
+L_518D           jsr L_6000
 L_5190           lda #$FF
                  sta CH
 L_5195           inc $0683
@@ -4460,16 +4511,16 @@ L_5383           sta AUDC1,x
                  bmi L_5383
                  ldx #$00
 L_538E           lda L_435A,x
-                 sta L_9C20,x
+                 sta L_9C1D+3,x
                  inx
                  cpx #$20
                  bne L_538E
                  lda #$00
                  tax
-L_539C           sta L_9C40,x
-                 sta L_9D40,x
-                 sta L_9E40,x
-                 sta L_9F40,x
+L_539C           sta L_9C3D+3,x
+                 sta L_9D3D+3,x
+                 sta L_9E3D+3,x
+                 sta L_9F3D+3,x
                  inx
                  bne L_539C
                  lda #$00
@@ -4497,11 +4548,11 @@ L_53CB           sta L_35FD+3,x
                  lda #$00
                  sta $066A
                  rts
-L_53DF           ora L_B6AD
+L_53DF           ora L_B6A8+5
                  asl PTABW
                  bpl L_53B5+1
                  and $D0
-                 rol L_ABAB+2
+                 rol L_ABA8+5
                  asl $D0
                  and #$AD
                  ora (TRAMSZ),y
@@ -4664,7 +4715,7 @@ L_5543           rts
                  ldx #$00
                  stx $0621
                  lda #$2F
-                 sta L_9CE9,x
+                 sta L_9CE5+4,x
                  inc $0646
                  rts
                  lda L_397A
@@ -4843,25 +4894,51 @@ L_56CF           sta L_33FE+2,x
                  lda #$E0
                  sta CHBAS
                  rts
-L_5709           .byte $70, $70, $70, $46, $00, $34, $06, $02
-                 .byte $02, $02, $02, $02, $02, $02, $02, $02
-                 .byte $02, $02, $02, $02, $02, $02, $02, $02
-                 .byte $02, $07, $07, $07, $07, $41, $00, $30
+L_5709           .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $46 ; DL LMS Antic Mode 6
+                 .word L_33FE+2
+                 .byte $06 ; DL Antic Mode 6
+                 .byte $02 ; DL Antic Mode 2
+                 .byte $02 ; DL Antic Mode 2
+                 .byte $02 ; DL Antic Mode 2
+                 .byte $02 ; DL Antic Mode 2
+                 .byte $02 ; DL Antic Mode 2
+                 .byte $02 ; DL Antic Mode 2
+                 .byte $02 ; DL Antic Mode 2
+                 .byte $02 ; DL Antic Mode 2
+                 .byte $02 ; DL Antic Mode 2
+                 .byte $02 ; DL Antic Mode 2
+                 .byte $02 ; DL Antic Mode 2
+                 .byte $02 ; DL Antic Mode 2
+                 .byte $02 ; DL Antic Mode 2
+                 .byte $02 ; DL Antic Mode 2
+                 .byte $02 ; DL Antic Mode 2
+                 .byte $02 ; DL Antic Mode 2
+                 .byte $02 ; DL Antic Mode 2
+                 .byte $02 ; DL Antic Mode 2
+                 .byte $07 ; DL Antic Mode 7
+                 .byte $07 ; DL Antic Mode 7
+                 .byte $07 ; DL Antic Mode 7
+                 .byte $07 ; DL Antic Mode 7
+                 .byte $41 ; DL JMP
+                 .word L_2FFC+4
                  .byte $00, $02, $D0, $08
                  lda #$19
                  sta L_9FA5
-                 dec L_9FA4
-                 lda L_9FA4
+                 dec L_9F9D+7
+                 lda L_9F9D+7
                  cmp #$10
                  bne L_5753+1
                  lda L_9FA5
                  cmp #$10
                  bne L_5753+1
-                 lda L_9FA6
+                 lda L_9FA5+1
                  cmp #$10
                  bne L_5753+1
                  lda #$10
-                 sta L_9FA4
+                 sta L_9F9D+7
 L_574F           lda #$AD
                  asl TRAMSZ,x
 L_5753           bne L_57A5
@@ -5003,10 +5080,10 @@ L_5893           jmp L_58B0
                  bne L_58BA+2
                  ldx #$00
                  lda #$00
-                 sta L_9C68,x
+                 sta L_9C65+3,x
                  sta L_9C1D,x
                  lda #$06
-                 sta L_9C90,x
+                 sta L_9C8D+3,x
                  sta L_9C45,x
                  txa
 L_58B0           lda $0687
@@ -5160,7 +5237,7 @@ L_5A02           sta L_35FD+3,x
                  bne L_5A3D
                  jsr L_55A0
                  lda $060F
-L_5A1E           sta L_AD52
+L_5A1E           sta L_AD50+2
                  dey
                  asl $D0
                  .byte $14
@@ -5186,7 +5263,7 @@ L_5A4D           cmp #$4A
                  jmp L_5AEE
 L_5A57           lda $0627
                  bne L_5A5F
-L_5A5C           jmp L_5AEE
+                 jmp L_5AEE
 L_5A5F           ldx $0691
                  ldy #$00
                  lda $0684
@@ -5269,11 +5346,11 @@ L_5B0A           cpx #$70
                  rts
 L_5B16           dec $060E
                  dex
-                 sta L_9F6C,x
+                 sta L_9F65+7,x
                  rts
 L_5B1E           jsr L_5B2B
                  ldx $060E
-                 sta L_9F6C,x
+                 sta L_9F65+7,x
                  inc $060E
                  rts
 L_5B2B           lda $0619
@@ -5387,19 +5464,8 @@ L_5BE9           cpx #$90
                  rts
 L_5BF0           lda #$38
                  rts
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00
 L_5C00           ldx #$00
                  stx $065D
 L_5C05           lda $0606,x
@@ -5423,21 +5489,8 @@ L_5C22           lda $0600,x
                  bne L_5C22
                  inc $065D
                  rts
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00
 L_5C40           lda $0616
                  bne L_5C78
                  lda #$0F
@@ -5612,7 +5665,7 @@ L_5DC4           ldx #$00
                  lda $06A2
                  cmp #$01
                  beq L_5DEB
-L_5DD3           lda L_5E1C,x
+L_5DD3           lda L_5E16+6,x
                  sta L_3700,y
                  lda L_5DFE,x
                  sta L_35FD+3,y
@@ -5623,55 +5676,23 @@ L_5DD3           lda L_5E1C,x
                  lda #$00
                  sta $06A2
                  rts
-L_5DEB           lda L_5E0D,x
+L_5DEB           lda L_5E06+7,x
                  sta L_35FD+3,y
-                 lda L_5E1C,x
+                 lda L_5E16+6,x
                  sta L_3700,y
                  iny
                  inx
                  cpx #$0F
                  bne L_5DEB
                  rts
-L_5DFE           brk
-                 clc
-                 .byte $3C
-                 .byte $34
-                 .byte $7A
-                 .byte $5A
-                 .byte $E3
-                 .byte $FF
-                 .byte $E7
-                 bvs L_5E81
-                 .byte $3C
-                 .byte $3C
-                 clc
-                 brk
-L_5E0D           brk
-                 clc
-                 .byte $3C
-                 bit L_5A5C+2
-                 .byte $C7
-                 .byte $FF
-                 .byte $E7
-                 asl L_3C1A+4
-                 .byte $3C
-                 clc
-                 brk
-L_5E1C           brk
-                 clc
-                 .byte $3C
-                 .byte $3C
-                 ror $FF7E,x
-                 .byte $FF
-                 .byte $FF
-                 ror L_3C7A+4,x
-                 .byte $3C
-                 clc
-                 brk
-                 brk
-                 bvs L_5DFE
-                 ora #$A9
-                 rti
+L_5DFE           .byte $00, $18, $3C, $34, $7A, $5A, $E3, $FF
+L_5E06           .byte $E7, $70, $78, $3C, $3C, $18, $00, $00
+                 .byte $18, $3C, $2C, $5E, $5A, $C7, $FF, $E7
+L_5E16           .byte $0E, $1E, $3C, $3C, $18, $00, $00, $18
+                 .byte $3C, $3C, $7E, $7E, $FF, $FF, $FF, $7E
+                 .byte $7E, $3C, $3C, $18, $00, $00, $70
+                 bne L_5E38
+                 lda #$40
                  sta HPOSP2
                  sta $0640
                  rts
@@ -5704,7 +5725,7 @@ L_5E74           sta $06C2
                  ldx $06AF
                  cpx #$10
                  bcc L_5E86
-L_5E81           ldx #$00
+                 ldx #$00
                  stx $06AF
 L_5E86           lda $06B2
                  cmp #$03
@@ -5718,67 +5739,26 @@ L_5E92           cmp #$00
                  rts
 L_5E9D           cmp #$01
                  bne L_5EA8
-                 lda L_5ECB,x
+                 lda L_5ECA+1,x
                  sta $0615
                  rts
 L_5EA8           cmp #$02
                  bne L_5EB3
-                 lda L_5EDC,x
+                 lda L_5EDA+2,x
                  sta $0615
                  rts
-L_5EB3           lda L_5EED,x
+L_5EB3           lda L_5EEA+3,x
                  sta $0615
                  rts
-L_5EBA           ora (CASINI,x)
-                 .byte $03
-                 ora (CASINI+1,x)
-                 .byte $02
-                 .byte $04
-                 ora RAMLO+1
-                 ora (NGFLAG,x)
-                 .byte $02
-                 .byte $04
-                 .byte $03
-                 .byte $04
-                 ora (CASINI+1,x)
-L_5ECB           ora (RAMLO+1,x)
-                 ora TRAMSZ
-                 .byte $04
-                 .byte $07
-                 ora RAMLO+1
-                 ora (WARMST,x)
-                 ora #$01
-                 .byte $02
-                 asl DOSVEC+1
-                 .byte $02
-                 .byte $04
-L_5EDC           ora (DOSVEC,x)
-                 .byte $0B
-                 .byte $02
-                 ora (DOSVEC+1,x)
-                 php
-                 ora #$05
-                 ora CASINI+1
-                 asl
-                 .byte $02
-                 .byte $07
-                 php
-                 .byte $07
-                 .byte $03
-L_5EED           asl CMCMD
-                 php
-                 ora #$0A
-                 .byte $0B
-                 ora RAMLO+1
-                 php
-                 ora #$02
-                 .byte $03
-                 asl
-                 asl
-                 asl
-                 asl
-                 asl
-                 ora (CASINI,x)
+L_5EBA           .byte $01, $02, $03, $01, $03, $02, $04, $05
+                 .byte $05, $01, $01, $02, $04, $03, $04, $01
+L_5ECA           .byte $03, $01, $05, $05, $06, $04, $07, $05
+                 .byte $05, $01, $08, $09, $01, $02, $06, $0B
+L_5EDA           .byte $02, $04, $01, $0A, $0B, $02, $01, $0B
+                 .byte $08, $09, $05, $05, $03, $0A, $02, $07
+L_5EEA           .byte $08, $07, $03, $06, $07, $08, $09, $0A
+                 .byte $0B, $05, $05, $08, $09, $02, $03, $0A
+                 .byte $0A, $0A, $0A, $0A, $01, $02
 L_5F00           ldx $0690
                  ldy #$00
                  lda #$0F
@@ -5788,9 +5768,9 @@ L_5F00           ldx $0690
                  sta AUDF4
                  cmp #$08
                  bcs L_5F2A
-L_5F17           lda L_6F90,y
+L_5F17           lda L_6F89+7,y
                  sta L_35FD+3,x
-                 lda L_6F9D,y
+                 lda L_6F99+4,y
                  sta L_3700,x
                  inx
                  iny
@@ -5799,9 +5779,9 @@ L_5F17           lda L_6F90,y
                  rts
 L_5F2A           cmp #$10
                  bcs L_5F41
-L_5F2E           lda L_6FAA,y
+L_5F2E           lda L_6FA9+1,y
                  sta L_35FD+3,x
-                 lda L_6FB7,y
+                 lda L_6FB1+6,y
                  sta L_3700,x
                  inx
                  iny
@@ -5816,7 +5796,7 @@ L_5F48           cmp #$20
                  jmp L_5F2E
 L_5F4F           cmp #$28
                  bcs L_5F65
-L_5F53           lda L_6FC4,y
+L_5F53           lda L_6FC1+3,y
                  sta L_35FD+3,x
                  lda #$00
                  sta L_3700,x
@@ -5836,7 +5816,7 @@ L_5F69           lda L_6FD1,y
                  rts
 L_5F76           cmp #$38
                  bcs L_5F87
-L_5F7A           lda L_6FDE,y
+L_5F7A           lda L_6FD9+5,y
                  sta L_35FD+3,x
                  inx
                  iny
@@ -5856,7 +5836,7 @@ L_5F8B           lda #$00
                  rts
 L_5F9D           cmp #$48
                  bcs L_5FAE
-L_5FA1           lda L_5FF0,y
+L_5FA1           lda L_5FEB+5,y
                  sta L_3700,x
                  inx
                  iny
@@ -5884,30 +5864,11 @@ L_5FCB           lda #$00
                  jsr L_67CF
                  jsr L_67CF
                  rts
-L_5FE3           brk
-                 brk
-                 brk
-                 brk
-                 jsr $0800
-                 rti
-                 brk
-                 bpl L_5FEE
-L_5FEE           brk
-                 brk
-L_5FF0           brk
-                 brk
-                 brk
-                 jsr L_4013+1
-                 .byte $82
-                 brk
-                 .byte $82
-                 .byte $80
-                 plp
-                 brk
-                 brk
-                 brk
-L_5FFE           lda L_A233,x
-                 brk
+L_5FE3           .byte $00, $00, $00, $00, $20, $00, $08, $40
+L_5FEB           .byte $00, $10, $00, $00, $00, $00, $00, $00
+                 .byte $20, $14, $40, $82, $00, $82, $80, $28
+                 .byte $00, $00, $00, $BD, $33
+L_6000           ldx #$00
                  lda $0624
                  beq L_6010
                  stx $0624
@@ -5947,9 +5908,9 @@ L_604F           sta L_33FE+2,y
                  cpx #$0D
                  bne L_604F
                  sta $0653
-                 sta L_9F86
+                 sta L_9F85+1
                  rts
-                 brk
+                 .byte $00
                  ldx #$06
 L_606B           inc $06A7
                  lda $0627
@@ -5958,10 +5919,9 @@ L_606B           inc $06A7
                  stx $06A3
                  inc $06A8
 L_607C           stx $0653
-                 stx L_9F86
+                 stx L_9F85+1
                  rts
-                 brk
-                 brk
+                 .word $0000
                  ldx #$00
 L_6087           inx
                  bne L_6087
@@ -6055,10 +6015,10 @@ L_614E           lda $0650
                  lda #$01
                  sta $0653
                  lda #$24
-                 sta L_9F86
+                 sta L_9F85+1
                  bne L_616E
 L_615F           lda #$2A
-                 sta L_9F74
+                 sta L_9F6D+7
                  lda #$05
                  sta $0656
                  bne L_616E
@@ -6270,44 +6230,11 @@ L_6327           lda L_3E32+5,x
                  cpx #$0D
                  bne L_6327
                  rts
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00
 L_6360           lda $0616
                  bne L_639B
                  lda #$50
@@ -6481,28 +6408,9 @@ L_64D4           lda L_3E0A+6,x
                  cpx #$0D
                  bne L_64D4
                  rts
-                 brk
-                 .byte $3C
-                 .byte $3C
-                 .byte $3C
-                 .byte $3C
-                 .byte $3C
-                 .byte $3C
-                 .byte $3C
-                 .byte $3C
-                 .byte $3C
-                 .byte $3C
-                 .byte $3C
-                 .byte $3C
-                 .byte $3C
-                 .byte $3C
-                 .byte $3C
-                 .byte $3C
-                 and L_3AFF+1,x
-                 .byte $3C
-                 .byte $3C
-                 .byte $3C
-                 .byte $3C
+                 .byte $00, $3C, $3C, $3C, $3C, $3C, $3C, $3C
+                 .byte $3C, $3C, $3C, $3C, $3C, $3C, $3C, $3C
+                 .byte $3C, $3D, $00, $3B, $3C, $3C, $3C, $3C
                  .byte $3C
 L_6500           lda $0687
                  bne L_653F
@@ -6596,108 +6504,19 @@ L_65C7           lda L_3F6A+6,y
                  cpy #$13
                  bne L_65C7
                  rts
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00
                  lda #$00
                  sta $0616
                  sta $0625
@@ -6812,7 +6631,7 @@ L_6719           lda L_6791,x
                  sta $069B
                  inc $069A
 L_6745           ldx #$00
-L_6747           lda L_679A+1,x
+L_6747           lda L_6799+2,x
                  sta L_348F,x
                  jsr L_4300
                  inx
@@ -6830,7 +6649,7 @@ L_6762           jsr L_67E6
                  cmp #$FF
                  bpl L_6762
 L_676F           ldx #$00
-L_6771           lda L_67A8,x
+L_6771           lda L_67A1+7,x
                  sta L_34E0+1,x
                  jsr L_4300
                  inx
@@ -6842,69 +6661,51 @@ L_6771           lda L_67A8,x
                  sta L_34E9
                  jsr L_2000
                  jmp L_560B
-L_6791           bit L_3321
-                 .byte $34
-                 brk
-                 .byte $33
-                 .byte $34
-                 and (ICPTHZ,x)
-L_679A           and ICCOMZ
-                 .byte $2F
-                 rol L_3334+1
-                 brk
-                 bit $110A
-                 bpl L_67B4+2
-                 bpl L_67C3+2
-L_67A8           .byte $33
-                 .byte $34
-                 and (ICPTHZ,x)
-                 and LNFLG
-                 cli
-                 .byte $5B
-                 eor L_585A,y
-                 .byte $5B
-L_67B4           eor L_585A,y
-                 .byte $5B
+L_6791           .byte $2C, $21, $33, $34, $00, $33, $34, $21
+L_6799           .byte $27, $25, $22, $2F, $2E, $35, $33, $00
+L_67A1           .byte $2C, $0A, $11, $10, $10, $10, $1D, $33
+                 .byte $34, $21, $27, $25, $00, $58, $5B, $59
+                 .byte $5A, $58, $5B, $59, $5A, $58, $5B
 L_67B8           ldy $0605
                  iny
                  cpy #$1A
                  beq L_67C7
-                 sty L_9FA1
-L_67C3           sty $0605
+                 sty L_9F9D+4
+                 sty $0605
                  rts
 L_67C7           ldy #$10
-                 sty L_9FA1
+                 sty L_9F9D+4
                  sty $0605
 L_67CF           ldy $0604
                  iny
                  cpy #$1A
                  beq L_67DE
-                 sty L_9FA0
+                 sty L_9F9D+3
                  sty $0604
                  rts
 L_67DE           ldy #$10
-                 sty L_9FA0
+                 sty L_9F9D+3
                  sty $0604
 L_67E6           ldy $0603
                  iny
                  cpy #$1A
                  beq L_67F5
-                 sty L_9F9F
+                 sty L_9F9D+2
                  sty $0603
                  rts
 L_67F5           ldy #$10
-                 sty L_9F9F
+                 sty L_9F9D+2
                  sty $0603
                  jsr L_4FE0
 L_6800           ldy $0602
                  iny
                  cpy #$1A
                  beq L_680F
-                 sty L_9F9E
+                 sty L_9F9D+1
                  sty $0602
                  rts
 L_680F           ldy #$10
-                 sty L_9F9E
+                 sty L_9F9D+1
                  sty $0602
                  ldy $0601
                  iny
@@ -6920,7 +6721,7 @@ L_6826           ldy #$10
                  iny
                  cpy #$1A
                  beq L_683C
-                 sty L_9F9C
+                 sty L_9F95+7
                  sty $0600
 L_683C           rts
                  brk
@@ -7010,9 +6811,7 @@ L_68EF           lda #$75
                  adc L_75A9
                  sta L_407D+1
                  rts
-                 brk
-                 brk
-                 brk
+                 .byte $00, $00, $00
 L_6900           lda $0619
                  sta $0628
                  lda M2PL
@@ -7176,11 +6975,7 @@ L_6A65           lda #$00
                  lda #$00
                  ldy $0690
                  jmp L_698D
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
+                 .byte $00, $00, $00, $00, $00
 L_6A80           lda $06A6
                  bne L_6A86
                  rts
@@ -7239,7 +7034,7 @@ L_6AD0           sta L_33FE+2,x
                  cpx #$00
                  bne L_6B0D
                  lda #$EF
-L_6AFE           sta L_ADBC
+L_6AFE           sta L_ADB8+4
                  asl TRAMSZ,x
                  bne L_6B34
                  lda #$28
@@ -7280,27 +7075,12 @@ L_6B59           inc $0690
                  beq L_6B64
                  inc $0690
 L_6B64           jmp L_1D30
-                 brk
-                 clv
-                 .byte $67
+                 .byte $00, $B8, $67
                  jsr L_67B8
                  jsr L_67CF
                  rts
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00
 L_6B80           lda $06A8
                  bne L_6B86
                  rts
@@ -7336,54 +7116,12 @@ L_6BB2           sta L_33FE+2,x
                  jsr L_67B8
                  jsr L_67CF
                  rts
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
 L_6C00           lda #$00
                  sta $0678
                  sta AUDC3
@@ -7393,14 +7131,14 @@ L_6C0B           lda #$00
                  inc $06AD
 L_6C13           ldx #$00
 L_6C15           lda L_6C61,x
-                 sta L_9F81,x
+                 sta L_9F7D+4,x
                  inx
                  cpx #$05
                  bne L_6C15
                  jsr L_6C52
                  ldx #$00
-L_6C25           lda L_6C65+1,x
-                 sta L_9F81,x
+L_6C25           lda L_6C61+5,x
+                 sta L_9F7D+4,x
                  inx
                  cpx #$05
                  bne L_6C25
@@ -7426,51 +7164,17 @@ L_6C58           inx
                  bne L_6C58
                  iny
                  bne L_6C58
-L_6C5E           pla
+                 pla
                  tax
                  rts
-L_6C61           bmi L_6C83+1
-                 and BUFRHI,x
-L_6C65           and ICBLLZ
-                 and #$27
-                 plp
-                 brk
-                 brk
-                 .byte $13
-                 lda $063C
-                 cmp #$07
-                 bcc L_6C7A
-                 inc $063F
-L_6C77           jmp L_6C92
-L_6C7A           inc $063C
-                 jmp L_6C92
-L_6C80           inc $0613
-L_6C83           lda #$00
-                 sta $0614
-                 rts
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_6C92           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
+L_6C61           .byte $30, $21, $35, $33, $25, $28, $29, $27
+                 .byte $28, $00, $00, $13, $AD, $3C, $06, $C9
+                 .byte $07, $90, $06, $EE, $3F, $06, $4C, $92
+L_6C79           .byte $6C, $EE, $3C, $06, $4C, $92, $6C, $EE
+                 .byte $13, $06, $A9, $00, $8D, $14, $06, $60
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00
 L_6CA0           lda #$00
                  sta VSCROL
                  sta $0680
@@ -7490,12 +7194,12 @@ L_6CA0           lda #$00
                  sta $06CC
                  lda #$11
                  sta $06B4
-                 jsr L_6C80
+                 jsr L_6C79+7
                  lda #$FF
                  sta CH
                  ldx #$00
                  lda #$01
-L_6CE3           sta L_9F7C,x
+L_6CE3           sta L_9F75+7,x
                  inx
                  cpx #$03
                  bne L_6CE3
@@ -7509,7 +7213,7 @@ L_6CEF           rts
                  bcc L_6CEF
                  lda $0641
                  bne L_6D11+1
-L_6CFF           lda L_9020
+L_6CFF           lda L_901D+3
                  lsr MVLNG,x
                  brk
                  lda #$07
@@ -7529,15 +7233,9 @@ L_6D11           lda L_6D2E,x
                  lda $069B
                  sta L_3483+2
                  jmp L_560E
-L_6D2E           .byte $33
-                 .byte $34
-                 and (ICPTHZ,x)
-                 and LNFLG
-                 rol HPOSM2,x
-                 sbc TRAPLN+1,x
-                 .byte $44
-                 adc L_619B+2
-                 .byte $97
+L_6D2E           .byte $33, $34, $21, $27, $25, $00, $3E, $06
+                 .byte $D0, $F5, $BD, $44, $6D
+                 sta L_975D+4,x
                  inx
 L_6D3F           cpx #$AD
                  jsr P2PF
@@ -7739,7 +7437,7 @@ L_6EF7           cmp #$01
                  bne L_6F13
 L_6F00           lda L_6F51,x
                  sta L_33FE+2,y
-                 lda L_6F5F,x
+                 lda L_6F59+6,x
                  sta L_3500,y
                  iny
                  inx
@@ -7748,7 +7446,7 @@ L_6F00           lda L_6F51,x
                  rts
 L_6F13           lda L_6F51,x
                  sta L_33FE+2,y
-                 lda L_6F6D,x
+                 lda L_6F69+4,x
                  sta L_3500,y
                  iny
                  inx
@@ -7775,1835 +7473,276 @@ L_6F3E           lda L_41CB+1,x
                  cpx #$0E
                  bne L_6F3E
                  rts
-L_6F51           brk
-                 brk
-                 brk
-                 bpl L_6FD2
-                 dec STOPLN,x
-                 .byte $7C
-                 bpl L_6F6B
-                 plp
-                 .byte $54
-                 sec
-                 brk
-L_6F5F           brk
-                 sec
-                 brk
-                 brk
-                 brk
-                 plp
-                 .byte $44
-                 brk
-                 brk
-                 brk
-                 bpl L_6F92+1
-L_6F6B           brk
-                 brk
-L_6F6D           brk
-                 bpl L_6F70
-L_6F70           brk
-                 brk
-                 plp
-                 .byte $44
-                 brk
-                 brk
-                 brk
-                 bpl L_6F9F+2
-                 brk
-                 brk
-                 brk
-                 brk
-                 plp
-                 .byte $44
-                 brk
-                 brk
-L_6F81           brk
-                 bpl L_6FAA+2
-                 brk
-                 brk
-                 brk
-                 inx
-                 cpx #$08
-                 bne L_6F81
-                 rts
-                 asl
-                 ora RAMLO+1
-L_6F90           php
-                 rol
-L_6F92           bmi L_6FE5
-L_6F94           adc $083E,y
-                 php
-                 php
-                 .byte $14
-                 rol ABUFPT,x
-                 brk
-L_6F9D           eor (LNFLG,x)
-L_6F9F           asl $062E
-                 brk
-                 brk
-                 brk
-                 brk
-                 php
-                 php
-                 brk
-                 brk
-L_6FAA           rol L_2A04+4,x
-                 asl BUFADR,x
-                 .byte $4F
-                 rol $0808,x
-                 php
-                 .byte $14
-                 rol ABUFPT,x
-L_6FB7           .byte $44
-                 brk
-                 pla
-                 nop
-                 jsr LNFLG
-                 brk
-                 brk
-                 php
-                 php
-                 brk
-                 brk
-L_6FC4           php
-                 php
-                 rol COLCRS,x
-                 rol $0808,x
-                 php
-                 .byte $1C
-                 brk
-                 brk
-                 brk
-                 brk
-L_6FD1           brk
-L_6FD2           php
-                 .byte $14
-                 rol ABUFPT,x
-                 php
-                 php
-                 .byte $1C
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_6FDE           brk
-                 brk
-                 php
-                 .byte $14
-                 php
-                 php
-                 php
-L_6FE5           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 .byte $14
-                 pha
-                 .byte $12
-L_6FEF           pha
-                 brk
-                 .byte $12
-                 bit POKMSK
-                 brk
-                 brk
-                 brk
-                 brk
-                 bne L_6FEF
-                 rts
-                 cmp #$78
-                 bne L_700D
-                 ldx #$00
-                 brk
-                 brk
-                 brk
-                 brk
-L_7005           brk
-                 brk
-L_7007           brk
-                 .byte $FF
-                 .byte $7F
-                 and L_3832+6,y
-L_700D           sec
-                 and $C03F,y
-                 cpx #$F0
-                 beq L_7005
-                 beq L_7007
-                 cpx #$00
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 asl L_3F3A+5,x
-                 .byte $3B
-                 and L_3832+6,y
-                 sec
-                 .byte $7C
-                 inc $C0C0,x
-                 cpx #$F0
-                 sei
-                 ror L_3C7A+4,x
-                 .byte $67
-                 .byte $E3
-                 inc $E0FC,x
-                 .byte $73
-                 .byte $3F
-                 asl DDEVIC,x
-                 ora (NGFLAG,x)
-                 ora (NGFLAG,x)
-                 ora $E03F,x
-                 cpy #$C0
-                 cpy #$C0
-                 cpy #$C0
-                 cpy #$79
-                 bvs L_70BA+1
-                 bvs L_70BD
-                 and L_1E3F,y
-                 cpy #$C0
-                 cpy #$C0
-                 cpy #$C0
-                 cpx #$F0
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 .byte $1F
-                 .byte $7F
-                 brk
-                 brk
-                 ora (CASINI+1,x)
-                 .byte $03
-                 .byte $07
-                 .byte $0F
-                 .byte $83
-                 brk
-                 brk
-                 cpy #$C0
-                 cpy #$F0
-                 cpx #$C0
-                 adc (APPMHI+1,x)
-                 .byte $3F
-                 adc L_7171,x
-                 .byte $3F
-                 asl $C3C3,x
-                 .byte $C3
-                 .byte $C3
-                 .byte $C3
-                 cmp (FCHRFLG,x)
-                 cpx #$C0
-                 cpy #$C0
-                 cpy #$E0
-L_7085           beq L_7085
-                 .byte $3C
-                 rol $E67E,x
-                 .byte $C2
-                 cpy #$C0
-                 .byte $7C
-                 rol LNFLG,x
-                 brk
-                 brk
-                 asl L_733E+1,x
-                 sbc (CMCMD,x)
-                 .byte $0F
-                 .byte $1C
-                 .byte $1C
-                 .byte $7F
-                 .byte $1C
-                 .byte $9C
-                 .byte $DC
-                 asl L_8606
-                 dec $F8FC
-                 brk
-                 brk
-                 sbc (FR1+1,x)
-                 sbc (COLAC+1,x)
-                 .byte $3F
-                 asl LNFLG,x
-                 .byte $DC
-                 .byte $DC
-                 .byte $DC
-                 .byte $9C
-                 .byte $1C
-                 rol LNFLG,x
-                 cpy #$E0
-L_70BA           ror L_3F1A+5
-L_70BD           asl $0E0E
-                 brk
-                 brk
-                 brk
-                 .byte $80
-                 brk
-                 and L_1C1C,x
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 .byte $F7
-                 inc FR2
-                 asl $0E0E
-                 .byte $0F
-                 .byte $07
-                 .byte $03
-                 brk
-                 brk
-                 asl $0E0E
-                 asl $C7E7
-                 brk
-                 brk
-                 ror TOADR
-                 ror BUFSTR
-                 .byte $9C
-                 tya
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 .byte $7C
-                 .byte $FF
-                 .byte $C7
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 .byte $1B
-                 .byte $3F
-                 asl LNFLG
-                 brk
-                 brk
-                 brk
-                 cpx #$F1
-                 .byte $3B
-                 .byte $0F
-                 .byte $37
-                 .byte $67
-                 .byte $C7
-                 .byte $C7
-                 .byte $7B
-                 brk
-                 brk
-                 asl $0E0E
-                 asl L_9FCE
-                 brk
-                 brk
-                 .byte $03
-                 .byte $03
-                 .byte $03
-                 .byte $03
-                 ora (LNFLG,x)
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 sed
-                 .byte $FC
-                 .byte $0C
-                 .byte $FC
-                 sei
-                 brk
-                 .byte $0C
-                 .byte $FC
-                 sed
-                 brk
-                 brk
-                 ora (LNFLG,x)
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 .byte $FC
-                 sed
-                 bvs L_71A4
-                 bvs L_71A6
-                 bvs L_71A8
-                 brk
-                 asl APPMHI+1
-                 .byte $1F
-                 asl $0E0E
-                 asl $0505
-                 ora RAMLO+1
-                 ora NGFLAG
-                 brk
-                 brk
-                 bvs L_71BA
-                 bvs L_71BB+2
-                 .byte $FF
-                 .byte $FF
-                 brk
-                 brk
-                 asl $EF0E
-                 .byte $E7
-                 .byte $E7
-                 .byte $E3
-                 brk
-                 brk
-                 brk
-                 brk
-                 .byte $80
-                 brk
-                 brk
-                 ora (CASINI+1,x)
-                 .byte $07
-                 .byte $03
-                 .byte $0F
-                 .byte $03
-                 .byte $03
-                 .byte $7B
-                 .byte $FF
-                 .byte $8F
-                 .byte $07
-                 cpy #$00
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 .byte $07
-L_7171           .byte $07
-                 .byte $07
-                 .byte $87
-                 .byte $E3
-                 cmp (LNFLG,x)
-                 brk
-                 .byte $07
-                 .byte $07
-                 .byte $07
-                 .byte $07
-                 .byte $CF
-                 .byte $FB
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 cpy #$80
-                 brk
-                 brk
-                 .byte $FB
-                 .byte $22
-                 .byte $22
-                 .byte $22
-                 .byte $22
-                 brk
-                 brk
-                 brk
-                 rts
-                 ldy #$A0
-                 jsr ICHIDZ
-                 brk
-                 brk
-                 .byte $03
-                 .byte $07
-                 .byte $03
-                 ora (APPMHI+1,x)
-                 .byte $1F
-                 beq L_721F
-                 cpx #$F0
-                 cpx #$C1
-L_71A4           .byte $FF
-                 .byte $FF
-L_71A6           brk
-                 .byte $FF
-L_71A8           brk
-                 brk
-L_71AA           cpx #$F0
-                 .byte $FF
-                 .byte $FF
-                 brk
-                 .byte $FF
-                 .byte $3F
-                 .byte $3F
-                 .byte $1F
-                 .byte $0F
-                 .byte $3F
-                 bit $FFFC
-                 .byte $FF
-                 .byte $87
-L_71BA           sei
-L_71BB           sta $FDF0
-                 sei
-                 .byte $FF
-                 .byte $FF
-                 asl $FBF1
-                 brk
-                 .byte $FB
-                 sbc (FPTR2+1),y
-                 brk
-                 brk
-                 clc
-                 and $FFFF,x
-                 brk
-                 .byte $FF
-                 brk
-                 .byte $7F
-                 .byte $7F
-                 sbc (DIGRT),y
-L_71D5           sbc (ROWAC+1),y
-                 .byte $7F
-                 brk
-                 sta ICCOMT
-                 .byte $7F
-                 .byte $7F
-                 .byte $7F
-                 rts
-                 .byte $7F
-                 .byte $FF
-                 .byte $1F
-                 .byte $E7
-                 .byte $F3
-                 bmi L_71D5+1
-                 cpx #$FF
-                 .byte $7F
-                 .byte $BF
-                 cmp (FPTR2+1,x)
-                 .byte $FC
-                 cld
-L_71EE           bvs L_71EE+1
-                 .byte $7F
-                 .byte $7F
-                 rts
-                 .byte $3F
-                 .byte $1F
-                 .byte $1B
-                 asl FPTR2+1
-                 sta $FF66,y
-                 .byte $FF
-                 .byte $FF
-                 brk
-                 .byte $FF
-                 brk
-                 bpl L_71AA+1
-                 .byte $FC
-                 .byte $FC
-                 .byte $FF
-                 ora (FLPTR,x)
-                 brk
-                 ora (CASINI+1,x)
-                 .byte $07
-                 asl ZTEMP2
-                 dec FMSZPG+3
-                 .byte $FF
-                 .byte $FF
-                 brk
-                 .byte $FF
-                 adc L_386A+3,x
-                 .byte $FF
-                 .byte $FF
-                 .byte $FF
-                 brk
-                 .byte $FF
-                 .byte $F7
-                 ldx FR1+3,y
-L_721F           .byte $FF
-                 lsr FMSZPG+3
-                 .byte $57
-                 .byte $FF
-                 cmp (IODVC),y
-                 .byte $80
-                 .byte $FF
-                 brk
-                 .byte $FF
-                 eor FPTR2+1,x
-                 .byte $1F
-                 clc
-                 clc
-                 clc
-                 brk
-                 .byte $FF
-                 eor FPTR2+1,x
-                 .byte $FF
-                 clc
-                 clc
-                 clc
-                 brk
-                 .byte $FF
-                 eor FPTR2+1,x
-                 .byte $FF
-                 clc
-                 clc
-                 clc
-                 .byte $1F
-                 .byte $1F
-                 .byte $1F
-                 .byte $FF
-                 .byte $F7
-                 ldx FR1+3,y
-                 .byte $FF
-                 .byte $FF
-                 .byte $FF
-                 .byte $F3
-                 .byte $FC
-                 .byte $C7
-                 cpy #$80
-                 .byte $FF
-                 .byte $FF
-                 .byte $FF
-                 .byte $FF
-                 brk
-                 .byte $FF
-                 brk
-                 brk
-                 .byte $FF
-                 brk
-                 .byte $FF
-                 eor FPTR2+1,x
-                 .byte $FF
-                 clc
-                 clc
-                 clc
-                 .byte $FF
-                 .byte $FF
-                 .byte $FF
-                 brk
-                 .byte $FF
-                 brk
-                 brk
-                 .byte $FF
-                 brk
-                 .byte $FF
-                 tax
-                 .byte $FF
-                 .byte $FF
-                 clc
-                 clc
-                 clc
-                 brk
-                 .byte $FF
-                 tax
-                 .byte $FF
-                 .byte $FF
-                 .byte $1F
-                 .byte $1F
-                 .byte $1F
-                 brk
-                 cpy #$A0
-                 beq L_7293
-                 asl BUFADR+1,x
-                 asl FPTR2+1,x
-                 .byte $FF
-                 .byte $CF
-                 .byte $3F
-                 .byte $E3
-                 .byte $03
-                 ora (FPTR2+1,x)
-                 .byte $FF
-                 .byte $FF
-                 .byte $FF
-                 .byte $FF
-                 .byte $EF
-                 adc $FFC7
-                 asl POKMSK,x
-                 .byte $FA
-L_7293           .byte $FF
-                 .byte $82
-                 .byte $80
-                 brk
-                 .byte $FF
-                 brk
-                 .byte $3F
-                 eor FPTR2+1,x
-                 .byte $8F
-L_729D           sty L_8C8B+1
-                 brk
-                 .byte $FF
-                 eor FPTR2+1,x
-                 .byte $FF
-                 clc
-                 clc
-                 clc
-                 brk
-                 .byte $FF
-                 eor FPTR2+1,x
-                 .byte $FF
-                 clc
-                 clc
-                 clc
-                 .byte $8F
-                 .byte $8F
-                 .byte $8F
-                 .byte $FF
-                 adc L_386A+3,x
-                 .byte $FF
-                 .byte $FF
-                 .byte $FF
-                 .byte $F3
-                 .byte $FC
-                 .byte $F7
-                 bcs L_729D+2
-                 .byte $FF
-                 .byte $FF
-                 .byte $FF
-                 .byte $FF
-                 brk
-                 .byte $FF
-                 brk
-                 brk
-                 .byte $FF
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 .byte $FF
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 ora (LNFLG,x)
-                 brk
-                 brk
-                 brk
-                 ora ARSTKX,x
-                 bcc L_7320
-                 brk
-                 brk
-                 brk
-                 ldy LMARGN
-                 jsr COX
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_7320           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 .byte $1F
-                 .byte $1F
-                 .byte $0F
-                 .byte $0F
-                 .byte $1F
-                 .byte $3F
-                 .byte $3F
-                 .byte $3F
-                 .byte $FF
-                 sbc (EEXP,x)
-                 sbc (FR2+5,x)
-                 sbc $FFFF
-                 .byte $FC
-                 sed
-L_733E           beq L_7320
-                 cpx #$E0
-                 cpy #$80
-                 .byte $1F
-                 .byte $0F
-                 .byte $0F
-                 .byte $B7
-                 .byte $D7
-                 ora L_250C+5
-                 .byte $BF
-                 lsr L_6C5E,x
-                 lsr $070D
-                 .byte $02
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 rti
-                 ldy #$5A
-                 .byte $74
-                 ora (DOSVEC,x)
-                 jsr LNFLG
-                 brk
-                 and (LOMEM+1,x)
-                 brk
-                 asl
-                 bpl L_736A
-L_736A           brk
-                 brk
-                 bvc L_73BE
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 ora (LNFLG,x)
-                 ora (CASINI,x)
-                 ora RAMLO+1
-                 brk
-                 .byte $80
-                 ldy ENDPT+1
-                 .byte $7A
-                 .byte $80
-                 brk
-                 brk
-                 .byte $04
-                 .byte $02
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 ldy #$D0
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_73BE           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_7400           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 ora (CASINI,x)
-                 .byte $03
-                 .byte $07
-                 php
-                 ora (CASINI,x)
-                 .byte $0B
-                 .byte $0C
-                 ora LNFLG
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 .byte $04
-                 ora TRAMSZ
-                 ora #$0A
-                 .byte $04
-                 ora APPMHI
-                 .byte $0F
-                 bpl L_7474
-L_7474           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 ora (RTCLOK),y
-                 .byte $13
-                 .byte $17
-                 clc
-                 ora L_1E1C+1,y
-                 .byte $1F
-                 .byte $23
-                 .byte $5F
-                 rts
-                 adc (ICBAHZ,x)
-                 rol ICPTHZ
-                 .byte $2B
-                 bit L_312C+1
-                 .byte $32
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 .byte $14
-                 ora BUFADR+1,x
-                 .byte $1A
-                 .byte $1B
-                 .byte $1C
-                 jsr L_221C+5
-                 bit PALNTS
-                 .byte $63
-                 .byte $64
-                 brk
-                 and #$2A
-                 rol L_302C+3
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_7500           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 bmi L_754E
-L_754E           .byte $32
-                 brk
-                 and LNFLG
-                 .byte $33
-                 brk
-                 and LNFLG
-                 rol L_33FE+2
-                 brk
-                 .byte $33
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 .byte $02
-                 .byte $33
-                 .byte $23
-                 .byte $32
-                 and ICDNOZ
-                 and L_2E24+5
-                 .byte $27
-                 brk
-                 .byte $37
-                 and #$2E
-                 .byte $27
-                 .byte $33
-                 .byte $02
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_75A9           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 php
-                 .byte $23
-                 ora #$32
-                 and ICBALZ
-                 brk
-                 .byte $32
-                 and (BFENLO,x)
-                 brk
-                 .byte $33
-                 .byte $2F
-                 rol BFENLO
-                 .byte $37
-                 and (BUFRLO,x)
-                 and LNFLG
-                 bit L_2434
-                 php
-                 ora (DSKFMS+1),y
-L_7600           clc
-                 asl BOOT,x
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 eor (LMARGN),y
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 eor LNFLG
-                 brk
-                 brk
-                 .byte $34
-                 plp
-                 and ICSPRZ+1
-                 and LNFLG
-                 brk
-                 and L_3334+1
-                 and #$23
-                 brk
-                 brk
-                 .byte $2F
-L_7641           rol LNFLG
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_765B           asl $0E0E
-                 asl APPMHI
-                 plp
-                 and (BUFRHI,x)
-                 brk
-                 .byte $34
-                 .byte $2F
-                 bit ICDNOZ
-                 and BUFRHI,y
-                 .byte $34
-                 .byte $2F
-                 bmi L_7670
-L_7670           .byte $33
-                 .byte $23
-                 .byte $2F
-                 .byte $32
-                 and DSKUTL
-L_7676           bpl L_7688
-                 bpl L_768A
-                 bpl L_768C
-                 bpl L_767E
-L_767E           brk
-                 brk
-                 brk
-                 brk
-                 .byte $5A
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-L_7688           .byte $52
-                 .byte $52
-L_768A           .byte $52
-                 .byte $52
-L_768C           .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $43
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 bmi L_7706
-                 .byte $2F
-                 .byte $27
-                 .byte $32
-                 and (ICSPRZ+1,x)
-                 brk
-                 .byte $22
-                 and L_2FFC+4,y
-                 and (BFENHI,x)
-                 bit L_22FC+4
-                 .byte $32
-                 and (LTEMP,x)
-                 and ICIDNO
-                 brk
-                 brk
-                 brk
-                 .byte $12
-                 bpl L_7700
-                 bpl L_76F0
-L_76F0           rol ICBAHZ,x
-                 .byte $32
-                 .byte $33
-                 and #$2F
-                 rol LNFLG
-                 brk
-                 and L_3334+1
-                 and #$23
-                 brk
-L_7700           .byte $22
-                 and L_23FC+4,y
-                 and (LTEMP,x)
-L_7706           and LNFLG
-                 rol CIOCHR
-                 .byte $32
-                 .byte $37
-                 and (BUFRLO,x)
-                 bit LNFLG
-                 brk
-                 brk
-                 rol BUFRLO
-                 and (ICIDNO,x)
-                 .byte $23
-                 .byte $2F
-                 brk
-                 .byte $23
-                 and (BFENLO,x)
-                 .byte $32
-                 and #$2E
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
+L_6F51           .byte $00, $00, $00, $10, $7C, $D6, $BA, $7C
+L_6F59           .byte $10, $10, $28, $54, $38, $00, $00, $38
+                 .byte $00, $00, $00, $28, $44, $00, $00, $00
+L_6F69           .byte $10, $28, $00, $00, $00, $10, $00, $00
+                 .byte $00, $28, $44, $00, $00, $00, $10, $28
+                 .byte $00, $00, $00, $00, $28, $44, $00, $00
+                 .byte $00, $10, $28, $00, $00, $00, $E8, $E0
+L_6F89           .byte $08, $D0, $F5, $60, $0A, $05, $05, $08
+L_6F91           .byte $2A, $30, $51, $79, $3E, $08, $08, $08
+L_6F99           .byte $14, $36, $1C, $00, $41, $00, $0E, $2E
+                 .byte $06, $00, $00, $00, $00, $08, $08, $00
+L_6FA9           .byte $00, $3E, $08, $2A, $16, $15, $4F, $3E
+L_6FB1           .byte $08, $08, $08, $14, $36, $1C, $44, $00
+                 .byte $68, $EA, $20, $00, $00, $00, $00, $08
+L_6FC1           .byte $08, $00, $00, $08, $08, $36, $55, $3E
+                 .byte $08, $08, $08, $1C, $00, $00, $00, $00
+L_6FD1           .byte $00, $08, $14, $36, $1C, $08, $08, $1C
+L_6FD9           .byte $00, $00, $00, $00, $00, $00, $00, $08
+                 .byte $14, $08, $08, $08, $00, $00, $00, $00
+                 .byte $00, $00, $00, $14, $48, $12, $48, $00
+                 .byte $12, $24, $10, $00, $00, $00, $00, $D0
+                 .byte $F5, $60, $C9, $78, $D0, $0E, $A2, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $FF
+                 .byte $7F, $39, $38, $38, $38, $39, $3F, $C0
+                 .byte $E0, $F0, $F0, $F0, $F0, $F0, $E0, $00
+                 .byte $00, $00, $00, $00, $00, $1E, $3F, $3F
+                 .byte $3B, $39, $38, $38, $38, $7C, $FE, $C0
+                 .byte $C0, $E0, $F0, $78, $7E, $7E, $3C, $67
+                 .byte $E3, $FE, $FC, $E0, $73, $3F, $1E, $00
+                 .byte $03, $01, $01, $01, $01, $1D, $3F, $E0
+                 .byte $C0, $C0, $C0, $C0, $C0, $C0, $C0, $79
+                 .byte $70, $70, $70, $70, $39, $3F, $1E, $C0
+                 .byte $C0, $C0, $C0, $C0, $C0, $E0, $F0, $00
+                 .byte $00, $00, $00, $00, $00, $1F, $7F, $00
+                 .byte $00, $01, $03, $03, $07, $0F, $83, $00
+                 .byte $00, $C0, $C0, $C0, $F0, $E0, $C0, $61
+                 .byte $0F, $3F, $7D, $71, $71, $3F, $1E, $C3
+                 .byte $C3, $C3, $C3, $C3, $C1, $F0, $E0, $C0
+                 .byte $C0, $C0, $C0, $E0, $F0, $FE, $3C, $3E
+                 .byte $7E, $E6, $C2, $C0, $C0, $7C, $3E, $00
+                 .byte $00, $00, $00, $1E, $3F, $73, $E1, $07
+                 .byte $0F, $1C, $1C, $7F, $1C, $9C, $DC, $0E
+                 .byte $06, $86, $CE, $FC, $F8, $00, $00, $E1
+                 .byte $E1, $E1, $73, $3F, $1E, $00, $00, $DC
+                 .byte $DC, $DC, $9C, $1C, $3E, $00, $00, $C0
+                 .byte $E0, $6E, $1F, $3F, $0E, $0E, $0E, $00
+                 .byte $00, $00, $80, $00, $3D, $1C, $1C, $00
+                 .byte $00, $00, $00, $00, $F7, $E6, $E6, $0E
+                 .byte $0E, $0E, $0F, $07, $03, $00, $00, $0E
+                 .byte $0E, $0E, $0E, $E7, $C7, $00, $00, $66
+                 .byte $66, $66, $6C, $9C, $98, $00, $00, $00
+                 .byte $00, $00, $00, $00, $7C, $FF, $C7, $00
+                 .byte $00, $00, $00, $00, $1B, $3F, $0E, $00
+                 .byte $00, $00, $00, $00, $E0, $F1, $3B, $0F
+                 .byte $37, $67, $C7, $C7, $7B, $00, $00, $0E
+                 .byte $0E, $0E, $0E, $CE, $9F, $00, $00, $03
+                 .byte $03, $03, $03, $01, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $F8, $FC, $0C, $FC
+                 .byte $78, $00, $0C, $FC, $F8, $00, $00, $01
+                 .byte $00, $00, $00, $00, $00, $00, $00, $FC
+                 .byte $F8, $70, $70, $70, $70, $70, $70, $00
+                 .byte $06, $0F, $1F, $0E, $0E, $0E, $0E, $05
+                 .byte $05, $05, $05, $05, $01, $00, $00, $70
+                 .byte $70, $70, $71, $FF, $FF, $00, $00, $0E
+                 .byte $0E, $EF, $E7, $E7, $E3, $00, $00, $00
+                 .byte $00, $80, $00, $00, $01, $03, $07, $03
+                 .byte $0F, $03, $03, $7B, $FF, $8F, $07, $C0
+                 .byte $00, $00, $00, $00, $00, $00, $00, $07
+                 .byte $07, $07, $87, $E3, $C1, $00, $00, $07
+                 .byte $07, $07, $07, $CF, $FB, $00, $00, $00
+                 .byte $00, $00, $00, $C0, $80, $00, $00, $FB
+                 .byte $22, $22, $22, $22, $00, $00, $00, $60
+                 .byte $A0, $A0, $20, $20, $00, $00, $00, $03
+                 .byte $07, $03, $01, $0F, $1F, $F0, $7F, $E0
+                 .byte $F0, $E0, $C1, $FF, $FF, $00, $FF, $00
+                 .byte $00, $E0, $F0, $FF, $FF, $00, $FF, $3F
+                 .byte $3F, $1F, $0F, $3F, $2C, $FC, $FF, $FF
+                 .byte $87, $78, $8D, $F0, $FD, $78, $FF, $FF
+                 .byte $0E, $F1, $FB, $00, $FB, $F1, $FF, $00
+                 .byte $00, $18, $3D, $FF, $FF, $00, $FF, $00
+                 .byte $7F, $7F, $F1, $F1, $F1, $71, $7F, $00
+                 .byte $85, $17, $7F, $7F, $7F, $60, $7F, $FF
+                 .byte $1F, $E7, $F3, $30, $F0, $E0, $FF, $7F
+                 .byte $BF, $C1, $FF, $FC, $D8, $70, $FF, $7F
+                 .byte $7F, $60, $3F, $1F, $1B, $0E, $FF, $00
+                 .byte $99, $66, $FF, $FF, $FF, $00, $FF, $00
+                 .byte $10, $A8, $FC, $FC, $FF, $01, $FC, $00
+                 .byte $01, $03, $07, $06, $C6, $C6, $46, $FF
+                 .byte $FF, $00, $FF, $7D, $6D, $38, $FF, $FF
+                 .byte $FF, $00, $FF, $F7, $B6, $E3, $FF, $46
+                 .byte $46, $57, $FF, $D1, $C1, $80, $FF, $00
+                 .byte $FF, $55, $FF, $1F, $18, $18, $18, $00
+                 .byte $FF, $55, $FF, $FF, $18, $18, $18, $00
+                 .byte $FF, $55, $FF, $FF, $18, $18, $18, $1F
+                 .byte $1F, $1F, $FF, $F7, $B6, $E3, $FF, $FF
+                 .byte $FF, $F3, $FC, $C7, $C0, $80, $FF, $FF
+                 .byte $FF, $FF, $00, $FF, $00, $00, $FF, $00
+                 .byte $FF, $55, $FF, $FF, $18, $18, $18, $FF
+                 .byte $FF, $FF, $00, $FF, $00, $00, $FF, $00
+                 .byte $FF, $AA, $FF, $FF, $18, $18, $18, $00
+                 .byte $FF, $AA, $FF, $FF, $1F, $1F, $1F, $00
+                 .byte $C0, $A0, $F0, $16, $16, $16, $16, $FF
+                 .byte $FF, $CF, $3F, $E3, $03, $01, $FF, $FF
+                 .byte $FF, $FF, $FF, $EF, $6D, $C7, $FF, $16
+                 .byte $10, $FA, $FF, $82, $80, $00, $FF, $00
+                 .byte $3F, $55, $FF, $8F, $8C, $8C, $8C, $00
+                 .byte $FF, $55, $FF, $FF, $18, $18, $18, $00
+                 .byte $FF, $55, $FF, $FF, $18, $18, $18, $8F
+                 .byte $8F, $8F, $FF, $7D, $6D, $38, $FF, $FF
+                 .byte $FF, $F3, $FC, $F7, $B0, $E0, $FF, $FF
+                 .byte $FF, $FF, $00, $FF, $00, $00, $FF, $00
+                 .byte $00, $00, $00, $00, $00, $00, $FF, $00
+                 .byte $00, $00, $00, $00, $00, $00, $01, $00
+                 .byte $00, $00, $00, $15, $AA, $90, $40, $00
+                 .byte $00, $00, $A4, $52, $20, $94, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $1F, $1F, $0F, $0F, $1F
+                 .byte $3F, $3F, $3F, $FF, $E1, $ED, $E1, $EB
+                 .byte $ED, $FF, $FF, $FC, $F8, $F0, $E0, $E0
+                 .byte $E0, $C0, $80, $1F, $0F, $0F, $B7, $D7
+                 .byte $0D, $11, $25, $BF, $5E, $5E, $6C, $4E
+                 .byte $0D, $07, $02, $00, $00, $00, $00, $00
+                 .byte $00, $40, $A0, $5A, $74, $01, $0A, $20
+                 .byte $00, $00, $00, $21, $81, $00, $0A, $10
+                 .byte $00, $00, $00, $50, $50, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $01, $00, $01
+                 .byte $02, $05, $05, $00, $80, $A4, $75, $7A
+                 .byte $80, $00, $00, $04, $02, $00, $00, $00
+                 .byte $00, $00, $00, $A0, $D0, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+L_73F9           .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $01, $02, $03, $07
+                 .byte $08, $01, $02, $0B, $0C, $0D, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $04, $05, $06, $09, $0A, $04, $05, $0E
+                 .byte $0F, $10, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $11, $12, $13, $17, $18, $19, $1D
+                 .byte $1E, $1F, $23, $5F, $60, $61, $25, $26
+                 .byte $27, $2B, $2C, $2D, $31, $32, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $14, $15, $16, $1A, $1B, $1C, $20
+                 .byte $21, $22, $24, $62, $63, $64, $00, $29
+                 .byte $2A, $2E, $2F, $30, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+L_74F9           .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $30, $00, $32, $00, $25
+                 .byte $00, $33, $00, $25, $00, $2E, $00, $34
+                 .byte $00, $33, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $02, $33, $23, $32, $25, $21, $2D
+                 .byte $29, $2E, $27, $00, $37, $29, $2E, $27
+                 .byte $33, $02, $00, $00, $00, $00, $00, $00
+L_75A9           .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $08, $23, $09
+                 .byte $32, $25, $24, $00, $32, $21, $34, $00
+                 .byte $33, $2F, $26, $34, $37, $21, $32, $25
+L_75F9           .byte $00, $2C, $34, $24, $08, $11, $19, $18
+                 .byte $16, $09, $00, $00, $00, $00, $00, $00
+                 .byte $00, $51, $52, $52, $52, $52, $52, $52
+                 .byte $52, $52, $52, $52, $52, $52, $52, $52
+                 .byte $52, $52, $52, $52, $52, $52, $52, $52
+                 .byte $52, $52, $52, $52, $52, $52, $52, $52
+                 .byte $52, $52, $52, $52, $52, $45, $00, $00
+                 .byte $00, $34, $28, $25, $2D, $25, $00, $00
+                 .byte $2D, $35, $33, $29, $23, $00, $00, $2F
+L_7641           .byte $2E, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+L_7659           .byte $00, $00, $0E, $0E, $0E, $0E, $0E, $00
+                 .byte $28, $21, $33, $00, $34, $2F, $24, $21
+                 .byte $39, $33, $00, $34, $2F, $30, $00, $33
+L_7671           .byte $23, $2F, $32, $25, $1A, $10, $10, $10
+                 .byte $10, $10, $10, $10, $00, $00, $00, $00
+                 .byte $00, $5A, $52, $52, $52, $52, $52, $52
+                 .byte $52, $52, $52, $52, $52, $52, $52, $52
+                 .byte $52, $52, $52, $52, $52, $52, $52, $52
+                 .byte $52, $52, $52, $52, $52, $52, $52, $52
+                 .byte $52, $52, $52, $52, $52, $43, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $30, $32, $2F, $27, $32, $21, $2D
+                 .byte $00, $22, $39, $00, $30, $21, $35, $2C
+                 .byte $00, $23, $32, $21, $36, $25, $2E, $00
+                 .byte $00, $00, $12, $10, $12, $10, $00, $36
+                 .byte $25, $32, $33, $29, $2F, $2E, $00, $00
+L_76F9           .byte $00, $2D, $35, $33, $29, $23, $00, $22
+                 .byte $39, $00, $24, $21, $36, $25, $00, $26
+                 .byte $2F, $32, $37, $21, $32, $24, $00, $00
+                 .byte $00, $26, $32, $21, $2E, $23, $2F, $00
+                 .byte $23, $21, $34, $32, $29, $2E, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00
                  lda LOADFLG
                  bne L_77C8
                  lda WARMST
@@ -9629,10 +7768,10 @@ L_77E0           sta LNFLG,x
                  bcc L_77E0
                  ldx #$86
                  ldy #$01
-                 jsr L_A87A
+                 jsr L_A878+2
                  ldx #$8C
                  ldy #$03
-                 jsr L_A87A
+                 jsr L_A878+2
                  lda #$00
                  tay
                  sta (VNTD),y
@@ -9646,8 +7785,8 @@ L_7800           lda #$00
 L_780D           jsr L_7954
                  ldx #$00
                  txa
-L_7813           sta L_9E70,x
-                 sta L_9EB0,x
+L_7813           sta L_9E6D+3,x
+                 sta L_9EAD+3,x
                  inx
                  bne L_7813
 L_781C           sta HPOSP0,x
@@ -9664,7 +7803,7 @@ L_781C           sta HPOSP0,x
                  sta SDLSTL
                  ldx #$00
 L_7839           lda L_7985,x
-                 sta L_9E58,x
+                 sta L_9E55+3,x
                  inx
                  cpx #$18
                  bne L_7839
@@ -9673,7 +7812,7 @@ L_7839           lda L_7985,x
 L_7848           lda #$00
                  sta $0617
 L_784D           tya
-                 sta L_9E70,x
+                 sta L_9E6D+3,x
                  inx
                  inx
                  iny
@@ -9689,24 +7828,24 @@ L_784D           tya
                  tax
                  jmp L_7848
 L_786A           lda #$0A
-                 sta L_9E70,x
+                 sta L_9E6D+3,x
                  ldy #$00
                  lda #$0E
 L_7873           inx
                  inx
-                 sta L_9E70,x
+                 sta L_9E6D+3,x
                  iny
                  cpy #$03
                  bne L_7873
                  ldx #$00
 L_787F           lda $0600,x
-                 sta L_9F63,x
+                 sta L_9F5D+6,x
                  inx
                  cpx #$06
                  bne L_787F
                  ldx #$00
 L_788C           lda L_797D,x
-                 sta L_9F69,x
+                 sta L_9F65+4,x
                  inx
                  cpx #$08
                  bne L_788C
@@ -9722,7 +7861,7 @@ L_78AC           lda $060E
                  cmp #$05
                  bmi L_78C6
                  ldx #$00
-L_78B5           lda L_9F6C,x
+L_78B5           lda L_9F65+7,x
                  sta $065E,x
                  inx
                  cpx #$05
@@ -9770,7 +7909,7 @@ L_791C           lda $0619
                  bcs L_7926
                  jmp L_78AC
 L_7926           jsr L_7954
-L_7929           lda $0619
+                 lda $0619
                  sec
                  sbc #$20
                  sta $0619
@@ -9795,7 +7934,7 @@ L_7957           sta L_33FE+2,x
                  rts
 L_795E           ldx #$00
                  ldy $0619
-L_7963           lda L_799C,x
+L_7963           lda L_7995+7,x
                  sta L_33FE+2,y
                  iny
                  inx
@@ -9809,5434 +7948,1243 @@ L_7976           inx
                  iny
                  bne L_7976
                  rts
-L_797D           bpl L_798D
-                 asl $0A0A
-                 asl
-                 asl
-                 asl
-L_7985           bvs L_79F7
-                 bvs L_79CF+1
-                 bvs L_7929
-                 .byte $07
-                 .byte $07
-L_798D           .byte $07
-                 .byte $07
-                 .byte $07
-                 .byte $07
-                 .byte $07
-                 .byte $07
-                 .byte $07
-                 asl TRAMSZ
-                 asl TRAMSZ
-                 asl SOUNDR
-                 cli
-                 .byte $9E
-L_799C           clc
-                 clc
-                 ror L_183C,x
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 clc
-                 .byte $3C
-                 ror L_1816+2,x
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and $0C22,y
-                 .byte $0C
-                 .byte $0C
-L_79CF           ora (APPMHI+1,x)
-                 bpl L_79D4
-                 .byte $0C
-L_79D4           .byte $3B
-                 .byte $3C
-                 bit ICAX2Z
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 .byte $33
-                 .byte $22
-                 .byte $3F
-                 rti
-                 .byte $0C
-L_79F7           ora (BRKKEY,x)
-                 .byte $12
-                 ora (DOSINI,x)
-                 .byte $04
-                 ora ICBALZ
-                 .byte $0C
-                 .byte $2B
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A3A,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 .byte $22
-                 and $0C3E,x
-                 ora (ICSTAZ,x)
-                 .byte $0C
-                 ora (CHKSNT,x)
-                 .byte $3C
-                 .byte $0C
-                 bit ICBAHZ
-                 rol RECVDN
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and $0C22,y
-                 .byte $0C
-                 .byte $0C
-                 ora (ICSTAZ,x)
-                 .byte $0C
-                 ora (RAMLO,x)
-                 ora DOSINI
-                 bit ICPTHZ
-                 plp
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A3A,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 .byte $22
-                 .byte $03
-                 .byte $03
-                 .byte $03
-                 .byte $02
-                 .byte $03
-                 .byte $03
-                 .byte $02
-                 .byte $03
-                 .byte $03
-                 .byte $03
-                 bit ICPTHZ
-                 plp
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 .byte $13
-                 .byte $22
-                 .byte $3F
-                 rti
-                 .byte $0C
-                 ora (ICSTAZ,x)
-                 .byte $0C
-                 ora (DOSINI,x)
-                 .byte $0C
-                 .byte $0C
-                 bit ICPTHZ
-                 plp
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 .byte $22
-                 and $0C3E,x
-                 ora (ICSTAZ,x)
-                 .byte $0C
-                 ora (DOSINI,x)
-                 .byte $3B
-                 .byte $3C
-                 bit ICPTHZ
-                 plp
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 .byte $13
-                 .byte $22
-                 .byte $3F
-                 rti
-                 .byte $0C
-                 ora (ICSTAZ,x)
-                 .byte $0C
-                 ora (DOSINI,x)
-                 .byte $04
-                 ora ICBALZ
-                 and #$2A
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 .byte $22
-                 and $0C3E,x
-                 ora (ICSTAZ,x)
-                 .byte $0C
-                 ora (DOSINI,x)
-                 .byte $3B
-                 .byte $3C
-                 bit DOSINI
-                 bit L_3A3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3F22,y
-                 rti
-                 .byte $0C
-                 ora (ICSTAZ,x)
-                 .byte $0C
-                 ora (DOSINI,x)
-                 .byte $04
-                 ora ICBALZ
-                 bit L_393A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_2234+6,y
-                 and $0C3E,x
-                 ora (APPMHI+1,x)
-                 bpl L_7B64
-                 .byte $0C
-L_7B64           .byte $3B
-                 .byte $3C
-                 bit XMTDON
-                 and L_3A3A,y
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and $0C22,y
-                 .byte $0C
-                 .byte $0C
-                 ora (BRKKEY,x)
-                 .byte $12
-                 ora (DOSINI,x)
-                 .byte $04
-                 ora ICBALZ
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 .byte $22
-                 .byte $03
-                 .byte $03
-                 .byte $03
-                 .byte $02
-                 .byte $03
-                 .byte $03
-                 .byte $02
-                 .byte $03
-                 .byte $03
-                 .byte $03
-                 bit LTEMP+1
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3F22,y
-                 rti
-                 .byte $0C
-                 ora (ICSTAZ,x)
-                 .byte $0C
-                 ora (DOSINI,x)
-                 .byte $0C
-                 .byte $0C
-                 bit XMTDON
-                 and L_3932+7,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 .byte $22
-                 and $0C3E,x
-                 ora (STATUS,x)
-                 and (NGFLAG),y
-                 .byte $0C
-                 .byte $3B
-                 .byte $3C
-                 bit RECVDN
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3F22,y
-                 rti
-                 .byte $0C
-                 ora (BUFRLO,x)
-                 rol NGFLAG,x
-                 .byte $0C
-                 .byte $04
-                 ora ICBALZ
-                 .byte $3A
-                 and L_3932+7,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 .byte $22
-                 and $0C3E,x
-                 ora (ICSTAZ,x)
-                 .byte $0C
-                 ora (DOSINI,x)
-                 .byte $0C
-                 .byte $0C
-                 bit RECVDN
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3532+2,y
-                 and BFENHI,x
-                 and BFENHI,x
-                 and BFENHI,x
-                 and BFENHI,x
-                 and LTEMP,x
-                 sec
-                 and L_3932+7,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and XMTDON,y
-                 brk
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 eor #$4A
-                 .byte $4B
-                 .byte $3A
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 lsr L_504E+1
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_4939,y
-                 lsr
-                 .byte $14
-                 lsr
-                 .byte $4B
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_4A48+1,y
-                 .byte $14
-                 ora RTCLOK+2,x
-                 ora DSKFMS+1,x
-                 lsr
-                 .byte $4B
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_4939,y
-                 .byte $14
-                 .byte $14
-                 ora BUFADR+1,x
-                 .byte $14
-                 ora RTCLOK+2,x
-                 clc
-                 .byte $0C
-                 bvc L_84F9
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 eor $140C
-                 ora RTCLOK+2,x
-                 asl BUFADR+1,x
-                 ora BUFADR,x
-                 ora L_4B4A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_393A,y
-L_84F9           .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and $1449,y
-                 ora BUFADR+1,x
-                 asl BUFADR,x
-                 .byte $14
-                 .byte $14
-                 asl BUFADR,x
-                 ora DSKFMS+1,x
-                 lsr
-                 .byte $4B
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_4D38+2,y
-                 .byte $14
-                 ora BUFADR+1,x
-                 ora BUFADR,x
-                 .byte $14
-                 asl BUFADR+1,x
-                 ora RTCLOK+2,x
-                 .byte $14
-                 clc
-                 .byte $0C
-                 bvc L_8573
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_1538+2,y
-                 ora RTCLOK+2,x
-                 asl BUFADR+1,x
-                 ora RTCLOK+2,x
-                 .byte $14
-                 ora BUFADR+1,x
-                 asl BUFADR,x
-                 ora L_4A0A+2,y
-                 .byte $4B
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-L_8573           and L_393A,y
-                 .byte $3A
-                 and L_163A,y
-                 .byte $14
-                 ora BUFADR,x
-                 .byte $14
-                 ora RTCLOK+2,x
-                 ora RTCLOK+2,x
-                 ora BUFADR+1,x
-                 .byte $14
-                 ora DSKFMS+1,x
-                 .byte $0C
-                 .byte $0C
-                 lsr
-                 .byte $4B
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 asl BUFADR,x
-                 .byte $14
-                 .byte $14
-                 .byte $14
-                 ora BUFADR+1,x
-                 ora BUFADR+1,x
-                 ora BUFADR,x
-                 asl BUFADR,x
-                 .byte $14
-                 ora $0C0C,y
-                 bvc L_85ED
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_1538+2,y
-                 asl DSKFMS,x
-                 ora BUFADR+1,x
-                 .byte $14
-                 ora BUFADR+1,x
-                 .byte $14
-                 asl RTCLOK+2,x
-                 ora BUFADR+1,x
-                 ora RTCLOK+2,x
-                 clc
-                 .byte $0C
-                 .byte $4B
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-L_85ED           .byte $3A
-                 and L_3A32+7,y
-                 ora L_1514,y
-                 asl BUFADR+1,x
-                 ora RTCLOK+2,x
-                 .byte $14
-                 ora BUFADR+1,x
-                 ora BUFADR+1,x
-                 .byte $14
-                 ora BUFADR+1,x
-                 ora L_504E+1,y
-                 and L_393A,y
-L_8606           .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_1839+1,y
-                 ora $1415,y
-                 asl BUFADR+1,x
-                 ora RTCLOK+2,x
-                 ora BUFADR+1,x
-                 ora RTCLOK+2,x
-                 ora BUFADR+1,x
-                 ora DSKFMS,x
-                 .byte $4B
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 .byte $14
-                 ora BUFADR+1,x
-                 ora BUFADR+1,x
-                 ora BUFADR+1,x
-                 asl BUFADR,x
-                 ora BUFADR+1,x
-                 .byte $14
-                 ora BUFADR,x
-                 asl BUFADR+1,x
-                 ora L_3A4A+1,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A32+7,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 ora RTCLOK+2,x
-                 ora BUFADR+1,x
-                 ora BUFADR+1,x
-                 ora BUFADR,x
-                 asl BUFADR+1,x
-                 ora BUFADR+1,x
-                 .byte $14
-                 .byte $14
-                 ora ICCOMT,x
-                 clc
-                 bvc L_86B3+2
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and $143A,y
-                 .byte $14
-                 asl BUFADR,x
-                 asl RTCLOK+2,x
-                 .byte $14
-                 .byte $14
-                 .byte $14
-                 asl BUFADR,x
-                 asl BUFADR,x
-                 asl DSKFMS,x
-                 .byte $4F
-                 bvc L_86DC+1
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-L_86B3           and L_393A,y
-                 .byte $3A
-                 and L_1839+1,y
-                 clc
-                 ora BUFADR,x
-                 ora RTCLOK+2,x
-                 ora RTCLOK+2,x
-                 ora BUFADR+1,x
-                 .byte $14
-                 clc
-                 clc
-                 ora TMPCHR,x
-                 .byte $3A
-                 and L_3A32+7,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-L_86DC           and L_393A,y
-                 and L_1538+2,y
-                 asl RTCLOK+2,x
-                 clc
-                 ora BUFADR+1,x
-                 clc
-                 ora BUFADR+1,x
-                 clc
-                 .byte $14
-                 ora BUFADR+1,x
-                 jmp L_3A32+7
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_1538+2,y
-                 asl RTCLOK+2,x
-                 .byte $14
-                 ora BUFADR+1,x
-                 .byte $14
-                 .byte $14
-                 asl RTCLOK+2,x
-                 clc
-                 .byte $14
-                 asl BUFADR,x
-                 lsr
-                 .byte $4B
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_1839+1,y
-                 .byte $14
-                 asl BUFADR,x
-                 .byte $14
-                 asl RTCLOK+2,x
-                 ora BUFADR+1,x
-                 asl RTCLOK+2,x
-                 ora RTCLOK+2,x
-                 asl BUFADR,x
-                 ora L_4B4A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_163A,y
-                 ora RTCLOK+2,x
-                 clc
-                 asl BUFADR,x
-                 .byte $14
-                 clc
-                 asl BUFADR,x
-                 .byte $14
-                 clc
-                 asl BUFADR,x
-                 .byte $14
-                 asl DSKFMS,x
-                 jmp L_3A32+7
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and $143A,y
-                 ora BUFADR+1,x
-                 .byte $14
-                 ora BUFADR+1,x
-                 .byte $14
-                 ora BUFADR+1,x
-                 .byte $14
-                 ora BUFADR+1,x
-                 .byte $14
-                 ora BUFADR+1,x
-                 clc
-                 .byte $4F
-                 bvc L_87CD
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_1538+2,y
-                 .byte $14
-                 asl BUFADR,x
-                 .byte $14
-                 asl BUFADR,x
-                 .byte $14
-                 asl BUFADR,x
-                 .byte $14
-                 asl BUFADR,x
-                 .byte $14
-                 clc
-                 jmp L_3A32+7
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-L_87CD           .byte $3A
-                 and L_3A32+7,y
-                 asl BUFADR,x
-                 .byte $14
-                 asl BUFADR,x
-                 .byte $14
-                 asl BUFADR,x
-                 .byte $14
-                 asl BUFADR,x
-                 .byte $14
-                 asl DSKFMS,x
-                 .byte $4F
-                 bvc L_881B
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_1839+1,y
-                 .byte $14
-                 ora BUFADR+1,x
-                 asl BUFADR,x
-                 .byte $14
-                 .byte $14
-                 ora BUFADR+1,x
-                 asl RTCLOK+2,x
-                 clc
-                 .byte $4B
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-L_881B           .byte $3A
-                 and L_393A,y
-                 and $143A,y
-                 clc
-                 asl BUFADR,x
-                 .byte $14
-                 clc
-                 asl BUFADR,x
-                 .byte $14
-                 clc
-                 ora DSKFMS,x
-                 .byte $4F
-                 bvc L_8867+2
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 asl BUFADR,x
-                 .byte $14
-                 asl BUFADR,x
-                 .byte $14
-                 asl BUFADR,x
-                 .byte $14
-                 .byte $17
-                 clc
-                 jmp L_3A3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-L_8867           and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 and L_1538+2,y
-                 .byte $14
-                 asl BUFADR,x
-                 .byte $14
-                 asl BUFADR,x
-                 .byte $17
-                 clc
-                 .byte $0C
-                 .byte $0C
-                 bvc L_88B5+2
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and $143A,y
-                 ora BUFADR+1,x
-                 ora RTCLOK+2,x
-                 ora DSKFMS,x
-                 .byte $0C
-                 .byte $0C
-                 .byte $4F
-                 bvc L_88DE
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-L_88B5           and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_1538+2,y
-                 .byte $14
-                 asl BUFADR+1,x
-                 .byte $17
-                 clc
-                 .byte $0C
-                 .byte $0C
-                 .byte $4F
-                 .byte $4B
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-L_88DE           .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_163A,y
-                 asl BUFADR,x
-                 clc
-                 .byte $0C
-                 .byte $0C
-                 .byte $4F
-                 bvc L_892B
-                 .byte $3A
-                 .byte $3A
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 .byte $17
-                 .byte $17
-                 clc
-                 .byte $0C
-                 .byte $4F
-                 bvc L_8951
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-L_892B           and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_4F3A,y
-                 .byte $4F
-                 .byte $4F
-                 bvc L_8975+2
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-L_8951           and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-L_8975           and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-L_8C8B           and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 eor #$4A
-                 .byte $4B
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and $0C49,y
-                 ora DSKFMS+1,x
-                 eor #$4A
-                 .byte $4B
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_4939+1,y
-                 asl ICCOMT,x
-                 ora BUFADR,x
-                 ora L_1913+1,y
-                 .byte $4B
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 eor #$14
-                 asl BUFADR,x
-                 ora RTCLOK+2,x
-                 ora RTCLOK+2,x
-                 clc
-                 ora L_394A+1,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_164E,y
-                 ora RTCLOK+2,x
-                 asl BUFADR+1,x
-                 ora $1418,y
-                 ora DSKFMS+1,x
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_4E3A,y
-                 .byte $17
-                 ora RTCLOK+2,x
-                 asl DSKFMS,x
-                 asl BUFADR,x
-                 asl TMPCHR,x
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 lsr L_1917
-                 ora DSKFMS+1,x
-                 .byte $14
-                 ora L_394A+6,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 lsr L_1616+1
-                 eor #$4F
-                 bvc L_8EB9+2
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3932+7,y
-                 .byte $3A
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-L_8EB9           and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A32+7,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-L_8FDB           and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-L_9020           .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-L_90A5           and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 eor #$4A
-                 .byte $4B
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and $0C49,y
-                 ora DSKFMS+1,x
-                 eor #$4A
-                 .byte $4B
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_4939+1,y
-                 asl ICCOMT,x
-                 ora BUFADR,x
-                 ora L_1913+1,y
-                 .byte $4B
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 eor #$14
-                 asl BUFADR,x
-                 ora RTCLOK+2,x
-                 ora RTCLOK+2,x
-                 clc
-                 ora L_394A+1,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-L_916D           .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_164E,y
-                 ora RTCLOK+2,x
-                 asl BUFADR+1,x
-                 ora $1418,y
-                 ora DSKFMS+1,x
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_4E3A,y
-                 .byte $17
-                 ora RTCLOK+2,x
-                 asl DSKFMS,x
-                 asl BUFADR,x
-                 asl TMPCHR,x
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 lsr L_1917
-                 ora DSKFMS+1,x
-                 .byte $14
-                 ora L_394A+6,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 lsr L_1616+1
-                 eor #$4F
-                 bvc L_923E+1
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3932+7,y
-                 .byte $3A
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-L_923E           and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-L_9553           and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A32+7,y
-                 lsr FMSZPG+4
-                 .byte $47
-                 .byte $47
-                 .byte $47
-                 .byte $47
-                 .byte $47
-                 pha
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_4443,y
-                 .byte $44
-                 .byte $44
-                 .byte $44
-                 .byte $44
-                 .byte $44
-                 .byte $44
-                 .byte $44
-                 eor RECVDN
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and $0C1E,y
-                 .byte $0C
-                 .byte $0C
-                 .byte $0C
-                 .byte $0C
-                 .byte $0C
-                 .byte $0C
-                 .byte $0C
-                 .byte $0C
-                 .byte $0C
-                 and (RECVDN,x)
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 .byte $22
-                 .byte $3F
-                 rti
-                 .byte $0C
-                 ora (ABUFPT+3,x)
-                 jsr $0C01
-                 .byte $0C
-                 .byte $0C
-                 bit XMTDON
-                 and L_3A3A,y
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_2234+6,y
-                 and $0C3E,x
-                 ora (ICSPRZ+1,x)
-                 rol $0C01
-                 .byte $3B
-                 .byte $3C
-                 bit RECVDN
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_2234+6,y
-                 .byte $0C
-                 .byte $3F
-                 rti
-                 ora (ICSTAZ,x)
-                 .byte $0C
-                 ora (DOSINI,x)
-                 .byte $04
-                 ora ICBALZ
-                 and L_3A3A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-L_975E           and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_2234+6,y
-                 .byte $0C
-                 and $013E,x
-                 .byte $23
-                 .byte $0C
-                 ora (DOSINI,x)
-                 .byte $3B
-                 .byte $3C
-                 bit XMTDON
-                 and L_3A3A,y
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_2234+6,y
-                 .byte $3F
-                 rti
-                 .byte $0C
-                 ora (ICSTAZ,x)
-                 .byte $0C
-                 ora (DOSINI,x)
-                 .byte $04
-                 ora ICBALZ
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_2234+6,y
-                 and $0C3E,x
-                 ora (ICSTAZ,x)
-                 .byte $0C
-                 ora (DOSINI,x)
-                 .byte $3B
-                 .byte $3C
-                 bit RECVDN
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_2234+6,y
-                 .byte $0C
-                 .byte $3F
-                 rti
-                 ora (ICSTAZ,x)
-                 .byte $0C
-                 ora (DOSINI,x)
-                 .byte $04
-                 ora ICBALZ
-                 and L_3A3A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_2234+6,y
-                 .byte $0C
-                 and $013E,x
-                 .byte $23
-                 .byte $0C
-                 ora (DOSINI,x)
-                 .byte $3B
-                 .byte $3C
-                 bit XMTDON
-                 and L_3A3A,y
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and $0C22,y
-                 .byte $0C
-                 .byte $0C
-                 ora (ICSTAZ,x)
-                 .byte $0C
-                 ora (DOSINI,x)
-                 .byte $04
-                 ora ICBALZ
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 .byte $22
-                 .byte $03
-                 .byte $03
-                 .byte $03
-                 .byte $02
-                 .byte $03
-                 .byte $03
-                 .byte $02
-                 .byte $03
-                 .byte $03
-                 .byte $03
-                 bit RECVDN
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $22
-                 .byte $0C
-                 .byte $0C
-                 .byte $0C
-                 ora (APPMHI+1,x)
-                 bpl L_988A
-                 .byte $0C
-L_988A           .byte $3B
-                 .byte $3C
-                 bit ICAX2Z
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 .byte $33
-                 .byte $22
-                 .byte $3F
-                 rti
-                 .byte $0C
-                 ora (BRKKEY,x)
-                 .byte $12
-                 ora (DOSINI,x)
-                 .byte $04
-                 ora ICBALZ
-                 .byte $0C
-                 .byte $2B
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A3A,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 .byte $22
-                 and $0C3E,x
-                 ora (ICSTAZ,x)
-                 .byte $0C
-                 ora (CHKSNT,x)
-                 .byte $3C
-                 .byte $0C
-                 bit ICBAHZ
-                 rol RECVDN
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and $0C22,y
-                 .byte $0C
-                 .byte $0C
-                 ora (ICSTAZ,x)
-                 .byte $0C
-                 ora (RAMLO,x)
-                 ora DOSINI
-                 bit ICPTHZ
-                 plp
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A3A,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 .byte $22
-                 .byte $03
-                 .byte $03
-                 .byte $03
-                 .byte $02
-                 .byte $03
-                 .byte $03
-                 .byte $02
-                 .byte $03
-                 .byte $03
-                 .byte $03
-                 bit ICPTHZ
-                 plp
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 .byte $13
-                 .byte $22
-                 .byte $3F
-                 rti
-                 .byte $0C
-                 ora (ICSTAZ,x)
-                 .byte $0C
-                 ora (DOSINI,x)
-                 .byte $0C
-                 .byte $0C
-                 bit ICPTHZ
-                 plp
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 .byte $22
-                 and $0C3E,x
-                 ora (ICSTAZ,x)
-                 .byte $0C
-                 ora (DOSINI,x)
-                 .byte $3B
-                 .byte $3C
-                 bit ICPTHZ
-                 plp
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 .byte $13
-                 .byte $22
-                 .byte $3F
-                 rti
-                 .byte $0C
-                 ora (ICSTAZ,x)
-                 .byte $0C
-                 ora (DOSINI,x)
-                 .byte $04
-                 ora ICBALZ
-                 and #$2A
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 .byte $22
-                 and $0C3E,x
-                 ora (ICSTAZ,x)
-                 .byte $0C
-                 ora (DOSINI,x)
-                 .byte $3B
-                 .byte $3C
-                 bit DOSINI
-                 bit L_3A3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3F22,y
-                 rti
-                 .byte $0C
-                 ora (ICSTAZ,x)
-                 .byte $0C
-                 ora (DOSINI,x)
-                 .byte $04
-                 ora ICBALZ
-                 bit L_393A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_2234+6,y
-                 and $0C3E,x
-                 ora (APPMHI+1,x)
-                 bpl L_9A1A
-                 .byte $0C
-L_9A1A           .byte $3B
-                 .byte $3C
-                 bit XMTDON
-                 and L_3A3A,y
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and $0C22,y
-                 .byte $0C
-                 .byte $0C
-                 ora (BRKKEY,x)
-                 .byte $12
-                 ora (DOSINI,x)
-                 .byte $04
-                 ora ICBALZ
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 .byte $22
-                 .byte $03
-                 .byte $03
-                 .byte $03
-                 .byte $02
-                 .byte $03
-                 .byte $03
-                 .byte $02
-                 .byte $03
-                 .byte $03
-                 .byte $03
-                 bit LTEMP+1
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3F22,y
-                 rti
-                 .byte $0C
-                 ora (ICSTAZ,x)
-                 .byte $0C
-                 ora (DOSINI,x)
-                 .byte $0C
-                 .byte $0C
-                 bit XMTDON
-                 and L_3932+7,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 .byte $22
-                 and $0C3E,x
-                 ora (STATUS,x)
-                 and (NGFLAG),y
-                 .byte $0C
-                 .byte $3B
-                 .byte $3C
-                 bit RECVDN
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3F22,y
-                 rti
-                 .byte $0C
-                 ora (BUFRLO,x)
-                 rol NGFLAG,x
-                 .byte $0C
-                 .byte $04
-                 ora ICBALZ
-                 .byte $3A
-                 and L_3932+7,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 .byte $22
-                 and $0C3E,x
-                 ora (ICSTAZ,x)
-                 .byte $0C
-                 ora (DOSINI,x)
-                 .byte $0C
-                 .byte $0C
-                 bit RECVDN
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3532+2,y
-                 and BFENHI,x
-                 and BFENHI,x
-                 and BFENHI,x
-                 and BFENHI,x
-                 and LTEMP,x
-                 sec
-                 and L_3932+7,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 bvs L_9BF0
-                 bvs L_9BC6
-                 ldy #$9B
-                 .byte $04
-                 .byte $04
-                 .byte $04
-                 .byte $04
-                 .byte $04
-                 .byte $04
-                 .byte $04
-                 .byte $04
-                 .byte $04
-                 .byte $04
-                 .byte $04
-                 .byte $04
-                 .byte $04
-                 .byte $04
-                 .byte $04
-                 .byte $04
-                 .byte $04
-                 .byte $04
-                 .byte $04
-                 .byte $42
-                 rts
-                 .byte $9F
-                 .byte $02
-                 .byte $02
-                 .byte $02
-                 eor (COUNTR,x)
-                 .byte $9B
-L_9BA0           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_9BC6           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_9BF0           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_9C1D           brk
-                 brk
-                 brk
-L_9C20           bvs L_9C92
-                 bvs L_9C66
-L_9C24           rti
-L_9C25           .byte $9C
-                 .byte $02
-L_9C27           asl TRAMSZ
-                 .byte $02
-                 .byte $02
-L_9C2B           .byte $82
-                 .byte $02
-                 .byte $02
-                 .byte $02
-                 .byte $02
-L_9C30           .byte $07
-L_9C31           .byte $07
-                 .byte $02
-                 .byte $02
-                 .byte $02
-L_9C35           asl TRAMSZ
-                 .byte $02
-                 .byte $02
-                 .byte $02
-                 .byte $02
-                 .byte $02
-                 .byte $02
-                 eor (ICHIDZ,x)
-                 .byte $9C
-L_9C40           brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_9C45           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_9C66           brk
-                 brk
-L_9C68           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_9C90           brk
-                 brk
-L_9C92           brk
-                 brk
-                 brk
-                 ora (CASINI,x)
-                 .byte $03
-                 .byte $07
-                 php
-                 ora (CASINI,x)
-                 .byte $0B
-                 .byte $0C
-L_9C9E           ora LNFLG
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 .byte $04
-                 ora TRAMSZ
-                 ora #$0A
-                 .byte $04
-                 ora APPMHI
-                 .byte $0F
-                 bpl L_9CB4
-L_9CB4           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_9CE9           brk
-                 ora (RTCLOK),y
-                 .byte $13
-                 .byte $17
-                 clc
-                 ora L_1E1C+1,y
-                 .byte $1F
-                 .byte $23
-                 .byte $5F
-                 rts
-                 adc (ICBAHZ,x)
-                 rol ICPTHZ
-                 .byte $2B
-                 bit L_312C+1
-                 .byte $32
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_9D08           brk
-L_9D09           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 .byte $14
-                 ora BUFADR+1,x
-                 .byte $1A
-                 .byte $1B
-                 .byte $1C
-                 jsr L_221C+5
-                 bit PALNTS
-                 .byte $63
-                 .byte $64
-                 brk
-                 and #$2A
-                 rol L_302C+3
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_9D30           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_9D40           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 bmi L_9D8E
-L_9D8E           .byte $32
-                 brk
-                 and LNFLG
-                 .byte $33
-                 brk
-                 and LNFLG
-                 rol L_33FE+2
-                 brk
-                 .byte $33
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_9DA0           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 .byte $02
-                 .byte $33
-                 .byte $23
-                 .byte $32
-                 and ICDNOZ
-                 and L_2E24+5
-                 .byte $27
-                 brk
-                 .byte $37
-                 and #$2E
-                 .byte $27
-                 .byte $33
-                 .byte $02
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 php
-                 .byte $23
-                 ora #$32
-                 and ICBALZ
-                 brk
-                 .byte $32
-                 and (BFENLO,x)
-                 brk
-                 .byte $33
-                 .byte $2F
-                 rol BFENLO
-                 .byte $37
-                 and (BUFRLO,x)
-                 and LNFLG
-                 bit L_2434
-                 php
-                 ora (DSKFMS+1),y
-L_9E40           clc
-                 asl BOOT,x
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 eor (LMARGN),y
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-L_9E58           .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 eor LNFLG
-L_9E70           brk
-                 brk
-                 .byte $34
-                 plp
-                 and ICSPRZ+1
-                 and LNFLG
-                 brk
-                 and L_3334+1
-                 and #$23
-                 brk
-                 brk
-                 .byte $2F
-L_9E81           rol LNFLG
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 asl $0E0E
-                 asl APPMHI
-                 plp
-                 and (BUFRHI,x)
-                 brk
-                 .byte $34
-                 .byte $2F
-                 bit ICDNOZ
-                 and BUFRHI,y
-                 .byte $34
-                 .byte $2F
-                 bmi L_9EB0
-L_9EB0           .byte $33
-                 .byte $23
-                 .byte $2F
-                 .byte $32
-                 and DSKUTL
-                 bpl L_9EC8
-                 bpl L_9ECA
-                 bpl L_9ECC
-                 bpl L_9EBE
-L_9EBE           brk
-                 brk
-                 brk
-                 brk
-                 .byte $5A
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-L_9EC8           .byte $52
-                 .byte $52
-L_9ECA           .byte $52
-                 .byte $52
-L_9ECC           .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $43
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 bmi L_9F46
-                 .byte $2F
-                 .byte $27
-                 .byte $32
-                 and (ICSPRZ+1,x)
-                 brk
-                 .byte $22
-                 and L_2FFC+4,y
-                 and (BFENHI,x)
-                 bit L_22FC+4
-                 .byte $32
-                 and (LTEMP,x)
-                 and ICIDNO
-                 brk
-                 brk
-                 brk
-                 .byte $12
-                 bpl L_9F40
-                 bpl L_9F30
-L_9F30           rol ICBAHZ,x
-                 .byte $32
-                 .byte $33
-                 and #$2F
-                 rol LNFLG
-                 brk
-                 and L_3334+1
-                 and #$23
-                 brk
-L_9F40           .byte $22
-                 and L_23FC+4,y
-                 and (LTEMP,x)
-L_9F46           and LNFLG
-                 rol CIOCHR
-                 .byte $32
-                 .byte $37
-                 and (BUFRLO,x)
-                 bit LNFLG
-                 brk
-                 brk
-                 rol BUFRLO
-                 and (ICIDNO,x)
-                 .byte $23
-                 .byte $2F
-                 brk
-                 .byte $23
-                 and (BFENLO,x)
-                 .byte $32
-                 and #$2E
-                 brk
-L_9F60           brk
-                 brk
-                 brk
-L_9F63           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_9F69           brk
-                 brk
-                 brk
-L_9F6C           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_9F74           brk
-                 brk
-L_9F76           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_9F7C           brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_9F81           brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_9F86           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_9F9C           brk
-L_9F9D           brk
-L_9F9E           brk
-L_9F9F           brk
-L_9FA0           brk
-L_9FA1           brk
-L_9FA2           brk
-                 brk
-L_9FA4           brk
-L_9FA5           brk
-L_9FA6           brk
-                 brk
-L_9FA8           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_9FAE           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_9FCE           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
+L_797D           .byte $10, $0E, $0E, $0A, $0A, $0A, $0A, $0A
+L_7985           .byte $70, $70, $70, $47, $70, $9E, $07, $07
+                 .byte $07, $07, $07, $07, $07, $07, $07, $06
+L_7995           .byte $06, $06, $06, $06, $41, $58, $9E, $18
+                 .byte $18, $7E, $3C, $18, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $18, $3C, $7E, $18, $18
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $22, $0C
+                 .byte $0C, $0C, $01, $0F, $10, $01, $0C, $3B
+                 .byte $3C, $24, $2B, $3A, $39, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $39, $3A, $3A, $3A, $39, $3A, $39, $39
+                 .byte $3A, $3A, $39, $3A, $3A, $33, $22, $3F
+                 .byte $40, $0C, $01, $11, $12, $01, $0C, $04
+                 .byte $05, $24, $0C, $2B, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $22, $3D
+                 .byte $3E, $0C, $01, $23, $0C, $01, $3B, $3C
+                 .byte $0C, $24, $25, $26, $39, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $39, $3A, $3A, $3A, $39, $3A, $39, $39
+                 .byte $3A, $3A, $39, $3A, $3A, $39, $22, $0C
+                 .byte $0C, $0C, $01, $23, $0C, $01, $04, $05
+                 .byte $0C, $24, $27, $28, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $22, $03
+                 .byte $03, $03, $02, $03, $03, $02, $03, $03
+                 .byte $03, $24, $27, $28, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $3A, $3A, $39, $3A, $39, $39
+                 .byte $3A, $3A, $39, $3A, $3A, $13, $22, $3F
+                 .byte $40, $0C, $01, $23, $0C, $01, $0C, $0C
+                 .byte $0C, $24, $27, $28, $39, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $22, $3D
+                 .byte $3E, $0C, $01, $23, $0C, $01, $0C, $3B
+                 .byte $3C, $24, $27, $28, $3A, $3A, $3A, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $3A, $3A, $39, $3A, $39, $39
+                 .byte $3A, $3A, $39, $3A, $3A, $13, $22, $3F
+                 .byte $40, $0C, $01, $23, $0C, $01, $0C, $04
+                 .byte $05, $24, $29, $2A, $39, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $22, $3D
+                 .byte $3E, $0C, $01, $23, $0C, $01, $0C, $3B
+                 .byte $3C, $24, $0C, $2C, $3A, $3A, $3A, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $3A, $3A, $39, $3A, $39, $39
+                 .byte $3A, $3A, $39, $3A, $3A, $39, $22, $3F
+                 .byte $40, $0C, $01, $23, $0C, $01, $0C, $04
+                 .byte $05, $24, $2C, $3A, $39, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $22, $3D
+                 .byte $3E, $0C, $01, $0F, $10, $01, $0C, $3B
+                 .byte $3C, $24, $3A, $39, $3A, $3A, $3A, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $3A, $3A, $39, $3A, $39, $39
+                 .byte $3A, $3A, $39, $3A, $3A, $39, $22, $0C
+                 .byte $0C, $0C, $01, $11, $12, $01, $0C, $04
+                 .byte $05, $24, $39, $3A, $39, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $22, $03
+                 .byte $03, $03, $02, $03, $03, $02, $03, $03
+                 .byte $03, $24, $37, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $3A, $3A, $39, $3A, $39, $39
+                 .byte $3A, $3A, $39, $3A, $3A, $39, $22, $3F
+                 .byte $40, $0C, $01, $23, $0C, $01, $0C, $0C
+                 .byte $0C, $24, $3A, $39, $39, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $22, $3D
+                 .byte $3E, $0C, $01, $30, $31, $01, $0C, $3B
+                 .byte $3C, $24, $39, $3A, $3A, $3A, $3A, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $3A, $3A, $39, $3A, $39, $39
+                 .byte $3A, $3A, $39, $3A, $3A, $39, $22, $3F
+                 .byte $40, $0C, $01, $32, $36, $01, $0C, $04
+                 .byte $05, $24, $3A, $39, $39, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $22, $3D
+                 .byte $3E, $0C, $01, $23, $0C, $01, $0C, $0C
+                 .byte $0C, $24, $39, $3A, $3A, $3A, $3A, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $3A, $3A, $39, $3A, $39, $39
+                 .byte $3A, $3A, $39, $3A, $3A, $39, $34, $35
+                 .byte $35, $35, $35, $35, $35, $35, $35, $35
+                 .byte $35, $36, $38, $39, $39, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $39, $3A, $3A, $39, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $3A, $39, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $3A, $3A, $3A, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $3A, $3A, $3A, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $3A, $3A, $3A, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $3A, $3A, $3A, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $3A, $3A, $3A, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $3A, $3A, $3A, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $3A, $3A, $3A, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $3A, $3A, $3A, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $3A, $3A, $3A, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $3A, $3A, $3A, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $3A, $3A, $3A, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $3A, $3A, $3A, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $3A, $3A, $3A, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $3A, $3A, $3A, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $3A, $3A, $3A, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $3A, $3A, $3A, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $3A, $3A, $3A, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $3A, $3A, $3A, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $3A, $3A, $3A, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $3A, $3A, $3A, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $00, $00, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $39, $3A, $3A, $39, $3A, $3A, $39
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $49, $4A
+                 .byte $4B, $3A, $39, $3A, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $39, $3A, $3A, $39, $3A, $3A, $39
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $4E, $4F
+                 .byte $50, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $39, $3A, $3A, $39, $3A, $3A, $39
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $39, $3A, $3A, $39, $3A, $3A, $39
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $39, $3A, $3A, $39, $3A, $3A, $39
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $39, $3A, $3A, $39, $3A, $3A, $39
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $49, $4A, $14, $4A, $4B, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $3A, $3A, $39, $49
+                 .byte $4A, $14, $15, $14, $15, $19, $4A, $4B
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $49, $14
+                 .byte $14, $15, $16, $14, $15, $14, $18, $0C
+                 .byte $50, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $3A, $3A, $4D, $0C
+                 .byte $14, $15, $14, $16, $16, $15, $15, $19
+                 .byte $4A, $4B, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $39, $49, $14, $15
+                 .byte $16, $16, $15, $14, $14, $16, $15, $15
+                 .byte $19, $4A, $4B, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $4D, $14, $15, $16
+                 .byte $15, $15, $14, $16, $16, $15, $14, $14
+                 .byte $18, $0C, $50, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $15, $15, $14, $16
+                 .byte $16, $15, $14, $14, $15, $16, $16, $15
+                 .byte $19, $0C, $4A, $4B, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $16, $14, $15, $15
+                 .byte $14, $15, $14, $15, $14, $15, $16, $14
+                 .byte $15, $19, $0C, $0C, $4A, $4B, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $16, $15, $14, $14
+                 .byte $14, $15, $16, $15, $16, $15, $15, $16
+                 .byte $15, $14, $19, $0C, $0C, $50, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $15, $16, $18, $15
+                 .byte $16, $14, $15, $16, $14, $16, $14, $15
+                 .byte $16, $15, $14, $18, $0C, $4B, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $19, $14, $15, $16
+                 .byte $16, $15, $14, $14, $15, $16, $15, $16
+                 .byte $14, $15, $16, $19, $4F, $50, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $18, $19, $15, $14
+                 .byte $16, $16, $15, $14, $15, $16, $15, $14
+                 .byte $15, $16, $15, $18, $4B, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $14, $15, $16, $15
+                 .byte $16, $15, $16, $16, $15, $15, $16, $14
+                 .byte $15, $15, $16, $16, $19, $4B, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $39, $39
+                 .byte $3A, $39, $3A, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $15, $14, $15, $16
+                 .byte $15, $16, $15, $15, $16, $16, $15, $16
+                 .byte $14, $14, $15, $17, $18, $50, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $14, $14, $16, $15
+                 .byte $16, $14, $14, $14, $14, $16, $15, $16
+                 .byte $15, $16, $18, $4F, $50, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $18, $18, $15, $15
+                 .byte $15, $14, $15, $14, $15, $16, $14, $18
+                 .byte $18, $15, $50, $3A, $39, $39, $3A, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $15, $16, $14, $18
+                 .byte $15, $16, $18, $15, $16, $18, $14, $15
+                 .byte $16, $4C, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $15, $16, $14, $14
+                 .byte $15, $16, $14, $14, $16, $14, $18, $14
+                 .byte $16, $15, $4A, $4B, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $18, $14, $16, $15
+                 .byte $14, $16, $14, $15, $16, $16, $14, $15
+                 .byte $14, $16, $15, $19, $4A, $4B, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $16, $15, $14, $18
+                 .byte $16, $15, $14, $18, $16, $15, $14, $18
+                 .byte $16, $15, $14, $16, $18, $4C, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $14, $15, $16, $14
+                 .byte $15, $16, $14, $15, $16, $14, $15, $16
+                 .byte $14, $15, $16, $18, $4F, $50, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $15, $14, $16, $15
+                 .byte $14, $16, $15, $14, $16, $15, $14, $16
+                 .byte $15, $14, $18, $4C, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $16, $15, $14, $16
+                 .byte $15, $14, $16, $15, $14, $16, $15, $14
+                 .byte $16, $18, $4F, $50, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $18, $14, $15, $16
+                 .byte $16, $15, $14, $14, $15, $16, $16, $14
+                 .byte $18, $4B, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $14, $18, $16, $15
+                 .byte $14, $18, $16, $15, $14, $18, $15, $18
+                 .byte $4F, $50, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $16, $15, $14, $16
+                 .byte $15, $14, $16, $15, $14, $17, $18, $4C
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $39
+                 .byte $3A, $39, $39, $3A, $15, $14, $16, $15
+                 .byte $14, $16, $15, $17, $18, $0C, $0C, $50
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $14, $15, $16, $15
+                 .byte $14, $15, $18, $0C, $0C, $4F, $50, $39
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $15, $14, $16, $16
+                 .byte $17, $18, $0C, $0C, $4F, $4B, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $16, $16, $15, $18
+                 .byte $0C, $0C, $4F, $50, $39, $3A, $3A, $39
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $17, $17, $18, $0C
+                 .byte $4F, $50, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $4F, $4F, $4F, $50
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $39, $3A, $3A, $39, $3A, $3A, $39
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $39, $3A, $3A, $39, $3A, $3A, $39
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $39, $3A, $3A, $39, $3A, $3A, $39
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $49, $4A
+                 .byte $4B, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $49, $0C, $15
+                 .byte $19, $49, $4A, $4B, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $39, $3A, $3A, $39, $3A, $3A, $39
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $49, $16, $17, $15
+                 .byte $15, $19, $14, $19, $4B, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $49, $14, $16, $15, $15
+                 .byte $14, $15, $14, $18, $19, $4B, $39, $3A
+                 .byte $39, $3A, $39, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $39, $3A, $3A, $39, $3A, $3A, $39
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $4E, $16, $15, $14, $16
+                 .byte $16, $19, $18, $14, $15, $19, $3A, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $4E, $17, $15, $14
+                 .byte $16, $18, $16, $15, $16, $50, $39, $3A
+                 .byte $39, $3A, $39, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $39, $3A, $3A, $39, $3A, $3A, $39
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $4E, $17, $19
+                 .byte $15, $19, $14, $19, $50, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $4E, $17
+                 .byte $16, $49, $4F, $50, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $39, $3A, $3A, $39, $3A, $3A, $39
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $39, $3A, $39, $3A, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $3A, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $39, $39
+                 .byte $3A, $39, $3A, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $39, $3A, $3A, $39, $3A, $3A, $39
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $39, $3A, $3A, $39, $3A, $3A, $39
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $3A, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $39, $3A, $3A, $39, $3A, $3A, $39
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $3A, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+L_8FDD           .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $3A, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+L_901D           .byte $39, $3A, $3A, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $39, $3A, $3A
+                 .byte $39, $3A, $3A, $39, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $3A, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $39, $3A, $3A
+                 .byte $39, $3A, $3A, $39, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $39, $3A
+L_90A5           .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $3A, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $39, $3A, $3A
+                 .byte $39, $3A, $3A, $39, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $49, $4A, $4B, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $49, $0C, $15, $19, $49, $4A, $4B
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $39, $3A, $3A
+                 .byte $39, $3A, $3A, $39, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $49, $16, $17, $15, $15, $19, $14, $19
+                 .byte $4B, $39, $3A, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $49
+                 .byte $14, $16, $15, $15, $14, $15, $14, $18
+                 .byte $19, $4B, $39, $3A, $39, $3A, $39, $3A
+L_916D           .byte $3A, $3A, $39, $3A, $39, $39, $3A, $3A
+                 .byte $39, $3A, $3A, $39, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $4E
+                 .byte $16, $15, $14, $16, $16, $19, $18, $14
+                 .byte $15, $19, $3A, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $4E, $17, $15, $14, $16, $18, $16, $15
+                 .byte $16, $50, $39, $3A, $39, $3A, $39, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $39, $3A, $3A
+                 .byte $39, $3A, $3A, $39, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $4E, $17, $19, $15, $19, $14, $19
+                 .byte $50, $39, $3A, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $4E, $17, $16, $49, $4F, $50
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $39, $3A, $3A
+                 .byte $39, $3A, $3A, $39, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $39, $39, $3A, $39, $3A
+                 .byte $3A, $39, $3A, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $3A, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $3A, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $3A, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $3A, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $3A, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $3A, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $3A, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $3A, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $3A, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $3A, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $3A, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $3A, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $3A, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $3A, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $3A, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $3A, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $3A, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $3A, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $3A, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $3A, $3A, $3A, $3A, $39, $3A
+L_954D           .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $3A, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $39, $3A, $3A
+                 .byte $39, $3A, $3A, $39, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $3A, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $39, $3A, $3A
+                 .byte $39, $3A, $3A, $39, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $3A, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $39, $3A, $3A
+                 .byte $39, $3A, $3A, $39, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $3A, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $39, $3A, $3A
+                 .byte $39, $3A, $3A, $39, $39, $3A, $46, $47
+                 .byte $47, $47, $47, $47, $47, $48, $3A, $39
+                 .byte $3A, $39, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $43, $44, $44
+                 .byte $44, $44, $44, $44, $44, $44, $45, $39
+                 .byte $3A, $39, $3A, $39, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $39, $3A, $3A
+                 .byte $39, $3A, $3A, $39, $1E, $0C, $0C, $0C
+                 .byte $0C, $0C, $0C, $0C, $0C, $0C, $0C, $21
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $22, $3F, $40, $0C
+                 .byte $01, $1F, $20, $01, $0C, $0C, $0C, $24
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $22, $3D, $3E, $0C
+                 .byte $01, $2D, $2E, $01, $0C, $3B, $3C, $24
+                 .byte $39, $3A, $3A, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $22, $0C, $3F, $40
+                 .byte $01, $23, $0C, $01, $0C, $04, $05, $24
+                 .byte $39, $3A, $3A, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+L_975D           .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $22, $0C, $3D, $3E
+                 .byte $01, $23, $0C, $01, $0C, $3B, $3C, $24
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $22, $3F, $40, $0C
+                 .byte $01, $23, $0C, $01, $0C, $04, $05, $24
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $22, $3D, $3E, $0C
+                 .byte $01, $23, $0C, $01, $0C, $3B, $3C, $24
+                 .byte $39, $3A, $3A, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $22, $0C, $3F, $40
+                 .byte $01, $23, $0C, $01, $0C, $04, $05, $24
+                 .byte $39, $3A, $3A, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $22, $0C, $3D, $3E
+                 .byte $01, $23, $0C, $01, $0C, $3B, $3C, $24
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $39, $3A, $3A
+                 .byte $39, $3A, $3A, $39, $22, $0C, $0C, $0C
+                 .byte $01, $23, $0C, $01, $0C, $04, $05, $24
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $3A, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $22, $03, $03, $03
+                 .byte $02, $03, $03, $02, $03, $03, $03, $24
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+L_9875           .byte $39, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $22, $0C, $0C, $0C
+                 .byte $01, $0F, $10, $01, $0C, $3B, $3C, $24
+                 .byte $2B, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $39, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $39, $3A, $3A
+                 .byte $39, $3A, $3A, $33, $22, $3F, $40, $0C
+                 .byte $01, $11, $12, $01, $0C, $04, $05, $24
+                 .byte $0C, $2B, $3A, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $39, $3A, $39, $3A, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $22, $3D, $3E, $0C
+                 .byte $01, $23, $0C, $01, $3B, $3C, $0C, $24
+                 .byte $25, $26, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $39, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $39, $3A, $3A
+                 .byte $39, $3A, $3A, $39, $22, $0C, $0C, $0C
+                 .byte $01, $23, $0C, $01, $04, $05, $0C, $24
+                 .byte $27, $28, $3A, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $39, $3A, $39, $3A, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $22, $03, $03, $03
+                 .byte $02, $03, $03, $02, $03, $03, $03, $24
+                 .byte $27, $28, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $39, $3A, $3A
+                 .byte $39, $3A, $3A, $13, $22, $3F, $40, $0C
+                 .byte $01, $23, $0C, $01, $0C, $0C, $0C, $24
+                 .byte $27, $28, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $22, $3D, $3E, $0C
+                 .byte $01, $23, $0C, $01, $0C, $3B, $3C, $24
+                 .byte $27, $28, $3A, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $39, $3A, $3A
+                 .byte $39, $3A, $3A, $13, $22, $3F, $40, $0C
+                 .byte $01, $23, $0C, $01, $0C, $04, $05, $24
+                 .byte $29, $2A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $22, $3D, $3E, $0C
+                 .byte $01, $23, $0C, $01, $0C, $3B, $3C, $24
+                 .byte $0C, $2C, $3A, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $39, $3A, $3A
+                 .byte $39, $3A, $3A, $39, $22, $3F, $40, $0C
+                 .byte $01, $23, $0C, $01, $0C, $04, $05, $24
+                 .byte $2C, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $22, $3D, $3E, $0C
+                 .byte $01, $0F, $10, $01, $0C, $3B, $3C, $24
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $39, $3A, $3A
+                 .byte $39, $3A, $3A, $39, $22, $0C, $0C, $0C
+                 .byte $01, $11, $12, $01, $0C, $04, $05, $24
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $3A, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $22, $03, $03, $03
+                 .byte $02, $03, $03, $02, $03, $03, $03, $24
+                 .byte $37, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $39, $3A, $3A
+                 .byte $39, $3A, $3A, $39, $22, $3F, $40, $0C
+                 .byte $01, $23, $0C, $01, $0C, $0C, $0C, $24
+                 .byte $3A, $39, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $22, $3D, $3E, $0C
+                 .byte $01, $30, $31, $01, $0C, $3B, $3C, $24
+                 .byte $39, $3A, $3A, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $39, $3A, $3A
+                 .byte $39, $3A, $3A, $39, $22, $3F, $40, $0C
+                 .byte $01, $32, $36, $01, $0C, $04, $05, $24
+                 .byte $3A, $39, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $22, $3D, $3E, $0C
+                 .byte $01, $23, $0C, $01, $0C, $0C, $0C, $24
+                 .byte $39, $3A, $3A, $3A, $3A, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $3A, $3A, $39, $3A, $39, $39, $3A, $3A
+                 .byte $39, $3A, $3A, $39, $34, $35, $35, $35
+                 .byte $35, $35, $35, $35, $35, $35, $35, $36
+                 .byte $38, $39, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $39, $3A
+                 .byte $3A, $39, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $3A, $39, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $70, $70, $70, $44, $A0, $9B, $04
+                 .byte $04, $04, $04, $04, $04, $04, $04, $04
+                 .byte $04, $04, $04, $04, $04, $04, $04, $04
+                 .byte $04, $04, $42, $60, $9F, $02, $02, $02
+L_9B9D           .byte $41, $7E, $9B, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+L_9C1D           .byte $00, $00, $00, $70, $70, $70, $42, $40
+L_9C25           .byte $9C, $02, $06, $06, $02, $02, $82, $02
+L_9C2D           .byte $02, $02, $02, $07, $07, $02, $02, $02
+L_9C35           .byte $06, $06, $02, $02, $02, $02, $02, $02
+L_9C3D           .byte $41, $20, $9C, $00, $00, $00, $00, $00
+L_9C45           .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+L_9C65           .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+L_9C8D           .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $01, $02, $03, $07, $08, $01, $02, $0B
+L_9C9D           .byte $0C, $0D, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $04, $05, $06, $09
+                 .byte $0A, $04, $05, $0E, $0F, $10, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+L_9CE5           .byte $00, $00, $00, $00, $00, $11, $12, $13
+                 .byte $17, $18, $19, $1D, $1E, $1F, $23, $5F
+                 .byte $60, $61, $25, $26, $27, $2B, $2C, $2D
+                 .byte $31, $32, $00, $00, $00, $00, $00, $00
+L_9D05           .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $14, $15, $16
+                 .byte $1A, $1B, $1C, $20, $21, $22, $24, $62
+                 .byte $63, $64, $00, $29, $2A, $2E, $2F, $30
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+L_9D2D           .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+L_9D3D           .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $30
+                 .byte $00, $32, $00, $25, $00, $33, $00, $25
+                 .byte $00, $2E, $00, $34, $00, $33, $00, $00
+L_9D9D           .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $02, $33, $23
+                 .byte $32, $25, $21, $2D, $29, $2E, $27, $00
+                 .byte $37, $29, $2E, $27, $33, $02, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $08, $23, $09, $32, $25, $24, $00
+                 .byte $32, $21, $34, $00, $33, $2F, $26, $34
+                 .byte $37, $21, $32, $25, $00, $2C, $34, $24
+L_9E3D           .byte $08, $11, $19, $18, $16, $09, $00, $00
+                 .byte $00, $00, $00, $00, $00, $51, $52, $52
+                 .byte $52, $52, $52, $52, $52, $52, $52, $52
+L_9E55           .byte $52, $52, $52, $52, $52, $52, $52, $52
+                 .byte $52, $52, $52, $52, $52, $52, $52, $52
+                 .byte $52, $52, $52, $52, $52, $52, $52, $52
+L_9E6D           .byte $52, $45, $00, $00, $00, $34, $28, $25
+                 .byte $2D, $25, $00, $00, $2D, $35, $33, $29
+L_9E7D           .byte $23, $00, $00, $2F, $2E, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $0E, $0E
+                 .byte $0E, $0E, $0E, $00, $28, $21, $33, $00
+                 .byte $34, $2F, $24, $21, $39, $33, $00, $34
+L_9EAD           .byte $2F, $30, $00, $33, $23, $2F, $32, $25
+                 .byte $1A, $10, $10, $10, $10, $10, $10, $10
+                 .byte $00, $00, $00, $00, $00, $5A, $52, $52
+                 .byte $52, $52, $52, $52, $52, $52, $52, $52
+                 .byte $52, $52, $52, $52, $52, $52, $52, $52
+                 .byte $52, $52, $52, $52, $52, $52, $52, $52
+                 .byte $52, $52, $52, $52, $52, $52, $52, $52
+                 .byte $52, $43, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $30, $32, $2F
+                 .byte $27, $32, $21, $2D, $00, $22, $39, $00
+                 .byte $30, $21, $35, $2C, $00, $23, $32, $21
+                 .byte $36, $25, $2E, $00, $00, $00, $12, $10
+                 .byte $12, $10, $00, $36, $25, $32, $33, $29
+                 .byte $2F, $2E, $00, $00, $00, $2D, $35, $33
+L_9F3D           .byte $29, $23, $00, $22, $39, $00, $24, $21
+                 .byte $36, $25, $00, $26, $2F, $32, $37, $21
+                 .byte $32, $24, $00, $00, $00, $26, $32, $21
+                 .byte $2E, $23, $2F, $00, $23, $21, $34, $32
+L_9F5D           .byte $29, $2E, $00, $00, $00, $00, $00, $00
+L_9F65           .byte $00, $00, $00, $00, $00, $00, $00, $00
+L_9F6D           .byte $00, $00, $00, $00, $00, $00, $00, $00
+L_9F75           .byte $00, $00, $00, $00, $00, $00, $00, $00
+L_9F7D           .byte $00, $00, $00, $00, $00, $00, $00, $00
+L_9F85           .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+L_9F95           .byte $00, $00, $00, $00, $00, $00, $00, $00
+L_9F9D           .byte $00, $00, $00, $00, $00, $00, $00, $00
+L_9FA5           .byte $00, $00, $00, $00, $00, $00, $00, $00
+L_9FAD           .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00
                  lda LOADFLG
                  bne L_A008
                  lda WARMST
-                 bne L_A04D
+                 bne L_A048+5
 L_A008           ldx #$FF
                  txs
                  cld
@@ -15258,2939 +9206,583 @@ L_A020           sta LNFLG,x
                  bcc L_A020
                  ldx #$86
                  ldy #$01
-                 jsr L_A87A
+                 jsr L_A878+2
                  ldx #$8C
                  ldy #$03
-                 jsr L_A87A
+                 jsr L_A878+2
                  lda #$00
                  tay
                  sta (VNTD),y
                  sta (STMCUR),y
                  iny
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_A04D           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 eor #$4A
-                 .byte $4B
-                 .byte $3A
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 lsr L_504E+1
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_4939,y
-                 lsr
-                 .byte $14
-                 lsr
-                 .byte $4B
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_4A48+1,y
-                 .byte $14
-                 ora RTCLOK+2,x
-                 ora DSKFMS+1,x
-                 lsr
-                 .byte $4B
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_4939,y
-                 .byte $14
-                 .byte $14
-                 ora BUFADR+1,x
-                 .byte $14
-                 ora RTCLOK+2,x
-                 clc
-                 .byte $0C
-                 bvc L_A239
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 eor $140C
-                 ora RTCLOK+2,x
-                 asl BUFADR+1,x
-                 ora BUFADR,x
-                 ora L_4B4A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-L_A233           and L_3A32+7,y
-                 and L_393A,y
-L_A239           .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and $1449,y
-                 ora BUFADR+1,x
-                 asl BUFADR,x
-                 .byte $14
-                 .byte $14
-                 asl BUFADR,x
-                 ora DSKFMS+1,x
-                 lsr
-                 .byte $4B
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_4D38+2,y
-                 .byte $14
-                 ora BUFADR+1,x
-                 ora BUFADR,x
-                 .byte $14
-                 asl BUFADR+1,x
-                 ora RTCLOK+2,x
-                 .byte $14
-                 clc
-                 .byte $0C
-                 bvc L_A2B3
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_1538+2,y
-                 ora RTCLOK+2,x
-                 asl BUFADR+1,x
-                 ora RTCLOK+2,x
-                 .byte $14
-                 ora BUFADR+1,x
-                 asl BUFADR,x
-                 ora L_4A0A+2,y
-                 .byte $4B
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-L_A2B3           and L_393A,y
-                 .byte $3A
-                 and L_163A,y
-                 .byte $14
-                 ora BUFADR,x
-                 .byte $14
-                 ora RTCLOK+2,x
-                 ora RTCLOK+2,x
-                 ora BUFADR+1,x
-                 .byte $14
-                 ora DSKFMS+1,x
-                 .byte $0C
-                 .byte $0C
-                 lsr
-                 .byte $4B
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 asl BUFADR,x
-                 .byte $14
-                 .byte $14
-                 .byte $14
-                 ora BUFADR+1,x
-                 ora BUFADR+1,x
-                 ora BUFADR,x
-                 asl BUFADR,x
-                 .byte $14
-                 ora $0C0C,y
-                 bvc L_A32D
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_1538+2,y
-                 asl DSKFMS,x
-                 ora BUFADR+1,x
-                 .byte $14
-                 ora BUFADR+1,x
-                 .byte $14
-                 asl RTCLOK+2,x
-                 ora BUFADR+1,x
-                 ora RTCLOK+2,x
-                 clc
-                 .byte $0C
-                 .byte $4B
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-L_A32D           .byte $3A
-                 and L_3A32+7,y
-                 ora L_1514,y
-                 asl BUFADR+1,x
-                 ora RTCLOK+2,x
-                 .byte $14
-                 ora BUFADR+1,x
-                 ora BUFADR+1,x
-                 .byte $14
-                 ora BUFADR+1,x
-                 ora L_504E+1,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_1839+1,y
-                 ora $1415,y
-                 asl BUFADR+1,x
-                 ora RTCLOK+2,x
-                 ora BUFADR+1,x
-                 ora RTCLOK+2,x
-                 ora BUFADR+1,x
-                 ora DSKFMS,x
-                 .byte $4B
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 .byte $14
-                 ora BUFADR+1,x
-                 ora BUFADR+1,x
-                 ora BUFADR+1,x
-                 asl BUFADR,x
-                 ora BUFADR+1,x
-                 .byte $14
-                 ora BUFADR,x
-                 asl BUFADR+1,x
-                 ora L_3A4A+1,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A32+7,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 ora RTCLOK+2,x
-                 ora BUFADR+1,x
-                 ora BUFADR+1,x
-                 ora BUFADR,x
-                 asl BUFADR+1,x
-                 ora BUFADR+1,x
-                 .byte $14
-                 .byte $14
-                 ora ICCOMT,x
-                 clc
-                 bvc L_A3F3+2
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and $143A,y
-                 .byte $14
-                 asl BUFADR,x
-                 asl RTCLOK+2,x
-                 .byte $14
-                 .byte $14
-                 .byte $14
-                 asl BUFADR,x
-                 asl BUFADR,x
-                 asl DSKFMS,x
-                 .byte $4F
-                 bvc L_A41C+1
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-L_A3F3           and L_393A,y
-                 .byte $3A
-                 and L_1839+1,y
-                 clc
-                 ora BUFADR,x
-                 ora RTCLOK+2,x
-                 ora RTCLOK+2,x
-                 ora BUFADR+1,x
-                 .byte $14
-                 clc
-                 clc
-                 ora TMPCHR,x
-                 .byte $3A
-                 and L_3A32+7,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-L_A41C           and L_393A,y
-                 and L_1538+2,y
-                 asl RTCLOK+2,x
-                 clc
-                 ora BUFADR+1,x
-                 clc
-                 ora BUFADR+1,x
-                 clc
-                 .byte $14
-                 ora BUFADR+1,x
-                 jmp L_3A32+7
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_1538+2,y
-                 asl RTCLOK+2,x
-                 .byte $14
-                 ora BUFADR+1,x
-                 .byte $14
-                 .byte $14
-                 asl RTCLOK+2,x
-                 clc
-                 .byte $14
-                 asl BUFADR,x
-                 lsr
-                 .byte $4B
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_1839+1,y
-                 .byte $14
-                 asl BUFADR,x
-                 .byte $14
-                 asl RTCLOK+2,x
-                 ora BUFADR+1,x
-                 asl RTCLOK+2,x
-                 ora RTCLOK+2,x
-                 asl BUFADR,x
-                 ora L_4B4A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_163A,y
-                 ora RTCLOK+2,x
-                 clc
-                 asl BUFADR,x
-                 .byte $14
-                 clc
-                 asl BUFADR,x
-                 .byte $14
-                 clc
-                 asl BUFADR,x
-                 .byte $14
-                 asl DSKFMS,x
-                 jmp L_3A32+7
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and $143A,y
-                 ora BUFADR+1,x
-                 .byte $14
-                 ora BUFADR+1,x
-                 .byte $14
-                 ora BUFADR+1,x
-                 .byte $14
-                 ora BUFADR+1,x
-                 .byte $14
-                 ora BUFADR+1,x
-                 clc
-                 .byte $4F
-                 bvc L_A50D
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_1538+2,y
-                 .byte $14
-                 asl BUFADR,x
-                 .byte $14
-                 asl BUFADR,x
-                 .byte $14
-                 asl BUFADR,x
-                 .byte $14
-                 asl BUFADR,x
-                 .byte $14
-                 clc
-                 jmp L_3A32+7
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-L_A50D           .byte $3A
-                 and L_3A32+7,y
-                 asl BUFADR,x
-                 .byte $14
-                 asl BUFADR,x
-                 .byte $14
-                 asl BUFADR,x
-                 .byte $14
-                 asl BUFADR,x
-                 .byte $14
-                 asl DSKFMS,x
-                 .byte $4F
-                 bvc L_A55B
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_1839+1,y
-                 .byte $14
-                 ora BUFADR+1,x
-                 asl BUFADR,x
-                 .byte $14
-                 .byte $14
-                 ora BUFADR+1,x
-                 asl RTCLOK+2,x
-                 clc
-                 .byte $4B
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-L_A55B           .byte $3A
-                 and L_393A,y
-                 and $143A,y
-                 clc
-                 asl BUFADR,x
-                 .byte $14
-                 clc
-                 asl BUFADR,x
-                 .byte $14
-                 clc
-                 ora DSKFMS,x
-                 .byte $4F
-                 bvc L_A5A7+2
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 asl BUFADR,x
-                 .byte $14
-                 asl BUFADR,x
-                 .byte $14
-                 asl BUFADR,x
-                 .byte $14
-                 .byte $17
-                 clc
-                 jmp L_3A3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-L_A5A7           and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 and L_1538+2,y
-                 .byte $14
-                 asl BUFADR,x
-                 .byte $14
-                 asl BUFADR,x
-                 .byte $17
-                 clc
-                 .byte $0C
-                 .byte $0C
-                 bvc L_A5F5+2
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and $143A,y
-                 ora BUFADR+1,x
-                 ora RTCLOK+2,x
-                 ora DSKFMS,x
-                 .byte $0C
-                 .byte $0C
-                 .byte $4F
-                 bvc L_A61E
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-L_A5F5           and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_1538+2,y
-                 .byte $14
-                 asl BUFADR+1,x
-                 .byte $17
-                 clc
-                 .byte $0C
-                 .byte $0C
-                 .byte $4F
-                 .byte $4B
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-L_A61E           .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_163A,y
-                 asl BUFADR,x
-                 clc
-                 .byte $0C
-                 .byte $0C
-                 .byte $4F
-                 bvc L_A66B
-                 .byte $3A
-                 .byte $3A
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 .byte $17
-                 .byte $17
-                 clc
-                 .byte $0C
-                 .byte $4F
-                 bvc L_A691
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-L_A66B           and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_4F3A,y
-                 .byte $4F
-                 .byte $4F
-                 bvc L_A6B5+2
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-L_A691           and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-L_A6B5           and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-L_A87A           .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-L_A997           and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-L_AA61           and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 eor #$4A
-                 .byte $4B
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and $0C49,y
-                 ora DSKFMS+1,x
-                 eor #$4A
-                 .byte $4B
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_4939+1,y
-                 asl ICCOMT,x
-                 ora BUFADR,x
-                 ora L_1913+1,y
-                 .byte $4B
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 eor #$14
-                 asl BUFADR,x
-                 ora RTCLOK+2,x
-                 ora RTCLOK+2,x
-                 clc
-                 ora L_394A+1,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-L_AB29           .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_164E,y
-                 ora RTCLOK+2,x
-                 asl BUFADR+1,x
-                 ora $1418,y
-                 ora DSKFMS+1,x
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_4E3A,y
-                 .byte $17
-                 ora RTCLOK+2,x
-                 asl DSKFMS,x
-                 asl BUFADR,x
-                 asl TMPCHR,x
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 lsr L_1917
-                 ora DSKFMS+1,x
-                 .byte $14
-                 ora L_394A+6,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-L_ABAB           and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 lsr L_1616+1
-                 eor #$4F
-                 bvc L_ABF9+2
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3932+7,y
-                 .byte $3A
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-L_ABF9           and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A32+7,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 .byte $3A
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A3A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_3A3A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_3A32+7,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 .byte $3A
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 and L_393A,y
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_AD25           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_AD52           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_AD9D           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_ADBC           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+L_A048           .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $3A, $3A, $39, $3A, $39, $39, $3A
+                 .byte $3A, $39, $3A, $3A, $39, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $49, $4A, $4B, $3A, $39
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $3A, $3A, $39, $3A, $39, $39, $3A
+                 .byte $3A, $39, $3A, $3A, $39, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $4E, $4F, $50, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $3A, $3A, $39, $3A, $39, $39, $3A
+                 .byte $3A, $39, $3A, $3A, $39, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $3A, $3A, $39, $3A, $39, $39, $3A
+                 .byte $3A, $39, $3A, $3A, $39, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $3A, $3A, $39, $3A, $39, $39, $3A
+                 .byte $3A, $39, $3A, $3A, $39, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $3A, $3A, $39, $3A, $39, $39, $3A
+                 .byte $3A, $39, $3A, $3A, $39, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $49, $4A
+                 .byte $14, $4A, $4B, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $3A, $3A, $39, $49, $4A, $14, $15
+                 .byte $14, $15, $19, $4A, $4B, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $49, $14, $14, $15, $16
+                 .byte $14, $15, $14, $18, $0C, $50, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $3A, $3A, $4D, $0C, $14, $15, $14
+                 .byte $16, $16, $15, $15, $19, $4A, $4B, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $39, $49, $14, $15, $16, $16, $15
+                 .byte $14, $14, $16, $15, $15, $19, $4A, $4B
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $4D, $14, $15, $16, $15, $15, $14
+                 .byte $16, $16, $15, $14, $14, $18, $0C, $50
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $15, $15, $14, $16, $16, $15, $14
+                 .byte $14, $15, $16, $16, $15, $19, $0C, $4A
+                 .byte $4B, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $16, $14, $15, $15, $14, $15, $14
+                 .byte $15, $14, $15, $16, $14, $15, $19, $0C
+                 .byte $0C, $4A, $4B, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $16, $15, $14, $14, $14, $15, $16
+                 .byte $15, $16, $15, $15, $16, $15, $14, $19
+                 .byte $0C, $0C, $50, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $15, $16, $18, $15, $16, $14, $15
+                 .byte $16, $14, $16, $14, $15, $16, $15, $14
+                 .byte $18, $0C, $4B, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $19, $14, $15, $16, $16, $15, $14
+                 .byte $14, $15, $16, $15, $16, $14, $15, $16
+                 .byte $19, $4F, $50, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $18, $19, $15, $14, $16, $16, $15
+                 .byte $14, $15, $16, $15, $14, $15, $16, $15
+                 .byte $18, $4B, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $14, $15, $16, $15, $16, $15, $16
+                 .byte $16, $15, $15, $16, $14, $15, $15, $16
+                 .byte $16, $19, $4B, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $39, $39, $3A, $39, $3A
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $15, $14, $15, $16, $15, $16, $15
+                 .byte $15, $16, $16, $15, $16, $14, $14, $15
+                 .byte $17, $18, $50, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $14, $14, $16, $15, $16, $14, $14
+                 .byte $14, $14, $16, $15, $16, $15, $16, $18
+                 .byte $4F, $50, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $18, $18, $15, $15, $15, $14, $15
+                 .byte $14, $15, $16, $14, $18, $18, $15, $50
+                 .byte $3A, $39, $39, $3A, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $15, $16, $14, $18, $15, $16, $18
+                 .byte $15, $16, $18, $14, $15, $16, $4C, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $15, $16, $14, $14, $15, $16, $14
+                 .byte $14, $16, $14, $18, $14, $16, $15, $4A
+                 .byte $4B, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $18, $14, $16, $15, $14, $16, $14
+                 .byte $15, $16, $16, $14, $15, $14, $16, $15
+                 .byte $19, $4A, $4B, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $16, $15, $14, $18, $16, $15, $14
+                 .byte $18, $16, $15, $14, $18, $16, $15, $14
+                 .byte $16, $18, $4C, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $14, $15, $16, $14, $15, $16, $14
+                 .byte $15, $16, $14, $15, $16, $14, $15, $16
+                 .byte $18, $4F, $50, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $15, $14, $16, $15, $14, $16, $15
+                 .byte $14, $16, $15, $14, $16, $15, $14, $18
+                 .byte $4C, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $16, $15, $14, $16, $15, $14, $16
+                 .byte $15, $14, $16, $15, $14, $16, $18, $4F
+                 .byte $50, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $18, $14, $15, $16, $16, $15, $14
+                 .byte $14, $15, $16, $16, $14, $18, $4B, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $14, $18, $16, $15, $14, $18, $16
+                 .byte $15, $14, $18, $15, $18, $4F, $50, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $16, $15, $14, $16, $15, $14, $16
+                 .byte $15, $14, $17, $18, $4C, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $3A, $39, $3A, $39, $39
+                 .byte $3A, $15, $14, $16, $15, $14, $16, $15
+                 .byte $17, $18, $0C, $0C, $50, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $14, $15, $16, $15, $14, $15, $18
+                 .byte $0C, $0C, $4F, $50, $39, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $15, $14, $16, $16, $17, $18, $0C
+                 .byte $0C, $4F, $4B, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $16, $16, $15, $18, $0C, $0C, $4F
+                 .byte $50, $39, $3A, $3A, $39, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $17, $17, $18, $0C, $4F, $50, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $4F, $4F, $4F, $50, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $3A, $39
+L_A878           .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+L_A998           .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $3A, $3A, $39, $3A, $39, $39, $3A
+                 .byte $3A, $39, $3A, $3A, $39, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $3A, $3A, $39, $3A, $39, $39, $3A
+                 .byte $3A, $39, $3A, $3A, $39, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+L_AA60           .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $3A, $3A, $39, $3A, $39, $39, $3A
+                 .byte $3A, $39, $3A, $3A, $39, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $49, $4A, $4B, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $49, $0C, $15, $19, $49, $4A
+                 .byte $4B, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $3A, $3A, $39, $3A, $39, $39, $3A
+                 .byte $3A, $39, $3A, $3A, $39, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $49, $16, $17, $15, $15, $19, $14
+                 .byte $19, $4B, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $49, $14, $16, $15, $15, $14, $15, $14
+                 .byte $18, $19, $4B, $39, $3A, $39, $3A, $39
+L_AB28           .byte $3A, $3A, $3A, $39, $3A, $39, $39, $3A
+                 .byte $3A, $39, $3A, $3A, $39, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $4E, $16, $15, $14, $16, $16, $19, $18
+                 .byte $14, $15, $19, $3A, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $4E, $17, $15, $14, $16, $18, $16
+                 .byte $15, $16, $50, $39, $3A, $39, $3A, $39
+                 .byte $3A, $3A, $3A, $39, $3A, $39, $39, $3A
+                 .byte $3A, $39, $3A, $3A, $39, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $4E, $17, $19, $15, $19, $14
+                 .byte $19, $50, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+L_ABA8           .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $4E, $17, $16, $49, $4F
+                 .byte $50, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $3A, $3A, $39, $3A, $39, $39, $3A
+                 .byte $3A, $39, $3A, $3A, $39, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $39, $39, $3A, $39
+                 .byte $3A, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $39, $39, $3A, $39, $3A
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $3A, $3A, $39, $3A, $39, $39, $3A
+                 .byte $3A, $39, $3A, $3A, $39, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $3A, $3A, $39, $3A, $39, $39, $3A
+                 .byte $3A, $39, $3A, $3A, $39, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $39, $39, $3A, $39, $39, $3A, $39
+                 .byte $39, $3A, $39, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $3A, $3A, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $3A, $3A, $39, $3A, $39, $39, $3A
+                 .byte $3A, $39, $3A, $3A, $39, $3A, $3A, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $3A, $39, $3A, $39, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $39
+                 .byte $3A, $39, $3A, $39, $3A, $39, $3A, $39
+                 .byte $39, $3A, $39, $3A, $39, $3A, $39, $3A
+                 .byte $39, $3A, $39, $39, $3A, $39, $39, $3A
+                 .byte $39, $39, $3A, $39, $39, $3A, $39, $39
+                 .byte $3A, $39, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+L_AD20           .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+L_AD50           .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+L_AD98           .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+L_ADB8           .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
 L_B200           lda $0616
                  bne L_B245
                  sta $06D3
@@ -18314,9 +9906,9 @@ L_B311           stx $0617
                  jmp L_B424
 L_B321           cmp #$18
                  bcs L_B338
-L_B325           lda L_B513,x
+L_B325           lda L_B50D+6,x
                  sta L_35FD+3,y
-                 lda L_B530,x
+                 lda L_B52D+3,x
                  sta L_3700,y
                  iny
                  inx
@@ -18409,16 +10001,16 @@ L_B3F0           ldx #$00
                  bne L_B40D
 L_B3FA           lda L_B465,x
                  sta L_35FD+3,y
-                 lda L_B482,x
+                 lda L_B47D+5,x
                  sta L_3700,y
                  iny
                  inx
-L_B408           cpx #$1D
+                 cpx #$1D
                  bne L_B3FA
                  rts
-L_B40D           lda L_B49F,x
+L_B40D           lda L_B49D+2,x
                  sta L_35FD+3,y
-                 lda L_B4BC,x
+                 lda L_B4B5+7,x
                  sta L_3700,y
                  iny
                  inx
@@ -18436,11 +10028,11 @@ L_B424           stx $0617
                  sta AUDF4
                  lda $06D2
                  bne L_B44D
-L_B437           lda L_B4D9,x
+L_B437           lda L_B4D5+4,x
                  sta L_35FD+3,y
-                 lda L_B4F6,x
+                 lda L_B4F5+1,x
                  sta L_3700,y
-L_B443           iny
+                 iny
                  inx
                  cpx #$1D
                  bne L_B437
@@ -18448,7 +10040,7 @@ L_B443           iny
                  rts
 L_B44D           lda L_B465,x
                  sta L_35FD+3,y
-                 lda L_B482,x
+                 lda L_B47D+5,x
                  sta L_3700,y
                  iny
                  inx
@@ -18457,198 +10049,36 @@ L_B44D           lda L_B465,x
                  lda #$00
                  sta $06D2
                  rts
-L_B465           brk
-                 .byte $0F
-                 .byte $1F
-                 .byte $1F
-                 .byte $1F
-                 asl $0101
-                 ora (NGFLAG,x)
-                 ora (NGFLAG,x)
-                 .byte $13
-                 .byte $7F
-                 .byte $FF
-                 .byte $FF
-                 inc $EFFE
-                 .byte $7F
-                 .byte $32
-                 .byte $03
-                 .byte $62
-                 .byte $03
-L_B47D           ora (NGFLAG,x)
-                 brk
-                 asl LNFLG
-L_B482           brk
-                 beq L_B47D
-                 sed
-                 sed
-                 bvs L_B408+1
-                 .byte $80
-                 .byte $80
-                 .byte $80
-                 .byte $80
-                 .byte $80
-                 iny
-                 inc $FFFF,x
-                 .byte $77
-                 .byte $7F
-                 .byte $F7
-                 inc $C04C,x
-                 lsr IOCMD
-                 .byte $80
-                 .byte $80
-                 brk
-                 rts
-                 brk
-L_B49F           brk
-                 .byte $0F
-                 .byte $1F
-                 .byte $1F
-                 .byte $1F
-                 asl $0101
-                 ora (NGFLAG,x)
-                 ora (NGFLAG,x)
-                 .byte $13
-                 .byte $7F
-                 .byte $FF
-                 .byte $FF
-                 inc $EFFE
-                 .byte $7F
-                 .byte $32
-                 .byte $03
-                 .byte $1A
-                 .byte $03
-L_B4B7           ora (NGFLAG,x)
-                 brk
-                 ora (LNFLG,x)
-L_B4BC           brk
-                 beq L_B4B7
-                 sed
-                 sed
-                 bvs L_B443
-                 .byte $80
-                 .byte $80
-                 .byte $80
-                 .byte $80
-                 .byte $80
-                 iny
-                 inc $FFFF,x
-                 .byte $77
-                 .byte $7F
-                 .byte $F7
-                 inc $C04C,x
-                 cli
-                 cpy #$80
-                 .byte $80
-                 brk
-                 .byte $80
-                 brk
-L_B4D9           brk
-                 .byte $0F
-                 bpl L_B4ED
-                 bpl L_B4ED
-                 ora (NGFLAG,x)
-                 ora (NGFLAG,x)
-                 ora (NGFLAG,x)
-                 .byte $02
-                 .byte $7F
-                 .byte $80
-                 .byte $80
-                 .byte $80
-                 .byte $80
-                 .byte $80
-                 .byte $7F
-L_B4ED           .byte $02
-                 .byte $02
-                 .byte $02
-                 .byte $02
-                 ora (NGFLAG,x)
-                 brk
-                 brk
-                 brk
-L_B4F6           brk
-                 beq L_B501
-                 php
-                 php
-                 bvs L_B47D
-                 .byte $80
-                 .byte $80
-                 .byte $80
-                 .byte $80
-L_B501           .byte $80
-                 rti
-                 inc $0101,x
-                 ora (NGFLAG,x)
-                 ora (FPTR2,x)
-                 rti
-                 rti
-                 rti
-                 rti
-                 .byte $80
-                 .byte $80
-                 brk
-                 brk
-                 brk
-L_B513           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 .byte $44
-                 tax
-                 tax
-                 rol
-                 lsr
-                 txa
-                 txa
-                 tax
-                 cpx LNFLG
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_B530           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 .byte $44
-                 tax
-                 tax
-                 tax
-                 tax
-                 tax
-                 tax
-                 tax
-                 .byte $44
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
+L_B465           .byte $00, $0F, $1F, $1F, $1F, $0E, $01, $01
+                 .byte $01, $01, $01, $01, $13, $7F, $FF, $FF
+                 .byte $EE, $FE, $EF, $7F, $32, $03, $62, $03
+L_B47D           .byte $01, $01, $00, $06, $00, $00, $F0, $F8
+                 .byte $F8, $F8, $70, $80, $80, $80, $80, $80
+                 .byte $80, $C8, $FE, $FF, $FF, $77, $7F, $F7
+                 .byte $FE, $4C, $C0, $46, $C0, $80, $80, $00
+L_B49D           .byte $60, $00, $00, $0F, $1F, $1F, $1F, $0E
+                 .byte $01, $01, $01, $01, $01, $01, $13, $7F
+                 .byte $FF, $FF, $EE, $FE, $EF, $7F, $32, $03
+L_B4B5           .byte $1A, $03, $01, $01, $00, $01, $00, $00
+                 .byte $F0, $F8, $F8, $F8, $70, $80, $80, $80
+                 .byte $80, $80, $80, $C8, $FE, $FF, $FF, $77
+                 .byte $7F, $F7, $FE, $4C, $C0, $58, $C0, $80
+L_B4D5           .byte $80, $00, $80, $00, $00, $0F, $10, $10
+                 .byte $10, $0E, $01, $01, $01, $01, $01, $01
+                 .byte $02, $7F, $80, $80, $80, $80, $80, $7F
+                 .byte $02, $02, $02, $02, $01, $01, $00, $00
+L_B4F5           .byte $00, $00, $F0, $08, $08, $08, $70, $80
+                 .byte $80, $80, $80, $80, $80, $40, $FE, $01
+                 .byte $01, $01, $01, $01, $FE, $40, $40, $40
+L_B50D           .byte $40, $80, $80, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $44, $AA, $AA, $2A, $4A, $8A
+                 .byte $8A, $AA, $E4, $00, $00, $00, $00, $00
+L_B52D           .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $44
+                 .byte $AA, $AA, $AA, $AA, $AA, $AA, $AA, $44
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00
 L_B550           lda $06D7
                  beq L_B55C
                  lda #$00
@@ -18695,7 +10125,7 @@ L_B5A7           lda L_B620,x
                  cpx #$08
                  bne L_B5A7
                  beq L_B5C1
-L_B5B5           lda L_B626+2,x
+L_B5B5           lda L_B628,x
                  sta L_33FE+2,y
                  iny
                  inx
@@ -18741,164 +10171,35 @@ L_B606           lda L_B620,x
                  cpx #$08
                  bne L_B606
                  rts
-L_B613           lda L_B626+2,x
+L_B613           lda L_B628,x
                  sta L_3500,y
                  iny
                  inx
                  cpx #$08
                  bne L_B613
                  rts
-L_B620           brk
-                 brk
-                 asl L_1F19+2
-                 .byte $1B
-L_B626           asl LNFLG
-                 bpl L_B66F
-                 .byte $82
-                 .byte $82
-                 .byte $44
-                 bpl L_B630
-L_B630           brk
-                 .byte $77
-                 rts
-                 .byte $74
-                 .byte $74
-                 rts
-                 rts
-                 rts
-                 plp
-                 .byte $44
-                 .byte $44
-                 rti
-                 jmp L_4444
-                 plp
-                 .byte $44
-                 .byte $44
-                 .byte $44
-                 jmp (L_446B+1)
-                 .byte $44
-                 .byte $44
-                 .byte $7C
-                 .byte $54
-                 bpl L_B65C
-                 bpl L_B65E
-                 .byte $54
-                 .byte $7C
-                 .byte $63
-                 .byte $63
-                 rol RTCLOK+2,x
-                 .byte $14
-                 rol LOGCOL,x
-                 .byte $63
-                 .byte $63
-                 .byte $63
-                 ror ROWAC,x
-L_B65C           ror LOGCOL,x
-L_B65E           .byte $63
-                 .byte $63
-                 rts
-                 rts
-                 rts
-                 rts
-                 rts
-                 .byte $63
-                 .byte $77
-                 .byte $77
-                 .byte $77
-                 .byte $6B
-                 .byte $6B
-                 .byte $6B
-                 .byte $6B
-                 .byte $63
-                 .byte $63
-L_B66F           .byte $63
-                 rol DELTAC,x
-                 .byte $63
-                 .byte $63
-                 .byte $63
-                 .byte $63
-                 .byte $63
-                 .byte $63
-                 rol DELTAC,x
-                 .byte $63
-                 .byte $63
-                 .byte $63
-                 .byte $63
-                 .byte $77
-                 rol SAVADR,x
-                 .byte $44
-                 .byte $44
-                 .byte $44
-                 pla
-                 rti
-                 rti
-                 rti
-                 rol DELTAC,x
-                 .byte $63
-                 .byte $63
-                 .byte $63
-                 .byte $67
-                 .byte $77
-                 .byte $37
-                 pla
-                 .byte $44
-                 .byte $44
-                 .byte $44
-                 pla
-                 pla
-                 pha
-                 .byte $44
-                 .byte $37
-                 .byte $77
-                 rts
-                 ror LTEMP+1,x
-                 .byte $03
-                 .byte $77
-                 ror DELTAC,x
-                 .byte $77
-                 eor RTCLOK+2,x
-                 .byte $14
-                 .byte $14
-                 .byte $14
-                 .byte $14
-                 .byte $44
-                 .byte $44
-                 .byte $44
-                 .byte $44
-                 .byte $44
-L_B6AD           .byte $44
-                 .byte $44
-                 plp
-                 .byte $63
-                 .byte $63
-                 .byte $63
-                 .byte $63
-                 .byte $63
-                 rol LTEMP,x
-                 .byte $1C
-                 .byte $63
-                 .byte $63
-                 .byte $63
-                 .byte $6B
-                 .byte $6B
-                 .byte $6B
-                 .byte $6B
-                 .byte $77
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 .byte $63
-                 .byte $63
-                 .byte $63
-                 rol LTEMP,x
-                 .byte $1C
-                 .byte $1C
-                 .byte $1C
+L_B620           .byte $00, $00, $0E, $1B, $1F, $1B, $0E, $00
+L_B628           .byte $00, $10, $44, $82, $82, $44, $10, $00
+                 .byte $00, $77, $60, $74, $74, $60, $60, $60
+                 .byte $28, $44, $44, $40, $4C, $44, $44, $28
+                 .byte $44, $44, $44, $6C, $6C, $44, $44, $44
+                 .byte $7C, $54, $10, $10, $10, $10, $54, $7C
+                 .byte $63, $63, $36, $14, $14, $36, $63, $63
+                 .byte $63, $63, $76, $70, $76, $63, $63, $63
+                 .byte $60, $60, $60, $60, $60, $63, $77, $77
+                 .byte $77, $6B, $6B, $6B, $6B, $63, $63, $63
+                 .byte $36, $77, $63, $63, $63, $63, $63, $63
+                 .byte $36, $77, $63, $63, $63, $63, $77, $36
+                 .byte $68, $44, $44, $44, $68, $40, $40, $40
+                 .byte $36, $77, $63, $63, $63, $67, $77, $37
+                 .byte $68, $44, $44, $44, $68, $68, $48, $44
+                 .byte $37, $77, $60, $76, $37, $03, $77, $76
+                 .byte $77, $77, $55, $14, $14, $14, $14, $14
+L_B6A8           .byte $44, $44, $44, $44, $44, $44, $44, $28
+                 .byte $63, $63, $63, $63, $63, $36, $36, $1C
+                 .byte $63, $63, $63, $6B, $6B, $6B, $6B, $77
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $63, $63, $63, $36, $36, $1C, $1C, $1C
                  lda $0615
                  bne L_B6D6
                  rts
@@ -18914,9 +10215,9 @@ L_B6ED           lda VCOUNT
                  cmp #$58
                  bcc L_B6ED
                  ldx #$26
-                 lda L_9D08,x
-                 sta L_9D09,x
-                 lda L_9D30,x
+                 lda L_9D05+3,x
+                 sta L_9D05+4,x
+                 lda L_9D2D+3,x
                  sta TSLNUM,x
 
 
