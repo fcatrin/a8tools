@@ -37,6 +37,8 @@ public class XexDumper {
 		this.mapFile = Utils.changeFileExtension(xexFile, "map");
 		this.disFile = Utils.changeFileExtension(xexFile, "dis");
 		
+		asmFile.getParentFile().mkdirs();
+		
 		Disassembler.reset();
 	}
 	
@@ -201,7 +203,7 @@ public class XexDumper {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		File xexFile = new File("/home/fcatrin/screaming_wings.xex");
+		File xexFile = new File("/home/fcatrin/git/a8tools/patches/screaming_wings/patched_screaming_wings.xex");
 		XexDumper xexDumper = new XexDumper(xexFile);
 		xexDumper.dump();
 	}
