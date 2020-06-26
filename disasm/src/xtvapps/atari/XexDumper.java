@@ -191,10 +191,10 @@ public class XexDumper {
 			} else if (cmd.equals("code")) {
 				int addr = Utils.strHex2i(parts[1], 0);
 				Disassembler.addSection(blockIndex, SectionType.Code, addr);
-			} else if (cmd.equals("bytes")) {
+			} else if (cmd.equals("byte")) {
 				int addr = Utils.strHex2i(parts[1], 0);
 				Disassembler.addSection(blockIndex, SectionType.Byte, addr);
-			} else if (cmd.equals("words")) {
+			} else if (cmd.equals("word")) {
 				int addr = Utils.strHex2i(parts[1], 0);
 				Disassembler.addSection(blockIndex, SectionType.Word, addr);
 			}
