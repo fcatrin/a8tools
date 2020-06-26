@@ -1,5 +1,6 @@
 block 1
-byte B741
+dlst B741
+byte B75E
 
 block 2
 word 0
@@ -69,7 +70,8 @@ byte 4963
 code 4969
 byte 4979
 code 4980
-byte 49BC
+dlst 49BC
+byte 49DF
 code 4A00
 byte 4A6D
 code 4AC0
@@ -95,7 +97,8 @@ byte 5437
 code 5440
 byte 5641
 code 5689
-byte 5709
+dlst 5709
+byte 5729
 code 572D
 
 
