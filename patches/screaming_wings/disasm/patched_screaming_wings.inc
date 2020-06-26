@@ -25,7 +25,6 @@ MVTA       = $009B
 TSLNUM     = $00A0
 MVLNG      = $00A2
 ECSIZE     = $00A4
-OPSTKX     = $00A9
 LELNUM     = $00AD
 PTABW      = $00C9
 LOADFLG    = $00CA

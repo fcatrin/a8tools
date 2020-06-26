@@ -2950,10 +2950,9 @@ L_435A           bvs L_43CC
                  .byte $9C, $02, $02, $02, $02, $02, $02, $02
                  .byte $02, $02, $02, $02, $02, $02, $02, $02
                  .byte $02, $02, $02, $02, $02, $02, $02, $02
-                 .byte $41, $20, $9C
-                 lda #$0C
-                 sta B0_ICCOM,x
-                 jsr OPSTKX
+                 .byte $41, $20, $9C, $A9, $0C, $9D, $42, $03
+                 .byte $20
+                 lda #$00
                  sta AUDCTL
                  lda #$03
                  sta SKCTL
