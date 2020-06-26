@@ -175,13 +175,12 @@ public class Disassembler {
 		int op1 = getMemory(addr);
 		int op2 = getMemory(addr+1);
 		int word = op1 + 256 * op2;
-		
+
+		String targetLabel = findLabel(0, word);
 
 		String line    = String.format("%04X: %02X %02X     WORD $%04X", addr, op1, op2, word);
-		String asmcode = String.format(".word $%04X", word); 
+		String asmcode = ".word " + (targetLabel != null ? targetLabel : String.format(".word $%04X", word)); 
 		int size = 2;
-		
-		String targetLabel = findLabel(0, word);
 		
 		return buildInstruction(addr, line, asmcode, size, word, targetLabel);
 	}
@@ -463,6 +462,14 @@ public class Disassembler {
 	
 	public static int getLastAddr(int blockIndex) {
 		return mapper.getLastAddr(blockIndex);
+	}
+
+	public static Map<Integer, String> getMapperLabels() {
+		return mapper.getLabels();
+	}
+	
+	public static void addMapperLabel(int addr, String name) {
+		mapper.addLabel(addr, name);
 	}
 
 	public static void dumpMapper() {

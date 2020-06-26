@@ -1,13 +1,15 @@
 package xtvapps.atari.disasm.mapper;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import xtvapps.atari.disasm.mapper.Section.SectionType;
 
 public class Mapper {
 	Map<Integer, Block> blocks = new HashMap<Integer, Block>();
-	
+	Map<Integer, String> labels = new LinkedHashMap<Integer, String>();
+
 	public Mapper() {}
 
 	public void createBlock(int blockIndex, int addr, int length) {
@@ -46,6 +48,19 @@ public class Mapper {
 	
 	public void clear() {
 		blocks.clear();
+		labels.clear();
+	}
+	
+	public void addLabel(int addr, String name) {
+		labels.put(addr, name);
+	}
+	
+	public String getLabel(int addr) {
+		return labels.get(addr);
+	}
+
+	public Map<Integer, String> getLabels() {
+		return labels;
 	}
 	
 	@Override

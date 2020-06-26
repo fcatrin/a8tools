@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import xtvapps.atari.disasm.Disassembler;
@@ -96,6 +97,15 @@ public class XexDumper {
 			String line = buildColumns(key, 10, String.format(" = $%04X", addr), "");
 			pwInc.println(line);
 		}
+
+		Map<Integer, String> labels = Disassembler.getMapperLabels();
+		for(Entry<Integer, String> label : labels.entrySet()) {
+			int addr = label.getKey();
+			String name = label.getValue();
+			
+			String line = buildColumns(name, 10, String.format(" = $%04X", addr), "");
+			pwInc.println(line);
+		}
 		
 		pwInc.close();
 
@@ -136,6 +146,12 @@ public class XexDumper {
 			base += instruction.getSize();
 		}
 		
+		// they may be overritten, so add them here after the automatic labels
+		Map<Integer, String> labels = Disassembler.getMapperLabels();
+		for(Entry<Integer, String> label : labels.entrySet()) {
+			Disassembler.addUserLabel(label.getKey(), label.getValue());
+		}
+		
 		base = 0;
 		while (base < block.length) {
 			Instruction instruction = Disassembler.getInstruction(blockIndex, addr + base);
@@ -143,9 +159,13 @@ public class XexDumper {
 			if (target >= 0) {
 				String targetLabel = instruction.getTargetLabel();
 				if (targetLabel != null) {
+					int delta = 0;
 					int p = targetLabel.indexOf("+");
-					if (p>0) targetLabel = targetLabel.substring(0, p);
-					usedTargets.put(targetLabel, target);
+					if (p>0) {
+						delta = Utils.str2i(targetLabel.substring(p+1));
+						targetLabel = targetLabel.substring(0, p);
+					}
+					usedTargets.put(targetLabel, target - delta);
 				}
 			}
 			base += instruction.getSize();
@@ -202,14 +222,18 @@ public class XexDumper {
 			} else if (cmd.equals("dlst")) {
 				int addr = Utils.strHex2i(parts[1], 0);
 				Disassembler.addSection(blockIndex, SectionType.DisplayList, addr);
+			} else if (cmd.equals("label")) {
+				int addr = Utils.strHex2i(parts[1], 0);
+				String name = parts[2];
+				Disassembler.addMapperLabel(addr, name);
 			}
 		}
 		Disassembler.dumpMapper();
 	}
 	
 	public static void main(String[] args) throws IOException {
-		//File xexFile = new File("/home/fcatrin/git/a8tools/patches/screaming_wings/patched_screaming_wings.xex");
-		File xexFile = new File("/home/fcatrin/git/a8tools/patches/screaming_wings/disasm/patched_screaming_wings.obx");
+		File xexFile = new File("/home/fcatrin/git/a8tools/patches/screaming_wings/patched_screaming_wings.xex");
+		// File xexFile = new File("/home/fcatrin/git/a8tools/patches/screaming_wings/disasm/patched_screaming_wings.obx");
 		XexDumper xexDumper = new XexDumper(xexFile);
 		xexDumper.dump();
 	}
