@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -25,6 +26,8 @@ public class Disassembler {
 	private static String xexFileName;
 	
 	private static boolean allowInvalidOpCodes = false;
+	private static boolean useLowerCase = true;
+	
 	private static Set<String> usedSyms = new HashSet<String>();
 	
 	private static Mapper mapper = new Mapper();
@@ -54,6 +57,8 @@ public class Disassembler {
 		SectionType sectionType = mapper.getSectionType(blockIndex, addr);
 		
 		String mnemonic = !allowInvalidOpCodes && !isValidOpCode(instr) ? null : Processor.instr6502[instr];
+		
+		if (useLowerCase && mnemonic != null) mnemonic = mnemonic.toLowerCase(Locale.US);
 		
 		String line;
 		String asmcode;
