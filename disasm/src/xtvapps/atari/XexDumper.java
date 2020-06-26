@@ -208,7 +208,8 @@ public class XexDumper {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		File xexFile = new File("/home/fcatrin/git/a8tools/patches/screaming_wings/patched_screaming_wings.xex");
+		//File xexFile = new File("/home/fcatrin/git/a8tools/patches/screaming_wings/patched_screaming_wings.xex");
+		File xexFile = new File("/home/fcatrin/git/a8tools/patches/screaming_wings/disasm/patched_screaming_wings.obx");
 		XexDumper xexDumper = new XexDumper(xexFile);
 		xexDumper.dump();
 	}

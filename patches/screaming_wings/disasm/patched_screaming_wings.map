@@ -38,7 +38,7 @@ byte 3565
 code 3650
 byte 3720
 code 37D0
-byte 3802
+byte 37D6 ; dirty code
 code 3AAA
 byte 3ACC
 code 3AD6
@@ -81,6 +81,8 @@ byte 4C2E
 code 4C30
 byte 4C51
 code 4C5A
+byte 4C7B
+code 4C80
 byte 4D7F
 code 4DA0
 byte 4EB2
@@ -126,6 +128,8 @@ byte 68FD
 code 6900
 byte 6A7B
 code 6A80
+byte 6AEE
+code 6AF5
 byte 6B67
 code 6B6A
 byte 6B71

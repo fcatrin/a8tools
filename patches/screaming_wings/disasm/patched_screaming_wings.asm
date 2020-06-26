@@ -2320,118 +2320,108 @@ L_3780           .byte $68, $44, $44, $44, $68, $40, $40, $40
                  lda $0615
                  bne L_37D6
                  rts
-L_37D6           jsr L_4950
-                 jsr L_4902+1
-                 lda $0616
-                 bne L_37EA
-                 jsr L_55CC+2
-                 jsr L_55B7
-                 jsr L_55B7
-L_37EA           jsr L_5760
-L_37ED           lda VCOUNT
-                 cmp #$58
-                 bcc L_37ED
-                 ldx #$26
-                 lda L_9D05+3,x
-                 sta L_9D05+4,x
-                 lda L_9D2D+3,x
-L_37FF           sta LNFLG,x
-                 .byte $00, $00, $00, $00, $00, $00, $9A, $9A
-                 .byte $9A, $9A, $9A, $9A, $9A, $9A, $9A, $9A
-                 .byte $9A, $55, $55, $9A, $9A, $9A, $AA, $AA
-                 .byte $AA, $55, $55, $AA, $AA, $AA, $A0, $A3
-                 .byte $A0, $A8, $A8, $AC, $A8, $A8, $8A, $8A
-                 .byte $8A, $0A, $8A, $AA, $AA, $AA, $63, $63
-                 .byte $06, $0C, $18, $30, $63, $63, $00, $00
-                 .byte $00, $08, $08, $00, $00, $00, $FF, $FF
-                 .byte $FE, $F8, $E2, $E2, $EA, $0A, $AA, $EA
-                 .byte $EA, $FA, $FA, $0E, $C3, $C3, $AA, $EA
-                 .byte $EA, $FA, $FA, $FE, $FF, $FF, $AA, $EA
-                 .byte $FA, $FE, $FE, $FA, $EA, $EA, $AA, $AA
+L_37D6           .byte $20, $50, $49, $20, $03, $49, $AD, $16
+                 .byte $06, $D0, $09, $20, $CE, $55, $20, $B7
+                 .byte $55, $20, $B7, $55, $20, $60, $57, $AD
+                 .byte $0B, $D4, $C9, $58, $90, $F9, $A2, $26
+                 .byte $BD, $08, $9D, $9D, $09, $9D, $BD, $30
+L_37FE           .byte $9D, $9D, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $9A, $9A, $9A, $9A, $9A, $9A
+                 .byte $9A, $9A, $9A, $9A, $9A, $55, $55, $9A
+                 .byte $9A, $9A, $AA, $AA, $AA, $55, $55, $AA
+                 .byte $AA, $AA, $A0, $A3, $A0, $A8, $A8, $AC
+                 .byte $A8, $A8, $8A, $8A, $8A, $0A, $8A, $AA
+                 .byte $AA, $AA, $63, $63, $06, $0C, $18, $30
+                 .byte $63, $63, $00, $00, $00, $08, $08, $00
+                 .byte $00, $00, $FF, $FF, $FE, $F8, $E2, $E2
+                 .byte $EA, $0A, $AA, $EA, $EA, $FA, $FA, $0E
+                 .byte $C3, $C3, $AA, $EA, $EA, $FA, $FA, $FE
+                 .byte $FF, $FF, $AA, $EA, $FA, $FE, $FE, $FA
+                 .byte $EA, $EA, $AA, $AA, $AA, $AA, $AA, $AA
                  .byte $AA, $AA, $AA, $AA, $AA, $AA, $AA, $AA
-                 .byte $AA, $AA, $AA, $AA, $AA, $AE, $FF, $FF
-                 .byte $FF, $FF, $FF, $FF, $FF, $FF, $55, $6A
-                 .byte $6A, $6A, $6A, $6A, $6A, $6A, $55, $A9
-                 .byte $A9, $A9, $A9, $A9, $A9, $A9, $6A, $6A
-                 .byte $6A, $6A, $6A, $6A, $6A, $55, $A9, $A9
-                 .byte $A9, $A9, $A9, $A9, $A9, $55, $3C, $FE
-                 .byte $E3, $03, $8B, $23, $03, $8A, $FA, $FA
-                 .byte $FA, $BE, $BE, $BF, $AF, $FB, $BF, $EF
-                 .byte $FF, $FF, $AF, $AF, $FB, $FE, $FE, $FE
-                 .byte $FE, $FB, $BF, $EF, $FB, $FF, $FF, $FF
-                 .byte $FF, $BF, $BA, $EE, $9A, $57, $FE, $FE
-                 .byte $FE, $FA, $BE, $EE, $FA, $EA, $FA, $FE
-                 .byte $FE, $FA, $BF, $EF, $FB, $FF, $AA, $AA
-                 .byte $AA, $AE, $BE, $BF, $AF, $BB, $BF, $EF
-                 .byte $FF, $FF, $AF, $AF, $BB, $AE, $FA, $FA
-                 .byte $EA, $EA, $AA, $FA, $FA, $EA, $EA, $AA
-L_38EA           .byte $FA, $FA, $86, $86, $FA, $FE, $2A, $95
-                 .byte $9A, $9A, $9A, $9A, $9A, $9A, $AA, $A5
-                 .byte $95, $9A, $9A, $9A, $9A, $A5, $AA, $6A
-                 .byte $5A, $9A, $9A, $9A, $9A, $6A, $FF, $57
-                 .byte $A7, $A7, $A7, $A7, $A7, $A7, $99, $99
-                 .byte $99, $9A, $9A, $9A, $99, $99, $A9, $A9
-                 .byte $A9, $A9, $AA, $AA, $A9, $A9, $A7, $A7
-L_3922           .byte $A7, $AB, $AB, $AB, $A7, $A7, $AB, $AF
-                 .byte $B5, $F5, $D7, $DF, $DF, $DF, $EA, $FA
-                 .byte $5E, $5F, $D7, $F7, $F7, $F7, $DF, $DF
-                 .byte $DF, $DF, $DF, $DF, $DF, $DF, $F7, $F7
-                 .byte $F7, $F7, $F7, $F7, $F7, $F7, $DF, $DF
-                 .byte $DF, $D7, $F5, $B5, $AF, $AB, $F7, $F7
-                 .byte $F7, $D7, $5F, $5E, $FA, $EA, $E2, $C8
-                 .byte $F0, $BE, $BC, $AC, $AF, $AB, $AB, $AF
-                 .byte $AE, $BC, $BE, $F8, $E2, $C8, $A5, $9A
-                 .byte $9A, $9A, $9A, $95, $A5, $AA, $6A, $9A
-                 .byte $9A, $9A, $9A, $5A, $6A, $AA, $AA, $55
-L_397A           .byte $AA, $AA, $AA, $AA, $AA, $AA, $AA, $95
-                 .byte $9A, $99, $99, $99, $9A, $9A, $AA, $56
-                 .byte $A6, $A6, $A6, $A6, $A6, $A6, $9A, $9A
-                 .byte $99, $99, $99, $9A, $95, $AA, $89, $25
-                 .byte $FF, $85, $FF, $85, $21, $88, $9A, $9A
-                 .byte $9A, $9A, $9A, $9A, $95, $AA, $AA, $AA
-L_39AA           .byte $AA, $AA, $AA, $AA, $55, $AA, $A7, $A7
-                 .byte $A7, $A7, $A7, $A7, $57, $BF, $62, $58
-                 .byte $FF, $50, $FF, $58, $62, $08, $CE, $CC
-                 .byte $DC, $56, $54, $54, $58, $62, $02, $00
-                 .byte $00, $00, $00, $20, $00, $00, $00, $00
-                 .byte $80, $00, $00, $00, $02, $00, $AA, $AA
-                 .byte $AA, $AA, $A8, $A8, $AC, $A8, $AA, $AA
-                 .byte $AA, $AA, $AA, $AA, $8A, $0A, $A2, $A2
-                 .byte $A2, $A0, $A2, $AA, $AA, $AA, $02, $32
-                 .byte $02, $2A, $2A, $3A, $2A, $2A, $AA, $AA
-                 .byte $AA, $AA, $AA, $AA, $A2, $A0, $AA, $AA
-                 .byte $AA, $AA, $2A, $2A, $3A, $2A, $AA, $AA
-                 .byte $AA, $AA, $AB, $AF, $AF, $AB, $A8, $A8
-                 .byte $A8, $A8, $A8, $E8, $E8, $A8, $03, $0E
-                 .byte $0E, $3A, $3A, $EA, $EA, $C0, $AA, $AA
-                 .byte $AA, $AA, $AA, $AA, $AA, $00, $C0, $B0
-                 .byte $B0, $AC, $AC, $AB, $AB, $03, $03, $0E
-                 .byte $0E, $3A, $3A, $EA, $EA, $EA, $FF, $AA
-                 .byte $AA, $AA, $AA, $AA, $AA, $AA, $C0, $B0
-                 .byte $B0, $AC, $AC, $AB, $AB, $AB, $85, $15
-                 .byte $56, $5A, $9A, $1A, $5A, $6A, $61, $96
-                 .byte $AA, $AA, $AA, $AA, $AA, $AA, $62, $98
-                 .byte $A4, $A6, $90, $98, $A6, $A4, $A9, $A9
-                 .byte $A6, $A4, $A6, $A9, $A9, $A6, $96, $4A
-                 .byte $4A, $16, $96, $16, $5A, $5A, $6A, $5A
-L_3A72           .byte $9A, $1A, $4A, $46, $15, $85, $AA, $AA
-                 .byte $AA, $AA, $AA, $AA, $96, $41, $A6, $A4
-                 .byte $98, $92, $A4, $A4, $C0, $62, $FF, $AB
-                 .byte $AB, $AB, $AB, $AB, $AB, $AB, $89, $25
-                 .byte $85, $14, $91, $55, $14, $45, $45, $54
-                 .byte $45, $51, $45, $51, $15, $51, $62, $58
-                 .byte $52, $14, $44, $55, $14, $51, $A0, $3A
+                 .byte $AA, $AE, $FF, $FF, $FF, $FF, $FF, $FF
+                 .byte $FF, $FF, $55, $6A, $6A, $6A, $6A, $6A
+                 .byte $6A, $6A, $55, $A9, $A9, $A9, $A9, $A9
+                 .byte $A9, $A9, $6A, $6A, $6A, $6A, $6A, $6A
+                 .byte $6A, $55, $A9, $A9, $A9, $A9, $A9, $A9
+                 .byte $A9, $55, $3C, $FE, $E3, $03, $8B, $23
+                 .byte $03, $8A, $FA, $FA, $FA, $BE, $BE, $BF
+                 .byte $AF, $FB, $BF, $EF, $FF, $FF, $AF, $AF
+                 .byte $FB, $FE, $FE, $FE, $FE, $FB, $BF, $EF
+                 .byte $FB, $FF, $FF, $FF, $FF, $BF, $BA, $EE
+                 .byte $9A, $57, $FE, $FE, $FE, $FA, $BE, $EE
+                 .byte $FA, $EA, $FA, $FE, $FE, $FA, $BF, $EF
+                 .byte $FB, $FF, $AA, $AA, $AA, $AE, $BE, $BF
+                 .byte $AF, $BB, $BF, $EF, $FF, $FF, $AF, $AF
+                 .byte $BB, $AE, $FA, $FA, $EA, $EA, $AA, $FA
+                 .byte $FA, $EA, $EA, $AA, $FA, $FA, $86, $86
+L_38EE           .byte $FA, $FE, $2A, $95, $9A, $9A, $9A, $9A
+                 .byte $9A, $9A, $AA, $A5, $95, $9A, $9A, $9A
+                 .byte $9A, $A5, $AA, $6A, $5A, $9A, $9A, $9A
+                 .byte $9A, $6A, $FF, $57, $A7, $A7, $A7, $A7
+                 .byte $A7, $A7, $99, $99, $99, $9A, $9A, $9A
+                 .byte $99, $99, $A9, $A9, $A9, $A9, $AA, $AA
+                 .byte $A9, $A9, $A7, $A7, $A7, $AB, $AB, $AB
+L_3926           .byte $A7, $A7, $AB, $AF, $B5, $F5, $D7, $DF
+                 .byte $DF, $DF, $EA, $FA, $5E, $5F, $D7, $F7
+                 .byte $F7, $F7, $DF, $DF, $DF, $DF, $DF, $DF
+                 .byte $DF, $DF, $F7, $F7, $F7, $F7, $F7, $F7
+                 .byte $F7, $F7, $DF, $DF, $DF, $D7, $F5, $B5
+                 .byte $AF, $AB, $F7, $F7, $F7, $D7, $5F, $5E
+                 .byte $FA, $EA, $E2, $C8, $F0, $BE, $BC, $AC
+                 .byte $AF, $AB, $AB, $AF, $AE, $BC, $BE, $F8
+                 .byte $E2, $C8, $A5, $9A, $9A, $9A, $9A, $95
+                 .byte $A5, $AA, $6A, $9A, $9A, $9A, $9A, $5A
+L_3976           .byte $6A, $AA, $AA, $55, $AA, $AA, $AA, $AA
+                 .byte $AA, $AA, $AA, $95, $9A, $99, $99, $99
+                 .byte $9A, $9A, $AA, $56, $A6, $A6, $A6, $A6
+                 .byte $A6, $A6, $9A, $9A, $99, $99, $99, $9A
+                 .byte $95, $AA, $89, $25, $FF, $85, $FF, $85
+                 .byte $21, $88, $9A, $9A, $9A, $9A, $9A, $9A
+                 .byte $95, $AA, $AA, $AA, $AA, $AA, $AA, $AA
+L_39AE           .byte $55, $AA, $A7, $A7, $A7, $A7, $A7, $A7
+                 .byte $57, $BF, $62, $58, $FF, $50, $FF, $58
+                 .byte $62, $08, $CE, $CC, $DC, $56, $54, $54
+                 .byte $58, $62, $02, $00, $00, $00, $00, $20
+                 .byte $00, $00, $00, $00, $80, $00, $00, $00
+                 .byte $02, $00, $AA, $AA, $AA, $AA, $A8, $A8
+                 .byte $AC, $A8, $AA, $AA, $AA, $AA, $AA, $AA
+                 .byte $8A, $0A, $A2, $A2, $A2, $A0, $A2, $AA
+                 .byte $AA, $AA, $02, $32, $02, $2A, $2A, $3A
+                 .byte $2A, $2A, $AA, $AA, $AA, $AA, $AA, $AA
+                 .byte $A2, $A0, $AA, $AA, $AA, $AA, $2A, $2A
+                 .byte $3A, $2A, $AA, $AA, $AA, $AA, $AB, $AF
+                 .byte $AF, $AB, $A8, $A8, $A8, $A8, $A8, $E8
+                 .byte $E8, $A8, $03, $0E, $0E, $3A, $3A, $EA
+                 .byte $EA, $C0, $AA, $AA, $AA, $AA, $AA, $AA
+                 .byte $AA, $00, $C0, $B0, $B0, $AC, $AC, $AB
+                 .byte $AB, $03, $03, $0E, $0E, $3A, $3A, $EA
+                 .byte $EA, $EA, $FF, $AA, $AA, $AA, $AA, $AA
+                 .byte $AA, $AA, $C0, $B0, $B0, $AC, $AC, $AB
+                 .byte $AB, $AB, $85, $15, $56, $5A, $9A, $1A
+                 .byte $5A, $6A, $61, $96, $AA, $AA, $AA, $AA
+                 .byte $AA, $AA, $62, $98, $A4, $A6, $90, $98
+                 .byte $A6, $A4, $A9, $A9, $A6, $A4, $A6, $A9
+                 .byte $A9, $A6, $96, $4A, $4A, $16, $96, $16
+                 .byte $5A, $5A, $6A, $5A, $9A, $1A, $4A, $46
+L_3A76           .byte $15, $85, $AA, $AA, $AA, $AA, $AA, $AA
+                 .byte $96, $41, $A6, $A4, $98, $92, $A4, $A4
+                 .byte $C0, $62, $FF, $AB, $AB, $AB, $AB, $AB
+                 .byte $AB, $AB, $89, $25, $85, $14, $91, $55
+                 .byte $14, $45, $45, $54, $45, $51, $45, $51
+                 .byte $15, $51, $62, $58, $52, $14, $44, $55
+                 .byte $14, $51, $A0, $3A
                  ldx #$95
                  lda #$02
-                 jsr L_38EA+6
+                 jsr L_38EE+2
                  lda #$15
                  sta MVLNG+1
                  ldy #$8A
                  ldx #$1D
                  lda #$7C
-                 jsr L_39AA+4
+                 jsr L_39AE
                  lda #$02
-                 jsr L_3922+5
+                 jsr L_3926+1
                  rts
                  asl RTCLOK+2
                  jmp L_3AC9
@@ -2445,21 +2435,21 @@ L_3AD6           lda #$04
                  ldy #$3A
                  ldx #$CC
                  lda #$01
-                 jsr L_38EA+6
+                 jsr L_38EE+2
                  lda #$01
-                 jsr L_3A72+6
+                 jsr L_3A76+2
                  lda TSLNUM
                  cmp #$80
                  bcs L_3AF5
                  jmp L_3AFB
 L_3AF5           lda #$01
-                 jsr L_3922+5
+                 jsr L_3926+1
                  rts
 L_3AFB           lda #$FF
                  sta MVLNG+1
                  ldy #$FF
-                 ldx L_37FF+2
-                 lda L_37FF+1
+                 ldx L_37FE+3
+                 lda L_37FE+2
                  jsr L_227C+4
                  .byte $00, $28, $02, $00, $08, $02, $02, $00
                  .byte $02, $08, $20, $02, $88, $22, $01, $02
@@ -3760,9 +3750,7 @@ L_4C64           stx AUDF1
                  sta AUDC1
                  sta AUDC2
                  rts
-                 sbc LNFLG
-                 brk
-                 brk
+                 .byte $ED, $00, $00, $00, $00
 L_4C80           lda $0687
                  bne L_4C99
                  lda #$20
@@ -4718,7 +4706,7 @@ L_5543           rts
                  sta L_9CE5+4,x
                  inc $0646
                  rts
-                 lda L_397A
+                 lda L_3976+4
                  and #$01
                  beq L_5577+1
                  ldx $0621
@@ -7025,11 +7013,7 @@ L_6AD0           sta L_33FE+2,x
                  jsr L_67B8
                  jsr L_67CF
                  rts
-                 sta LNFLG
-                 brk
-                 brk
-                 brk
-                 brk
+                 .byte $8D, $00, $00, $00, $00, $00, $00
                  ldx $06BF
                  cpx #$00
                  bne L_6B0D
