@@ -21,7 +21,7 @@ public class Block {
 	public SectionType getSectionType(int addr) {
 		SectionType sectionType = SectionType.Code;
 		for(Section section : sections) {
-			if (addr > section.addr) sectionType = section.sectionType;
+			if (addr >= section.addr) sectionType = section.sectionType;
 		}
 		return sectionType;
 	}
