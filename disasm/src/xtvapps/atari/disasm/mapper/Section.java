@@ -1,7 +1,7 @@
 package xtvapps.atari.disasm.mapper;
 
 public class Section {
-	public enum SectionType {Code, Byte, Word};
+	public enum SectionType {Code, Byte, Word, DisplayList};
 
 	public SectionType sectionType;
 	public int addr;

@@ -74,6 +74,7 @@ public class XexDumper {
 			
 			disasm(blockIndex++, addr_start, block, pwAsm, pwDis);
 			index += blocksize;
+			break;
 		}
 		pwAsm.close();
 		pwDis.close();
@@ -199,6 +200,9 @@ public class XexDumper {
 			} else if (cmd.equals("word")) {
 				int addr = Utils.strHex2i(parts[1], 0);
 				Disassembler.addSection(blockIndex, SectionType.Word, addr);
+			} else if (cmd.equals("dlst")) {
+				int addr = Utils.strHex2i(parts[1], 0);
+				Disassembler.addSection(blockIndex, SectionType.DisplayList, addr);
 			}
 		}
 		Disassembler.dumpMapper();

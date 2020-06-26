@@ -52,6 +52,8 @@ public class Disassembler {
 		return memory[position];
 	}
 	
+	static boolean isDisplayListTarget = false;
+	
 	public static Instruction getInstruction(int blockIndex, int addr) {
 		int instr = getMemory(addr);
 		SectionType sectionType = mapper.getSectionType(blockIndex, addr);
@@ -67,8 +69,59 @@ public class Disassembler {
 		int value = -1;
 		
 		String targetLabel = null;
+		int target = -1;
 
-		if (sectionType == SectionType.Byte || mnemonic == null) {
+		if (sectionType == SectionType.DisplayList) {
+			int op = getMemory(addr);
+			String comment = null;
+			size = 1;
+			if (isDisplayListTarget) {
+				isDisplayListTarget = false;
+				
+				int l = getMemory(addr);
+				int h = getMemory(addr+1);
+				target = l + 256 * h;
+				targetLabel = findLabel(0, target);
+				line    = String.format("%04X: %02X %02X     WORD $%04X", addr, l, h, target);
+				asmcode = String.format(".word ");
+				if (targetLabel != null) {
+					asmcode += targetLabel;
+				} else {
+					asmcode += String.format("$%04X", target);
+				}
+				size = 2;
+			} else if ((op & 0x0F) == 0) {
+				int scanlines = 1 + ((op & 0xF0) >> 4);
+				line    = String.format("%04X: %02X        BYTE $%02X", addr, instr, op);
+				asmcode = String.format(".byte $%02X", op);
+				comment = String.format(scanlines != 1 ? "%d scanlines" : "%d scanline", scanlines);
+			} else {
+				int inst = op & 0xF0;
+				int mode = op & 0x0F;
+				boolean isJMP  = mode == 1;
+				boolean isVSC  = (inst & 0x10) != 0;
+				boolean isHSC  = (inst & 0x20) != 0;
+				boolean isLMS  = (inst & 0x40) != 0;
+				boolean isDLI  = (inst& 0x80) != 0;
+				if (isJMP) isLMS = false;
+				
+				line    = String.format("%04X: %02X        BYTE $%02X", addr, op, op);
+				asmcode = String.format(".byte $%02X", op);
+				comment = isJMP ? "JMP" : "";
+				comment = (comment + (isLMS ? " LMS" : "")).trim();
+				comment = (comment + (isDLI ? " DLI" : "")).trim();
+				comment = (comment + (isVSC ? " Vertical Scroll" : "")).trim();
+				comment = (comment + (isHSC ? " Horizontal Scroll" : "")).trim();
+				if (!isJMP) {
+					comment = (comment + (" Antic Mode " + mode)).trim();
+				}
+				isDisplayListTarget = isJMP || isLMS;
+			}
+			if (comment!=null) {
+				line     += " ; DL " + comment;
+				asmcode  += " ; DL " + comment;
+			}
+		} else if (sectionType == SectionType.Byte || mnemonic == null) {
 			line    = String.format("%04X:           BYTE ", addr, instr);
 			asmcode = String.format(".byte ");
 			int index = 0;
@@ -146,7 +199,11 @@ public class Disassembler {
 		}
 		
 		Instruction instruction = new Instruction(addr, line, asmcode, size);
-		fillTargetAddress(instruction);
+		if (target >= 0) {
+			instruction.setTarget(target);
+		} else {
+			fillTargetAddress(instruction);
+		}
 		instruction.setTargetLabel(targetLabel);
 		instruction.setLabel(symtableUser.get(addr));
 		return instruction;
