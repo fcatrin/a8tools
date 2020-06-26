@@ -74,7 +74,6 @@ public class XexDumper {
 			
 			disasm(blockIndex++, addr_start, block, pwAsm, pwDis);
 			index += blocksize;
-			break;
 		}
 		pwAsm.close();
 		pwDis.close();
