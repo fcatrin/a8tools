@@ -86,11 +86,15 @@ public class XexDumper {
 			pwInc.println(line);
 		}
 		
+		/*
+		
 		for(String usedLabel : usedLabels) {
 			usedTargets.remove(usedLabel);
 		}
+		*/
 		
 		for(String key : usedTargets.keySet()) {
+			if (usedLabels.contains(key)) continue;
 			if (!key.startsWith("L_")) continue;
 			
 			int addr = usedTargets.get(key);
@@ -100,9 +104,10 @@ public class XexDumper {
 
 		Map<Integer, String> labels = Disassembler.getMapperLabels();
 		for(Entry<Integer, String> label : labels.entrySet()) {
-			int addr = label.getKey();
 			String name = label.getValue();
+			if (usedLabels.contains(name)) continue;
 			
+			int addr = label.getKey();
 			String line = buildColumns(name, 10, String.format(" = $%04X", addr), "");
 			pwInc.println(line);
 		}
