@@ -69,14 +69,14 @@ public class Disassembler {
 		String targetLabel = null;
 
 		if (sectionType == SectionType.Byte || mnemonic == null) {
-			line    = String.format("%04X: %02X        BYTE ", addr, instr);
+			line    = String.format("%04X:           BYTE ", addr, instr);
 			asmcode = String.format(".byte ");
 			int index = 0;
 			int lastAddr = getLastAddr(blockIndex);
 			while (index < 8) {
 				int offset = addr + index;
 				
-				if (mnemonic != null) {
+				if (sectionType == SectionType.Byte) {
 					if (offset > lastAddr) break;
 					if (mapper.getSectionType(blockIndex, offset) != SectionType.Byte) break;
 				}
@@ -86,7 +86,7 @@ public class Disassembler {
 				asmcode += (index > 0 ? ", " : "") + byteValue;
 				
 				index++;
-				if (mnemonic == null) break;
+				if (mnemonic == null && sectionType == SectionType.Code) break;
 			}
 			size = index;
 		} else if (sectionType == SectionType.Word) {
