@@ -10,8 +10,16 @@ public class Block {
 	
 	List<Section> sections = new ArrayList<Section>();
 
+	private int addr;
+	private int length;
+
 	public Block(int index) {
 		this.index = index;
+	}
+	
+	public void setAddr(int addr, int length) {
+		this.addr = addr;
+		this.length = length;
 	}
 	
 	public void addSection(Section section) {
@@ -24,6 +32,10 @@ public class Block {
 			if (addr >= section.addr) sectionType = section.sectionType;
 		}
 		return sectionType;
+	}
+	
+	public int getLastAddr() {
+		return addr + length - 1;
 	}
 	
 	@Override

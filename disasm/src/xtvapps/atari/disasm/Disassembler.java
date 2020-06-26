@@ -64,9 +64,26 @@ public class Disassembler {
 		String targetLabel = null;
 
 		if (sectionType == SectionType.Byte || mnemonic == null) {
-			line    = String.format("%04X: %02X        BYTE $%02X", addr, instr, instr);
-			asmcode = String.format(".byte $%02X", instr); 
-			size = 1;
+			line    = String.format("%04X: %02X        BYTE ", addr, instr);
+			asmcode = String.format(".byte ");
+			int index = 0;
+			int lastAddr = getLastAddr(blockIndex);
+			while (index < 8) {
+				int offset = addr + index;
+				
+				if (mnemonic != null) {
+					if (offset > lastAddr) break;
+					if (mapper.getSectionType(blockIndex, offset) != SectionType.Byte) break;
+				}
+
+				String byteValue = String.format("$%02X", getMemory(offset)); 
+				line +=    (index > 0 ? " "  : "") + byteValue;
+				asmcode += (index > 0 ? ", " : "") + byteValue;
+				
+				index++;
+				if (mnemonic == null) break;
+			}
+			size = index;
 		} else if (sectionType == SectionType.Word) {
 			int op1 = getMemory(addr);
 			int op2 = getMemory(addr+1);
@@ -322,6 +339,14 @@ public class Disassembler {
 		mapper.addSection(blockIndex, sectionType, addr);
 	}
 
+	public static void createBlock(int blockIndex, int addr, int length) {
+		mapper.createBlock(blockIndex, addr, length);
+	}
+	
+	public static int getLastAddr(int blockIndex) {
+		return mapper.getLastAddr(blockIndex);
+	}
+
 	public static void dumpMapper() {
 		System.out.println(mapper);
 	}
@@ -351,6 +376,5 @@ public class Disassembler {
 		System.out.println(String.format("%04X", traceBack(13, 4)));  // 0007
 		System.out.println(String.format("%04X", traceBack(13, 5)));  // 0005
 	}
-
 
 }

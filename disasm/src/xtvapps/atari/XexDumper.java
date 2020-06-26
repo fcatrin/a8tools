@@ -121,6 +121,8 @@ public class XexDumper {
 	
 	private void disasm(int blockIndex, int addr, int block[], PrintWriter pwAsm, PrintWriter pwDis) {
 		Disassembler.setMemory(addr, block);
+		Disassembler.createBlock(blockIndex, addr, block.length);
+		
 		pwAsm.println(String.format("\n\n; BLOCK %d\n", blockIndex));
 		pwDis.println(String.format("\n\n; BLOCK %d\n", blockIndex));
 		
