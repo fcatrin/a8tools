@@ -1,20 +1,55 @@
 block 1
-bytes B741
+byte B741
 
 block 2
-words 0
+word 0
 
 block 3
 
 block 4
+word 162C
+code 1630
+word 16F2
+code 1700
+byte 17D8
+code 17F3
+byte 18D9
+code 18F3
+byte 1917
+code 1920
+byte 198A
+code 1A21
+byte 1A98
+code 1B00
+byte 1BEF
+code 1BFF
+byte 1DB0
+code 1DBF
+word 1F10
+code 1F12
+byte 1FF0
+code 2008
+byte 204F
+code 2063
+byte 20AC
+code 3300
+byte 3565
+code 3650
+byte 3720
+code 37D0
+byte 3802
+code 3AAA
+byte 3ACC
+code 3AD6
+
 
 block 5
-bytes 0
+byte 0
 
 block 6
-words 0
+word 0
 
 block 7
-words 0
+word 0
 
 

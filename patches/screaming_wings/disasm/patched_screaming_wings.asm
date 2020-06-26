@@ -16,15 +16,15 @@
                  STX BOOT
                  DEX
                  STX COLDST
-L_B715           LDA L_B761+1,X
+L_B715           LDA L_B762,X
                  SBC #$6F
-                 STA L_B761+1,X
+                 STA L_B762,X
                  INX
                  CPX #$64
                  BNE L_B715
                  LDA #$41
                  STA DLISTL
-L_B727           STA SDLSTL
+                 STA SDLSTL
                  LDA #$B7
                  STA DLISTH
                  STA SDLSTH
@@ -35,109 +35,186 @@ L_B734           LDA L_B75E,X
                  DEX
                  BPL L_B734
                  RTS
-                 BVS L_B7B3
-                 BVS L_B7B3+2
-                 BVS L_B7B6+1
-                 BVS L_B7B9
-                 BVS L_B792
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $47
                  .byte $62
                  .byte $B7
-                 BVS L_B7BE+1
+                 .byte $70
+                 .byte $70
                  .byte $04
-                 BVS L_B756
-                 BVS L_B7C4
-                 BVS L_B7C6
-L_B756           BVS L_B7C8
-                 BVS L_B7C9+1
+                 .byte $70
                  .byte $04
-L_B75B           EOR (SOUNDR,X)
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $04
+                 .byte $41
+                 .byte $41
                  .byte $B7
-L_B75E           ASL $0E08
-L_B761           STY ROWAC,X
-                 BVS L_B7C8
+L_B75E           .byte $0E
+                 .byte $08
+                 .byte $0E
+                 .byte $94
+L_B762           .byte $70
+                 .byte $70
+                 .byte $63
                  .byte $53
                  .byte $62
-                 EOR HOLD1,X
-                 EOR $5E59,X
+                 .byte $55
+                 .byte $51
+                 .byte $5D
+                 .byte $59
+                 .byte $5E
                  .byte $57
-                 BVS L_B7DF
+                 .byte $70
+                 .byte $70
                  .byte $67
-                 EOR $575E,Y
+                 .byte $59
+                 .byte $5E
+                 .byte $57
                  .byte $63
-                 BVS L_B7E6
-                 BVS L_B7E7+1
-                 BVS L_B7EA
-                 BVS L_B7EC
-                 BVS L_B7EC+2
-                 BVS L_B7EC+4
-                 BVS L_B715
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $93
                  .byte $E2
-                 CMP (VNUM),Y
+                 .byte $D1
+                 .byte $D3
                  .byte $DB
-                 CMP FR0,X
-                 BVS L_B75B+1
-                 SBC #$8A
-                 BVS L_B727+2
-                 CMP $E2DC,Y
+                 .byte $D5
+                 .byte $D4
+                 .byte $70
+                 .byte $D2
+                 .byte $E9
+                 .byte $8A
+                 .byte $70
+                 .byte $9B
+                 .byte $D9
+                 .byte $DC
+                 .byte $E2
                  .byte $DF
-L_B792           SBC #$70
-                 BVS $B806
-                 BVS $B808
-                 BVS $B80A
-                 BVS $B80C
-                 BVS $B80E
-                 BVS $B810
-                 BVS $B812
-                 BVS $B814
-                 BVS $B816
-                 BVS $B818
-                 BVS $B81A
-                 SEI
-                 LDY #$79
-                 STA (STMTAB+1,X)
-                 DEY
-                 STX ROWAC
+                 .byte $E9
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $78
+                 .byte $A0
+                 .byte $79
+                 .byte $81
+                 .byte $89
+                 .byte $88
+                 .byte $86
+                 .byte $70
                  .byte $9E
-L_B7B3           ROR $7E91,X
-L_B7B6           LDY #$7E
+                 .byte $7E
+                 .byte $91
+                 .byte $7E
+                 .byte $A0
+                 .byte $7E
                  .byte $9F
-L_B7B9           ROR $7070,X
-                 BVS $B82E
-L_B7BE           BVS $B830
-                 BVS $B832
-                 BVS $B834
-L_B7C4           BVS $B836
-L_B7C6           ROL COLAC
-L_B7C8           .byte $6F
-L_B7C9           ADC $3400
-                 PLA
-                 ADC LNFLG
-                 BIT FKDEF+1
-                 ADC #$6C
-                 ADC $3000,Y
-                 JMP ($6E61)
-                 ADC ENDPT
-                 BRK
+                 .byte $7E
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $70
+                 .byte $26
+                 .byte $72
+                 .byte $6F
+                 .byte $6D
+                 .byte $00
+                 .byte $34
+                 .byte $68
+                 .byte $65
+                 .byte $00
+                 .byte $24
+                 .byte $61
+                 .byte $69
+                 .byte $6C
+                 .byte $79
+                 .byte $00
+                 .byte $30
+                 .byte $6C
+                 .byte $61
+                 .byte $6E
+                 .byte $65
+                 .byte $74
+                 .byte $00
                  .byte $22
                  .byte $22
                  .byte $33
-L_B7DF           BRK
-                 PHP
+                 .byte $00
+                 .byte $08
                  .byte $17
-                 ORA (BUFADR+1),Y
-                 ORA #$00
-L_B7E6           CLC
-L_B7E7           ORA $0D15,Y
-L_B7EA           BPL $B801
-L_B7EC           BPL $B806
+                 .byte $11
+                 .byte $16
+                 .byte $09
+                 .byte $00
+                 .byte $18
+                 .byte $19
+                 .byte $15
+                 .byte $0D
+                 .byte $10
+                 .byte $15
+                 .byte $10
+                 .byte $18
 
 
 ; BLOCK 2
 
                  org $02E2
 
-                 BRK
-                 .byte $B7
+                 .word $B700
 
 
 ; BLOCK 3
@@ -211,7 +288,7 @@ L_155B           LDA $06AE
                  RTS
 L_156E           INC $0617
                  LDA $0617
-L_1574           CMP #$02
+                 CMP #$02
                  BCS L_157B
                  RTS
 L_1579           BNE L_15E4
@@ -291,10 +368,8 @@ L_1619           LDA L_2F00,Y
                  CPY #$11
                  BNE L_1619
                  RTS
-                 BRK
-                 BRK
-                 BRK
-                 BRK
+                 .word $0000
+                 .word $0000
 L_1630           LDA $0687
                  BNE L_1657
                  LDA #$28
@@ -378,20 +453,13 @@ L_16DF           LDA L_2F11,Y
                  CPY #$11
                  BNE L_16DF
                  RTS
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
+                 .word $0000
+                 .word $0000
+                 .word $0000
+                 .word $0000
+                 .word $0000
+                 .word $0000
+                 .word $0000
 L_1700           LDA $0616
                  BNE L_173B
                  LDA #$50
@@ -487,28 +555,32 @@ L_17C0           INC $06BB
 L_17D2           LDA #$00
                  STA $06BB
                  RTS
-                 RTI
+                 .byte $40
                  .byte $3C
-                 RTI
-                 PHA
-                 EOR (FMSZPG+5),Y
-                 RTI
+                 .byte $40
+                 .byte $48
+                 .byte $51
+                 .byte $48
+                 .byte $40
                  .byte $3C
-                 RTI
-                 PHA
-                 RTI
+                 .byte $40
+                 .byte $48
+                 .byte $40
                  .byte $3C
-                 AND NOCKSM,X
-                 RTI
-                 PHA
-                 EOR (FMSZPG+5),Y
-                 EOR (FMSZPG+5),Y
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
+                 .byte $35
+                 .byte $3C
+                 .byte $40
+                 .byte $48
+                 .byte $51
+                 .byte $48
+                 .byte $51
+                 .byte $48
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
                  .byte $D2
                  LDA L_19AA,Y
                  BNE L_1800
@@ -612,26 +684,30 @@ L_18D2           LDA #$00
                  RTS
 L_18D8           RTI
                  .byte $3C
-                 RTI
-                 PHA
-                 EOR (FMSZPG+5),Y
-                 RTI
+                 .byte $40
+                 .byte $48
+                 .byte $51
+                 .byte $48
+                 .byte $40
                  .byte $3C
-                 RTI
-                 PHA
-                 RTI
+                 .byte $40
+                 .byte $48
+                 .byte $40
                  .byte $3C
-                 AND NOCKSM,X
-                 RTI
-                 PHA
-                 EOR (FMSZPG+5),Y
-                 EOR (FMSZPG+5),Y
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
+                 .byte $35
+                 .byte $3C
+                 .byte $40
+                 .byte $48
+                 .byte $51
+                 .byte $48
+                 .byte $51
+                 .byte $48
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
                  .byte $D2
                  LDA L_19AA,Y
                  BNE L_1900
@@ -647,15 +723,15 @@ L_1900           LDA #$00
                  LDA #$07
 L_1913           STA $0671
                  RTS
-L_1917           BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
+L_1917           .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
 L_1920           LDA $0658
                  BNE L_1926
                  RTS
@@ -686,7 +762,7 @@ L_1939           LDA $0670
                  BNE L_1970
                  LDX #$00
                  STX $0672
-L_196D           LDA L_199A,X
+                 LDA L_199A,X
 L_1970           STA AUDF1
                  LDA L_19AA,Y
                  BNE L_1980
@@ -702,7 +778,9 @@ L_198A           .byte $9E
                  .byte $9E
                  .byte $9F
                  .byte $DF
-                 DEC L_9FDF,X
+                 .byte $DE
+                 .byte $DF
+                 .byte $9F
                  .byte $9E
                  .byte $9E
                  .byte $9F
@@ -711,131 +789,162 @@ L_198A           .byte $9E
                  .byte $9E
                  .byte $9E
                  .byte $9F
-L_199A           ROL
-                 PLP
-                 ROL
-                 PLP
+L_199A           .byte $2A
+                 .byte $28
+                 .byte $2A
+                 .byte $28
                  .byte $1F
-                 ROL
-                 ORA (ICAX1Z,X)
-                 PLP
-                 ROL
-                 AND CIOCHR,X
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-L_19AA           RTI
-                 ORA (LOMEM,X)
-                 ORA (FREQ,X)
-                 ORA (TOPSTK,X)
-                 ORA (FREQ,X)
-                 ORA (LOMEM,X)
-                 ORA (FREQ,X)
-                 ORA (TOPSTK,X)
-                 ORA (FREQ,X)
-                 ORA (LOMEM,X)
-                 ORA (FREQ,X)
-                 ORA (TOPSTK,X)
-                 ORA (FREQ,X)
-L_19C3           ORA (LOMEM,X)
-                 ORA (FREQ,X)
-                 ORA (TOPSTK,X)
-                 ORA (FREQ,X)
+                 .byte $2A
+                 .byte $01
+                 .byte $2A
+                 .byte $28
+                 .byte $2A
+                 .byte $35
+                 .byte $2F
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+L_19AA           .byte $40
+                 .byte $01
+                 .byte $80
+                 .byte $01
+                 .byte $40
+                 .byte $01
+                 .byte $90
+                 .byte $01
+                 .byte $40
+                 .byte $01
+                 .byte $80
+                 .byte $01
+                 .byte $40
+                 .byte $01
+                 .byte $90
+                 .byte $01
+                 .byte $40
+                 .byte $01
+                 .byte $80
+                 .byte $01
+                 .byte $40
+                 .byte $01
+                 .byte $90
+                 .byte $01
+                 .byte $40
+L_19C3           .byte $01
+L_19C4           .byte $80
+                 .byte $01
+                 .byte $40
+                 .byte $01
+                 .byte $90
+                 .byte $01
+                 .byte $40
                  .byte $2F
                  .byte $80
                  .byte $23
-                 RTI
-                 PLP
-                 BCC L_1A07
-                 RTI
+                 .byte $40
+                 .byte $28
+                 .byte $90
+                 .byte $35
+                 .byte $40
                  .byte $2F
                  .byte $80
                  .byte $23
-                 RTI
-                 PLP
-                 BCC L_1A0F
-                 RTI
+                 .byte $40
+                 .byte $28
+                 .byte $90
+                 .byte $35
+                 .byte $40
                  .byte $23
                  .byte $80
                  .byte $2F
-                 RTI
-                 AND TOPSTK,X
-                 PLP
-                 RTI
+                 .byte $40
+                 .byte $35
+                 .byte $90
+                 .byte $28
+                 .byte $40
                  .byte $2F
                  .byte $80
                  .byte $2F
-                 RTI
-                 AND TOPSTK,X
-                 AND FREQ,X
-                 AND LOMEM,X
-                 ROL
-                 RTI
-                 .byte $2F
-                 BCC L_1A15
-                 RTI
-                 .byte $1F
+                 .byte $40
+                 .byte $35
+                 .byte $90
+                 .byte $35
+                 .byte $40
+                 .byte $35
                  .byte $80
-                 PLP
-                 RTI
+                 .byte $2A
+                 .byte $40
+                 .byte $2F
+                 .byte $90
                  .byte $23
-                 BCC L_1A29
-                 RTI
-                 .byte $2F
-                 .byte $80
-                 .byte $1F
-                 RTI
-                 .byte $1F
-                 BCC L_1A2A
-                 RTI
+                 .byte $40
                  .byte $1F
                  .byte $80
-                 .byte $2F
-                 RTI
-L_1A07           .byte $23
-                 BCC L_1A39
-                 BRK
-                 RTI
+                 .byte $28
+                 .byte $40
                  .byte $23
-                 BCC L_1A3C+2
-L_1A0F           RTI
+                 .byte $90
+                 .byte $2F
+                 .byte $40
                  .byte $2F
                  .byte $80
                  .byte $1F
-                 RTI
+                 .byte $40
                  .byte $1F
-L_1A15           BCC L_1A3F
-                 RTI
+                 .byte $90
+                 .byte $28
+                 .byte $40
                  .byte $1F
                  .byte $80
                  .byte $2F
-                 RTI
+                 .byte $40
                  .byte $23
-L_1A1D           BCC L_1A4E
-                 BRK
+                 .byte $90
+                 .byte $2F
+                 .byte $00
+                 .byte $40
+                 .byte $23
+                 .byte $90
+                 .byte $2F
+                 .byte $40
+                 .byte $2F
+                 .byte $80
+                 .byte $1F
+                 .byte $40
+                 .byte $1F
+                 .byte $90
+                 .byte $28
+                 .byte $40
+                 .byte $1F
+                 .byte $80
+                 .byte $2F
+                 .byte $40
+                 .byte $23
+                 .byte $90
+L_1A1E           .byte $2F
+                 .byte $00
                  .byte $6F
                  STA L_975E+2,X
                  INX
                  CPX #$08
-                 BNE L_1A1D+1
-L_1A29           RTS
-L_1A2A           LDA #$00
+                 BNE L_1A1E
+                 RTS
+                 LDA #$00
                  STA $0641
                  LDX #$00
                  LDA L_6F94+1,X
                  STA L_34AC+1,X
                  ASL PTABW
-L_1A39           .byte $FF
+                 .byte $FF
                  BEQ L_1A44
-L_1A3C           LDA $0615
-L_1A3F           BNE L_1A44
+                 LDA $0615
+                 BNE L_1A44
                  JSR L_5E5F+1
 L_1A44           LDA $0615
                  CMP #$01
                  BNE L_1A52
                  JSR L_47FE+2
-L_1A4E           JSR L_47FE+2
+                 JSR L_47FE+2
                  RTS
 L_1A52           CMP #$02
                  BNE L_1A5A
@@ -861,7 +970,7 @@ L_1A78           CMP #$06
                  RTS
 L_1A80           CMP #$07
                  BNE L_1A88
-                 JSR L_1DC0
+                 JSR L_1DBF+1
                  RTS
 L_1A88           CMP #$08
                  BNE L_1A90
@@ -871,107 +980,110 @@ L_1A90           CMP #$FF
                  BNE L_1A98
                  JSR L_6680
                  RTS
-L_1A98           RTS
-                 BRK
-                 JSR L_4C1E+2
+L_1A98           .byte $60
+                 .byte $00
+                 .byte $20
+                 .byte $20
+                 .byte $4C
                  .byte $44
-                 EOR (ICHIDZ,X)
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
+                 .byte $41
+                 .byte $20
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
 L_1B00           LDA #$EF
                  STA AUDC4
                  LDX $066C
@@ -1012,7 +1124,7 @@ L_1B4C           LDX #$00
                  BCS L_1B6B
 L_1B5B           LDA L_3C4E,X
                  STA L_3470,Y
-                 STA L_356F+1,Y
+                 STA L_3570,Y
                  INY
                  INX
                  CPX #$0D
@@ -1022,7 +1134,7 @@ L_1B6B           CMP #$10
                  BCS L_1B7F
 L_1B6F           LDA L_3C5B,X
                  STA L_3470,Y
-                 STA L_356F+1,Y
+                 STA L_3570,Y
                  INY
                  INX
                  CPX #$0D
@@ -1032,7 +1144,7 @@ L_1B7F           CMP #$18
                  BCS L_1B93
 L_1B83           LDA L_3C68,X
                  STA L_3470,Y
-                 STA L_356F+1,Y
+                 STA L_3570,Y
                  INY
                  INX
                  CPX #$0D
@@ -1042,7 +1154,7 @@ L_1B93           CMP #$20
                  BCS L_1BA7
 L_1B97           LDA L_3C75,X
                  STA L_3470,Y
-                 STA L_356F+1,Y
+                 STA L_3570,Y
                  INY
                  INX
                  CPX #$0D
@@ -1053,7 +1165,7 @@ L_1BA7           CMP #$48
                  INC $0611
 L_1BAE           LDA L_3C82,X
                  STA L_3470,Y
-                 STA L_356F+1,Y
+                 STA L_3570,Y
                  INY
                  INX
                  CPX #$0D
@@ -1063,7 +1175,7 @@ L_1BBE           CMP #$50
                  BCS L_1BD2
 L_1BC2           LDA L_3C8F,X
                  STA L_3470,Y
-                 STA L_356F+1,Y
+                 STA L_3570,Y
                  INY
                  INX
                  CPX #$0D
@@ -1073,7 +1185,7 @@ L_1BD2           CMP #$58
                  BCS L_1BE6
 L_1BD6           LDA L_3C9C,X
                  STA L_3470,Y
-                 STA L_356F+1,Y
+                 STA L_3570,Y
                  INY
                  INX
                  CPX #$0D
@@ -1083,24 +1195,25 @@ L_1BE6           LDA #$00
                  STA $0613
                  STA AUDC4
                  RTS
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
                  .byte $9B
                  .byte $52
                  .byte $17
-                 BPL L_1C1C+2
-L_1BFE           JSR L_AD42
-                 .byte $BB
-                 ASL $D0
-                 .byte $3A
+                 .byte $10
+                 .byte $20
+                 .byte $20
+                 .byte $42
+L_1C00           LDA $06BB
+                 BNE L_1C3F
                  LDA $06BF
                  BNE L_1C3F
                  LDA $0665
@@ -1172,7 +1285,7 @@ L_1CA0           CMP #$06
                  RTS
 L_1CA8           CMP #$07
                  BNE L_1CB0
-                 JSR L_1DC0
+                 JSR L_1DBF+1
                  RTS
 L_1CB0           CMP #$08
                  BNE L_1CB8
@@ -1224,7 +1337,7 @@ L_1D05           JSR L_31E9
                  INC B0_ICBLH,X
 L_1D1C           LDA L_19C3
                  STA B0_ICBAL,X
-                 LDA L_19C3+1
+                 LDA L_19C4
                  STA B0_ICBAH,X
                  JMP L_1893
                  .byte $53
@@ -1283,22 +1396,27 @@ L_1D9E           LDA L_2FC0,X
                  LDA #$00
                  STA L_3700,Y
                  INY
-L_1DAA           INX
+                 INX
                  CPX #$10
                  BNE L_1D9E
                  RTS
-                 BRK
-                 BRK
-                 STA L_3700,Y
-                 INY
-                 INX
-                 CPX #$10
-                 BNE L_1DAA
-                 RTS
-                 BRK
-                 BRK
-                 ROL OPSTKX,X
-L_1DC0           LDA $0616
+                 .byte $00
+                 .byte $00
+                 .byte $99
+                 .byte $00
+                 .byte $37
+                 .byte $C8
+                 .byte $E8
+                 .byte $E0
+                 .byte $10
+                 .byte $D0
+                 .byte $EF
+                 .byte $60
+                 .byte $00
+                 .byte $00
+                 .byte $36
+L_1DBF           LDA #$AD
+                 ASL TRAMSZ,X
                  BNE L_1DDD
                  LDA #$B0
                  STA $0690
@@ -1365,7 +1483,7 @@ L_1E4D           LDA $06A0
                  CMP #$02
                  BEQ L_1E7E
 L_1E5D           LDX #$0E
-L_1E5F           LDA L_2F59+1,X
+L_1E5F           LDA L_2F5A,X
                  STA L_3600,Y
                  LDA L_2F69,X
                  STA L_3700,Y
@@ -1382,7 +1500,7 @@ L_1E5F           LDA L_2F59+1,X
                  BNE L_1E5D
                  RTS
 L_1E7E           LDX #$0E
-L_1E80           LDA L_2F59+1,X
+L_1E80           LDA L_2F5A,X
                  STA L_3600,Y
                  LDA L_2F78,X
                  STA L_3700,Y
@@ -1452,8 +1570,7 @@ L_1F01           BNE L_1EF1
                  LDA $0668
                  BNE L_1EEF
                  RTS
-                 BRK
-                 BRK
+                 .word $0000
                  BNE L_1F01+1
                  RTS
                  CMP #$03
@@ -1553,24 +1670,35 @@ L_1FD0           LDA L_3E0F,X
                  BNE L_1FCE
                  LDA #$00
                  RTS
-                 BRK
-                 BRK
-                 RTS
-                 BRK
-                 ORA TRAMSZ
-                 JSR L_9B3A+1
+                 .byte $00
+                 .byte $00
+                 .byte $60
+                 .byte $00
+                 .byte $05
+                 .byte $06
+                 .byte $20
+                 .byte $3B
+                 .byte $9B
                  .byte $82
-                 ORA TRAMSZ
-                 JSR L_9B3A+1
-L_1FFF           STY L_5CAD
-                 ASL FCHRFLG
+                 .byte $05
+                 .byte $06
+                 .byte $20
+                 .byte $3B
+                 .byte $9B
+                 .byte $8C
+L_2000           .byte $AD
+                 .byte $5C
+                 .byte $06
+                 .byte $F0
                  .byte $03
-                 JMP L_2063
+                 .byte $4C
+                 .byte $63
+                 .byte $20
                  INC $065C
                  LDA #$21
                  STA RUNSTK+1
                  LDA #$21
-L_2011           STA RUNSTK
+                 STA RUNSTK
                  LDA #$83
                  STA TOPSTK+1
                  LDA #$21
@@ -1599,26 +1727,26 @@ L_2037           LDA L_2A59,X
                  CPX #$C8
                  BNE L_2037
                  RTS
-                 BRK
-L_2050           BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
+                 .byte $00
+L_2050           .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
 L_2063           LDA #$00
                  STA $065C
                  LDA #$A0
@@ -1653,1453 +1781,2580 @@ L_2094           LDA L_A997+2,X
                  CPX #$C8
                  BNE L_2094
                  RTS
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BMI L_20DE+1
-                 CLI
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $30
+                 .byte $2C
+                 .byte $58
                  .byte $9B
-                 LSR APPMHI,X
-                 ORA (ICHIDZ),Y
-                 JSR L_5453
-                 EOR (ICHIDZ,X)
+                 .byte $56
+                 .byte $0E
+                 .byte $11
+                 .byte $20
+                 .byte $20
+                 .byte $53
+                 .byte $54
+                 .byte $41
+                 .byte $20
                  .byte $33
-                 ROL BUFRFL,X
+                 .byte $36
+                 .byte $38
                  .byte $32
-                 AND L_582A+2,Y
+                 .byte $39
+                 .byte $2C
+                 .byte $58
                  .byte $9B
-                 RTS
-                 ASL L_2011
-                 JSR L_444A+2
-                 EOR (ICHIDZ,X)
-                 AND (CHKSUM),Y
-                 BMI L_210B
-                 BMI L_2100+1
-                 CLI
+                 .byte $60
+                 .byte $0E
+                 .byte $11
+                 .byte $20
+                 .byte $20
+                 .byte $4C
+                 .byte $44
+                 .byte $41
+                 .byte $20
+                 .byte $31
+                 .byte $31
+                 .byte $30
+                 .byte $38
+                 .byte $30
+                 .byte $2C
+                 .byte $58
                  .byte $9B
-                 ROR
-                 ASL L_2011
-                 JSR L_5453
-L_20DE           EOR (ICHIDZ,X)
+                 .byte $6A
+                 .byte $0E
+                 .byte $11
+                 .byte $20
+                 .byte $20
+                 .byte $53
+                 .byte $54
+                 .byte $41
+                 .byte $20
                  .byte $33
                  .byte $37
-                 BMI L_2116
-                 AND L_582A+2,Y
+                 .byte $30
+                 .byte $32
+                 .byte $39
+                 .byte $2C
+                 .byte $58
                  .byte $9B
                  .byte $74
-                 ASL L_2011
-                 JSR L_444A+2
-                 EOR (ICHIDZ,X)
-                 AND (CHKSUM),Y
+                 .byte $0E
+                 .byte $11
+                 .byte $20
+                 .byte $20
+                 .byte $4C
+                 .byte $44
+                 .byte $41
+                 .byte $20
+                 .byte $31
+                 .byte $31
                  .byte $32
-                 SEC
-                 BMI L_2122+1
-                 CLI
+                 .byte $38
+                 .byte $30
+                 .byte $2C
+                 .byte $58
                  .byte $9B
-                 ROR $110E,X
-                 JSR L_5320
+                 .byte $7E
+                 .byte $0E
+                 .byte $11
+                 .byte $20
+                 .byte $20
+                 .byte $53
                  .byte $54
-L_2100           EOR (ICHIDZ,X)
+                 .byte $41
+                 .byte $20
                  .byte $33
                  .byte $37
                  .byte $32
                  .byte $32
-                 AND L_582A+2,Y
+                 .byte $39
+                 .byte $2C
+                 .byte $58
                  .byte $9B
-                 DEY
-L_210B           ASL L_2011
-L_210E           JSR L_444A+2
-                 EOR (ICHIDZ,X)
-                 AND (CHKSUM),Y
+                 .byte $88
+                 .byte $0E
+                 .byte $11
+                 .byte $20
+                 .byte $20
+L_210F           .byte $4C
+                 .byte $44
+                 .byte $41
+                 .byte $20
+                 .byte $31
+                 .byte $31
                  .byte $34
-L_2116           SEC
-                 BMI L_2143+2
-                 CLI
+                 .byte $38
+                 .byte $30
+                 .byte $2C
+                 .byte $58
                  .byte $9B
                  .byte $92
-                 ASL L_2011
-                 JSR L_3953
-L_2122           AND L_393A,Y
-                 AND L_4A48+1,Y
+                 .byte $0E
+                 .byte $11
+                 .byte $20
+                 .byte $20
+                 .byte $53
+                 .byte $39
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $39
+                 .byte $49
+                 .byte $4A
                  .byte $0C
-                 LSR
+                 .byte $4A
                  .byte $4B
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-L_2133           AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
+                 .byte $3A
+L_2133           .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
                  .byte $3A
                  .byte $3A
                  .byte $3A
                  .byte $3A
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-L_2143           AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 EOR #$15
+                 .byte $39
                  .byte $3A
-                 EOR #$4A
+                 .byte $39
+                 .byte $3A
+                 .byte $49
+                 .byte $15
+                 .byte $3A
+                 .byte $49
+                 .byte $4A
                  .byte $0C
-                 LSR
-                 LSR
+                 .byte $4A
+                 .byte $4A
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ORA L_4A0A+2,Y
+                 .byte $15
+                 .byte $14
+                 .byte $19
+                 .byte $0C
+                 .byte $4A
                  .byte $4B
                  .byte $3A
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_4A48+1,Y
-                 LSR
-                 LSR
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $49
+                 .byte $4A
+                 .byte $4A
+                 .byte $4A
                  .byte $4B
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_4939+1,Y
-                 LSR
-                 .byte $0C
-                 ORA FMSZPG+6,X
-                 .byte $0C
-                 ORA $1415,Y
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA DSKFMS+1,X
-                 .byte $0C
-                 BVC L_21B9
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_4939+1,Y
-                 LSR
-                 LSR
-                 .byte $0C
-                 .byte $0C
-                 .byte $0C
-                 .byte $14
-                 ORA L_4B0B+1,Y
+                 .byte $39
                  .byte $3A
-                 AND L_4939+1,Y
-                 LSR
-                 LSR
+                 .byte $49
+                 .byte $4A
                  .byte $0C
-                 .byte $14
-                 ORA BUFADR,X
-                 .byte $14
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL BUFADR+1,X
-                 ORA BUFADR,X
-                 ORA L_4B4A,Y
-                 AND L_393A,Y
-                 EOR #$4A
-                 LSR
+                 .byte $15
+                 .byte $49
                  .byte $0C
+                 .byte $19
+                 .byte $15
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA L_4A0A+2,Y
-                 LSR
-L_21B9           LSR
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $19
                  .byte $0C
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA BUFADR,X
-                 .byte $14
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 ASL BUFADR,X
-                 .byte $14
-                 .byte $14
-                 ASL BUFADR,X
-                 ORA DSKFMS+1,X
+                 .byte $50
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $49
+                 .byte $4A
+                 .byte $4A
                  .byte $0C
-                 LSR
-                 .byte $0C
-                 LSR
                  .byte $0C
                  .byte $0C
                  .byte $14
-                 ORA BUFADR+1,X
+                 .byte $19
+                 .byte $0C
+                 .byte $4B
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $49
+                 .byte $4A
+                 .byte $4A
+                 .byte $0C
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA $0C0C,Y
+                 .byte $15
+                 .byte $15
                  .byte $14
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL BUFADR,X
-                 ORA BUFADR,X
+                 .byte $15
                  .byte $14
-                 ORA BUFADR+1,X
-                 ORA BUFADR,X
+                 .byte $15
                  .byte $14
-                 ASL BUFADR+1,X
-                 ORA RTCLOK+2,X
+                 .byte $15
                  .byte $14
-                 CLC
-                 ORA $0C19,Y
+                 .byte $16
+                 .byte $16
+                 .byte $15
+                 .byte $15
+                 .byte $19
+                 .byte $4A
+                 .byte $4B
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $49
+                 .byte $4A
+                 .byte $4A
+                 .byte $0C
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $19
+                 .byte $0C
+                 .byte $4A
+                 .byte $4A
+                 .byte $4A
+                 .byte $0C
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $14
+                 .byte $16
+                 .byte $15
+                 .byte $15
+                 .byte $19
+                 .byte $0C
+                 .byte $4A
+                 .byte $0C
+                 .byte $4A
+                 .byte $0C
+                 .byte $0C
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $19
+                 .byte $0C
+                 .byte $0C
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $15
+                 .byte $15
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $14
+                 .byte $18
+                 .byte $19
+                 .byte $19
+                 .byte $0C
                  .byte $0C
                  .byte $14
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ORA BUFADR,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA BUFADR,X
-                 ORA RTCLOK+2,X
-                 ASL BUFADR+1,X
-                 ORA RTCLOK+2,X
-                 ORA L_6562+2,Y
-                 ASL BUFADR,X
+                 .byte $15
                  .byte $14
-                 ORA RTCLOK+2,X
-L_2220           ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-L_223A           ORA BUFADR+1,X
-                 ASL BUFADR,X
+                 .byte $15
+                 .byte $15
+                 .byte $15
                  .byte $14
-                 ORA BUFADR+1,X
-                 ROR BUFADR,X
+                 .byte $15
                  .byte $14
-                 ASL DSKFMS+1,X
-                 ROR TOADR+1
+                 .byte $15
                  .byte $14
-                 ASL RTCLOK+2,X
-                 ORA BUFADR+1,X
+                 .byte $15
                  .byte $14
-                 ORA L_1514,Y
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL DSKFMS+1,X
+                 .byte $15
                  .byte $14
-                 ORA BUFADR+1,X
+                 .byte $15
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA BUFADR,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 PLA
-                 ADC #$14
-                 ORA RTCLOK+2,X
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $15
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $19
+                 .byte $64
+                 .byte $65
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+L_2221           .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+L_223A           .byte $15
+                 .byte $16
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $76
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $19
+                 .byte $66
+                 .byte $67
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $19
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $19
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $15
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $68
+                 .byte $69
+                 .byte $14
+                 .byte $15
+                 .byte $14
                  .byte $77
-                 ORA BUFADR,X
-                 ORA BUFADR,X
+                 .byte $15
+                 .byte $15
+                 .byte $15
+                 .byte $15
                  .byte $14
-                 ASL BUFADR,X
-                 ORA BUFADR+1,X
+                 .byte $16
+                 .byte $15
+                 .byte $15
+                 .byte $16
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
+                 .byte $15
+                 .byte $14
+                 .byte $15
                  .byte $14
                  .byte $14
-L_227F           ORA BUFADR+1,X
-                 ORA DSKFMS+1,X
+                 .byte $14
+                 .byte $15
+L_2280           .byte $16
+                 .byte $15
+                 .byte $19
                  .byte $64
-                 ADC BUFADR+1
+                 .byte $65
+                 .byte $16
                  .byte $14
                  .byte $14
-                 ORA BUFADR+1,X
-L_228A           ASL BUFADR+1,X
-                 ASL BUFADR+1,X
+                 .byte $15
+                 .byte $16
+L_228A           .byte $16
+                 .byte $16
+                 .byte $16
+                 .byte $16
                  .byte $14
-                 ORA BUFADR,X
+                 .byte $15
+                 .byte $15
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ROR
+                 .byte $15
+                 .byte $14
+                 .byte $6A
                  .byte $6B
-                 ORA BUFADR,X
+                 .byte $15
+                 .byte $15
                  .byte $14
                  .byte $14
                  .byte $14
-                 ORA BUFSTR,X
+                 .byte $15
+                 .byte $6C
                  .byte $6F
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL BUFADR+1,X
+                 .byte $15
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ASL TOADR,X
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $66
                  .byte $67
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
+                 .byte $15
                  .byte $14
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA L_3A6B+1,Y
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $19
+                 .byte $6C
+                 .byte $3A
                  .byte $6F
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ASL BUFADR+1,X
-                 ASL BUFADR,X
+                 .byte $15
                  .byte $14
-                 ASL RTCLOK+2,X
-                 ORA BUFADR,X
-                 ORA ADRESS,X
+                 .byte $16
                  .byte $14
-                 ASL TOADR,X
-                 .byte $67
+                 .byte $15
                  .byte $14
+                 .byte $16
                  .byte $14
-                 ORA BUFADR+1,X
+                 .byte $16
+                 .byte $16
+                 .byte $16
+                 .byte $15
                  .byte $14
-                 ORA BUFADR+1,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA L_396C,Y
-                 .byte $3A
-                 AND $146F,Y
-                 ORA BUFADR,X
+                 .byte $16
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-L_2300           ORA RTCLOK+2,X
-                 PLA
-                 ADC #$16
-                 ORA BUFCNT,X
-                 ORA BUFADR+1,X
-                 .byte $14
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 ASL BUFADR,X
-                 .byte $14
-                 ORA L_3A6B+1,Y
-                 AND L_3A39,Y
-                 AND $1472,Y
-                 .byte $14
-                 ORA RTCLOK+2,X
-                 ASL DSKFMS+1,X
-                 .byte $14
-                 ORA BUFADR+1,X
-                 .byte $14
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA BUFADR,X
-                 ASL BUFADR,X
-                 .byte $14
-                 .byte $14
-                 .byte $14
-                 ORA BUFADR+1,X
-                 ORA BUFADR+1,X
-                 ORA BUFADR,X
-                 ASL BUFADR,X
-                 .byte $14
-                 ORA DSKFMS+1,X
-                 BVS L_2373+1
-L_233B           .byte $3A
-                 AND L_393A,Y
-                 .byte $3A
-                 ROR L_6E6D
-                 ADC L_6F6E
-                 .byte $14
-                 ORA BUFADR+1,X
-                 .byte $14
-                 ORA BUFADR+1,X
-                 ASL BUFADR,X
-                 .byte $14
-                 ASL BUFADR,X
-                 ORA BUFADR+1,X
-                 CLC
-                 ORA BUFADR+1,X
-                 .byte $14
-                 ORA BUFADR+1,X
-                 .byte $14
-                 ASL RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 ORA RTCLOK+2,X
-                 BVS L_239B+1
-                 AND L_3A39,Y
-                 AND L_393A,Y
-                 .byte $3A
-                 AND L_393A,Y
-                 AND $1471,Y
-                 ORA BUFADR+1,X
-                 ORA BUFADR+1,X
-L_2373           ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA BUFADR,X
-                 ORA L_1514,Y
-                 ASL BUFADR+1,X
-                 ORA RTCLOK+2,X
-                 ADC TOADR+1
-                 ASL BUFADR,X
-                 ASL RTCLOK+2,X
-                 ORA DSKFMS+1,X
-                 .byte $72
-                 AND L_393A,Y
-                 .byte $3A
-                 AND L_393A,Y
-                 .byte $3A
-                 AND L_393A,Y
-                 ADC RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 .byte $14
-                 ORA RTCLOK+2,X
-L_239B           ASL RTCLOK+2,X
-                 ORA BUFADR,X
-                 .byte $14
-                 ORA DSKFMS,X
-                 ORA L_1913+2,Y
+                 .byte $15
+                 .byte $15
+                 .byte $15
                  .byte $64
-                 ADC TOADR
                  .byte $14
-                 ORA BUFADR+1,X
-                 ORA RTCLOK+2,X
-                 ORA DSKFMS+1,X
-                 JMP (L_393A)
+                 .byte $16
+                 .byte $66
+                 .byte $67
+                 .byte $14
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $19
+                 .byte $6C
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
+                 .byte $6F
+                 .byte $14
+                 .byte $15
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+L_2300           .byte $15
+                 .byte $14
+                 .byte $68
+                 .byte $69
+                 .byte $16
+                 .byte $15
+                 .byte $6B
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $19
+                 .byte $6C
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $72
+                 .byte $14
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $19
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $14
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $19
+                 .byte $70
+                 .byte $39
+L_233B           .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $6E
+                 .byte $6D
+                 .byte $6E
+                 .byte $6D
+                 .byte $6E
+                 .byte $6F
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $15
+                 .byte $15
+                 .byte $16
+                 .byte $18
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $70
+                 .byte $3A
+                 .byte $39
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $39
+                 .byte $71
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $15
+                 .byte $19
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $65
+                 .byte $67
+                 .byte $16
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $19
+                 .byte $72
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $75
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $18
+                 .byte $19
+                 .byte $15
+                 .byte $19
+                 .byte $64
+                 .byte $65
+                 .byte $66
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $19
+                 .byte $6C
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
                  .byte $3A
                  .byte $3A
                  .byte $6F
-                 ASL RTCLOK+2,X
-                 ASL BUFADR,X
-                 ASL RTCLOK+2,X
+                 .byte $16
                  .byte $14
-                 ORA BUFADR+1,X
-                 ORA DSKFMS,X
-                 ORA BUFADR,X
-                 ASL DSKFMS,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 ORA DSKFMS,X
+                 .byte $16
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $18
+                 .byte $15
+                 .byte $15
+                 .byte $16
+                 .byte $18
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $18
                  .byte $72
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
                  .byte $3A
                  .byte $3A
-                 ADC BUFADR+1,X
+                 .byte $75
+                 .byte $16
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
+                 .byte $15
                  .byte $14
-                 ORA BUFADR,X
-                 ORA L_1514,Y
-                 ASL BUFADR+1,X
-                 ORA RTCLOK+2,X
+                 .byte $16
                  .byte $14
-                 ORA BUFADR+1,X
-                 ORA BUFADR+1,X
+                 .byte $15
                  .byte $14
-                 ORA BUFADR+1,X
-L_2400           ORA L_3A72,Y
-                 AND L_393A,Y
-                 ADC COLAC,X
+                 .byte $16
+                 .byte $14
+                 .byte $14
+                 .byte $15
+                 .byte $15
+                 .byte $19
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $16
+L_2400           .byte $19
+                 .byte $72
                  .byte $3A
-                 AND L_1574+1,Y
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 ASL BUFADR+1,X
-                 ORA RTCLOK+2,X
-                 ORA DSKFMS,X
-                 ORA $1415,Y
-                 ASL BUFADR+1,X
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 ORA RTCLOK+2,X
-                 ORA COLAC,X
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $75
+                 .byte $72
+                 .byte $3A
+                 .byte $39
+                 .byte $75
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $16
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $18
+                 .byte $19
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $72
                  .byte $73
 L_242C           .byte $74
-                 ADC RTCLOK+2,X
-                 ORA L_7572,Y
-                 ORA RTCLOK+2,X
-L_2434           ASL RTCLOK+2,X
-L_2436           ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-L_243C           ASL RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
+                 .byte $75
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL DSKFMS+1,X
-                 CLC
+                 .byte $19
+                 .byte $72
+                 .byte $75
+                 .byte $15
                  .byte $14
-                 ORA BUFADR+1,X
+L_2434           .byte $16
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA BUFADR,X
-                 ORA BUFADR+1,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL BUFADR+1,X
-                 ORA RTCLOK+2,X
+                 .byte $15
+L_2437           .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+L_243C           .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $19
+                 .byte $18
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $15
+                 .byte $15
+                 .byte $16
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $16
+                 .byte $15
                  .byte $14
                  .byte $14
                  .byte $14
-                 CLC
-                 ORA L_1514,Y
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA BUFADR+1,X
                  .byte $14
-                 ORA BUFADR,X
-                 ORA RTCLOK+2,X
-                 ASL BUFADR,X
+                 .byte $18
+                 .byte $19
                  .byte $14
-                 ASL BUFADR,X
+                 .byte $15
+                 .byte $16
                  .byte $14
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $15
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
                  .byte $14
                  .byte $14
-                 ORA BUFADR+1,X
-                 CLC
-                 CLC
-                 ORA L_1514,Y
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA BUFADR,X
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL BUFADR+1,X
-                 ORA BUFADR,X
+                 .byte $15
+                 .byte $16
+                 .byte $18
+                 .byte $18
+                 .byte $19
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
+                 .byte $15
+                 .byte $16
                  .byte $14
-                 ORA RTCLOK+2,X
+                 .byte $15
                  .byte $14
-                 ORA BUFADR,X
+                 .byte $16
                  .byte $14
-                 ORA BUFADR+1,X
+                 .byte $15
                  .byte $14
-                 ORA RTCLOK+2,X
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $16
+                 .byte $15
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $14
+                 .byte $15
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
                  .byte $1C
                  .byte $64
-                 ADC TOADR
+                 .byte $65
+                 .byte $66
                  .byte $1C
-L_24DA           ADC TOADR+1
+                 .byte $65
+L_24DB           .byte $67
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ORA BUFADR,X
+                 .byte $15
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 ASL BUFADR,X
+                 .byte $15
+                 .byte $15
                  .byte $14
+                 .byte $15
                  .byte $14
-                 ASL BUFADR,X
-L_24EC           ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 .byte $14
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 .byte $14
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ROR RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 ORA L_1514,Y
-                 .byte $14
-                 ASL BUFADR,X
-                 ORA BUFADR,X
-                 .byte $14
-                 ORA BUFADR+1,X
-                 ORA BUFADR,X
-                 .byte $14
-L_2510           ASL BUFADR+1,X
-                 ORA RTCLOK+2,X
-                 .byte $14
-                 CLC
+                 .byte $15
+                 .byte $16
+                 .byte $16
+                 .byte $15
                  .byte $14
                  .byte $14
-                 ORA BUFADR+1,X
+                 .byte $16
+                 .byte $15
+L_24EC           .byte $15
                  .byte $14
-                 ORA BUFADR,X
+                 .byte $15
                  .byte $14
-                 ORA BUFADR,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ROR ABUFPT,X
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $76
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $19
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $15
+                 .byte $15
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $15
+                 .byte $14
+                 .byte $16
+L_2511           .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $14
+                 .byte $18
+                 .byte $14
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $15
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $76
+                 .byte $1C
                  .byte $1B
                  .byte $1A
                  .byte $1B
                  .byte $77
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA BUFADR,X
-                 ORA RTCLOK+2,X
-                 ASL BUFADR+1,X
-                 ORA RTCLOK+2,X
+                 .byte $15
                  .byte $14
-                 ORA BUFSTR,X
-                 ADC L_6E6D
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $15
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $14
+                 .byte $15
+                 .byte $6C
+                 .byte $6D
+                 .byte $6D
+                 .byte $6E
                  .byte $6F
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA $1476,Y
-                 ORA DSKFMS+1,X
+                 .byte $15
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 ASL BUFADR,X
-                 JMP (L_6D6D)
-                 ROR L_393A
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $19
+                 .byte $76
+                 .byte $14
+                 .byte $15
+                 .byte $19
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $16
+                 .byte $15
+                 .byte $6C
+                 .byte $6D
+                 .byte $6D
+                 .byte $6E
                  .byte $3A
-                 AND L_6D3A,Y
-                 ROR $146F
-                 ORA BUFADR+1,X
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $6D
+                 .byte $6E
+                 .byte $6F
                  .byte $14
-                 ORA L_1514,Y
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL DSKFMS+1,X
-                 PLA
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $19
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $19
+                 .byte $68
                  .byte $1A
-                 ROR
+                 .byte $6A
                  .byte $6B
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA BUFADR,X
-                 ORA RTCLOK+2,X
-                 ORA BUFSTR,X
-                 ROR L_393A
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $15
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $6C
+                 .byte $6E
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_6E6D,Y
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $6D
+                 .byte $6E
                  .byte $6F
-                 ORA BUFADR,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
+                 .byte $15
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
                  .byte $14
                  .byte $14
-                 ORA BUFADR+1,X
-                 ORA BUFADR+1,X
                  .byte $14
-                 ORA BUFADR+1,X
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $16
                  .byte $14
                  .byte $14
-                 ORA BUFADR+1,X
-                 ASL BUFADR+1,X
+                 .byte $15
+                 .byte $16
+                 .byte $16
+                 .byte $16
                  .byte $72
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_7139+1,Y
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL BUFADR+1,X
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $71
+                 .byte $15
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ASL BUFADR,X
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $15
                  .byte $14
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 JMP (L_3A39)
-                 AND L_393A,Y
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $6C
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_6C38+2,Y
-                 ADC L_6F6E
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $6C
+                 .byte $6D
+                 .byte $6E
+                 .byte $6F
                  .byte $14
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ASL BUFADR+1,X
-                 ASL BUFADR,X
+                 .byte $16
                  .byte $14
-                 ASL RTCLOK+2,X
-                 ORA BUFADR,X
-                 ORA BUFADR,X
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $16
+                 .byte $16
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $15
+                 .byte $15
+                 .byte $15
                  .byte $14
                  .byte $72
                  .byte $73
                  .byte $74
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_6D6A+2,Y
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $6C
+                 .byte $6D
                  .byte $6F
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-L_261C           ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 ASL BUFADR,X
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+L_261D           .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $16
+                 .byte $15
                  .byte $14
                  .byte $72
                  .byte $73
                  .byte $3A
-                 AND L_393A,Y
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
-                 ROR L_196D+2
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $6E
+                 .byte $6F
+                 .byte $19
                  .byte $14
-                 ORA BUFADR+1,X
+                 .byte $15
+                 .byte $16
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA BUFADR,X
-                 ASL BUFADR,X
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $15
+                 .byte $16
+                 .byte $15
                  .byte $14
                  .byte $14
                  .byte $14
-                 ORA BUFADR+1,X
-                 ORA COLAC,X
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $72
                  .byte $73
-                 ADC RTCLOK+2,X
-                 ORA COLAC,X
-                 AND L_393A,Y
+                 .byte $75
+                 .byte $14
+                 .byte $15
+                 .byte $72
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
                  .byte $3A
                  .byte $73
                  .byte $74
-                 ADC COLAC+1,X
+                 .byte $75
+                 .byte $73
                  .byte $74
-                 ADC RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 ASL BUFADR,X
+                 .byte $75
                  .byte $14
-                 ASL BUFADR,X
-                 ORA BUFADR+1,X
-                 CLC
-                 ORA BUFADR+1,X
+                 .byte $15
+                 .byte $16
+                 .byte $15
                  .byte $14
-                 ORA BUFADR+1,X
+                 .byte $15
+                 .byte $16
+                 .byte $16
+                 .byte $15
                  .byte $14
-                 ASL RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 ORA COLAC,X
+                 .byte $16
+                 .byte $15
+                 .byte $15
+                 .byte $16
+                 .byte $18
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $72
                  .byte $73
                  .byte $74
                  .byte $6F
-                 JMP (L_7574)
+                 .byte $6C
+                 .byte $74
+                 .byte $75
                  .byte $14
-                 ORA BUFADR+1,X
+                 .byte $15
+                 .byte $16
                  .byte $14
-                 ORA BUFADR+1,X
+                 .byte $15
+                 .byte $16
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ASL ADRESS,X
-                 ADC ABUFPT
-                 ROR TOADR+1
-                 ORA RTCLOK+2,X
-                 ORA BUFADR,X
-                 ORA L_1514,Y
-                 ASL BUFADR+1,X
-                 ORA RTCLOK+2,X
+                 .byte $15
                  .byte $14
-                 ORA BUFADR+1,X
-                 ORA BUFADR+1,X
+                 .byte $16
+                 .byte $64
+                 .byte $65
+                 .byte $1C
+                 .byte $66
+                 .byte $67
+                 .byte $15
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
+                 .byte $15
+                 .byte $15
+                 .byte $19
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL BUFADR,X
-                 ASL DELTAR,X
+                 .byte $15
+                 .byte $16
+                 .byte $16
+                 .byte $15
                  .byte $14
-                 ORA DSKUTL+1,X
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $15
+                 .byte $16
+                 .byte $76
+                 .byte $14
+                 .byte $15
+                 .byte $1B
                  .byte $77
-                 ORA BUFADR,X
+                 .byte $15
+                 .byte $15
                  .byte $14
-                 ORA DSKFMS,X
-                 ORA $1415,Y
-                 ASL BUFADR+1,X
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
+                 .byte $15
+                 .byte $18
+                 .byte $19
+                 .byte $15
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
+                 .byte $16
+                 .byte $16
+                 .byte $15
                  .byte $14
-                 ORA BUFADR,X
-                 ASL RTCLOK+2,X
+                 .byte $15
+                 .byte $16
+                 .byte $15
                  .byte $14
-                 ORA BUFADR+1,X
-                 ORA DSKFMS,X
-                 ORA BUFADR,X
-                 ASL DSKFMS,X
-                 ORA BUFADR+1,X
+                 .byte $15
                  .byte $14
-                 ORA BUFADR+1,X
+                 .byte $15
+                 .byte $16
                  .byte $14
-                 ASL RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
+                 .byte $15
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA BUFADR+1,X
+                 .byte $16
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ASL SAVADR,X
-                 ADC #$14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $18
+                 .byte $15
+                 .byte $15
+                 .byte $16
+                 .byte $18
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $68
+                 .byte $69
+                 .byte $14
                  .byte $6B
                  .byte $14
                  .byte $14
-                 ORA BUFADR,X
-                 ORA L_1514,Y
-                 ASL BUFADR+1,X
-                 ORA RTCLOK+2,X
+                 .byte $15
+                 .byte $15
+                 .byte $19
                  .byte $14
-                 ORA BUFADR+1,X
-                 ORA BUFADR+1,X
-                 .byte $14
-                 ORA BUFADR+1,X
-                 ORA L_1514,Y
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 .byte $14
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 ASL BUFADR+1,X
-                 ORA RTCLOK+2,X
-                 ORA DSKFMS,X
-                 ORA $1415,Y
-                 ASL BUFADR+1,X
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 ORA $1415,Y
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 .byte $14
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL DSKFMS+1,X
-                 CLC
-                 .byte $14
-                 ORA BUFADR+1,X
-                 .byte $14
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 .byte $14
-                 ORA BUFADR,X
-                 ASL BUFADR+1,X
-                 .byte $14
-                 ORA RTCLOK+2,X
-                 ASL BUFADR+1,X
-                 ORA RTCLOK+2,X
+                 .byte $15
+                 .byte $16
+                 .byte $16
+                 .byte $15
                  .byte $14
                  .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $16
                  .byte $14
-                 CLC
-                 ORA L_1514,Y
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA BUFADR+1,X
+                 .byte $15
+                 .byte $16
+                 .byte $19
                  .byte $14
-                 ORA BUFADR,X
-                 ORA RTCLOK+2,X
-                 ASL BUFADR,X
+                 .byte $15
+                 .byte $16
                  .byte $14
-                 ASL BUFADR,X
+                 .byte $15
                  .byte $14
-                 ASL RTCLOK+2,X
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $16
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $18
+                 .byte $19
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $19
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $19
+                 .byte $18
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $14
+                 .byte $15
+                 .byte $15
+                 .byte $16
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $16
+                 .byte $15
                  .byte $14
                  .byte $14
                  .byte $14
                  .byte $14
-                 ORA BUFADR+1,X
-                 CLC
-                 CLC
-                 ORA L_1514,Y
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
+                 .byte $18
+                 .byte $19
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL BUFADR+1,X
-                 ORA BUFADR,X
+                 .byte $15
+                 .byte $16
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
+                 .byte $15
                  .byte $14
-                 ORA RTCLOK+2,X
+                 .byte $16
                  .byte $14
-                 ORA BUFADR,X
+                 .byte $15
+                 .byte $16
                  .byte $14
-                 ORA BUFADR+1,X
+                 .byte $15
+                 .byte $15
+                 .byte $15
                  .byte $14
-                 ORA RTCLOK+2,X
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $14
+                 .byte $14
+                 .byte $14
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $18
+                 .byte $18
+                 .byte $19
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $16
+                 .byte $15
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $14
+                 .byte $15
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
                  .byte $1C
                  .byte $14
-                 ORA BUFADR+1,X
+                 .byte $15
+                 .byte $16
                  .byte $14
-                 ORA BUFADR,X
+                 .byte $15
+                 .byte $15
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
+                 .byte $15
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 ASL BUFADR,X
+                 .byte $15
                  .byte $14
                  .byte $14
-                 ASL BUFADR,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
+                 .byte $15
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
+                 .byte $15
+                 .byte $16
+                 .byte $16
+                 .byte $15
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
                  .byte $14
-                 ORA BUFADR+1,X
+                 .byte $16
+                 .byte $15
+                 .byte $15
                  .byte $14
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL BUFADR,X
+                 .byte $15
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 ORA BUFADR,X
+                 .byte $15
+                 .byte $16
                  .byte $14
-                 ASL BUFADR+1,X
-                 ORA RTCLOK+2,X
+                 .byte $15
                  .byte $14
-                 CLC
+                 .byte $15
+                 .byte $16
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
+                 .byte $15
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ORA BUFADR,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
+                 .byte $16
                  .byte $14
-                 ORA BUFADR,X
+                 .byte $15
                  .byte $14
-                 ASL BUFADR+1,X
-                 ORA RTCLOK+2,X
                  .byte $14
-                 ORA BUFSTR,X
-                 ADC L_6E6D
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $14
+                 .byte $18
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $15
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $14
+                 .byte $15
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $14
+                 .byte $15
+                 .byte $6C
+                 .byte $6D
+                 .byte $6D
+                 .byte $6E
                  .byte $6F
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-L_286C           ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+L_286C           .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
                  .byte $14
                  .byte $14
-                 ORA BUFADR+1,X
-                 ASL BUFADR,X
-                 JMP (L_6D6D)
-                 ROR L_393A
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $16
+                 .byte $15
+                 .byte $6C
+                 .byte $6D
+                 .byte $6D
+                 .byte $6E
                  .byte $3A
-                 AND L_6D3A,Y
-                 ROR $146F
-                 ORA BUFADR+1,X
-                 .byte $14
-                 ORA L_1514,Y
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL DSKFMS+1,X
-                 .byte $14
-                 ORA BUFADR+1,X
-                 .byte $14
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA BUFSTR,X
-                 ROR L_393A
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
-                 .byte $3A
-                 AND L_6E6D,Y
+                 .byte $6D
+                 .byte $6E
                  .byte $6F
-                 ORA BUFADR,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
                  .byte $14
+                 .byte $15
+                 .byte $16
                  .byte $14
-                 ORA BUFADR+1,X
-                 ORA BUFADR+1,X
+                 .byte $19
                  .byte $14
-                 ORA BUFADR+1,X
+                 .byte $15
+                 .byte $16
                  .byte $14
+                 .byte $15
                  .byte $14
+                 .byte $16
+                 .byte $19
                  .byte $14
-                 ASL BUFADR+1,X
-                 ASL COLAC,X
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $6C
+                 .byte $6E
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_7139+1,Y
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL BUFADR+1,X
-                 .byte $14
-                 ORA RTCLOK+2,X
-                 ASL BUFADR,X
-                 .byte $14
-                 .byte $14
-                 .byte $14
-                 .byte $14
-                 ORA BUFADR+1,X
-                 JMP (L_3A39)
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_7372,Y
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $6D
+                 .byte $6E
+                 .byte $6F
+                 .byte $15
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $14
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $14
+                 .byte $14
+                 .byte $16
+                 .byte $16
+                 .byte $16
+                 .byte $72
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $71
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $14
+                 .byte $14
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $6C
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $72
+                 .byte $73
                  .byte $74
-                 AND L_393A,Y
+                 .byte $39
+                 .byte $3A
+                 .byte $39
                  .byte $74
-                 ADC RTCLOK+2,X
-                 ORA BUFADR+1,X
+                 .byte $75
                  .byte $14
-                 ORA BUFADR+1,X
+                 .byte $15
+                 .byte $16
                  .byte $14
-                 ORA BUFADR,X
+                 .byte $15
+                 .byte $16
                  .byte $14
-                 ASL RTCLOK+2,X
-                 ASL BUFADR+1,X
-                 ASL BUFADR,X
+                 .byte $15
+                 .byte $15
                  .byte $14
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-L_2919           ORA BUFADR,X
+                 .byte $16
+                 .byte $14
+                 .byte $16
+                 .byte $16
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $15
                  .byte $14
                  .byte $72
                  .byte $73
                  .byte $3A
-                 AND L_7339+1,Y
+                 .byte $39
+                 .byte $3A
+                 .byte $73
                  .byte $74
                  .byte $73
                  .byte $14
-                 ORA BUFADR+1,X
+                 .byte $15
+                 .byte $16
                  .byte $14
-                 ORA RTCLOK+2,X
-                 .byte $14
-                 ORA BUFADR+1,X
-                 .byte $14
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 .byte $14
-                 ORA RTCLOK+2,X
-                 .byte $14
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
+                 .byte $15
                  .byte $14
                  .byte $14
-                 ORA BUFADR+1,X
-                 ASL BUFADR,X
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $14
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $16
+                 .byte $15
                  .byte $72
                  .byte $73
-                 ADC BUFADR+1,X
+                 .byte $75
+                 .byte $16
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
+                 .byte $15
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA BUFADR+1,X
+                 .byte $15
+                 .byte $16
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ASL DSKFMS+1,X
+                 .byte $15
                  .byte $14
-                 ORA BUFADR+1,X
+                 .byte $16
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL BUFADR,X
+                 .byte $15
                  .byte $14
+                 .byte $16
                  .byte $14
+                 .byte $15
+                 .byte $16
                  .byte $14
-                 ORA BUFADR+1,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL BUFADR,X
+                 .byte $15
                  .byte $14
-                 ASL RTCLOK+2,X
-                 ORA BUFADR,X
-                 ASL BUFADR,X
+                 .byte $16
+                 .byte $19
                  .byte $14
-                 ORA BUFADR+1,X
-                 ASL BUFADR,X
+                 .byte $15
+                 .byte $16
                  .byte $14
-                 ASL RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 CLC
-                 ORA BUFADR+1,X
+                 .byte $15
                  .byte $14
-                 ORA BUFADR+1,X
+                 .byte $16
                  .byte $14
-                 ASL RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
+                 .byte $15
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 .byte $14
-                 ORA BUFADR+1,X
-                 .byte $14
-                 ORA RTCLOK+2,X
-                 ASL BUFADR+1,X
-                 ORA BUFADR+1,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA L_1514,Y
-                 ASL BUFADR+1,X
-                 ORA RTCLOK+2,X
-                 .byte $14
-                 ORA BUFADR+1,X
-                 ORA BUFADR+1,X
-                 .byte $14
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 .byte $14
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL BUFADR,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA BUFADR,X
+                 .byte $16
+                 .byte $15
                  .byte $14
                  .byte $14
-                 CLC
-                 ORA $1415,Y
-                 ASL BUFADR+1,X
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $18
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $16
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $19
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $15
+                 .byte $14
+                 .byte $14
+                 .byte $18
+                 .byte $19
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
                  .byte $14
                  .byte $17
-                 ORA BUFADR+1,X
+                 .byte $15
+                 .byte $16
                  .byte $14
                  .byte $14
-                 ORA BUFADR+1,X
-                 ORA DSKFMS,X
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $18
 L_2A08           .byte $14
-                 ORA BUFADR+1,X
-                 CLC
-                 ORA BUFADR+1,X
+                 .byte $15
+                 .byte $16
+                 .byte $18
+                 .byte $15
+                 .byte $16
                  .byte $14
-                 ORA BUFADR+1,X
+                 .byte $15
+                 .byte $16
                  .byte $14
-                 ASL RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
+                 .byte $16
                  .byte $14
-L_2A1B           ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA BUFADR+1,X
+                 .byte $15
+                 .byte $16
+                 .byte $15
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
+                 .byte $15
+                 .byte $16
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ORA L_1514,Y
-                 ASL BUFADR+1,X
-                 ORA RTCLOK+2,X
+                 .byte $15
+L_2A1C           .byte $14
+                 .byte $16
                  .byte $14
-                 ORA BUFADR+1,X
-                 ORA BUFADR+1,X
+                 .byte $15
                  .byte $14
-                 ORA BUFADR+1,X
-                 ORA L_1514,Y
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
+                 .byte $16
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 ASL BUFADR+1,X
-                 ORA RTCLOK+2,X
+                 .byte $15
+                 .byte $16
                  .byte $14
-L_2A59           CLC
-                 ORA $1415,Y
-                 ASL BUFADR+1,X
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 ORA $1415,Y
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA BUFADR+1,X
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
                  .byte $14
                  .byte $14
-                 ORA BUFADR+1,X
+                 .byte $15
                  .byte $14
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA $0C0C,Y
+                 .byte $19
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $19
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $16
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $14
+L_2A59           .byte $18
+                 .byte $19
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $19
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $19
+                 .byte $0C
+                 .byte $0C
                  .byte $0C
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ASL BUFADR+1,X
-                 ASL BUFADR,X
+                 .byte $15
                  .byte $14
-                 ASL RTCLOK+2,X
-                 ORA BUFADR,X
-                 ORA BUFADR,X
+                 .byte $16
                  .byte $14
-                 ASL BUFADR+1,X
-                 ORA RTCLOK+2,X
+                 .byte $15
                  .byte $14
-                 ORA BUFADR+1,X
-                 ASL BUFADR,X
+                 .byte $16
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ORA DSKFMS+1,X
+                 .byte $16
+                 .byte $16
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $15
+                 .byte $15
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $19
                  .byte $1C
                  .byte $0C
                  .byte $0C
@@ -3110,98 +4365,154 @@ L_2A59           CLC
                  .byte $1B
                  .byte $14
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 ASL BUFADR,X
+                 .byte $15
                  .byte $14
-                 ORA BUFADR+1,X
+                 .byte $15
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ASL BUFADR,X
-                 ORA $0C0C,Y
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $16
+                 .byte $15
+                 .byte $19
+                 .byte $0C
+                 .byte $0C
                  .byte $0C
                  .byte $1A
                  .byte $14
-                 ORA DSKFMS+1,X
+                 .byte $15
+                 .byte $19
                  .byte $0C
                  .byte $0C
                  .byte $0C
                  .byte $14
                  .byte $14
-                 ASL DSKFMS+1,X
+                 .byte $16
+                 .byte $19
                  .byte $14
-                 ORA BUFADR+1,X
+                 .byte $15
+                 .byte $16
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA BUFADR,X
-                 ASL BUFADR,X
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $15
+                 .byte $16
+                 .byte $15
                  .byte $14
                  .byte $14
                  .byte $14
-                 ORA BUFADR+1,X
-                 ORA BUFADR+1,X
-                 ORA BUFADR,X
-                 ASL BUFADR,X
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $15
+                 .byte $16
+                 .byte $15
                  .byte $14
-                 ORA DSKFMS+1,X
+                 .byte $15
+                 .byte $19
                  .byte $0C
                  .byte $0C
                  .byte $1B
                  .byte $14
-                 ORA BUFADR+1,X
+                 .byte $15
+                 .byte $16
                  .byte $14
-                 ORA $0C0C,Y
+                 .byte $19
+                 .byte $0C
+                 .byte $0C
                  .byte $0C
                  .byte $14
-                 ORA BUFADR+1,X
-                 ORA BUFADR+1,X
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $16
                  .byte $14
-                 ORA BUFADR+1,X
-                 ASL BUFADR,X
+                 .byte $15
+                 .byte $16
+                 .byte $16
+                 .byte $15
                  .byte $14
-                 ASL BUFADR,X
-L_2B21           CLC
-                 ORA $1415,Y
-                 ASL BUFADR+1,X
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA $0C0C,Y
+                 .byte $16
+                 .byte $15
+L_2B21           .byte $18
+                 .byte $19
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $19
+                 .byte $0C
+                 .byte $0C
                  .byte $0C
                  .byte $1B
                  .byte $14
-                 ORA BUFADR+1,X
+                 .byte $15
+                 .byte $16
                  .byte $1C
                  .byte $0C
                  .byte $0C
                  .byte $0C
 L_2B3B           .byte $14
-                 ORA BUFADR+1,X
+                 .byte $15
+                 .byte $16
                  .byte $14
-                 ASL BUFADR,X
-                 ASL RTCLOK+2,X
+                 .byte $16
+                 .byte $15
+                 .byte $16
                  .byte $14
-                 ORA BUFADR+1,X
                  .byte $14
-                 ORA BUFADR,X
-                 ORA BUFADR+1,X
-                 CLC
-                 ORA BUFADR+1,X
+                 .byte $15
+                 .byte $16
                  .byte $14
-                 ORA BUFADR+1,X
+                 .byte $15
+                 .byte $15
+                 .byte $15
+                 .byte $16
+                 .byte $18
+                 .byte $15
+                 .byte $16
                  .byte $14
-                 ASL RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 ORA DSKFMS,X
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $18
                  .byte $0C
                  .byte $0C
                  .byte $0C
@@ -3213,149 +4524,246 @@ L_2B3B           .byte $14
                  .byte $0C
                  .byte $0C
                  .byte $14
-                 ORA BUFADR+1,X
+                 .byte $15
+                 .byte $16
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
+                 .byte $15
                  .byte $14
-                 ORA BUFADR,X
-                 ORA L_1514,Y
-                 ASL BUFADR+1,X
-                 ORA RTCLOK+2,X
+                 .byte $16
                  .byte $14
-                 ORA BUFADR+1,X
-                 ORA BUFADR+1,X
+                 .byte $15
                  .byte $14
-                 ORA BUFADR+1,X
-                 ORA $0C0C,Y
+                 .byte $16
+                 .byte $14
+                 .byte $14
+                 .byte $15
+                 .byte $15
+                 .byte $19
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $19
                  .byte $0C
                  .byte $0C
                  .byte $0C
                  .byte $0C
                  .byte $0C
                  .byte $0C
+                 .byte $0C
+                 .byte $0C
                  .byte $14
                  .byte $14
-                 ORA BUFADR+1,X
+                 .byte $15
+                 .byte $16
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 ASL BUFADR+1,X
-                 ORA RTCLOK+2,X
-                 ORA DSKFMS,X
-                 ORA $1415,Y
-                 ASL BUFADR+1,X
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 ORA RTCLOK+2,X
-                 ORA ABUFPT,X
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $16
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $18
+                 .byte $19
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $1C
                  .byte $0C
                  .byte $0C
                  .byte $0C
                  .byte $0C
                  .byte $14
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA BUFADR+1,X
+                 .byte $16
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 ASL BUFADR,X
-                 ORA BUFADR+1,X
-                 CLC
-                 ORA BUFADR+1,X
+                 .byte $15
                  .byte $14
-                 ORA BUFADR+1,X
+                 .byte $16
                  .byte $14
-                 ASL RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 ORA RTCLOK+2,X
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $16
+                 .byte $15
+                 .byte $15
+                 .byte $16
+                 .byte $18
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $14
                  .byte $14
                  .byte $1C
                  .byte $0C
-                 ORA BUFADR+1,X
+                 .byte $15
+                 .byte $16
                  .byte $14
-                 ORA BUFADR+1,X
+                 .byte $15
+                 .byte $16
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 ORA RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA BUFADR,X
-L_2BE9           ORA L_1514,Y
-                 ASL BUFADR+1,X
-                 ORA RTCLOK+2,X
+                 .byte $15
                  .byte $14
-                 ORA BUFADR+1,X
-                 ORA BUFADR+1,X
+                 .byte $16
                  .byte $14
-                 ORA RTCLOK+2,X
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $15
+L_2BE9           .byte $19
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
                  .byte $1C
                  .byte $0C
-                 ORA BUFADR+1,X
+                 .byte $15
+                 .byte $16
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA BUFADR,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA BUFADR,X
+                 .byte $15
                  .byte $14
-                 ORA DRKMSK,X
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $4E
                  .byte $4F
                  .byte $4F
                  .byte $4F
                  .byte $0C
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ORA BUFADR+1,X
-                 ORA DSKFMS+1,X
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $19
                  .byte $0C
                  .byte $0C
                  .byte $0C
                  .byte $0C
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA $0C0C,Y
+                 .byte $15
                  .byte $14
-                 ORA BUFADR+1,X
+                 .byte $16
                  .byte $14
+                 .byte $15
                  .byte $14
-                 ORA BUFADR+1,X
-                 ORA DSKFMS,X
-                 ORA XMTDON,X
-                 AND L_393A,Y
-                 LSR L_4F4D+2
-                 .byte $4F
-                 .byte $0C
+                 .byte $16
                  .byte $14
-                 ORA $0C0C,Y
-                 .byte $4F
-                 .byte $4F
-                 .byte $4F
+                 .byte $15
+                 .byte $14
+                 .byte $19
                  .byte $0C
                  .byte $0C
                  .byte $14
-                 ASL RTCLOK+2,X
-                 ORA RTCLOK+2,X
-                 ORA $0C0C,Y
+                 .byte $15
+                 .byte $16
+                 .byte $14
+                 .byte $14
+                 .byte $15
+                 .byte $16
+                 .byte $15
+                 .byte $18
+                 .byte $15
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $4E
+                 .byte $4F
+                 .byte $4F
+                 .byte $4F
+                 .byte $0C
+                 .byte $14
+                 .byte $19
+                 .byte $0C
+                 .byte $0C
+                 .byte $4F
+                 .byte $4F
+                 .byte $4F
+                 .byte $0C
+                 .byte $0C
+                 .byte $14
+                 .byte $16
+                 .byte $14
+                 .byte $15
+                 .byte $14
+                 .byte $19
+                 .byte $0C
+                 .byte $0C
                  .byte $0C
                  .byte $0C
                  .byte $4F
@@ -3363,1494 +4771,1708 @@ L_2BE9           ORA L_1514,Y
                  .byte $0C
                  .byte $14
                  .byte $14
-                 ORA RTCLOK+2,X
-                 ASL RTCLOK+2,X
+                 .byte $15
                  .byte $14
-                 ORA BUFADR,X
-                 AND L_393A,Y
+                 .byte $16
+                 .byte $14
+                 .byte $14
+                 .byte $15
+                 .byte $15
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 LSR L_4F4D+2
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $4E
                  .byte $4F
-                 EOR L_393A
+                 .byte $4F
+                 .byte $4F
+                 .byte $4D
                  .byte $3A
-                 LSR L_4F4D+2
+                 .byte $39
+                 .byte $3A
+                 .byte $4E
+                 .byte $4F
+                 .byte $4F
                  .byte $0C
                  .byte $14
-                 ORA $0C0C,Y
+                 .byte $19
+                 .byte $0C
+                 .byte $0C
                  .byte $4F
                  .byte $4F
                  .byte $4F
-                 EOR L_3A39
-                 LSR L_4F4D+2
+                 .byte $4D
+                 .byte $39
+                 .byte $3A
+                 .byte $4E
+                 .byte $4F
+                 .byte $4F
                  .byte $0C
                  .byte $14
-                 ASL BUFADR+1,X
-                 ORA RTCLOK+2,X
-                 ORA RECVDN,X
+                 .byte $16
+                 .byte $16
+                 .byte $15
+                 .byte $14
+                 .byte $15
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_4F4D+1,Y
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $4E
                  .byte $4F
                  .byte $4F
-                 EOR L_3A39
-                 AND L_3A39,Y
-                 AND L_393A,Y
+                 .byte $4F
+                 .byte $4D
+                 .byte $39
                  .byte $3A
-                 LSR L_4F4D+2
+                 .byte $39
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $4E
                  .byte $4F
                  .byte $4F
                  .byte $4F
-                 ORA XMTDON,X
-                 AND L_393A,Y
+                 .byte $4F
+                 .byte $4F
+                 .byte $15
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_1538+2,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $15
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
+                 .byte $39
                  .byte $3A
-                 AND L_393A,Y
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-L_2E29           BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-L_2EFF           BRK
-L_2F00           BRK
-                 SEC
-                 JMP (L_5438)
-                 SEC
-                 BPL L_2F84
-                 TSX
-                 TSX
-                 JMP (L_6C92)
-                 BPL L_2F1F
-                 BRK
-L_2F10           BRK
-L_2F11           BRK
-                 BRK
-                 BPL L_2F15
-L_2F15           PLP
-                 BRK
-                 BRK
-                 BRK
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $3A
+                 .byte $39
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+L_2E29           .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+L_2EFF           .byte $00
+L_2F00           .byte $00
+                 .byte $38
+                 .byte $6C
+                 .byte $38
+                 .byte $54
+                 .byte $38
+                 .byte $10
+                 .byte $7C
+                 .byte $BA
+                 .byte $BA
+                 .byte $6C
+                 .byte $92
+                 .byte $6C
+                 .byte $10
+                 .byte $10
+                 .byte $00
+L_2F10           .byte $00
+L_2F11           .byte $00
+                 .byte $00
+                 .byte $10
+                 .byte $00
+                 .byte $28
+                 .byte $00
+                 .byte $00
+                 .byte $00
                  .byte $44
                  .byte $44
-                 BPL L_2F1D
-L_2F1D           BPL L_2F1F
-L_2F1F           BRK
-                 BVS L_2F22
-L_2F22           BRK
-                 BRK
-                 BPL L_2F26
-L_2F26           PLP
-                 BRK
-                 BRK
-                 BRK
+                 .byte $10
+                 .byte $00
+                 .byte $10
+                 .byte $00
+                 .byte $00
+                 .byte $70
+                 .byte $00
+L_2F22           .byte $00
+                 .byte $00
+                 .byte $10
+                 .byte $00
+                 .byte $28
+                 .byte $00
+                 .byte $00
+                 .byte $00
                  .byte $44
                  .byte $44
-                 BPL L_2F2E
-L_2F2E           BPL L_2F30
-L_2F30           BRK
+                 .byte $10
+                 .byte $00
+                 .byte $10
+                 .byte $00
+                 .byte $00
                  .byte $1C
-                 BRK
-                 BIT FPTR2+1
-                 LDA L_66FF,X
-                 BIT DSKFMS
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 CLC
-                 BRK
-                 BRK
-                 STA (LNFLG,X)
-                 BRK
+                 .byte $00
+                 .byte $24
+                 .byte $FF
+                 .byte $BD
+                 .byte $FF
+                 .byte $66
+                 .byte $24
+                 .byte $18
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $18
+                 .byte $00
+                 .byte $00
+                 .byte $81
+                 .byte $00
+                 .byte $00
                  .byte $42
-                 BRK
-                 CLC
-L_2F47           CLC
-                 BRK
-                 BRK
+                 .byte $00
+                 .byte $18
+                 .byte $18
+                 .byte $00
+                 .byte $00
                  .byte $1C
-                 BRK
-                 BRK
-                 CLC
-                 BRK
-                 BRK
+                 .byte $00
+                 .byte $00
+                 .byte $18
+                 .byte $00
+                 .byte $00
                  .byte $42
-                 BRK
-                 BRK
+                 .byte $00
+                 .byte $00
                  .byte $42
-                 BRK
-                 CLC
-                 CLC
-                 BRK
-                 BRK
-L_2F59           JSR LNFLG
-                 CLC
-                 CLC
-                 TYA
-                 TYA
-                 STY RAMTOP,X
-                 ROR
-                 STY SVESA+1,X
-                 TYA
-                 CLC
-                 CLC
-                 BRK
-L_2F69           BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 ORA (BOOT,X)
-                 STA COX,X
-                 PHP
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-L_2F78           BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 PHP
-                 STY POKADR,X
-                 ORA #$01
-                 BRK
-L_2F84           BRK
-                 BRK
-                 BRK
-L_2F87           BRK
-                 BRK
-                 CLC
-                 CLC
-                 ORA L_2919,Y
-                 LSR COLCRS+1,X
-                 AND #$19
-                 ORA L_1816+2,Y
-                 BRK
-L_2F96           BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
+                 .byte $00
+                 .byte $18
+                 .byte $18
+                 .byte $00
+                 .byte $00
+                 .byte $20
+L_2F5A           .byte $00
+                 .byte $00
+                 .byte $18
+                 .byte $18
+                 .byte $98
+                 .byte $98
+                 .byte $94
+                 .byte $6A
+                 .byte $6A
+                 .byte $94
+                 .byte $98
+                 .byte $98
+                 .byte $18
+                 .byte $18
+                 .byte $00
+L_2F69           .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $01
+                 .byte $09
+                 .byte $95
+                 .byte $94
+                 .byte $08
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+L_2F78           .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $08
+                 .byte $94
+                 .byte $95
+                 .byte $09
+                 .byte $01
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+L_2F87           .byte $00
+                 .byte $00
+                 .byte $18
+                 .byte $18
+                 .byte $19
+                 .byte $19
+                 .byte $29
+                 .byte $56
+                 .byte $56
+                 .byte $29
+                 .byte $19
+                 .byte $19
+                 .byte $18
+                 .byte $18
+                 .byte $00
+L_2F96           .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
                  .byte $80
-                 BCC L_2F47
-                 AND #$10
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-L_2FA5           BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BPL L_2FD6
-                 LDA #$90
+                 .byte $90
+                 .byte $A9
+                 .byte $29
+                 .byte $10
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+L_2FA5           .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $10
+                 .byte $29
+                 .byte $A9
+                 .byte $90
                  .byte $80
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 JSR L_3A5C
-                 AND $CB,X
-                 .byte $87
-                 LSR ICBLHZ
-                 BPL L_2FC6+1
-                 BRK
-L_2FC0           BRK
-                 BRK
-                 BPL L_2FD4
-                 BPL L_2FD6
-L_2FC6           BPL L_2FD8
-                 BPL L_2FDA
-                 BPL L_2FDC
-                 BPL L_2FDE
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-L_2FD4           BRK
-                 BRK
-L_2FD6           BRK
-                 BRK
-L_2FD8           BRK
-                 BRK
-L_2FDA           BPL L_2FDC
-L_2FDC           BRK
-                 BRK
-L_2FDE           BRK
-                 BRK
-                 BRK
-                 BRK
-                 PHP
-                 BPL L_300E
-                 LSR VVTP+1
-                 .byte $CB
-                 AND XMTDON,X
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $20
                  .byte $5C
-                 JSR LNFLG
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-L_3000           BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-L_3007           BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-L_300E           BRK
-                 BRK
-L_3010           BRK
-L_3011           BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-L_302F           BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-L_303C           BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-L_30BD           BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-L_312D           BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-L_31B0           BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-L_31B6           BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-L_31E9           BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
+                 .byte $3A
+                 .byte $35
+                 .byte $CB
+                 .byte $87
+                 .byte $46
+                 .byte $29
+                 .byte $10
+                 .byte $08
+                 .byte $00
+L_2FC0           .byte $00
+                 .byte $00
+                 .byte $10
+                 .byte $10
+                 .byte $10
+                 .byte $10
+                 .byte $10
+                 .byte $10
+                 .byte $10
+                 .byte $10
+                 .byte $10
+                 .byte $10
+                 .byte $10
+                 .byte $10
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $10
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $08
+                 .byte $10
+                 .byte $29
+                 .byte $46
+                 .byte $87
+                 .byte $CB
+                 .byte $35
+                 .byte $3A
+                 .byte $5C
+                 .byte $20
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+L_3000           .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+L_3007           .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+L_3010           .byte $00
+L_3011           .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+L_302F           .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+L_303C           .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+L_30BD           .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+L_312D           .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+L_31B0           .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+L_31B6           .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+L_31E9           .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
 L_3300           LDA $0616
                  BNE L_3345
 L_3305           STA $06D3
@@ -5073,7 +6695,7 @@ L_3500           LDA L_B482,X
                  STA L_3700,Y
                  INY
                  INX
-L_3508           CPX #$1D
+                 CPX #$1D
                  BNE L_34FA
 L_350C           RTS
 L_350D           LDA L_B49F,X
@@ -5100,7 +6722,7 @@ L_3537           LDA L_B4D9,X
                  STA L_3600,Y
                  LDA L_B4F6,X
                  STA L_3700,Y
-L_3543           INY
+                 INY
                  INX
                  CPX #$1D
                  BNE L_3537
@@ -5117,99 +6739,134 @@ L_354D           LDA L_B465,X
                  LDA #$00
                  STA $06D2
                  RTS
-                 BRK
+                 .byte $00
                  .byte $0F
                  .byte $1F
                  .byte $1F
                  .byte $1F
-                 ASL $0101
-                 ORA (NGFLAG,X)
-L_356F           ORA (NGFLAG,X)
+                 .byte $0E
+                 .byte $01
+                 .byte $01
+                 .byte $01
+                 .byte $01
+                 .byte $01
+L_3570           .byte $01
                  .byte $13
                  .byte $7F
                  .byte $FF
                  .byte $FF
-                 INC $EFFE
+                 .byte $EE
+                 .byte $FE
+                 .byte $EF
                  .byte $7F
                  .byte $32
                  .byte $03
                  .byte $62
                  .byte $03
-L_357D           ORA (NGFLAG,X)
-                 BRK
-                 ASL LNFLG
-                 BRK
-                 BEQ L_357D
-                 SED
-                 SED
-                 BVS L_3508+1
+                 .byte $01
+                 .byte $01
+                 .byte $00
+                 .byte $06
+                 .byte $00
+                 .byte $00
+                 .byte $F0
+                 .byte $F8
+                 .byte $F8
+                 .byte $F8
+                 .byte $70
                  .byte $80
                  .byte $80
                  .byte $80
                  .byte $80
                  .byte $80
-                 INY
-                 INC $FFFF,X
+                 .byte $80
+                 .byte $C8
+                 .byte $FE
+                 .byte $FF
+                 .byte $FF
                  .byte $77
                  .byte $7F
 L_3594           .byte $F7
-                 INC $C04C,X
-                 LSR IOCMD
+                 .byte $FE
+                 .byte $4C
+                 .byte $C0
+                 .byte $46
+                 .byte $C0
                  .byte $80
                  .byte $80
-                 BRK
-                 RTS
-                 BRK
-                 BRK
+                 .byte $00
+                 .byte $60
+                 .byte $00
+                 .byte $00
                  .byte $0F
                  .byte $1F
                  .byte $1F
                  .byte $1F
-                 ASL $0101
-                 ORA (NGFLAG,X)
-                 ORA (NGFLAG,X)
+                 .byte $0E
+                 .byte $01
+                 .byte $01
+                 .byte $01
+                 .byte $01
+                 .byte $01
+                 .byte $01
 L_35AB           .byte $13
                  .byte $7F
                  .byte $FF
                  .byte $FF
-L_35AF           INC $EFFE
+                 .byte $EE
+                 .byte $FE
+L_35B1           .byte $EF
                  .byte $7F
                  .byte $32
                  .byte $03
                  .byte $1A
                  .byte $03
-L_35B7           ORA (NGFLAG,X)
-                 BRK
-                 ORA (LNFLG,X)
-                 BRK
-                 BEQ L_35B7
-                 SED
-                 SED
-                 BVS L_3543
+                 .byte $01
+                 .byte $01
+                 .byte $00
+                 .byte $01
+                 .byte $00
+                 .byte $00
+                 .byte $F0
+                 .byte $F8
+                 .byte $F8
+                 .byte $F8
+                 .byte $70
                  .byte $80
                  .byte $80
                  .byte $80
                  .byte $80
                  .byte $80
-                 INY
-                 INC $FFFF,X
+                 .byte $80
+                 .byte $C8
+                 .byte $FE
+                 .byte $FF
+                 .byte $FF
                  .byte $77
                  .byte $7F
                  .byte $F7
-                 INC $C04C,X
-                 CLI
-                 CPY #$80
+                 .byte $FE
+                 .byte $4C
+                 .byte $C0
+                 .byte $58
+                 .byte $C0
                  .byte $80
-                 BRK
                  .byte $80
-                 BRK
-                 BRK
+                 .byte $00
+                 .byte $80
+                 .byte $00
+                 .byte $00
                  .byte $0F
-                 BPL L_35ED
-                 BPL L_35ED
-                 ORA (NGFLAG,X)
-                 ORA (NGFLAG,X)
-                 ORA (NGFLAG,X)
+                 .byte $10
+                 .byte $10
+                 .byte $10
+                 .byte $0E
+                 .byte $01
+                 .byte $01
+                 .byte $01
+                 .byte $01
+                 .byte $01
+                 .byte $01
                  .byte $02
                  .byte $7F
                  .byte $80
@@ -5218,97 +6875,105 @@ L_35B7           ORA (NGFLAG,X)
                  .byte $80
                  .byte $80
                  .byte $7F
-L_35ED           .byte $02
                  .byte $02
                  .byte $02
                  .byte $02
-                 ORA (NGFLAG,X)
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BEQ L_3601
-                 PHP
-                 PHP
-                 BVS L_357D
+                 .byte $02
+                 .byte $01
+                 .byte $01
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $F0
+                 .byte $08
+                 .byte $08
+                 .byte $08
+                 .byte $70
+                 .byte $80
 L_35FD           .byte $80
 L_35FE           .byte $80
 L_35FF           .byte $80
 L_3600           .byte $80
-L_3601           .byte $80
-                 RTI
-                 INC $0101,X
-                 ORA (NGFLAG,X)
-                 ORA (FPTR2,X)
-                 RTI
-                 RTI
-L_360C           RTI
-                 RTI
+                 .byte $80
+                 .byte $40
+                 .byte $FE
+                 .byte $01
+                 .byte $01
+                 .byte $01
+                 .byte $01
+                 .byte $01
+                 .byte $FE
+                 .byte $40
+                 .byte $40
+L_360C           .byte $40
+                 .byte $40
                  .byte $80
                  .byte $80
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
                  .byte $44
-                 TAX
-                 TAX
-                 ROL
-                 LSR
-                 TXA
-                 TXA
-                 TAX
-L_3627           CPX LNFLG
-L_3629           BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
+                 .byte $AA
+                 .byte $AA
+                 .byte $2A
+                 .byte $4A
+                 .byte $8A
+                 .byte $8A
+                 .byte $AA
+                 .byte $E4
+L_3628           .byte $00
+L_3629           .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
                  .byte $44
-                 TAX
-                 TAX
-                 TAX
-                 TAX
-                 TAX
-                 TAX
-                 TAX
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
                  .byte $44
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
                  LDA $06D7
                  BEQ L_365C
                  LDA #$00
@@ -5408,59 +7073,75 @@ L_3713           LDA L_B626+2,X
                  CPX #$08
                  BNE L_3713
                  RTS
-                 BRK
-                 BRK
-                 ASL L_1F19+2
+                 .byte $00
+                 .byte $00
+                 .byte $0E
+                 .byte $1B
+                 .byte $1F
 L_3725           .byte $1B
-                 ASL LNFLG
-                 BPL L_376F
+                 .byte $0E
+                 .byte $00
+                 .byte $00
+                 .byte $10
+                 .byte $44
                  .byte $82
                  .byte $82
                  .byte $44
-                 BPL L_3730
-L_3730           BRK
+                 .byte $10
+                 .byte $00
+                 .byte $00
                  .byte $77
-                 RTS
+                 .byte $60
                  .byte $74
                  .byte $74
-                 RTS
-                 RTS
-                 RTS
-                 PLP
+                 .byte $60
+                 .byte $60
+                 .byte $60
+                 .byte $28
                  .byte $44
                  .byte $44
-                 RTI
-                 JMP L_4444
-                 PLP
+                 .byte $40
+                 .byte $4C
+                 .byte $44
+                 .byte $44
+                 .byte $28
                  .byte $44
                  .byte $44
                  .byte $44
-                 JMP (L_446B+1)
+                 .byte $6C
+                 .byte $6C
+                 .byte $44
                  .byte $44
                  .byte $44
                  .byte $7C
                  .byte $54
-                 BPL L_375C
-                 BPL L_375E
+                 .byte $10
+                 .byte $10
+                 .byte $10
+                 .byte $10
                  .byte $54
                  .byte $7C
                  .byte $63
                  .byte $63
-                 ROL RTCLOK+2,X
+                 .byte $36
                  .byte $14
-                 ROL LOGCOL,X
+                 .byte $14
+                 .byte $36
                  .byte $63
                  .byte $63
                  .byte $63
-                 ROR ROWAC,X
-L_375C           ROR LOGCOL,X
-L_375E           .byte $63
                  .byte $63
-                 RTS
-                 RTS
-                 RTS
-                 RTS
-                 RTS
+                 .byte $76
+                 .byte $70
+                 .byte $76
+                 .byte $63
+                 .byte $63
+                 .byte $63
+                 .byte $60
+                 .byte $60
+                 .byte $60
+                 .byte $60
+                 .byte $60
                  .byte $63
                  .byte $77
                  .byte $77
@@ -5471,56 +7152,63 @@ L_375E           .byte $63
                  .byte $6B
                  .byte $63
                  .byte $63
-L_376F           .byte $63
-                 ROL DELTAC,X
+                 .byte $63
+                 .byte $36
+                 .byte $77
                  .byte $63
                  .byte $63
                  .byte $63
                  .byte $63
                  .byte $63
                  .byte $63
-                 ROL DELTAC,X
+                 .byte $36
+                 .byte $77
                  .byte $63
                  .byte $63
                  .byte $63
                  .byte $63
                  .byte $77
-L_377F           ROL SAVADR,X
+                 .byte $36
+L_3780           .byte $68
                  .byte $44
                  .byte $44
                  .byte $44
-                 PLA
-                 RTI
-                 RTI
-                 RTI
-                 ROL DELTAC,X
+                 .byte $68
+                 .byte $40
+                 .byte $40
+                 .byte $40
+                 .byte $36
+                 .byte $77
                  .byte $63
                  .byte $63
                  .byte $63
                  .byte $67
                  .byte $77
                  .byte $37
-                 PLA
+                 .byte $68
                  .byte $44
                  .byte $44
                  .byte $44
-                 PLA
-                 PLA
-                 PHA
+                 .byte $68
+                 .byte $68
+                 .byte $48
                  .byte $44
                  .byte $37
                  .byte $77
-                 RTS
-                 ROR LTEMP+1,X
+                 .byte $60
+                 .byte $76
+                 .byte $37
                  .byte $03
                  .byte $77
-                 ROR DELTAC,X
+                 .byte $76
                  .byte $77
-                 EOR RTCLOK+2,X
+                 .byte $77
+                 .byte $55
                  .byte $14
                  .byte $14
                  .byte $14
                  .byte $14
+                 .byte $14
                  .byte $44
                  .byte $44
                  .byte $44
@@ -5528,13 +7216,14 @@ L_377F           ROL SAVADR,X
                  .byte $44
                  .byte $44
                  .byte $44
-                 PLP
+                 .byte $28
                  .byte $63
                  .byte $63
                  .byte $63
                  .byte $63
                  .byte $63
-                 ROL LTEMP,X
+                 .byte $36
+                 .byte $36
                  .byte $1C
                  .byte $63
                  .byte $63
@@ -5544,18 +7233,19 @@ L_377F           ROL SAVADR,X
                  .byte $6B
                  .byte $6B
                  .byte $77
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
                  .byte $63
                  .byte $63
                  .byte $63
-                 ROL LTEMP,X
+                 .byte $36
+                 .byte $36
                  .byte $1C
                  .byte $1C
                  .byte $1C
@@ -5578,138 +7268,170 @@ L_37ED           LDA VCOUNT
                  STA L_9D09,X
                  LDA L_9D30,X
 L_37FF           STA LNFLG,X
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 TXS
-                 TXS
-                 TXS
-                 TXS
-                 TXS
-                 TXS
-                 TXS
-                 TXS
-                 TXS
-                 TXS
-                 TXS
-                 EOR COLCRS,X
-                 TXS
-                 TXS
-                 TXS
-                 TAX
-                 TAX
-                 TAX
-                 EOR COLCRS,X
-                 TAX
-                 TAX
-                 TAX
-                 LDY #$A3
-                 LDY #$A8
-                 TAY
-                 LDY L_A8A7+1
-                 TXA
-                 TXA
-                 TXA
-                 ASL
-                 TXA
-                 TAX
-                 TAX
-                 TAX
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $9A
+                 .byte $9A
+                 .byte $9A
+                 .byte $9A
+                 .byte $9A
+                 .byte $9A
+                 .byte $9A
+                 .byte $9A
+                 .byte $9A
+                 .byte $9A
+                 .byte $9A
+                 .byte $55
+                 .byte $55
+                 .byte $9A
+                 .byte $9A
+                 .byte $9A
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $55
+                 .byte $55
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $A0
+                 .byte $A3
+                 .byte $A0
+                 .byte $A8
+                 .byte $A8
+                 .byte $AC
+                 .byte $A8
+                 .byte $A8
+                 .byte $8A
+                 .byte $8A
+                 .byte $8A
+                 .byte $0A
+                 .byte $8A
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
                  .byte $63
                  .byte $63
-                 ASL DOSINI
-                 CLC
-                 BMI L_3899+1
+                 .byte $06
+                 .byte $0C
+                 .byte $18
+                 .byte $30
                  .byte $63
-L_3838           BRK
-                 BRK
-                 BRK
-                 PHP
-                 PHP
-                 BRK
-                 BRK
-                 BRK
+                 .byte $63
+L_3838           .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $08
+                 .byte $08
+                 .byte $00
+                 .byte $00
+                 .byte $00
                  .byte $FF
                  .byte $FF
-                 INC $E2F8,X
+                 .byte $FE
+                 .byte $F8
                  .byte $E2
-                 NOP
-                 ASL
-                 TAX
-                 NOP
-                 NOP
+                 .byte $E2
+                 .byte $EA
+                 .byte $0A
+                 .byte $AA
+                 .byte $EA
+                 .byte $EA
                  .byte $FA
                  .byte $FA
-                 ASL $C3C3
-                 TAX
-                 NOP
-                 NOP
+                 .byte $0E
+                 .byte $C3
+                 .byte $C3
+                 .byte $AA
+                 .byte $EA
+                 .byte $EA
                  .byte $FA
                  .byte $FA
-                 INC $FFFF,X
-                 TAX
-                 NOP
+                 .byte $FE
+                 .byte $FF
+                 .byte $FF
+                 .byte $AA
+                 .byte $EA
                  .byte $FA
-                 INC $FAFE,X
-                 NOP
-                 NOP
-                 TAX
-                 TAX
-                 TAX
-                 TAX
-                 TAX
-                 TAX
-                 TAX
-                 TAX
-                 TAX
-                 TAX
-                 TAX
-                 TAX
-                 TAX
-L_386D           TAX
-                 TAX
-                 LDX $FFFF
+                 .byte $FE
+                 .byte $FE
+                 .byte $FA
+                 .byte $EA
+                 .byte $EA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+L_386D           .byte $AA
+                 .byte $AA
+                 .byte $AE
                  .byte $FF
                  .byte $FF
                  .byte $FF
                  .byte $FF
                  .byte $FF
                  .byte $FF
-                 EOR RAMTOP,X
-                 ROR
-                 ROR
-                 ROR
-                 ROR
-                 ROR
-                 ROR
-                 EOR OPSTKX,X
-                 LDA #$A9
-                 LDA #$A9
-                 LDA #$A9
-                 ROR
-                 ROR
-                 ROR
-                 ROR
-                 ROR
-                 ROR
-                 ROR
-                 EOR OPSTKX,X
-                 LDA #$A9
-                 LDA #$A9
-                 LDA #$A9
-                 EOR NOCKSM,X
-L_3899           INC $03E3,X
+                 .byte $FF
+                 .byte $FF
+                 .byte $55
+                 .byte $6A
+                 .byte $6A
+                 .byte $6A
+                 .byte $6A
+                 .byte $6A
+                 .byte $6A
+                 .byte $6A
+                 .byte $55
+                 .byte $A9
+                 .byte $A9
+                 .byte $A9
+                 .byte $A9
+                 .byte $A9
+                 .byte $A9
+                 .byte $A9
+                 .byte $6A
+                 .byte $6A
+                 .byte $6A
+                 .byte $6A
+                 .byte $6A
+                 .byte $6A
+                 .byte $6A
+                 .byte $55
+                 .byte $A9
+                 .byte $A9
+                 .byte $A9
+                 .byte $A9
+                 .byte $A9
+                 .byte $A9
+                 .byte $A9
+                 .byte $55
+                 .byte $3C
+                 .byte $FE
+                 .byte $E3
+                 .byte $03
                  .byte $8B
                  .byte $23
                  .byte $03
-                 TXA
+                 .byte $8A
                  .byte $FA
                  .byte $FA
                  .byte $FA
-                 LDX $BFBE,Y
+                 .byte $BE
+                 .byte $BE
+                 .byte $BF
                  .byte $AF
                  .byte $FB
                  .byte $BF
@@ -5719,8 +7441,12 @@ L_3899           INC $03E3,X
                  .byte $AF
                  .byte $AF
                  .byte $FB
-                 INC $FEFE,X
-                 INC CARTCS+1,X
+                 .byte $FE
+                 .byte $FE
+                 .byte $FE
+                 .byte $FE
+                 .byte $FB
+                 .byte $BF
                  .byte $EF
                  .byte $FB
                  .byte $FF
@@ -5728,22 +7454,32 @@ L_3899           INC $03E3,X
                  .byte $FF
                  .byte $FF
                  .byte $BF
-                 TSX
-                 INC L_5799+1
-                 INC $FEFE,X
+                 .byte $BA
+                 .byte $EE
+                 .byte $9A
+                 .byte $57
+                 .byte $FE
+                 .byte $FE
+                 .byte $FE
                  .byte $FA
-                 LDX $FAEE,Y
-                 NOP
+                 .byte $BE
+                 .byte $EE
                  .byte $FA
-                 INC $FAFE,X
+                 .byte $EA
+                 .byte $FA
+                 .byte $FE
+                 .byte $FE
+                 .byte $FA
                  .byte $BF
                  .byte $EF
                  .byte $FB
                  .byte $FF
-                 TAX
-                 TAX
-                 TAX
-                 LDX $BFBE
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AE
+                 .byte $BE
+                 .byte $BF
                  .byte $AF
                  .byte $BB
                  .byte $BF
@@ -5753,40 +7489,47 @@ L_3899           INC $03E3,X
                  .byte $AF
                  .byte $AF
                  .byte $BB
-                 LDX $FAFA
-                 NOP
-                 NOP
-                 TAX
+                 .byte $AE
                  .byte $FA
                  .byte $FA
-                 NOP
-                 NOP
-                 TAX
+                 .byte $EA
+                 .byte $EA
+                 .byte $AA
                  .byte $FA
                  .byte $FA
-                 STX VVTP
+                 .byte $EA
+                 .byte $EA
+                 .byte $AA
                  .byte $FA
-L_38EF           INC L_952A,X
-                 TXS
-                 TXS
-                 TXS
-                 TXS
-                 TXS
-                 TXS
-                 TAX
-                 LDA POKADR
-                 TXS
-                 TXS
-                 TXS
-                 TXS
-                 LDA ARSTKX
-                 ROR
+                 .byte $FA
+                 .byte $86
+                 .byte $86
+                 .byte $FA
+                 .byte $FE
+L_38F0           .byte $2A
+                 .byte $95
+                 .byte $9A
+                 .byte $9A
+                 .byte $9A
+                 .byte $9A
+                 .byte $9A
+                 .byte $9A
+                 .byte $AA
+                 .byte $A5
+                 .byte $95
+                 .byte $9A
+                 .byte $9A
+                 .byte $9A
+                 .byte $9A
+                 .byte $A5
+                 .byte $AA
+                 .byte $6A
                  .byte $5A
-                 TXS
-                 TXS
-                 TXS
-                 TXS
-                 ROR
+                 .byte $9A
+                 .byte $9A
+                 .byte $9A
+                 .byte $9A
+                 .byte $6A
                  .byte $FF
                  .byte $57
                  .byte $A7
@@ -5795,15 +7538,22 @@ L_38EF           INC L_952A,X
                  .byte $A7
                  .byte $A7
                  .byte $A7
-                 STA L_9999,Y
-                 TXS
-                 TXS
-                 TXS
-                 STA L_A997+2,Y
-L_3919           LDA #$A9
-                 LDA #$AA
-                 TAX
-                 LDA #$A9
+                 .byte $99
+                 .byte $99
+                 .byte $99
+                 .byte $9A
+                 .byte $9A
+                 .byte $9A
+                 .byte $99
+                 .byte $99
+                 .byte $A9
+                 .byte $A9
+                 .byte $A9
+                 .byte $A9
+                 .byte $AA
+                 .byte $AA
+                 .byte $A9
+                 .byte $A9
                  .byte $A7
                  .byte $A7
                  .byte $A7
@@ -5814,14 +7564,17 @@ L_3919           LDA #$A9
 L_3927           .byte $A7
                  .byte $AB
                  .byte $AF
-                 LDA ZTEMP1,X
+                 .byte $B5
+                 .byte $F5
                  .byte $D7
 L_392D           .byte $DF
                  .byte $DF
                  .byte $DF
-                 NOP
+                 .byte $EA
                  .byte $FA
-                 LSR $D75F,X
+                 .byte $5E
+                 .byte $5F
+                 .byte $D7
                  .byte $F7
                  .byte $F7
                  .byte $F7
@@ -5845,80 +7598,106 @@ L_393A           .byte $DF
                  .byte $DF
                  .byte $DF
 L_394B           .byte $D7
-                 SBC LISTDTD,X
+                 .byte $F5
+                 .byte $B5
                  .byte $AF
                  .byte $AB
 L_3950           .byte $F7
                  .byte $F7
                  .byte $F7
-L_3953           .byte $D7
+                 .byte $D7
                  .byte $5F
-                 LSR $EAFA,X
+                 .byte $5E
+                 .byte $FA
+                 .byte $EA
                  .byte $E2
-                 INY
-                 BEQ L_3919+1
-                 LDY L_AFAC,X
+                 .byte $C8
+                 .byte $F0
+                 .byte $BE
+                 .byte $BC
+                 .byte $AC
+                 .byte $AF
                  .byte $AB
                  .byte $AB
                  .byte $AF
-                 LDX $BEBC
-                 SED
+                 .byte $AE
+                 .byte $BC
+                 .byte $BE
+                 .byte $F8
                  .byte $E2
-                 INY
-                 LDA MVFA+1
-                 TXS
-                 TXS
-L_396C           TXS
-                 STA ECSIZE+1,X
-                 TAX
-                 ROR
-                 TXS
-                 TXS
-                 TXS
-                 TXS
+                 .byte $C8
+                 .byte $A5
+                 .byte $9A
+                 .byte $9A
+                 .byte $9A
+                 .byte $9A
+                 .byte $95
+                 .byte $A5
+                 .byte $AA
+                 .byte $6A
+                 .byte $9A
+                 .byte $9A
+                 .byte $9A
+                 .byte $9A
                  .byte $5A
-                 ROR
-                 TAX
-                 TAX
-L_3979           EOR ARSTKX,X
-                 TAX
-                 TAX
-                 TAX
-                 TAX
-                 TAX
-                 TAX
-                 STA MVFA+1,X
-                 STA L_9999,Y
-                 TXS
-                 TXS
-                 TAX
-                 LSR DIRFLG,X
-                 LDX DIRFLG
-                 LDX DIRFLG
-                 LDX MVFA+1
-                 TXS
-                 STA L_9999,Y
-                 TXS
-                 STA ARSTKX,X
+                 .byte $6A
+                 .byte $AA
+                 .byte $AA
+                 .byte $55
+L_397A           .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $95
+                 .byte $9A
+                 .byte $99
+                 .byte $99
+                 .byte $99
+                 .byte $9A
+                 .byte $9A
+                 .byte $AA
+                 .byte $56
+                 .byte $A6
+                 .byte $A6
+                 .byte $A6
+                 .byte $A6
+                 .byte $A6
+                 .byte $A6
+                 .byte $9A
+                 .byte $9A
+                 .byte $99
+                 .byte $99
+                 .byte $99
+                 .byte $9A
+                 .byte $95
+                 .byte $AA
                  .byte $89
-                 AND FPTR2+1
-                 STA FPTR2+1
-                 STA ICDNOZ
-                 DEY
-                 TXS
-                 TXS
-                 TXS
-                 TXS
-                 TXS
-                 TXS
-                 STA ARSTKX,X
-                 TAX
-                 TAX
-                 TAX
-                 TAX
-                 TAX
-                 TAX
-L_39AE           EOR ARSTKX,X
+                 .byte $25
+                 .byte $FF
+                 .byte $85
+                 .byte $FF
+                 .byte $85
+                 .byte $21
+                 .byte $88
+                 .byte $9A
+                 .byte $9A
+                 .byte $9A
+                 .byte $9A
+                 .byte $9A
+                 .byte $9A
+                 .byte $95
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+L_39AE           .byte $55
+                 .byte $AA
                  .byte $A7
                  .byte $A7
                  .byte $A7
@@ -5928,169 +7707,213 @@ L_39AE           EOR ARSTKX,X
                  .byte $57
                  .byte $BF
                  .byte $62
-                 CLI
+                 .byte $58
                  .byte $FF
-L_39BB           BVC L_39BB+1
-                 CLI
+                 .byte $50
+                 .byte $FF
+                 .byte $58
                  .byte $62
-                 PHP
-                 DEC $DCCC
-                 LSR ROWCRS,X
+                 .byte $08
+                 .byte $CE
+                 .byte $CC
+                 .byte $DC
+                 .byte $56
                  .byte $54
-                 CLI
+                 .byte $54
+                 .byte $58
                  .byte $62
                  .byte $02
-                 BRK
-                 BRK
-                 BRK
-                 BRK
-                 JSR LNFLG
-                 BRK
-                 BRK
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $20
+                 .byte $00
+                 .byte $00
+                 .byte $00
+                 .byte $00
                  .byte $80
-                 BRK
-                 BRK
-                 BRK
+                 .byte $00
+                 .byte $00
+                 .byte $00
                  .byte $02
-                 BRK
-L_39D8           TAX
-                 TAX
-                 TAX
-                 TAX
-                 TAY
-                 TAY
-                 LDY L_AAA6+2
-                 TAX
-                 TAX
-                 TAX
-                 TAX
-                 TAX
-                 TXA
-                 ASL
-                 LDX #$A2
-                 LDX #$A0
-                 LDX #$AA
-                 TAX
-                 TAX
-L_39F0           .byte $02
+                 .byte $00
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $A8
+                 .byte $A8
+                 .byte $AC
+                 .byte $A8
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $8A
+                 .byte $0A
+                 .byte $A2
+                 .byte $A2
+                 .byte $A2
+                 .byte $A0
+                 .byte $A2
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $02
                  .byte $32
                  .byte $02
-                 ROL
-                 ROL
+                 .byte $2A
+                 .byte $2A
                  .byte $3A
-L_39F6           ROL
-                 ROL
-                 TAX
-                 TAX
-                 TAX
-                 TAX
-                 TAX
-                 TAX
-                 LDX #$A0
-                 TAX
-                 TAX
-                 TAX
-                 TAX
-                 ROL
-                 ROL
+                 .byte $2A
+                 .byte $2A
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $A2
+                 .byte $A0
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $2A
+                 .byte $2A
                  .byte $3A
-                 ROL
-                 TAX
-                 TAX
-                 TAX
-                 TAX
+                 .byte $2A
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
                  .byte $AB
                  .byte $AF
-L_3A0E           .byte $AF
+                 .byte $AF
                  .byte $AB
-                 TAY
-                 TAY
-                 TAY
-                 TAY
-                 TAY
-                 INX
-                 INX
-                 TAY
+                 .byte $A8
+                 .byte $A8
+                 .byte $A8
+                 .byte $A8
+                 .byte $A8
+                 .byte $E8
+                 .byte $E8
+                 .byte $A8
                  .byte $03
-                 ASL L_3A0E
+                 .byte $0E
+                 .byte $0E
                  .byte $3A
-                 NOP
-                 NOP
-                 CPY #$AA
-                 TAX
-                 TAX
-                 TAX
-                 TAX
-                 TAX
-                 TAX
-                 BRK
-                 CPY #$B0
-                 BCS L_39D8
-                 LDY L_ABAB
-                 .byte $03
-                 .byte $03
-                 ASL L_3A0E
                  .byte $3A
-                 NOP
-                 NOP
-                 NOP
+                 .byte $EA
+                 .byte $EA
+                 .byte $C0
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $00
+                 .byte $C0
+                 .byte $B0
+                 .byte $B0
+                 .byte $AC
+                 .byte $AC
+                 .byte $AB
+                 .byte $AB
+                 .byte $03
+                 .byte $03
+                 .byte $0E
+                 .byte $0E
+                 .byte $3A
+                 .byte $3A
+                 .byte $EA
+                 .byte $EA
+                 .byte $EA
                  .byte $FF
-L_3A39           TAX
-L_3A3A           TAX
-                 TAX
-                 TAX
-                 TAX
-                 TAX
-                 TAX
-                 CPY #$B0
-                 BCS L_39F0
-                 LDY L_ABAB
+L_3A39           .byte $AA
+L_3A3A           .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $C0
+                 .byte $B0
+                 .byte $B0
+                 .byte $AC
+                 .byte $AC
                  .byte $AB
-                 STA BUFADR
-L_3A4A           LSR OLDROW,X
-                 TXS
+                 .byte $AB
+                 .byte $AB
+                 .byte $85
+                 .byte $15
+                 .byte $56
+L_3A4B           .byte $5A
+                 .byte $9A
                  .byte $1A
                  .byte $5A
-                 ROR
-                 ADC (POKADR+1,X)
-                 TAX
-                 TAX
-                 TAX
-                 TAX
-                 TAX
-                 TAX
+                 .byte $6A
+                 .byte $61
+                 .byte $96
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
                  .byte $62
-                 TYA
-                 LDY DIRFLG
-L_3A5C           BCC L_39F6
-                 LDX ECSIZE
-                 LDA #$A9
-                 LDX ECSIZE
-                 LDX OPSTKX
-                 LDA #$A6
-                 STX ZCHAIN,Y
-                 LSR
-L_3A6B           ASL POKADR+1,X
-                 ASL OLDROW,X
+                 .byte $98
+                 .byte $A4
+                 .byte $A6
+                 .byte $90
+                 .byte $98
+                 .byte $A6
+                 .byte $A4
+                 .byte $A9
+                 .byte $A9
+                 .byte $A6
+                 .byte $A4
+                 .byte $A6
+                 .byte $A9
+                 .byte $A9
+                 .byte $A6
+                 .byte $96
+                 .byte $4A
+                 .byte $4A
+                 .byte $16
+                 .byte $96
+                 .byte $16
                  .byte $5A
-                 ROR
                  .byte $5A
-L_3A72           TXS
+                 .byte $6A
+                 .byte $5A
+                 .byte $9A
                  .byte $1A
-                 LSR
-                 LSR BUFADR
-L_3A77           STA ARSTKX
-                 TAX
-                 TAX
-                 TAX
-                 TAX
-                 TAX
-                 STX SOUNDR,Y
-                 LDX ECSIZE
-                 TYA
+                 .byte $4A
+                 .byte $46
+                 .byte $15
+                 .byte $85
+L_3A78           .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $AA
+                 .byte $96
+                 .byte $41
+                 .byte $A6
+                 .byte $A4
+                 .byte $98
                  .byte $92
-                 LDY ECSIZE
-                 CPY #$62
+                 .byte $A4
+                 .byte $A4
+                 .byte $C0
+                 .byte $62
                  .byte $FF
                  .byte $AB
                  .byte $AB
@@ -6100,26 +7923,34 @@ L_3A77           STA ARSTKX
                  .byte $AB
                  .byte $AB
                  .byte $89
-                 AND VNTD+1
+                 .byte $25
+                 .byte $85
                  .byte $14
-                 STA (COLCRS),Y
+                 .byte $91
+                 .byte $55
                  .byte $14
-                 EOR FMSZPG+2
+                 .byte $45
+                 .byte $45
                  .byte $54
-                 EOR HOLD1
-                 EOR HOLD1
-                 ORA HOLD1,X
+                 .byte $45
+                 .byte $51
+                 .byte $45
+                 .byte $51
+                 .byte $15
+                 .byte $51
                  .byte $62
-                 CLI
+                 .byte $58
                  .byte $52
                  .byte $14
                  .byte $44
-                 EOR RTCLOK+2,X
-                 EOR (TSLNUM),Y
+                 .byte $55
+                 .byte $14
+                 .byte $51
+                 .byte $A0
                  .byte $3A
                  LDX #$95
                  LDA #$02
-                 JSR L_38EF+1
+                 JSR L_38F0
                  LDA #$15
                  STA MVLNG+1
                  LDY #$8A
@@ -6132,11 +7963,15 @@ L_3A77           STA ARSTKX
                  ASL RTCLOK+2
                  JMP L_3AC9
 L_3AC9           JMP L_3AD6
-                 ORA #$44
+                 .byte $09
+                 .byte $44
                  .byte $3A
                  .byte $44
-                 EOR TMPCHR,X
-                 ROL L_5953
+                 .byte $55
+                 .byte $50
+                 .byte $2E
+                 .byte $53
+                 .byte $59
                  .byte $53
 L_3AD6           LDA #$04
 L_3AD8           STA MVLNG+1
@@ -6145,9 +7980,9 @@ L_3AD8           STA MVLNG+1
                  LDY #$3A
                  LDX #$CC
                  LDA #$01
-                 JSR L_38EF+1
+                 JSR L_38F0
                  LDA #$01
-                 JSR L_3A77+1
+                 JSR L_3A78
                  LDA TSLNUM
                  CMP #$80
                  BCS L_3AF5
@@ -6160,7 +7995,7 @@ L_3AFB           LDA #$FF
 L_3AFF           LDY #$FF
                  LDX L_37FF+2
                  LDA L_37FF+1
-                 JSR L_227F+1
+                 JSR L_2280
                  BRK
                  PLP
                  .byte $02
@@ -6398,7 +8233,7 @@ L_3C41           BRK
 L_3C4E           BRK
                  BRK
                  BRK
-                 ROR L_24DA+1,X
+                 ROR L_24DB,X
                  BIT ICBALZ
                  .byte $3C
                  ROR NOCKSM,X
@@ -6742,7 +8577,7 @@ L_3DEE           ORA #$02
                  BRK
 L_3DF6           .byte $44
                  .byte $E2
-                 ADC L_2436+1,X
+                 ADC L_2437,X
                  BIT $071E
                  .byte $03
                  BRK
@@ -6763,7 +8598,7 @@ L_3E06           PHP
 L_3E0F           BRK
 L_3E10           .byte $0C
                  .byte $0C
-                 ORA L_261C+1
+                 ORA L_261D
                  ROL ABUFPT+1
                  ORA $0C0C
                  BRK
@@ -6985,7 +8820,7 @@ L_3F41           BRK
                  BRK
                  PHP
                  ORA (DOSINI,X)
-                 LSR L_2A1B+1,X
+                 LSR L_2A1C,X
 L_3F4A           .byte $14
                  BRK
                  BRK
@@ -7193,7 +9028,7 @@ L_4029           LDY #$05
                  .byte $23
                  JMP L_228A
                  JSR L_233B
-                 JMP L_210E+1
+                 JMP L_210F
                  LDX #$10
                  LDA #$0C
                  STA B0_ICCOM,X
@@ -8710,7 +10545,7 @@ L_4AF2           STA L_3300,X
                  TAX
 L_4B05           STA HPOSP0,X
                  STA SIZEP0,X
-L_4B0B           STA $06A6,X
+                 STA $06A6,X
                  INX
                  CPX #$04
                  BNE L_4B05
@@ -8789,7 +10624,7 @@ L_4B9F           LDX #$00
 L_4BAE           LDA L_3C1A,X
                  STA L_3470,Y
                  LDA L_3CC3,X
-                 STA L_356F+1,Y
+                 STA L_3570,Y
                  INY
                  INX
                  CPX #$0D
@@ -8798,7 +10633,7 @@ L_4BAE           LDA L_3C1A,X
 L_4BC1           LDA L_3C27,X
                  STA L_3470,Y
                  LDA L_3CD0,X
-                 STA L_356F+1,Y
+                 STA L_3570,Y
                  INY
                  INX
                  CPX #$0D
@@ -8811,7 +10646,7 @@ L_4BD4           CMP #$01
 L_4BDD           LDA L_3C00,X
                  STA L_3470,Y
                  LDA L_3CA9,X
-                 STA L_356F+1,Y
+                 STA L_3570,Y
                  INY
                  INX
                  CPX #$0D
@@ -8820,7 +10655,7 @@ L_4BDD           LDA L_3C00,X
 L_4BF0           LDA L_3C0D,X
                  STA L_3470,Y
                  LDA L_3CB6,X
-                 STA L_356F+1,Y
+                 STA L_3570,Y
                  INY
                  INX
                  CPX #$0D
@@ -8831,16 +10666,16 @@ L_4C03           LDA $060D
 L_4C08           LDA L_3C34,X
                  STA L_3470,Y
                  LDA L_3CDD,X
-                 STA L_356F+1,Y
+                 STA L_3570,Y
                  INY
                  INX
                  CPX #$0D
                  BNE L_4C08
                  RTS
 L_4C1B           LDA L_3C41,X
-L_4C1E           STA L_3470,Y
+                 STA L_3470,Y
                  LDA L_3CEA,X
-                 STA L_356F+1,Y
+                 STA L_3570,Y
                  INY
                  INX
                  CPX #$0D
@@ -9220,7 +11055,7 @@ L_4F42           CPY #$0D
                  JMP L_4FCA
 L_4F49           CMP #$05
                  BPL L_4F6C
-L_4F4D           INC $0689
+                 INC $0689
                  LDA $06B0
 L_4F53           BNE L_4F58
                  JMP L_4FCA
@@ -9483,7 +11318,7 @@ L_51B4           JSR L_6B80
                  STA HITCLR
                  JSR L_6D3F+1
                  JSR L_5420
-                 JSR L_1BFE+2
+                 JSR L_1C00
                  JSR L_526E
                  LDA $06B3
                  BEQ L_51D1
@@ -9646,7 +11481,7 @@ L_5310           LDA $0690
                  BMI L_533E
                  STX $0652
                  INX
-L_5320           STX $0634
+                 STX $0634
                  LDA PCOLR2
                  CMP #$26
                  BNE L_532E
@@ -9788,7 +11623,7 @@ L_542E           CPY #$0E
                  TAY
                  RTS
                  BRK
-L_5438           BRK
+                 BRK
                  BRK
                  BRK
                  BRK
@@ -9803,7 +11638,7 @@ L_5445           LDA #$20
                  STA $06B1
                  JSR L_5486
                  INC $068A
-L_5453           RTS
+                 RTS
 L_5454           CMP #$06
                  BCC L_545B
                  JMP L_5543
@@ -9921,7 +11756,7 @@ L_5543           RTS
                  STA L_9CE9,X
                  INC $0646
                  RTS
-                 LDA L_3979+1
+                 LDA L_397A
                  AND #$01
                  BEQ L_5577+1
                  LDX $0621
@@ -9981,7 +11816,7 @@ L_55CC           LDA $0606,X
                  CPX #$06
                  BNE L_55CC
                  LDA #$10
-                 STA L_35AF+2
+                 STA L_35B1
                  LDX #$00
 L_55E1           LDA L_5675,X
                  STA L_360C,X
@@ -9990,7 +11825,7 @@ L_55E1           LDA L_5675,X
                  CPX #$0D
                  BNE L_55E1
                  LDA $069A
-                 STA L_3627+1
+                 STA L_3628
                  LDA $069B
                  STA L_3629
                  LDX #$00
@@ -10211,7 +12046,7 @@ L_577B           STA PCOLR1
                  LDA #$00
                  STA $0684
                  STA $0617
-L_5799           STA $0687
+                 STA $0687
                  LDA #$0E
                  STA L_542E+1
                  INC $0616
@@ -11012,7 +12847,7 @@ L_5E56           STA L_33FE+2,X
                  STA L_3600,X
 L_5E5F           STA L_3700,X
                  STA L_3680,X
-                 STA L_377F+1,X
+                 STA L_3780,X
                  INX
                  CPX #$80
                  BCC L_5E56
@@ -12102,7 +13937,7 @@ L_66E5           STA L_3600,X
                  STA AUDC4
                  STA $062F
                  JSR L_67E6
-L_66FF           RTS
+                 RTS
 L_6700           JSR L_568F+1
                  LDX #$00
                  LDA #$06
@@ -12160,7 +13995,7 @@ L_6771           LDA L_67A8,X
                  STA L_34E7+1
                  LDA $069B
                  STA L_34E9
-                 JSR L_1FFF+1
+                 JSR L_2000
                  JMP L_560B
 L_6791           BIT L_3321
                  .byte $34
@@ -12259,7 +14094,7 @@ L_6840           LDX $0611
 L_685C           LDA L_3F33+1,Y
                  STA L_3470,X
                  LDA L_3F41,Y
-                 STA L_356F+1,X
+                 STA L_3570,X
                  INX
                  INY
                  CPY #$0D
@@ -12270,7 +14105,7 @@ L_686F           CMP #$20
 L_6873           LDA L_3F18+2,Y
                  STA L_3470,X
                  LDA L_3F27,Y
-                 STA L_356F+1,X
+                 STA L_3570,X
                  INX
                  INY
                  CPY #$0D
@@ -12281,7 +14116,7 @@ L_6886           CMP #$30
 L_688A           LDA L_3EFE+2,Y
                  STA L_3470,X
                  LDA L_3F0D,Y
-                 STA L_356F+1,X
+                 STA L_3570,X
                  INX
                  INY
                  CPY #$0D
@@ -12292,7 +14127,7 @@ L_689D           CMP #$40
 L_68A1           LDA L_3F18+2,Y
                  STA L_3470,X
                  LDA L_3F27,Y
-                 STA L_356F+1,X
+                 STA L_3570,X
                  INX
                  INY
                  CPY #$0D
@@ -12305,7 +14140,7 @@ L_68BB           CMP #$80
                  BCS L_68CE
                  LDA #$00
 L_68C1           STA L_3470,X
-                 STA L_356F+1,X
+                 STA L_3570,X
                  INX
                  INY
                  CPY #$0D
@@ -12727,7 +14562,7 @@ L_6C25           LDA L_6C65+1,X
                  JSR L_6C52
                  LDA $0678
                  BNE L_6C42
-L_6C38           LDA CH
+                 LDA CH
                  CMP #$0A
                  BEQ L_6C0B
                  INC $0678
@@ -12856,7 +14691,7 @@ L_6D2E           .byte $33
                  ROL HPOSM2,X
                  SBC TRAPLN+1,X
                  .byte $44
-L_6D3A           ADC L_619B+2
+                 ADC L_619B+2
                  .byte $97
                  INX
 L_6D3F           CPX #$AD
@@ -12878,8 +14713,8 @@ L_6D60           CLC
                  TXA
                  CLC
                  ADC #$03
-L_6D6A           STA HPOSM0
-L_6D6D           STA $0622
+                 STA HPOSM0
+                 STA $0622
                  STA $0620
                  JMP L_6DC5
                  LDY $061E
@@ -12992,7 +14827,7 @@ L_6E50           LDA $06B3
 L_6E66           CMP #$02
 L_6E68           BNE L_6E78
                  DEC $06BA
-L_6E6D           LDA $06BA
+                 LDA $06BA
                  CMP #$81
                  BCS L_6EC2
                  INC $06B3
@@ -13120,7 +14955,7 @@ L_6F5F           BRK
 L_6F6B           BRK
                  BRK
 L_6F6D           BRK
-L_6F6E           BPL L_6F70
+                 BPL L_6F70
 L_6F70           BRK
                  BRK
                  PLP
@@ -13452,7 +15287,7 @@ L_70F7           ASL LNFLG
                  BVS L_71A6
                  BVS L_71A8
                  BRK
-L_7139           ASL APPMHI+1
+                 ASL APPMHI+1
                  .byte $1F
                  ASL $0E0E
                  ASL $0505
@@ -13881,7 +15716,7 @@ L_7320           BRK
                  .byte $FF
                  SBC (EEXP,X)
                  SBC (FR2+5,X)
-L_7339           SBC $FFFF
+                 SBC $FFFF
                  .byte $FC
                  SED
 L_733E           BEQ L_7320
@@ -13892,7 +15727,7 @@ L_733E           BEQ L_7320
                  .byte $0F
                  .byte $B7
                  .byte $D7
-                 ORA L_2510+1
+                 ORA L_2511
                  .byte $BF
                  LSR L_6C5E,X
                  LSR $070D
@@ -13920,7 +15755,7 @@ L_736A           BRK
                  BRK
                  BRK
                  BRK
-L_7372           BRK
+                 BRK
                  BRK
                  BRK
                  BRK
@@ -14257,7 +16092,7 @@ L_7474           BRK
                  .byte $1A
                  .byte $1B
                  .byte $1C
-                 JSR L_2220+1
+                 JSR L_2221
                  BIT PALNTS
                  .byte $63
                  .byte $64
@@ -14400,9 +16235,9 @@ L_754E           .byte $32
                  BRK
                  BRK
                  BRK
-L_7572           BRK
                  BRK
-L_7574           BRK
+                 BRK
+                 BRK
                  BRK
                  BRK
                  BRK
@@ -14931,8 +16766,8 @@ L_7706           AND LNFLG
 L_77C8           LDX #$FF
                  TXS
                  CLD
-                 LDX L_02E3+4
-                 LDY L_02E3+5
+                 LDX L_02E2+5
+                 LDY L_02E2+6
                  STX LOMEM
                  STY LOMEM+1
                  LDA #$00
@@ -16807,7 +18642,7 @@ L_8606           .byte $3A
                  .byte $14
                  ORA BUFADR,X
                  ASL BUFADR+1,X
-                 ORA L_3A4A+1,Y
+                 ORA L_3A4B,Y
                  AND L_393A,Y
                  .byte $3A
                  AND L_393A,Y
@@ -18673,7 +20508,7 @@ L_923E           AND L_3A39,Y
                  AND L_393A,Y
                  .byte $3A
                  AND L_393A,Y
-L_952A           .byte $3A
+                 .byte $3A
                  AND L_393A,Y
                  AND L_393A,Y
                  AND L_393A,Y
@@ -19256,7 +21091,7 @@ L_988A           .byte $3B
                  AND L_3A3A,Y
                  AND L_3A3A,Y
                  .byte $13
-L_9999           .byte $22
+                 .byte $22
                  .byte $3F
                  RTI
                  .byte $0C
@@ -19471,7 +21306,7 @@ L_9B2D           AND BFENHI,X
                  SEC
                  AND L_3939,Y
                  .byte $3A
-L_9B3A           AND L_393A,Y
+                 AND L_393A,Y
                  .byte $3A
                  AND L_393A,Y
                  .byte $3A
@@ -19886,7 +21721,7 @@ L_9D09           BRK
                  .byte $1A
                  .byte $1B
                  .byte $1C
-                 JSR L_2220+1
+                 JSR L_2221
                  BIT PALNTS
                  .byte $63
                  .byte $64
@@ -20520,7 +22355,7 @@ L_9FCE           BRK
                  BRK
                  BRK
                  BRK
-L_9FDF           BRK
+                 BRK
                  BRK
                  BRK
                  BRK
@@ -20560,8 +22395,8 @@ L_9FDF           BRK
 L_A008           LDX #$FF
                  TXS
                  CLD
-                 LDX L_02E3+4
-                 LDY L_02E3+5
+                 LDX L_02E2+5
+                 LDY L_02E2+6
                  STX LOMEM
                  STY LOMEM+1
                  LDA #$00
@@ -21032,7 +22867,7 @@ L_A32D           .byte $3A
                  .byte $14
                  ORA BUFADR,X
                  ASL BUFADR+1,X
-                 ORA L_3A4A+1,Y
+                 ORA L_3A4B,Y
                  AND L_393A,Y
                  .byte $3A
                  AND L_393A,Y
@@ -21719,7 +23554,7 @@ L_A87A           .byte $3A
                  .byte $3A
                  AND L_393A,Y
                  .byte $3A
-L_A8A7           AND L_393A,Y
+                 AND L_393A,Y
                  AND L_393A,Y
                  AND L_393A,Y
                  AND L_393A,Y
@@ -21965,7 +23800,7 @@ L_AA61           AND L_3A39,Y
                  .byte $3A
                  EOR #$4A
                  .byte $4B
-L_AAA6           AND L_393A,Y
+                 AND L_393A,Y
                  .byte $3A
                  AND L_393A,Y
                  .byte $3A
@@ -22297,7 +24132,7 @@ L_AD25           BRK
                  BRK
                  BRK
                  BRK
-L_AD42           BRK
+                 BRK
                  BRK
                  BRK
                  BRK
@@ -22915,7 +24750,7 @@ L_AF38           BRK
                  BRK
                  BRK
                  BRK
-L_AFAC           BRK
+                 BRK
                  BRK
                  BRK
                  BRK
@@ -24244,14 +26079,14 @@ L_B6ED           LDA VCOUNT
 
                  org $0244
 
-                 BRK
+                 .byte $00
 
 
 ; BLOCK 6
 
                  org $0009
 
-                 ORA (LOMEM,X)
+                 .word $8001
                  .byte $43
                  .byte $80
                  .byte $43
@@ -24261,5 +26096,4 @@ L_B6ED           LDA VCOUNT
 
                  org $02E2
 
-                 BRK
-L_02E3           .byte $B7
+L_02E2           .word $B700
