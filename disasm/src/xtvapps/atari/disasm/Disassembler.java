@@ -12,6 +12,8 @@ import java.util.Map;
 import java.util.Set;
 
 import xtvapps.atari.disasm.Processor.Sym;
+import xtvapps.atari.disasm.mapper.Mapper;
+import xtvapps.atari.disasm.mapper.Section.SectionType;
 
 public class Disassembler {
 	private static final int MAX_MEMORY = 0x10000;
@@ -25,9 +27,12 @@ public class Disassembler {
 	private static boolean allowInvalidOpCodes = false;
 	private static Set<String> usedSyms = new HashSet<String>();
 	
+	private static Mapper mapper = new Mapper();
+	
 	public static void reset() {
 		memory = null;
 		usedSyms.clear();
+		mapper.clear();
 	}
 	
 	public static void setMemory(int addr, int memory[]) {
@@ -44,8 +49,10 @@ public class Disassembler {
 		return memory[position];
 	}
 	
-	public static Instruction getInstruction(int addr) {
+	public static Instruction getInstruction(int blockIndex, int addr) {
 		int instr = getMemory(addr);
+		SectionType sectionType = mapper.getSectionType(blockIndex, addr);
+		
 		String mnemonic = !allowInvalidOpCodes && !isValidOpCode(instr) ? null : Processor.instr6502[instr];
 		
 		String line;
@@ -56,10 +63,18 @@ public class Disassembler {
 		
 		String targetLabel = null;
 
-		if (mnemonic == null) {
+		if (sectionType == SectionType.Byte || mnemonic == null) {
 			line    = String.format("%04X: %02X        BYTE $%02X", addr, instr, instr);
 			asmcode = String.format(".byte $%02X", instr); 
 			size = 1;
+		} else if (sectionType == SectionType.Word) {
+			int op1 = getMemory(addr);
+			int op2 = getMemory(addr+1);
+			int word = op1 + 256 * op2;
+
+			line    = String.format("%04X: %02X %02X     WORD $%04X", addr, op1, op2, word);
+			asmcode = String.format(".word $%04X", word); 
+			size = 2;
 		} else if (mnemonic.indexOf("0")>0) {
 			int op = getMemory(addr+1);
 			value = addr + 2 + (op > 127 ? (op - 256) : op);
@@ -303,6 +318,14 @@ public class Disassembler {
 		symtableUser.put(addr, label);
 	}
 	
+	public static void addSection(int blockIndex, SectionType sectionType, int addr) {
+		mapper.addSection(blockIndex, sectionType, addr);
+	}
+
+	public static void dumpMapper() {
+		System.out.println(mapper);
+	}
+
 	public static void main(String args[]) {
 		int memory[] = { 169, 0, 142, 160, 0x6A, 133, 0x6A, 133, 206, 104, 96, 16, 3, 32, 62, 63, 160, 2, 16, 254, 0};
 		
@@ -311,7 +334,7 @@ public class Disassembler {
 		int addr = 1536;
 		int base = 0;
 		while (base < memory.length) {
-			Instruction instruction = getInstruction(addr + base);
+			Instruction instruction = getInstruction(0, addr + base);
 			System.out.println(instruction.text + (instruction.label != null ? (" ;  " + instruction.label) : ""));
 			base += instruction.size;
 		}
@@ -327,6 +350,7 @@ public class Disassembler {
 		System.out.println(String.format("%04X", traceBack(13, 3)));  // 0009
 		System.out.println(String.format("%04X", traceBack(13, 4)));  // 0007
 		System.out.println(String.format("%04X", traceBack(13, 5)));  // 0005
-}
+	}
+
 
 }

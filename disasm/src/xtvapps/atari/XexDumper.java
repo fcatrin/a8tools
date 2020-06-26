@@ -4,13 +4,16 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import xtvapps.atari.disasm.Disassembler;
 import xtvapps.atari.disasm.Instruction;
 import xtvapps.atari.disasm.Processor.Sym;
+import xtvapps.atari.disasm.mapper.Section.SectionType;
 
 public class XexDumper {
 	public static final String LOGTAG = XexDumper.class.getSimpleName();
@@ -24,17 +27,24 @@ public class XexDumper {
 	private File mapFile;
 	private File disFile;
 
+	Map<String, Integer> usedTargets = new HashMap<String, Integer>();
+	Set<String> usedLabels = new HashSet<String>();
+
 	public XexDumper(File xexFile) {
 		this.xexFile = xexFile;
 		this.asmFile = Utils.changeFileExtension(xexFile, "asm");
 		this.incFile = Utils.changeFileExtension(xexFile, "inc");
 		this.mapFile = Utils.changeFileExtension(xexFile, "map");
 		this.disFile = Utils.changeFileExtension(xexFile, "dis");
+		
+		Disassembler.reset();
 	}
 	
 	public void dump() throws IOException {
 		byte[] bytes = Utils.loadBytes(xexFile);
-		
+
+		initMapper();
+
 		PrintWriter pwAsm = new PrintWriter(new FileWriter(asmFile));
 		PrintWriter pwDis = new PrintWriter(new FileWriter(disFile));
 		
@@ -72,6 +82,19 @@ public class XexDumper {
 			String line = buildColumns(sym.name, 10, String.format(" = $%04X", sym.addr), "");
 			pwInc.println(line);
 		}
+		
+		for(String usedLabel : usedLabels) {
+			usedTargets.remove(usedLabel);
+		}
+		
+		for(String key : usedTargets.keySet()) {
+			if (!key.startsWith("L_")) continue;
+			
+			int addr = usedTargets.get(key);
+			String line = buildColumns(key, 10, String.format(" = $%04X", addr), "");
+			pwInc.println(line);
+		}
+		
 		pwInc.close();
 
 	}
@@ -104,23 +127,21 @@ public class XexDumper {
 		int base = 0;
 
 		while (base < block.length) {
-			Instruction instruction = Disassembler.getInstruction(addr + base);
-			Disassembler.addUserLabel(instruction.getAddr(), "L" +  String.format("%04X", instruction.getAddr()));
+			Instruction instruction = Disassembler.getInstruction(blockIndex, addr + base);
+			Disassembler.addUserLabel(instruction.getAddr(), "L_" +  String.format("%04X", instruction.getAddr()));
 			base += instruction.getSize();
 		}
 		
-		Set<String> usedLabels = new HashSet<String>();
-		
 		base = 0;
 		while (base < block.length) {
-			Instruction instruction = Disassembler.getInstruction(addr + base);
+			Instruction instruction = Disassembler.getInstruction(blockIndex, addr + base);
 			int target = instruction.getTarget();
 			if (target >= 0) {
 				String targetLabel = instruction.getTargetLabel();
 				if (targetLabel != null) {
 					int p = targetLabel.indexOf("+");
 					if (p>0) targetLabel = targetLabel.substring(0, p);
-					usedLabels.add(targetLabel);
+					usedTargets.put(targetLabel, target);
 				}
 			}
 			base += instruction.getSize();
@@ -128,10 +149,14 @@ public class XexDumper {
 		
 		base = 0;
 		while (base < block.length) {
-			Instruction instruction = Disassembler.getInstruction(addr + base);
+			Instruction instruction = Disassembler.getInstruction(blockIndex, addr + base);
 			
 			String label = instruction.getLabel();
-			if (!usedLabels.contains(label)) label = "";
+			if (usedTargets.containsKey(label)) {
+				usedLabels.add(label);
+			} else {
+				label = "";
+			}
 			
 			String margin = buildMargin(label);
 			pwAsm.println(margin + " " + instruction.getCode());
@@ -147,6 +172,32 @@ public class XexDumper {
 	
 	private int word(byte low, byte high) {
 		return byte2int(low) + 256* byte2int(high);
+	}
+	
+	private void initMapper() throws IOException {
+		if (!mapFile.exists()) return;
+		
+		int blockIndex = 1;
+		List<String> lines = Utils.loadLines(mapFile);
+		for(String line : lines) {
+			String parts[] = line.split(" ");
+			if (parts.length < 2) continue;
+			
+			String cmd = parts[0];
+			if (cmd.equals("block")) {
+				blockIndex = Utils.str2i(parts[1]);
+			} else if (cmd.equals("code")) {
+				int addr = Utils.strHex2i(parts[1], 0);
+				Disassembler.addSection(blockIndex, SectionType.Code, addr);
+			} else if (cmd.equals("bytes")) {
+				int addr = Utils.strHex2i(parts[1], 0);
+				Disassembler.addSection(blockIndex, SectionType.Byte, addr);
+			} else if (cmd.equals("words")) {
+				int addr = Utils.strHex2i(parts[1], 0);
+				Disassembler.addSection(blockIndex, SectionType.Word, addr);
+			}
+		}
+		Disassembler.dumpMapper();
 	}
 	
 	public static void main(String[] args) throws IOException {
