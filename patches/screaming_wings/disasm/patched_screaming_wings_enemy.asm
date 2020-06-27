@@ -3,11 +3,11 @@
 
                  org $5E96
 
-                 lda $5E92,x
+                 lda $5E92
 
                  org ENEMY_SETS1
                  
-                 .byte $01, $02, $0b
+                 .byte $0b
                  
                  
                  org $33F0
@@ -20,6 +20,6 @@ SET_BIG_PLANE_X
                  sta HPOSP2
                  sta COLBK
                  clc
-                 adc #$1E
+                 adc #$0F
                  sta HPOSP3
                  rts
