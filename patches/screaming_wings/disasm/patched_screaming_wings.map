@@ -167,6 +167,7 @@ word 0
 label B700 START
 label 0615 ENEMY_TYPE
 label 06B2 STAGE_NO
+label 06A0 ENEMY_X
 
 label B200 BIGPLANE_CHECK2
 label B205 BIGPLANE_ON2
@@ -180,3 +181,7 @@ label 5E92 ENEMY_SETS1
 label 5E9D ENEMY_SETS2
 label 5EA8 ENEMY_SETS3
 label 5EB3 ENEMY_SETS4
+
+rem 3305 intialize big plan
+rem 3319 set big plane intial position
+rem 3334 set quadruple size players
