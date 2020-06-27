@@ -3,7 +3,7 @@
 
                  org $B700
 
-START            ldy #$00
+L_B700           ldy #$00
                  tya
                  clc
                  tax

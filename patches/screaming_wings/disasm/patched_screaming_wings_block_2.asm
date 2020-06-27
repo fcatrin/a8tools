@@ -3,4 +3,4 @@
 
                  org $02E2
 
-                 .word START
+                 .word L_B700

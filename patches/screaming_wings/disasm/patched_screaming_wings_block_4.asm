@@ -70,7 +70,7 @@ L_157B           lda #$00
 L_159B           lda #$01
 L_159D           sta $0684
 L_15A0           lda ENEMY_X
-                 cmp $060F
+                 cmp PLANE_X
                  beq L_15B4
                  bcc L_15B1
                  dec ENEMY_X
@@ -583,18 +583,18 @@ L_1B00           lda #$EF
 L_1B15           inx
 L_1B16           stx AUDF4
                  stx $066C
-                 lda $0614
+                 lda PLANE_X+5
                  cmp #$01
                  bpl L_1B4C
                  lda #$01
                  sta $060E
-                 lda $0611
+                 lda PLANE_X+2
                  cmp #$10
                  bcc L_1B36
-                 dec $0611
+                 dec PLANE_X+2
                  jsr L_4B80
                  rts
-L_1B36           inc $0614
+L_1B36           inc PLANE_X+5
                  lda #$00
                  sta $066B
                  lda #$B0
@@ -604,9 +604,9 @@ L_1B36           inc $0614
                  sta AUDC4
                  rts
 L_1B4C           ldx #$00
-                 ldy $0611
-                 inc $0614
-                 lda $0614
+                 ldy PLANE_X+2
+                 inc PLANE_X+5
+                 lda PLANE_X+5
                  cmp #$08
                  bcs L_1B6B
 L_1B5B           lda L_3C4A+4,x
@@ -649,7 +649,7 @@ L_1B97           lda L_3C72+3,x
                  rts
 L_1BA7           cmp #$48
                  bcs L_1BBE
-                 inc $0611
+                 inc PLANE_X+2
 L_1BAE           lda L_3C82,x
                  sta L_3470,y
                  sta L_356D+3,y
@@ -679,7 +679,7 @@ L_1BD6           lda L_3C9A+2,x
                  bne L_1BD6
                  rts
 L_1BE6           lda #$00
-                 sta $0613
+                 sta PLANE_X+4
                  sta AUDC4
                  rts
                  .byte $00, $00, $00, $00, $00, $00, $00, $00
@@ -838,7 +838,7 @@ L_1D3A           sta L_35FD+3,y
                  bcs L_1D60
                  dec $06AF
 L_1D60           rts
-L_1D61           lda $060F
+L_1D61           lda PLANE_X
                  cmp ENEMY_X
                  beq L_1D75
                  bcs L_1D72
@@ -926,7 +926,7 @@ L_1E2B           inc ENEMY_X
                  beq L_1E3D
                  sec
                  sbc #$30
-                 cmp $060F
+                 cmp PLANE_X
                  bne L_1E4D
 L_1E3D           ldx #$00
                  txa
@@ -1215,7 +1215,7 @@ L_2094           lda L_A998+1,x
                  .byte $38, $30, $2C, $58, $9B, $7E, $0E, $11
                  .byte $20, $20, $53, $54, $41, $20, $33, $37
                  .byte $32, $32, $39, $2C, $58, $9B, $88, $0E
-L_210C           .byte $11, $20, $20, $4C, $44, $41, $20, $31
+                 .byte $11, $20, $20, $4C, $44, $41, $20, $31
                  .byte $31, $34, $38, $30, $2C, $58, $9B, $92
                  .byte $0E, $11, $20, $20, $53, $39, $39, $3A
                  .byte $39, $39, $49, $4A, $0C, $4A, $4B, $39
@@ -1262,7 +1262,7 @@ L_210C           .byte $11, $20, $20, $4C, $44, $41, $20, $31
                  .byte $15, $14, $77, $15, $15, $15, $15, $14
                  .byte $16, $15, $15, $16, $14, $15, $14, $15
 L_227C           .byte $14, $14, $14, $15, $16, $15, $19, $64
-L_2284           .byte $65, $16, $14, $14, $15, $16, $16, $16
+                 .byte $65, $16, $14, $14, $15, $16, $16, $16
                  .byte $16, $16, $14, $15, $15, $14, $15, $14
                  .byte $6A, $6B, $15, $15, $14, $14, $14, $15
                  .byte $6C, $6F, $14, $15, $14, $15, $14, $16
@@ -1284,7 +1284,7 @@ L_2284           .byte $65, $16, $14, $14, $15, $16, $16, $16
                  .byte $14, $16, $19, $14, $15, $16, $14, $15
                  .byte $14, $16, $14, $15, $15, $16, $15, $14
                  .byte $14, $14, $15, $16, $15, $16, $15, $15
-L_2334           .byte $16, $15, $14, $15, $19, $70, $39, $3A
+                 .byte $16, $15, $14, $15, $19, $70, $39, $3A
                  .byte $39, $3A, $39, $3A, $6E, $6D, $6E, $6D
                  .byte $6E, $6F, $14, $15, $16, $14, $15, $16
                  .byte $16, $15, $14, $16, $15, $15, $16, $18
@@ -1883,7 +1883,7 @@ L_33D4           inc $0684
 L_33D7           lda ENEMY_X
                  clc
                  adc #$1C
-                 cmp $060F
+                 cmp PLANE_X
                  beq L_33F0
                  bcc L_33ED
                  dec ENEMY_X
@@ -1891,7 +1891,7 @@ L_33D7           lda ENEMY_X
                  cmp #$00
                  beq L_33F0
 L_33ED           inc ENEMY_X
-L_33F0           lda ENEMY_X
+L_33F0           lda ENEMY_X   ; set big plane X position
                  sta HPOSP2
                  clc
                  adc #$1E
@@ -2098,7 +2098,7 @@ L_365F           lda $06D3
                  bne L_3680
                  lda #$ED
                  sta PCOLR0
-                 lda $060F
+                 lda PLANE_X
                  sec
                  sbc #$01
                  sta $0685
@@ -2146,7 +2146,7 @@ L_36C7           cmp #$01
                  sta $06D6
                  lda #$ED
                  sta PCOLR1
-                 lda $060F
+                 lda PLANE_X
                  clc
                  adc #$0A
                  sta $0686
@@ -2513,7 +2513,7 @@ L_4000           lda VCOUNT
                  sta NMIEN
                  rts
                  .byte $3F, $9D, $F4, $1D
-                 pha
+DLI_1            pha           ; set playfield color at the top of the screen
                  txa
                  pha
                  tya
@@ -2537,25 +2537,18 @@ L_4029           ldy #$05
                  tax
                  pla
                  rti
-                 .byte $23
-                 jmp L_2284+6
-                 jsr L_2334+7
-                 jmp L_210C+3
-                 ldx #$10
-                 lda #$0C
-                 sta B0_ICCOM,x
-                 jmp L_31E4+5
-                 .byte $54, $59, $50, $45, $20, $22, $59, $22
-                 jsr L_4F53+1
-                 jsr L_4542+2
-                 jmp L_5445
-                 .byte $45, $2E, $2E, $2E, $9B, $44, $45
-                 pha
+                 .byte $23, $4C, $8A, $22, $20, $3B, $23, $4C
+                 .byte $0F, $21, $A2, $10, $A9, $0C, $9D, $42
+                 .byte $03, $4C, $E9, $31, $54, $59, $50, $45
+                 .byte $20, $22, $59, $22, $20, $54, $4F, $20
+                 .byte $44, $45, $4C, $45, $54, $45, $2E, $2E
+                 .byte $2E, $9B, $44, $45
+DLI_2            pha           ; set plane position and size
                  txa
                  pha
                  tya
                  pha
-                 lda $060F
+                 lda PLANE_X
 L_407D           ldx #$75
                  ldy #$0E
                  sta WSYNC
@@ -2577,7 +2570,7 @@ L_407D           ldx #$75
                  .byte $57, $45, $44, $9B, $00, $04, $04, $36
                  .byte $39, $37, $20, $46, $52, $45, $45, $20
                  .byte $53, $45
-                 pha
+DLI_3            pha           ; reset charbase and color for score panel
                  txa
                  pha
                  lda #$02
@@ -2594,7 +2587,7 @@ L_407D           ldx #$75
                  .byte $4F, $50, $59, $33, $32, $2E, $43, $4F
                  .byte $4D, $9B, $9B, $00, $00, $00, $00, $00
                  .byte $6C, $23
-                 pha
+DLI_4            pha           ; set color for score line
                  lda #$2F
                  sta WSYNC
                  sta COLPF0
@@ -2603,7 +2596,7 @@ L_407D           ldx #$75
                  pla
                  rti
                  ldx #$00
-                 pha
+DLI_5            pha
                  txa
                  pha
                  tya
@@ -3029,7 +3022,7 @@ L_4531           ldx #$00
                  stx $0632
                  stx $0636
                  stx $064F
-L_4542           stx $0637
+                 stx $0637
                  stx $0698
                  stx $0635
                  stx $0653
@@ -3184,7 +3177,7 @@ L_47FE           sta L_AD98+5,x
                  sta $061D
                  lda $0683
                  bpl L_4812
-                 lda $060F
+                 lda PLANE_X
 L_4812           sta HPOSP2
                  sta HPOSP3
                  sta $0685
@@ -3511,10 +3504,10 @@ L_4B05           sta HPOSP0,x
                  lda #$74
                  sta HPOSP0
                  sta HPOSP1
-                 sta $060F
-                 sta $0610
+                 sta PLANE_X
+                 sta PLANE_X+1
                  lda #$20
-                 sta $0611
+                 sta PLANE_X+2
                  lda GPRIOR
                  ora #$10
                  sta GPRIOR
@@ -3543,7 +3536,7 @@ L_4B80           inc $060C
 L_4B9A           lda #$00
                  sta $060D
 L_4B9F           ldx #$00
-                 ldy $0611
+                 ldy PLANE_X+2
                  lda $060E
                  bne L_4BD4
                  lda $060D
@@ -3934,7 +3927,7 @@ L_4F49           cmp #$05
                  bpl L_4F6C
                  inc $0689
                  lda $06B0
-L_4F53           bne L_4F58
+                 bne L_4F58
                  jmp L_4FCA
 L_4F58           ldx $0692
                  ldy #$00
@@ -4032,14 +4025,14 @@ L_5038           jsr L_6900
                  lda $0698
                  bne L_5000
                  jmp L_51A4
-L_504B           lda $0613
+L_504B           lda PLANE_X+4
                  beq L_5056
                  jsr L_1B00
                  jmp L_5162
 L_5056           lda $06AB
                  beq L_508F
                  jsr L_1800
-                 lda $060F
+                 lda PLANE_X
                  cmp #$74
                  bne L_5077
                  lda #$01
@@ -4051,10 +4044,10 @@ L_5056           lda $06AB
                  jmp L_5008
 L_5077           bmi L_5081
                  lda #$00
-                 dec $060F
+                 dec PLANE_X
                  jmp L_5086
 L_5081           lda #$02
-                 inc $060F
+                 inc PLANE_X
 L_5086           sta $060E
                  jsr L_4B80
                  jmp L_51A4
@@ -4207,36 +4200,36 @@ L_5206           jmp L_502D
                  jsr L_6700
                  inc $0632
                  jmp L_5008
-L_5212           lda $060F
+L_5212           lda PLANE_X
                  cmp #$2B
                  bcc L_5221
                  lda #$00
                  sta $060E
-                 dec $060F
+                 dec PLANE_X
 L_5221           rts
-L_5222           lda $060F
+L_5222           lda PLANE_X
                  cmp #$C8
                  bcs L_5231
                  lda #$02
                  sta $060E
-                 inc $060F
+                 inc PLANE_X
 L_5231           rts
-L_5232           lda $0611
+L_5232           lda PLANE_X+2
                  cmp STAGE_NO+2
                  bmi L_523D
-                 dec $0611
+                 dec PLANE_X+2
 L_523D           lda #$01
                  sta $060E
                  rts
-L_5243           lda $0611
+L_5243           lda PLANE_X+2
                  cmp #$3A
                  bcs L_524D
-                 inc $0611
+                 inc PLANE_X+2
 L_524D           lda #$01
                  sta $060E
                  rts
 L_5253           inc ENEMY_TYPE+6
-                 ldx $060F
+                 ldx PLANE_X
                  inx
                  stx HPOSM2
                  inx
@@ -4244,7 +4237,7 @@ L_5253           inc ENEMY_TYPE+6
                  inx
                  inx
                  stx HPOSM3
-                 lda $0611
+                 lda PLANE_X+2
                  clc
                  adc #$70
                  sta ENEMY_TYPE+4
@@ -4472,7 +4465,7 @@ L_542E           cpy #$0E
                  .byte $00
 L_5440           lda $068A
                  bne L_5454
-L_5445           lda #$20
+                 lda #$20
                  sta $0693
                  sta $06B1
                  jsr L_5486
@@ -5109,11 +5102,11 @@ L_5A02           sta L_35FD+3,x
                  rts
                  brk
                  .byte $D2
-                 lda $0612
+                 lda PLANE_X+3
                  cmp #$02
                  bne L_5A3D
                  jsr L_55A0
-                 lda $060F
+                 lda PLANE_X
 L_5A1E           sta L_AD50+2
                  dey
                  asl $D0
@@ -5211,7 +5204,7 @@ L_5AF7           jmp L_4EC0
                  brk
                  bne L_5B0A
                  lda L_6800,y
-L_5B00           ldx $060F
+L_5B00           ldx PLANE_X
                  lda ENEMY_TYPE+4
                  cmp #$9C
                  bne L_5B1E
@@ -5372,7 +5365,7 @@ L_5C40           lda ENEMY_TYPE+1
                  bne L_5C78
                  lda #$0F
                  sta L_542E+1
-                 lda $060F
+                 lda PLANE_X
                  sta HPOSP2
                  sta HPOSP3
                  sta ENEMY_X
@@ -5405,7 +5398,7 @@ L_5C91           inc $0687
                  lda $0687
                  cmp #$02
                  bcc L_5CBE
-                 lda $060F
+                 lda PLANE_X
                  cmp ENEMY_X
                  bne L_5CA5
                  beq L_5CB0
@@ -5502,7 +5495,7 @@ L_5D60           lda #$FF
                  lda $0690
                  sta AUDF3
                  lda ENEMY_X
-                 cmp $060F
+                 cmp PLANE_X
                  bcc L_5D7E
                  dec ENEMY_X
                  jmp L_5D81
@@ -5510,7 +5503,7 @@ L_5D7E           inc ENEMY_X
 L_5D81           lda ENEMY_X
                  sta HPOSP2
                  sta HPOSP3
-                 lda $0611
+                 lda PLANE_X+2
                  clc
                  adc #$70
                  sta $0664
@@ -6322,7 +6315,7 @@ L_6547           lda ENEMY_TYPE+2
                  beq L_654F
                  rts
 L_654F           lda ENEMY_X
-                 cmp $060F
+                 cmp PLANE_X
                  beq L_6562
                  bcc L_655F
                  dec ENEMY_X
@@ -6603,7 +6596,7 @@ L_6826           ldy #$10
 L_683C           rts
                  brk
                  dec LOGCOL
-L_6840           ldx $0611
+L_6840           ldx PLANE_X+2
                  ldy #$00
                  lda #$0F
                  sta AUDC4
@@ -7157,7 +7150,7 @@ L_6D9D           jsr L_6E1E
                  bcc L_6DC5
                  lda #$00
                  sta $0626
-                 lda $060F
+                 lda PLANE_X
                  cmp $0622
                  bcs L_6DBC
                  dec $0622
@@ -7726,7 +7719,7 @@ L_788C           lda L_797D,x
                  sta SDMCTL
                  lda #$50
                  sta HPOSP0
-                 sta $060F
+                 sta PLANE_X
                  ldy #$1C
                  sty ENEMY_TYPE+4
                  jsr L_795E
@@ -7756,24 +7749,24 @@ L_78C6           lda STICK0
                  jsr L_5B00
                  jsr L_796F
                  jmp L_78AC
-L_78E7           lda $060F
+L_78E7           lda PLANE_X
                  cmp #$60
                  bcs L_78F1
                  jmp L_78AC
-L_78F1           lda $060F
+L_78F1           lda PLANE_X
                  sec
                  sbc #$10
-                 sta $060F
+                 sta PLANE_X
                  sta HPOSP0
                  jsr L_796F
                  jmp L_78AC
-L_7903           lda $060F
+L_7903           lda PLANE_X
                  cmp #$9F
                  bcc L_790D
                  jmp L_78AC
 L_790D           clc
                  adc #$10
-                 sta $060F
+                 sta PLANE_X
                  sta HPOSP0
                  jsr L_796F
                  jmp L_78AC
@@ -9658,7 +9651,7 @@ L_ADB8           .byte $00, $00, $00, $00, $00, $00, $00, $00
                  .byte $00, $00, $00, $00, $00, $00, $00, $00
 BIGPLANE_CHECK2  lda ENEMY_TYPE+1
                  bne L_B245
-                 sta $06D3
+BIGPLANE_ON2     sta $06D3
                  sta $06D4
                  sta $06D8
                  sta $0625
@@ -9749,7 +9742,7 @@ L_B2D4           inc $0684
 L_B2D7           lda ENEMY_X
                  clc
                  adc #$1C
-                 cmp $060F
+                 cmp PLANE_X
                  beq L_B2F0
                  bcc L_B2ED
                  dec ENEMY_X
@@ -9964,7 +9957,7 @@ L_B55F           lda $06D3
                  bne L_B580
                  lda #$ED
                  sta PCOLR0
-                 lda $060F
+                 lda PLANE_X
                  sec
                  sbc #$01
                  sta $0685
@@ -10012,7 +10005,7 @@ L_B5C7           cmp #$01
                  sta $06D6
                  lda #$ED
                  sta PCOLR1
-                 lda $060F
+                 lda PLANE_X
                  clc
                  adc #$0A
                  sta $0686
