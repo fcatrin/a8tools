@@ -52,7 +52,7 @@ public class XexDumper {
 		PrintWriter pwDis = new PrintWriter(new FileWriter(disFile));
 		
 		String includeName = incFile.getName();
-		pwAsm.println("  icl \"" + includeName + "\"");
+		pwAsm.println(String.format("  icl \"%s\"\n", includeName));
 		
 		int blockIndex = 1;
 		int index = 0;
@@ -134,14 +134,18 @@ public class XexDumper {
 		return line + separator + c2;
 	}
 	
-	private void disasm(int blockIndex, int addr, int block[], PrintWriter pwAsm, PrintWriter pwDis) {
+	private void disasm(int blockIndex, int addr, int block[], PrintWriter pwAsm, PrintWriter pwDis) throws IOException {
 		Disassembler.setMemory(addr, block);
 		Disassembler.createBlock(blockIndex, addr, block.length);
 		
-		pwAsm.println(String.format("\n\n; BLOCK %d\n", blockIndex));
-		pwDis.println(String.format("\n\n; BLOCK %d\n", blockIndex));
+		File asmFileBlock = buildAsmFileForBlock(blockIndex);
+		PrintWriter pwAsmBlock = new PrintWriter(new FileWriter(asmFileBlock));
 		
-		pwAsm.println(MARGIN + " " + String.format("org $%04X\n", addr));
+		pwDis.println(String.format("\n\n; BLOCK %d %s\n", blockIndex, xexFile.getName()));
+		pwAsm.println(String.format("  icl \"%s\"", asmFileBlock.getName()));
+		
+		pwAsmBlock.println(String.format("\n; BLOCK %d %s\n", blockIndex, xexFile.getName()));
+		pwAsmBlock.println(MARGIN + " " + String.format("org $%04X\n", addr));
 		
 		int base = 0;
 
@@ -188,11 +192,13 @@ public class XexDumper {
 			}
 			
 			String margin = buildMargin(label);
-			pwAsm.println(margin + " " + instruction.getCode());
+			pwAsmBlock.println(margin + " " + instruction.getCode());
 			pwDis.println(buildColumns(instruction.getText(), DISASM_WIDTH, instruction.getTargetLabel(), " ; "));
 			
 			base += instruction.getSize();
 		}
+		
+		pwAsmBlock.close();
 	}
 	
 	private int byte2int(byte b) {
@@ -235,6 +241,14 @@ public class XexDumper {
 		}
 		Disassembler.dumpMapper();
 	}
+	
+	private File buildAsmFileForBlock(int blockIndex) {
+		String path = asmFile.getAbsolutePath();
+		path = path.substring(0, path.length() - 4);
+		path += "_block_" + blockIndex + ".asm";
+		return new File(path);
+	}
+
 	
 	public static void main(String[] args) throws IOException {
 		File xexFile = new File("/home/fcatrin/git/a8tools/patches/screaming_wings/patched_screaming_wings.xex");
