@@ -103,4 +103,4 @@ VCOUNT     = $D40B
 NMIEN      = $D40E
 COLDSV     = $E477
 L_B776     = $B776
-L_7FFD     = $8001
+L_7FFD     = $7FFD
