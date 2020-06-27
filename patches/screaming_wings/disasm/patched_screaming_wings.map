@@ -46,9 +46,7 @@ byte 3B0A
 code 4000
 byte 401C
 code 4020
-byte 405D
-code 4065
-byte 406E
+byte 4049
 code 4075
 byte 40A3
 code 40B5
@@ -164,9 +162,10 @@ word 0
 block 7
 word 0
 
-label B700 START
+; label B700 START
 label 0615 ENEMY_TYPE
 label 06B2 STAGE_NO
+label 060F PLANE_X
 label 06A0 ENEMY_X
 
 label B200 BIGPLANE_CHECK2
@@ -185,3 +184,18 @@ label 5EB3 ENEMY_SETS4
 rem 3305 intialize big plan
 rem 3319 set big plane intial position
 rem 3334 set quadruple size players
+rem 33F0 set big plane X position
+
+label 4020 DLI_1
+label 4075 DLI_2
+label 40B5 DLI_3
+label 40E0 DLI_4
+label 40F2 DLI_5
+
+rem 4020 set playfield color at the top of the screen
+rem 4075 set plane position and size
+rem 40B5 reset charbase and color for score panel
+rem 40E0 set color for score line
+rem 40F2 reset everything at the end of the screen
+
+
