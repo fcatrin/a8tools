@@ -104,3 +104,6 @@ NMIEN      = $D40E
 COLDSV     = $E477
 L_B776     = $B776
 L_7FFD     = $7FFD
+ENEMY_TYPE                 = $0615
+STAGE_NO   = $06B2
+BIGPLANE_ON2                 = $B205

@@ -3,7 +3,7 @@
 
                  org $1500
 
-L_1500           lda $0616
+L_1500           lda ENEMY_TYPE+1
                  bne L_153C
                  lda #$28
                  sta $0690
@@ -25,7 +25,7 @@ L_1518           sta $06A0
                  sta PCOLR2
                  lda #$0E
                  sta L_542E+1
-                 inc $0616
+                 inc ENEMY_TYPE+1
                  rts
 L_153C           lda $0625
                  bne L_155B
@@ -34,8 +34,8 @@ L_153C           lda $0625
                  lda $0624
                  beq L_154C
                  rts
-L_154C           sta $0616
-                 sta $0615
+L_154C           sta ENEMY_TYPE+1
+                 sta ENEMY_TYPE
                  sta $06A6
                  lda #$11
                  sta L_542E+1
@@ -48,14 +48,14 @@ L_155B           lda $06AE
                  sta $06A2
                  inc $06A7
                  rts
-L_156E           inc $0617
-                 lda $0617
+L_156E           inc ENEMY_TYPE+2
+                 lda ENEMY_TYPE+2
                  cmp #$02
                  bcs L_157B
                  rts
 L_1579           bne L_15E4
 L_157B           lda #$00
-                 sta $0617
+                 sta ENEMY_TYPE+2
                  inc $06C9
                  lda $06C9
                  cmp #$02
@@ -80,7 +80,7 @@ L_15B1           inc $06A0
 L_15B4           lda $06A0
                  sta HPOSP2
                  sta HPOSP3
-                 lda $0616
+                 lda ENEMY_TYPE+1
                  cmp #$02
                  bne L_15D5
                  dec $0690
@@ -88,14 +88,14 @@ L_15B4           lda $06A0
                  cmp #$30
                  bcs L_15E4
                  lda #$03
-                 sta $0616
+                 sta ENEMY_TYPE+1
                  bne L_15E4
 L_15D5           inc $0690
                  lda $0690
                  cmp #$60
                  bcc L_15E4
                  lda #$02
-                 sta $0616
+                 sta ENEMY_TYPE+1
 L_15E4           lda $0625
                  bne L_15FC
                  ldx #$00
@@ -222,7 +222,7 @@ L_16DF           lda L_2F0C+5,y
                  .word LNFLG
                  .word LNFLG
                  .word LNFLG
-L_1700           lda $0616
+L_1700           lda ENEMY_TYPE+1
                  bne L_173B
                  lda #$50
                  sta $061D
@@ -239,18 +239,18 @@ L_1700           lda $0616
                  sta PCOLR0
                  lda #$00
                  sta $0684
-                 sta $0617
+                 sta ENEMY_TYPE+2
                  sta $0687
                  lda #$0E
                  sta L_542E+1
-                 inc $0616
+                 inc ENEMY_TYPE+1
                  rts
-L_173B           inc $0617
-                 lda $0617
+L_173B           inc ENEMY_TYPE+2
+                 lda ENEMY_TYPE+2
                  cmp #$03
                  bcc L_1759
                  lda #$00
-                 sta $0617
+                 sta ENEMY_TYPE+2
                  lda $0684
                  bne L_1754
                  inc $0684
@@ -259,7 +259,7 @@ L_1754           lda #$00
                  sta $0684
 L_1759           ldy $061D
                  ldx #$00
-                 lda $0616
+                 lda ENEMY_TYPE+1
                  cmp #$02
                  bcc L_1766
                  rts
@@ -275,7 +275,7 @@ L_1773           sta L_33FE+2,y
                  inx
                  cpx #$0D
                  bne L_1773
-                 inc $0616
+                 inc ENEMY_TYPE+1
                  rts
 L_1783           dec $0685
                  dec $0686
@@ -515,10 +515,10 @@ L_1A1A           .byte $2F, $40, $23, $90, $2F, $00, $6F
                  asl PTABW
                  .byte $FF
                  beq L_1A44
-                 lda $0615
+                 lda ENEMY_TYPE
                  bne L_1A44
                  jsr L_5E5F+1
-L_1A44           lda $0615
+L_1A44           lda ENEMY_TYPE
                  cmp #$01
                  bne L_1A52
                  jsr L_47FE+2
@@ -714,10 +714,10 @@ L_1C39           stx $0666
 L_1C3F           lda $0634
                  cmp #$FF
                  beq L_1C4E
-                 lda $0615
+                 lda ENEMY_TYPE
                  bne L_1C4E
                  jsr L_5E38
-L_1C4E           lda $0615
+L_1C4E           lda ENEMY_TYPE
                  cmp #$01
                  bne L_1C5C
                  jsr L_47FE+2
@@ -747,7 +747,7 @@ L_1C8C           jsr L_61BF+1
                  rts
 L_1C90           cmp #$05
                  bne L_1CA0
-                 lda $06B2
+                 lda STAGE_NO
                  beq L_1C9C
                  jsr L_5C40
 L_1C9C           jsr L_5C40
@@ -775,7 +775,7 @@ L_1CC3           cmp #$0A
                  rts
 L_1CCB           cmp #$0B
                  bne L_1CD3
-                 jsr L_B200
+                 jsr BIGPLANE_CHECK2
                  rts
 L_1CD3           cmp #$FF
                  bne L_1CDB
@@ -828,8 +828,8 @@ L_1D3A           sta L_35FD+3,y
                  cpx #$10
                  bne L_1D3A
                  lda #$00
-                 sta $0615
-                 sta $0616
+                 sta ENEMY_TYPE
+                 sta ENEMY_TYPE+1
                  lda #$11
                  sta L_542E+1
                  inc $06CC
@@ -886,7 +886,7 @@ L_1DBF           lda #$AD
                  sta L_542E+1
                  lda #$00
                  sta $0669
-                 inc $0616
+                 inc ENEMY_TYPE+1
                  rts
 L_1DDD           cmp #$02
                  bne L_1DF2
@@ -895,20 +895,20 @@ L_1DDD           cmp #$02
                  cpy #$90
                  bcs L_1E01
                  lda #$01
-                 sta $0616
+                 sta ENEMY_TYPE+1
                  bne L_1E01
 L_1DF2           inc $0690
                  ldy $0690
                  cpy #$B8
                  bcc L_1E01
                  lda #$02
-                 sta $0616
-L_1E01           inc $0617
-                 lda $0617
+                 sta ENEMY_TYPE+1
+L_1E01           inc ENEMY_TYPE+2
+                 lda ENEMY_TYPE+2
                  cmp #$03
                  bcc L_1E1F
                  lda #$00
-                 sta $0617
+                 sta ENEMY_TYPE+2
                  inc $0684
                  lda $0684
                  cmp #$03
@@ -986,8 +986,8 @@ L_1EAC           sta L_35FD+3,x
                  sta L_3700,x
                  inx
                  bne L_1EAC
-                 sta $0615
-                 sta $0616
+                 sta ENEMY_TYPE
+                 sta ENEMY_TYPE+1
                  lda #$11
                  sta L_542E+1
                  rts
@@ -1046,7 +1046,7 @@ L_1F1F           stx L_16AD
                  sta $06A0
                  lda #$0A
                  sta L_542E+1
-                 inc $0616
+                 inc ENEMY_TYPE+1
                  rts
                  cmp #$02
 L_1F3A           bne L_1F4D
@@ -1055,20 +1055,20 @@ L_1F3A           bne L_1F4D
                  cpy #$9C
                  bcs L_1F5C
                  lda #$01
-                 sta $0616
+                 sta ENEMY_TYPE+1
                  bne L_1F5C
 L_1F4D           inc $0690
                  ldy $0690
                  cpy #$B4
                  bcc L_1F5C
                  lda #$02
-                 sta $0616
-L_1F5C           inc $0617
-                 lda $0617
+                 sta ENEMY_TYPE+1
+L_1F5C           inc ENEMY_TYPE+2
+                 lda ENEMY_TYPE+2
                  cmp #$03
                  bcc L_1F7A
                  lda #$00
-                 sta $0617
+                 sta ENEMY_TYPE+2
                  inc $0684
                  lda $0684
                  cmp #$03
@@ -1087,8 +1087,8 @@ L_1F8C           sta L_35FD+3,x
                  sta L_3700,x
                  inx
                  bne L_1F8C
-                 sta $0615
-                 sta $0616
+                 sta ENEMY_TYPE
+                 sta ENEMY_TYPE+1
                  lda #$11
                  sta L_542E+1
                  rts
@@ -1790,7 +1790,7 @@ L_31E4           .byte $00, $00, $00, $00, $00, $00, $00, $00
                  .byte $00, $00, $00, $00, $00, $00, $00, $00
                  .byte $00, $00, $00, $00, $00, $00, $00, $00
                  .byte $00, $00, $00, $00
-L_3300           lda $0616
+L_3300           lda ENEMY_TYPE+1
                  bne L_3345
                  sta $06D3
                  sta $06D4
@@ -1815,7 +1815,7 @@ L_3300           lda $0616
                  sta SIZEP3
                  lda #$0F
                  sta L_542E+1
-                 inc $0616
+                 inc ENEMY_TYPE+1
                  rts
 L_3345           jsr L_B550
                  lda $06D0
@@ -1867,12 +1867,12 @@ L_33A4           lda L_3300,y
                  bne L_33A4
 L_33B2           lda $06D0
                  beq L_33FC
-                 inc $0617
-                 lda $0617
+                 inc ENEMY_TYPE+2
+                 lda ENEMY_TYPE+2
                  cmp #$03
                  bcc L_33FC
                  lda #$00
-                 sta $0617
+                 sta ENEMY_TYPE+2
                  lda $0684
                  beq L_33D4
                  lda #$00
@@ -1900,12 +1900,12 @@ L_33FC           ldx #$00
 L_33FE           ldy $0690
 L_3401           lda $06D0
                  bne L_345A
-L_3406           inc $0617
-                 lda $0617
+L_3406           inc ENEMY_TYPE+2
+                 lda ENEMY_TYPE+2
 L_340C           cmp #$06
                  bcs L_3411
                  rts
-L_3411           stx $0617
+L_3411           stx ENEMY_TYPE+2
                  inc $06D1
 L_3417           lda $06D1
                  cmp #$10
@@ -1929,9 +1929,9 @@ L_3439           sta L_35FD+3,y
                  inx
                  cpx #$1D
                  bne L_3439
-                 sta $0616
+                 sta ENEMY_TYPE+1
                  sta AUDC4
-                 sta $0615
+                 sta ENEMY_TYPE
                  lda #$11
                  sta L_542E+1
                  jsr L_67E6
@@ -1943,7 +1943,7 @@ L_345A           lda M0PL
                  lda M3PL
                  and #$0C
                  beq L_34C0
-L_3468           ldy $0619
+L_3468           ldy ENEMY_TYPE+4
                  ldx #$00
 L_346D           lda L_3300,y
 L_3470           and #$AF
@@ -1953,8 +1953,8 @@ L_3470           and #$AF
                  cpx #$0C
                  bne L_346D
                  lda #$00
-L_347D           sta $061B
-                 sta $061C
+L_347D           sta ENEMY_TYPE+6
+                 sta ENEMY_TYPE+7
 L_3483           inc $06AC
                  lda $06AC
                  cmp #$50
@@ -1981,16 +1981,16 @@ L_34AC           lda $06D3
 L_34B8           lda $06D4
                  bne L_34C0
 L_34BD           inc $06D4
-L_34C0           lda $0617
+L_34C0           lda ENEMY_TYPE+2
                  bne L_34F0
-                 lda $0616
+                 lda ENEMY_TYPE+1
                  cmp #$01
                  bne L_34E0
                  lda $0690
                  cmp #$68
                  bcc L_34D9
                  lda #$02
-                 sta $0616
+                 sta ENEMY_TYPE+1
                  rts
 L_34D9           inc $0690
                  lda #$00
@@ -1999,7 +1999,7 @@ L_34E0           lda $0690
                  cmp #$28
                  bcs L_34ED
 L_34E7           lda #$01
-L_34E9           sta $0616
+L_34E9           sta ENEMY_TYPE+1
                  rts
 L_34ED           dec $0690
 L_34F0           ldx #$00
@@ -2028,7 +2028,7 @@ L_351B           cpx #$1D
                  nop
                  nop
                  nop
-                 stx $0617
+                 stx ENEMY_TYPE+2
                  lda #$0F
                  sta AUDC4
                  lda $06D1
@@ -2207,7 +2207,7 @@ L_3780           .byte $68, $44, $44, $44, $68, $40, $40, $40
                  .byte $63, $63, $63, $6B, $6B, $6B, $6B, $77
                  .byte $00, $00, $00, $00, $00, $00, $00, $00
                  .byte $63, $63, $63, $36, $36, $1C, $1C, $1C
-                 lda $0615
+                 lda ENEMY_TYPE
                  bne L_37D6
                  rts
 L_37D6           .byte $20, $50, $49, $20, $03, $49, $AD, $16
@@ -2697,13 +2697,13 @@ L_41E3           .byte $00, $00, $10, $20, $00, $00, $08, $00
                  lda $06AD
                  beq L_4208
                  jmp L_42DC
-L_4208           inc $0618
-                 lda $0618
+L_4208           inc ENEMY_TYPE+3
+                 lda ENEMY_TYPE+3
                  cmp #$02
                  bcs L_4215
                  jmp L_42DC
 L_4215           lda #$00
-                 sta $0618
+                 sta ENEMY_TYPE+3
                  lda $0680
                  cmp #$01
                  bmi L_4224
@@ -3033,9 +3033,9 @@ L_4542           stx $0637
                  stx $0698
                  stx $0635
                  stx $0653
-                 stx $06B5
-                 stx $06B2
-                 stx $06B6
+                 stx STAGE_NO+3
+                 stx STAGE_NO
+                 stx STAGE_NO+4
                  txa
 L_4558           sta L_9B9D+3,x
                  sta L_9C9D+3,x
@@ -3160,12 +3160,12 @@ L_45ED           .byte $02, $11, $02, $00, $00, $00, $01, $01
                  .byte $6B, $6B, $77, $00, $00, $00, $00, $00
                  .byte $00, $00, $00, $63, $63, $63, $36, $36
                  .byte $1C, $1C, $1C
-                 lda $0615
+                 lda ENEMY_TYPE
                  bne L_47D6
                  rts
 L_47D6           jsr L_4950
                  jsr L_4902+1
-                 lda $0616
+                 lda ENEMY_TYPE+1
                  bne L_47EA
                  jsr L_55CC+2
                  jsr L_55B7
@@ -3203,20 +3203,20 @@ L_4812           sta HPOSP2
                  sta $0687
                  lda #$0E
                  sta L_542E+1
-                 inc $0616
+                 inc ENEMY_TYPE+1
                  rts
-L_4847           inc $0617
-                 lda $0617
+L_4847           inc ENEMY_TYPE+2
+                 lda ENEMY_TYPE+2
                  cmp #$03
                  bcc L_4864
                  ldx #$00
-                 stx $0617
+                 stx ENEMY_TYPE+2
                  lda $0684
                  bne L_4861
                  inc $0684
                  jmp L_4864
 L_4861           stx $0684
-L_4864           lda $0616
+L_4864           lda ENEMY_TYPE+1
                  cmp #$06
                  bcc L_486E
                  jmp L_4945
@@ -3226,11 +3226,11 @@ L_486E           cmp #$03
                  lda $061D
                  cmp #$30
                  bne L_487F
-                 inc $0616
+                 inc ENEMY_TYPE+1
 L_487F           cmp #$6A
                  bcc L_488C
                  jsr L_4950
-                 inc $0616
+                 inc ENEMY_TYPE+1
                  jmp L_4945
 L_488C           lda $0624
                  bne L_4894
@@ -3269,7 +3269,7 @@ L_48D6           lda L_3D2A+1,y
                  iny
                  cpy #$04
                  bne L_48D6
-L_48E2           inc $0616
+L_48E2           inc ENEMY_TYPE+1
                  jmp L_4945
 L_48E8           dec $061D
                  lda $061D
@@ -3284,7 +3284,7 @@ L_48F8           sta L_33FE+2,x
                  iny
                  cpy #$0D
 L_4902           bne L_48F8
-                 inc $0616
+                 inc ENEMY_TYPE+1
                  sta $0624
                  jmp L_4945
 L_490D           lda $0624
@@ -3311,7 +3311,7 @@ L_4933           lda L_3D3A+3,y
                  iny
                  cpy #$0D
                  bne L_4933
-L_4945           lda $0616
+L_4945           lda ENEMY_TYPE+1
                  cmp #$02
                  bpl L_494D
                  rts
@@ -3399,7 +3399,7 @@ L_49BC           .byte $70 ; DL 8 scanlines
                  .byte $00, $00, $00, $00, $00, $00, $00, $00
                  .byte $00, $00, $00, $00, $00, $00, $00, $00
                  .byte $00
-                 lda $0617
+                 lda ENEMY_TYPE+2
                  bne L_4A23
                  lda #$2A
                  sta HPOSP1
@@ -3412,7 +3412,7 @@ L_4A0F           lda L_4A6D,x
                  bne L_4A0F
                  lda #$0E
                  sta PCOLR1
-                 inc $0617
+                 inc ENEMY_TYPE+2
                  rts
 L_4A23           inc $061F
                  lda $061F
@@ -3420,7 +3420,7 @@ L_4A23           inc $061F
                  cmp #$D8
                  bcc L_4A36
                  lda #$00
-                 sta $0617
+                 sta ENEMY_TYPE+2
                  rts
 L_4A36           cmp #$50
                  bne L_4A48
@@ -3479,7 +3479,7 @@ L_4AC0           jsr L_4980
                  lda #$01
                  sta GPRIOR
                  sta $060E
-                 sta $0615
+                 sta ENEMY_TYPE
                  ldx #$00
                  txa
 L_4AF2           sta L_3300,x
@@ -3498,9 +3498,9 @@ L_4B05           sta HPOSP0,x
                  bne L_4B05
                  sta $060C
                  sta $060D
-                 sta $061B
-                 sta $061C
-                 sta $0616
+                 sta ENEMY_TYPE+6
+                 sta ENEMY_TYPE+7
+                 sta ENEMY_TYPE+1
                  sta $0695
                  sta $0698
                  sta $0620
@@ -4047,7 +4047,7 @@ L_5056           lda $06AB
                  cpx #$03
                  bcc L_5086
                  jsr L_6700
-                 inc $06B2
+                 inc STAGE_NO
                  jmp L_5008
 L_5077           bmi L_5081
                  lda #$00
@@ -4117,7 +4117,7 @@ L_5113           jsr L_4B80
                  bne L_5145
                  lda #$FF
                  sta CH
-                 lda $06B3
+                 lda STAGE_NO+1
                  bne L_5145
                  ldx $062A
                  bmi L_5145
@@ -4130,7 +4130,7 @@ L_5113           jsr L_4B80
                  jmp L_5162
 L_5145           lda STRIG0
                  bne L_5162
-                 lda $061B
+                 lda ENEMY_TYPE+6
                  bne L_5162
                  lda #$4E
                  sta AUDC4
@@ -4148,7 +4148,7 @@ L_516C           lda CH
                  bne L_5195
                  lda $0653
                  beq L_5190
-                 lda $0615
+                 lda ENEMY_TYPE
                  cmp #$06
                  bne L_5181
                  beq L_5185
@@ -4178,7 +4178,7 @@ L_51B4           jsr L_6B80
                  jsr L_5420
                  jsr L_1C00
                  jsr L_526E
-                 lda $06B3
+                 lda STAGE_NO+1
                  beq L_51D1
                  jsr L_6E50
                  jmp L_51D4
@@ -4222,7 +4222,7 @@ L_5222           lda $060F
                  inc $060F
 L_5231           rts
 L_5232           lda $0611
-                 cmp $06B4
+                 cmp STAGE_NO+2
                  bmi L_523D
                  dec $0611
 L_523D           lda #$01
@@ -4235,7 +4235,7 @@ L_5243           lda $0611
 L_524D           lda #$01
                  sta $060E
                  rts
-L_5253           inc $061B
+L_5253           inc ENEMY_TYPE+6
                  ldx $060F
                  inx
                  stx HPOSM2
@@ -4247,12 +4247,12 @@ L_5253           inc $061B
                  lda $0611
                  clc
                  adc #$70
-                 sta $0619
+                 sta ENEMY_TYPE+4
                  rts
-L_526E           lda $061B
+L_526E           lda ENEMY_TYPE+6
                  bne L_5274
                  rts
-L_5274           ldx $0619
+L_5274           ldx ENEMY_TYPE+4
                  ldy #$00
 L_5279           lda L_3300,x
                  and #$AF
@@ -4270,7 +4270,7 @@ L_5279           lda L_3300,x
                  inx
                  cpx #$30
                  bcc L_52BB
-                 stx $0619
+                 stx ENEMY_TYPE+4
                  ldy #$00
 L_5297           lda L_3300,x
                  ora #$50
@@ -4292,7 +4292,7 @@ L_52AC           lda L_3300,x
                  bne L_52AC
 L_52BA           rts
 L_52BB           lda #$00
-                 sta $061B
+                 sta ENEMY_TYPE+6
 L_52C0           rts
                  .byte $00, $00, $8D, $1B, $06, $60, $00, $00
                  .byte $00
@@ -4309,7 +4309,7 @@ L_52D6           lda M0PL
                  ldy $061E
                  bpl L_52EF
                  lda #$FE
-                 sta $06B7
+                 sta STAGE_NO+5
                  jsr L_5364
                  sta $0620
                  beq L_533E
@@ -4319,7 +4319,7 @@ L_52EF           lda M1PL
                  ldy $061F
                  bpl L_5308
                  lda #$FB
-                 sta $06B7
+                 sta STAGE_NO+5
                  jsr L_5364
                  sta $0621
                  beq L_533E
@@ -4348,7 +4348,7 @@ L_5336           cmp #$96
                  bne L_533D
                  sta $0635
 L_533D           rts
-L_533E           lda $06B3
+L_533E           lda STAGE_NO+1
                  beq L_534B
                  lda $0634
                  cmp #$FF
@@ -4366,7 +4366,7 @@ L_534B           lda #$00
                  rts
 L_5364           ldx #$00
 L_5366           lda L_3300,y
-                 and $06B7
+                 and STAGE_NO+5
 L_536C           sta L_3300,y
                  iny
                  inx
@@ -4421,7 +4421,7 @@ L_53CB           sta L_35FD+3,x
                  inx
                  bne L_53CB
                  lda #$FF
-                 sta $0615
+                 sta ENEMY_TYPE
                  lda #$00
                  sta $066A
                  rts
@@ -4436,19 +4436,19 @@ L_53DF           ora L_B6A8+5
                  cmp #$22
                  bcc L_5417
                  ldx #$01
-                 stx $06B3
+                 stx STAGE_NO+1
                  lda $06BB
                  bne L_5402
                  stx $06BB
 L_5402           dex
-                 stx $06B6
+                 stx STAGE_NO+4
                  lda #$20
-                 sta $06B4
+                 sta STAGE_NO+2
                  rts
-                 inc $06B5
-                 lda $06B5
+                 inc STAGE_NO+3
+                 lda STAGE_NO+3
                  bne L_5417
-                 inc $06B6
+                 inc STAGE_NO+4
 L_5417           rts
                  .byte $00, $00, $00, $00, $00, $00, $00, $00
 L_5420           tya
@@ -4556,10 +4556,10 @@ L_54ED           sta L_33FE+2,x
                  bne L_54ED
                  inc $068A
                  lda #$00
-                 sta $0616
+                 sta ENEMY_TYPE+1
                  nop
                  nop
-                 sta $0615
+                 sta ENEMY_TYPE
                  lda #$11
                  sta L_542E+1
                  rts
@@ -4844,14 +4844,14 @@ L_5767           clc
                  sta $0624
                  lda #$00
                  sta $0684
-                 sta $0617
+                 sta ENEMY_TYPE+2
                  sta $0687
                  lda #$0E
                  sta L_542E+1
-                 inc $0616
+                 inc ENEMY_TYPE+1
                  rts
-L_57A5           inc $0617
-                 lda $0617
+L_57A5           inc ENEMY_TYPE+2
+                 lda ENEMY_TYPE+2
                  cmp #$01
                  bcs L_57B8
                  lda $061D
@@ -4860,14 +4860,14 @@ L_57A5           inc $0617
                  rts
                  rts
 L_57B8           lda #$00
-                 sta $0617
+                 sta ENEMY_TYPE+2
                  lda $0684
                  bne L_57C8
                  inc $0684
                  jmp L_57CD
 L_57C8           lda #$00
                  sta $0684
-L_57CD           lda $0616
+L_57CD           lda ENEMY_TYPE+1
                  cmp #$03
                  bcc L_57D7
                  jmp L_582A
@@ -4875,10 +4875,10 @@ L_57D7           inc $061D
                  lda $061D
                  cmp #$30
                  bne L_57E4
-                 inc $0616
+                 inc ENEMY_TYPE+1
 L_57E4           cmp #$6A
                  bcc L_57EE
-                 inc $0616
+                 inc ENEMY_TYPE+1
                  jmp L_588B
 L_57EE           lda $0624
                  bne L_57F6
@@ -4920,7 +4920,7 @@ L_583D           sta L_33FE+2,x
                  cpy #$0D
                  bne L_583D
                  sta $0624
-                 inc $0616
+                 inc ENEMY_TYPE+1
                  jmp L_588B
 L_5852           lda $0624
                  bne L_585A
@@ -4946,7 +4946,7 @@ L_5879           lda L_3D72,y
                  iny
                  cpy #$0D
                  bne L_5879
-L_588B           lda $0616
+L_588B           lda ENEMY_TYPE+1
                  cmp #$02
                  bpl L_5893
                  rts
@@ -5059,12 +5059,12 @@ L_5987           inc $06A0
                  cmp #$B0
                  bcc L_59B5
                  lda #$00
-                 sta $0616
+                 sta ENEMY_TYPE+1
                  sta $0625
                  lda #$11
                  sta L_542E+1
                  lda #$00
-                 sta $0615
+                 sta ENEMY_TYPE
                  jsr L_59FC
                  jmp L_59F1
 L_59B5           lda $0625
@@ -5212,7 +5212,7 @@ L_5AF7           jmp L_4EC0
                  bne L_5B0A
                  lda L_6800,y
 L_5B00           ldx $060F
-                 lda $0619
+                 lda ENEMY_TYPE+4
                  cmp #$9C
                  bne L_5B1E
 L_5B0A           cpx #$70
@@ -5230,7 +5230,7 @@ L_5B1E           jsr L_5B2B
                  sta L_9F65+7,x
                  inc $060E
                  rts
-L_5B2B           lda $0619
+L_5B2B           lda ENEMY_TYPE+4
                  cmp #$1C
                  bne L_5B35
                  jmp L_5B5B
@@ -5368,7 +5368,7 @@ L_5C22           lda $0600,x
                  rts
                  .byte $00, $00, $00, $00, $00, $00, $00, $00
                  .byte $00, $00, $00, $00, $00, $00, $00
-L_5C40           lda $0616
+L_5C40           lda ENEMY_TYPE+1
                  bne L_5C78
                  lda #$0F
                  sta L_542E+1
@@ -5388,7 +5388,7 @@ L_5C6A           lda #$44
 L_5C6C           sta PCOLR2
                  lda #$0F
                  sta PCOLR3
-                 inc $0616
+                 inc ENEMY_TYPE+1
                  rts
 L_5C78           lda $0634
                  beq L_5C7E
@@ -5418,12 +5418,12 @@ L_5CB0           lda $06A0
                  sta HPOSP3
                  lda #$00
                  sta $0687
-L_5CBE           inc $0617
-                 lda $0617
+L_5CBE           inc ENEMY_TYPE+2
+                 lda ENEMY_TYPE+2
                  cmp #$02
                  bcc L_5CDC
                  lda #$00
-                 sta $0617
+                 sta ENEMY_TYPE+2
                  lda $0684
                  beq L_5CD9
                  lda #$00
@@ -5461,9 +5461,9 @@ L_5D12           sta L_35FD+2,x
                  iny
                  cpy #$0E
                  bne L_5D12
-                 sta $0615
+                 sta ENEMY_TYPE
 L_5D21           sta $0625
-                 sta $0616
+                 sta ENEMY_TYPE+1
                  lda #$11
                  sta L_542E+1
                  rts
@@ -5474,7 +5474,7 @@ L_5D21           sta $0625
                  bne L_5D21+2
                  rts
                  lda #$01
-                 sta $0616
+                 sta ENEMY_TYPE+1
                  ldx $0690
                  ldy #$00
                  tya
@@ -5577,7 +5577,7 @@ L_5E38           lda #$00
                  sta $0624
                  sta $0625
                  sta $0627
-                 sta $0616
+                 sta ENEMY_TYPE+1
                  sta SIZEP2
                  sta SIZEP3
                  sta $0634
@@ -5604,36 +5604,36 @@ L_5E74           sta $06C2
                  bcc L_5E86
                  ldx #$00
                  stx $06AF
-L_5E86           lda $06B2
+L_5E86           lda STAGE_NO
                  cmp #$03
-                 bcc L_5E92
+                 bcc ENEMY_SETS1
                  lda #$00
-                 sta $06B2
-L_5E92           cmp #$00
-                 bne L_5E9D
-                 lda L_5EBA,x
-                 sta $0615
+                 sta STAGE_NO
+ENEMY_SETS1      cmp #$00
+                 bne ENEMY_SETS2
+                 lda ENEMY_TBLS1,x
+                 sta ENEMY_TYPE
                  rts
-L_5E9D           cmp #$01
-                 bne L_5EA8
-                 lda L_5ECA+1,x
-                 sta $0615
+ENEMY_SETS2      cmp #$01
+                 bne ENEMY_SETS3
+                 lda ENEMY_TBLS2+1,x
+                 sta ENEMY_TYPE
                  rts
-L_5EA8           cmp #$02
-                 bne L_5EB3
-                 lda L_5EDA+2,x
-                 sta $0615
+ENEMY_SETS3      cmp #$02
+                 bne ENEMY_SETS4
+                 lda ENEMY_TBLS3+2,x
+                 sta ENEMY_TYPE
                  rts
-L_5EB3           lda L_5EEA+3,x
-                 sta $0615
+ENEMY_SETS4      lda ENEMY_TBLS4+3,x
+                 sta ENEMY_TYPE
                  rts
-L_5EBA           .byte $01, $02, $03, $01, $03, $02, $04, $05
+ENEMY_TBLS1      .byte $01, $02, $03, $01, $03, $02, $04, $05
                  .byte $05, $01, $01, $02, $04, $03, $04, $01
-L_5ECA           .byte $03, $01, $05, $05, $06, $04, $07, $05
+ENEMY_TBLS2      .byte $03, $01, $05, $05, $06, $04, $07, $05
                  .byte $05, $01, $08, $09, $01, $02, $06, $0B
-L_5EDA           .byte $02, $04, $01, $0A, $0B, $02, $01, $0B
+ENEMY_TBLS3      .byte $02, $04, $01, $0A, $0B, $02, $01, $0B
                  .byte $08, $09, $05, $05, $03, $0A, $02, $07
-L_5EEA           .byte $08, $07, $03, $06, $07, $08, $09, $0A
+ENEMY_TBLS4      .byte $08, $07, $03, $06, $07, $08, $09, $0A
                  .byte $0B, $05, $05, $08, $09, $02, $03, $0A
                  .byte $0A, $0A, $0A, $0A, $01, $02
 L_5F00           ldx $0690
@@ -5853,7 +5853,7 @@ L_60EE           jsr L_6186
                  sta $062F
                  jsr L_67B8
                  jsr L_67CF
-                 lda $0615
+                 lda ENEMY_TYPE
                  cmp #$01
                  beq L_616E
                  lda $0683
@@ -6066,9 +6066,9 @@ L_62D3           lda $06A0
                  bcs L_62FA
                  lda #$00
                  sta $0625
-                 sta $0616
+                 sta ENEMY_TYPE+1
                  lda #$00
-                 sta $0615
+                 sta ENEMY_TYPE
                  lda #$11
                  sta L_542E+1
 L_62EC           txa
@@ -6112,7 +6112,7 @@ L_6327           lda L_3E32+5,x
                  .byte $00, $00, $00, $00, $00, $00, $00, $00
                  .byte $00, $00, $00, $00, $00, $00, $00, $00
                  .byte $00, $00, $00, $00, $00, $00
-L_6360           lda $0616
+L_6360           lda ENEMY_TYPE+1
                  bne L_639B
                  lda #$50
                  sta $061D
@@ -6129,18 +6129,18 @@ L_6360           lda $0616
                  sta PCOLR0
                  lda #$00
                  sta $0684
-                 sta $0617
+                 sta ENEMY_TYPE+2
                  sta $0687
                  lda #$0E
                  sta L_542E+1
-                 inc $0616
+                 inc ENEMY_TYPE+1
                  rts
-L_639B           inc $0617
-                 lda $0617
+L_639B           inc ENEMY_TYPE+2
+                 lda ENEMY_TYPE+2
                  cmp #$03
                  bcc L_63BA
                  lda #$00
-                 sta $0617
+                 sta ENEMY_TYPE+2
                  lda $0684
                  bne L_63B5
                  inc $0684
@@ -6149,7 +6149,7 @@ L_63B5           lda #$00
                  sta $0684
 L_63BA           ldy $061D
                  ldx #$00
-                 lda $0616
+                 lda ENEMY_TYPE+1
                  cmp #$03
                  bcc L_63C9
                  jmp L_6412
@@ -6158,10 +6158,10 @@ L_63C9           inc $0685
                  lda $0685
                  cmp #$30
                  bne L_63D9
-                 inc $0616
+                 inc ENEMY_TYPE+1
 L_63D9           cmp #$8A
                  bcc L_63E1
-                 inc $0616
+                 inc ENEMY_TYPE+1
                  rts
 L_63E1           lda $0624
                  bne L_63E7
@@ -6198,7 +6198,7 @@ L_641C           lda L_3DDA+2,x
                  iny
                  inx
                  cpx #$0D
-                 inc $0616
+                 inc ENEMY_TYPE+1
                  rts
 L_6430           cmp #$05
                  bcs L_6476
@@ -6206,7 +6206,7 @@ L_6430           cmp #$05
                  lda $061D
                  cmp #$60
                  bcc L_6445
-                 inc $0616
+                 inc ENEMY_TYPE+1
                  jsr L_64A2
                  rts
 L_6445           lda $0624
@@ -6234,7 +6234,7 @@ L_6463           lda L_3CF2+5,x
                  rts
 L_6476           cmp #$07
                  bcs L_6496
-                 inc $0616
+                 inc ENEMY_TYPE+1
                  lda $0624
                  bne L_6483
                  rts
@@ -6317,7 +6317,7 @@ L_6518           sta $06A0
 L_653F           lda $0625
                  bne L_6547
                  jmp L_6592
-L_6547           lda $0617
+L_6547           lda ENEMY_TYPE+2
                  cmp #$02
                  beq L_654F
                  rts
@@ -6395,18 +6395,18 @@ L_65C7           lda L_3F6A+6,y
                  .byte $00, $00, $00, $00, $00, $00, $00, $00
                  .byte $00, $00, $00, $00, $00, $00
                  lda #$00
-                 sta $0616
+                 sta ENEMY_TYPE+1
                  sta $0625
                  sta SIZEP2
                  sta SIZEP3
                  lda #$00
 L_6650           lda #$00
-                 sta $0616
+                 sta ENEMY_TYPE+1
                  sta $0625
                  sta SIZEP2
                  sta SIZEP3
                  sta $06AE
-                 sta $0615
+                 sta ENEMY_TYPE
                  lda #$11
                  sta L_542E+1
                  ldy $0690
@@ -6474,7 +6474,7 @@ L_66E5           sta L_35FD+3,x
                  bne L_66E5
                  lda #$00
                  sta $06A6
-                 sta $0615
+                 sta ENEMY_TYPE
                  sta AUDC4
                  sta $062F
                  jsr L_67E6
@@ -6689,7 +6689,7 @@ L_68EF           lda #$75
                  sta L_407D+1
                  rts
                  .byte $00, $00, $00
-L_6900           lda $0619
+L_6900           lda ENEMY_TYPE+4
                  sta $0628
                  lda M2PL
                  and #$05
@@ -6700,12 +6700,12 @@ L_6900           lda $0619
                  rts
 L_6915           cmp #$02
                  bpl L_6929
-                 lda $0619
+                 lda ENEMY_TYPE+4
                  bpl L_692C
                  rts
 L_691F           cmp #$02
                  bpl L_6929
-                 lda $061A
+                 lda ENEMY_TYPE+5
                  bpl L_692C
                  rts
 L_6929           jmp L_6A21
@@ -6782,7 +6782,7 @@ L_69C1           lda #$10
 L_69D3           lda #$1A
                  sta $069D
                  inc $069C
-L_69DB           ldy $0619
+L_69DB           ldy ENEMY_TYPE+4
                  ldx #$00
 L_69E0           lda L_3300,y
                  and #$AF
@@ -6792,8 +6792,8 @@ L_69E0           lda L_3300,y
                  cpx #$0C
                  bne L_69E0
                  lda #$00
-                 sta $061B
-                 sta $061C
+                 sta ENEMY_TYPE+6
+                 sta ENEMY_TYPE+7
                  rts
 L_69F7           lda $0690
                  clc
@@ -6829,7 +6829,7 @@ L_6A2C           lda $0628
 L_6A3B           lda $0625
                  bne L_6A41
                  rts
-L_6A41           lda $0615
+L_6A41           lda ENEMY_TYPE
                  cmp #$03
                  beq L_6A50
                  cmp #$08
@@ -6923,17 +6923,17 @@ L_6B0D           lda $0683
                  sta PCOLR2
                  lda #$00
                  sta $0684
-                 sta $0617
+                 sta ENEMY_TYPE+2
                  lda #$0E
                  sta L_542E+1
-                 inc $0616
+                 inc ENEMY_TYPE+1
                  rts
-L_6B34           inc $0617
-                 lda $0617
+L_6B34           inc ENEMY_TYPE+2
+                 lda ENEMY_TYPE+2
                  cmp #$04
                  bcc L_6B53
                  lda #$00
-                 sta $0617
+                 sta ENEMY_TYPE+2
                  lda $0684
                  bne L_6B4E
                  inc $0684
@@ -7061,12 +7061,12 @@ L_6CA0           lda #$00
                  sta $0637
                  sta $0657
                  sta $0663
-                 sta $06B3
+                 sta STAGE_NO+1
                  sta $06BB
                  sta $06BF
                  sta $06CC
                  lda #$11
-                 sta $06B4
+                 sta STAGE_NO+2
                  jsr L_6C79+7
                  lda #$FF
                  sta CH
@@ -7231,14 +7231,14 @@ L_6E33           lda L_3300,x
                  rts
 L_6E4B           lda $0643
                  bne L_6E68+1
-L_6E50           lda $06B3
+L_6E50           lda STAGE_NO+1
                  cmp #$01
                  bne L_6E66
-                 sta $06B8
-                 sta $06B9
+                 sta STAGE_NO+6
+                 sta STAGE_NO+7
                  lda #$B0
                  sta $06BA
-                 inc $06B3
+                 inc STAGE_NO+1
                  rts
 L_6E66           cmp #$02
 L_6E68           bne L_6E78
@@ -7246,31 +7246,31 @@ L_6E68           bne L_6E78
                  lda $06BA
                  cmp #$81
                  bcs L_6EC2
-                 inc $06B3
+                 inc STAGE_NO+1
                  rts
 L_6E78           cmp #$03
                  bne L_6E9A
-                 inc $06B8
-                 lda $06B8
+                 inc STAGE_NO+6
+                 lda STAGE_NO+6
                  beq L_6E87
                  jmp L_6EC2
-L_6E87           inc $06B9
-                 lda $06B9
+L_6E87           inc STAGE_NO+7
+                 lda STAGE_NO+7
                  cmp #$05
                  bcc L_6EC2
                  lda #$00
-                 sta $06B9
-                 inc $06B3
+                 sta STAGE_NO+7
+                 inc STAGE_NO+1
                  rts
 L_6E9A           inc $06BA
                  lda $06BA
                  cmp #$B0
                  bcc L_6EC2
                  lda #$11
-                 sta $06B4
+                 sta STAGE_NO+2
                  lda #$00
-                 sta $06B3
-                 sta $06B6
+                 sta STAGE_NO+1
+                 sta STAGE_NO+4
                  ldy $06BA
                  tax
 L_6EB5           sta L_33FE+2,y
@@ -7683,7 +7683,7 @@ L_7839           lda L_7985,x
                  ldx #$04
                  ldy #$21
 L_7848           lda #$00
-                 sta $0617
+                 sta ENEMY_TYPE+2
 L_784D           tya
                  sta L_9E6D+3,x
                  inx
@@ -7691,8 +7691,8 @@ L_784D           tya
                  iny
                  cpy #$3B
                  beq L_786A
-                 inc $0617
-                 lda $0617
+                 inc ENEMY_TYPE+2
+                 lda ENEMY_TYPE+2
                  cmp #$06
                  bne L_784D
                  txa
@@ -7728,7 +7728,7 @@ L_788C           lda L_797D,x
                  sta HPOSP0
                  sta $060F
                  ldy #$1C
-                 sty $0619
+                 sty ENEMY_TYPE+4
                  jsr L_795E
 L_78AC           lda $060E
                  cmp #$05
@@ -7777,26 +7777,26 @@ L_790D           clc
                  sta HPOSP0
                  jsr L_796F
                  jmp L_78AC
-L_791C           lda $0619
+L_791C           lda ENEMY_TYPE+4
                  cmp #$20
                  bcs L_7926
                  jmp L_78AC
 L_7926           jsr L_7954
-                 lda $0619
+                 lda ENEMY_TYPE+4
                  sec
                  sbc #$20
-                 sta $0619
+                 sta ENEMY_TYPE+4
                  jsr L_795E
                  jmp L_78AC
-L_7938           lda $0619
+L_7938           lda ENEMY_TYPE+4
                  cmp #$9C
                  bcc L_7942
                  jmp L_78AC
 L_7942           jsr L_7954
-                 lda $0619
+                 lda ENEMY_TYPE+4
                  clc
                  adc #$20
-                 sta $0619
+                 sta ENEMY_TYPE+4
                  jsr L_795E
                  jmp L_78AC
 L_7954           ldx #$00
@@ -7806,7 +7806,7 @@ L_7957           sta L_33FE+2,x
                  bne L_7957
                  rts
 L_795E           ldx #$00
-                 ldy $0619
+                 ldy ENEMY_TYPE+4
 L_7963           lda L_7995+7,x
                  sta L_33FE+2,y
                  iny
@@ -9656,7 +9656,7 @@ L_ADB8           .byte $00, $00, $00, $00, $00, $00, $00, $00
                  .byte $00, $00, $00, $00, $00, $00, $00, $00
                  .byte $00, $00, $00, $00, $00, $00, $00, $00
                  .byte $00, $00, $00, $00, $00, $00, $00, $00
-L_B200           lda $0616
+BIGPLANE_CHECK2  lda ENEMY_TYPE+1
                  bne L_B245
                  sta $06D3
                  sta $06D4
@@ -9681,7 +9681,7 @@ L_B200           lda $0616
                  sta SIZEP3
                  lda #$0F
                  sta L_542E+1
-                 inc $0616
+                 inc ENEMY_TYPE+1
                  rts
 L_B245           jsr L_B550
                  lda $06D0
@@ -9733,12 +9733,12 @@ L_B2A4           lda L_3300,y
                  bne L_B2A4
 L_B2B2           lda $06D0
                  beq L_B2FC
-                 inc $0617
-                 lda $0617
+                 inc ENEMY_TYPE+2
+                 lda ENEMY_TYPE+2
                  cmp #$03
                  bcc L_B2FC
                  lda #$00
-                 sta $0617
+                 sta ENEMY_TYPE+2
                  lda $0684
                  beq L_B2D4
                  lda #$00
@@ -9766,12 +9766,12 @@ L_B2FC           ldx #$00
                  ldy $0690
                  lda $06D0
                  bne L_B35A
-                 inc $0617
-                 lda $0617
+                 inc ENEMY_TYPE+2
+                 lda ENEMY_TYPE+2
                  cmp #$06
                  bcs L_B311
                  rts
-L_B311           stx $0617
+L_B311           stx ENEMY_TYPE+2
                  inc $06D1
                  lda $06D1
                  cmp #$10
@@ -9795,9 +9795,9 @@ L_B339           sta L_35FD+3,y
                  inx
                  cpx #$1D
                  bne L_B339
-                 sta $0616
+                 sta ENEMY_TYPE+1
                  sta AUDC4
-                 sta $0615
+                 sta ENEMY_TYPE
                  lda #$11
                  sta L_542E+1
                  jsr L_67E6
@@ -9809,7 +9809,7 @@ L_B35A           lda M0PL
                  lda M3PL
                  and #$0C
                  beq L_B3C0
-L_B368           ldy $0619
+L_B368           ldy ENEMY_TYPE+4
                  ldx #$00
 L_B36D           lda L_3300,y
                  and #$AF
@@ -9819,8 +9819,8 @@ L_B36D           lda L_3300,y
                  cpx #$0C
                  bne L_B36D
                  lda #$00
-                 sta $061B
-                 sta $061C
+                 sta ENEMY_TYPE+6
+                 sta ENEMY_TYPE+7
                  inc $06AC
                  lda $06AC
                  cmp #$50
@@ -9847,16 +9847,16 @@ L_B3A9           jsr L_67B8
 L_B3B8           lda $06D4
                  bne L_B3C0
                  inc $06D4
-L_B3C0           lda $0617
+L_B3C0           lda ENEMY_TYPE+2
                  bne L_B3F0
-                 lda $0616
+                 lda ENEMY_TYPE+1
                  cmp #$01
                  bne L_B3E0
                  lda $0690
                  cmp #$68
                  bcc L_B3D9
                  lda #$02
-                 sta $0616
+                 sta ENEMY_TYPE+1
                  rts
 L_B3D9           inc $0690
                  lda #$00
@@ -9865,7 +9865,7 @@ L_B3E0           lda $0690
                  cmp #$28
                  bcs L_B3ED
                  lda #$01
-                 sta $0616
+                 sta ENEMY_TYPE+1
                  rts
 L_B3ED           dec $0690
 L_B3F0           ldx #$00
@@ -9894,7 +9894,7 @@ L_B40D           lda L_B49D+2,x
                  nop
                  nop
                  nop
-L_B424           stx $0617
+L_B424           stx ENEMY_TYPE+2
                  lda #$0F
                  sta AUDC4
                  lda $06D1
@@ -10073,12 +10073,12 @@ L_B6A8           .byte $44, $44, $44, $44, $44, $44, $44, $28
                  .byte $63, $63, $63, $6B, $6B, $6B, $6B, $77
                  .byte $00, $00, $00, $00, $00, $00, $00, $00
                  .byte $63, $63, $63, $36, $36, $1C, $1C, $1C
-                 lda $0615
+                 lda ENEMY_TYPE
                  bne L_B6D6
                  rts
 L_B6D6           jsr L_4950
                  jsr L_4902+1
-                 lda $0616
+                 lda ENEMY_TYPE+1
                  bne L_B6EA
                  jsr L_55CC+2
                  jsr L_55B7
