@@ -191,6 +191,12 @@ public class XexDumper {
 				label = "";
 			}
 			
+			String userLabel = Disassembler.getMapperLabel(addr + base);
+			if (userLabel!=null) {
+				label = userLabel;
+				usedLabels.add(label);
+			}
+			
 			String margin = buildMargin(label);
 			String comment = Disassembler.getComment(addr + base);
 			if (comment == null) {

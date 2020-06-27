@@ -472,6 +472,10 @@ public class Disassembler {
 		mapper.addLabel(addr, name);
 	}
 
+	public static String getMapperLabel(int addr) {
+		return mapper.getLabel(addr);
+	}
+
 	public static void addComment(int addr, String comment) {
 		mapper.addComment(addr, comment);
 	}
@@ -509,5 +513,6 @@ public class Disassembler {
 		System.out.println(String.format("%04X", traceBack(13, 4)));  // 0007
 		System.out.println(String.format("%04X", traceBack(13, 5)));  // 0005
 	}
+
 
 }
