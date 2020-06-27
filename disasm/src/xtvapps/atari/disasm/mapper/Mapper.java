@@ -9,6 +9,7 @@ import xtvapps.atari.disasm.mapper.Section.SectionType;
 public class Mapper {
 	Map<Integer, Block> blocks = new HashMap<Integer, Block>();
 	Map<Integer, String> labels = new LinkedHashMap<Integer, String>();
+	Map<Integer, String> comments = new LinkedHashMap<Integer, String>();
 
 	public Mapper() {}
 
@@ -49,6 +50,7 @@ public class Mapper {
 	public void clear() {
 		blocks.clear();
 		labels.clear();
+		comments.clear();
 	}
 	
 	public void addLabel(int addr, String name) {
@@ -62,7 +64,15 @@ public class Mapper {
 	public Map<Integer, String> getLabels() {
 		return labels;
 	}
+
+	public void addComment(int addr, String comment) {
+		comments.put(addr, comment);
+	}
 	
+	public String getComment(int addr) {
+		return comments.get(addr);
+	}
+
 	@Override
 	public String toString() {
 		return String.format("mapper blocks %s", blocks);

@@ -472,6 +472,14 @@ public class Disassembler {
 		mapper.addLabel(addr, name);
 	}
 
+	public static void addComment(int addr, String comment) {
+		mapper.addComment(addr, comment);
+	}
+
+	public static String getComment(int addr) {
+		return mapper.getComment(addr);
+	}
+
 	public static void dumpMapper() {
 		System.out.println(mapper);
 	}

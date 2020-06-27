@@ -192,8 +192,14 @@ public class XexDumper {
 			}
 			
 			String margin = buildMargin(label);
-			pwAsmBlock.println(margin + " " + instruction.getCode());
-			pwDis.println(buildColumns(instruction.getText(), DISASM_WIDTH, instruction.getTargetLabel(), " ; "));
+			String comment = Disassembler.getComment(addr + base);
+			if (comment == null) {
+				pwAsmBlock.println(margin + " " + instruction.getCode());
+				pwDis.println(buildColumns(instruction.getText(), DISASM_WIDTH, instruction.getTargetLabel(), " ; "));
+			} else {
+				pwAsmBlock.println(buildColumns(margin + " " + instruction.getCode(), DISASM_WIDTH, comment, " ; "));
+				pwDis.println(buildColumns(instruction.getText(), DISASM_WIDTH, comment + " " + instruction.getTargetLabel(), " ; "));
+			}
 			
 			base += instruction.getSize();
 		}
@@ -237,6 +243,14 @@ public class XexDumper {
 				int addr = Utils.strHex2i(parts[1], 0);
 				String name = parts[2];
 				Disassembler.addMapperLabel(addr, name);
+			} else if (cmd.equals("rem")) {
+				int addr = Utils.strHex2i(parts[1], 0);
+				
+				int addrpos = line.indexOf(parts[1]);
+				int spacepos = line.substring(addrpos).indexOf(" ");
+				
+				String comment = line.substring(addrpos + spacepos).trim();
+				Disassembler.addComment(addr, comment);
 			}
 		}
 		Disassembler.dumpMapper();
