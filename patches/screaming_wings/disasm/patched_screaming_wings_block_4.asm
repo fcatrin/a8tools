@@ -1790,7 +1790,7 @@ L_31E4           .byte $00, $00, $00, $00, $00, $00, $00, $00
                  .byte $00, $00, $00, $00, $00, $00, $00, $00
                  .byte $00, $00, $00, $00, $00, $00, $00, $00
                  .byte $00, $00, $00, $00
-MISSIL_GFX       lda ENEMY_MOV_TYPE
+MISSILE_GFX      lda ENEMY_MOV_TYPE
                  bne L_3345
                  sta $06D3     ; intialize big plane
                  sta $06D4
@@ -1845,9 +1845,9 @@ L_3377           lda ENEMY_Y
                  inc $06D8
 L_3383           ldx #$00
                  ldy ENEMY_BULLET_Y
-BP_MISSILE_DEL   lda MISSIL_GFX,y
+BP_MISSILE_DEL   lda MISSILE_GFX,y
                  and #$FA
-                 sta MISSIL_GFX,y
+                 sta MISSILE_GFX,y
                  iny
                  inx
                  cpx #$03
@@ -1858,9 +1858,9 @@ BP_MISSILE_DEL   lda MISSIL_GFX,y
                  sta $06D8
                  beq L_33B2
 L_33A1           sty ENEMY_BULLET_Y
-BP_MISSILE_ADD   lda MISSIL_GFX,y
+BP_MISSILE_ADD   lda MISSILE_GFX,y
                  ora #$05
-                 sta MISSIL_GFX,y
+                 sta MISSILE_GFX,y
                  iny
                  inx
                  cpx #$06
@@ -1945,9 +1945,9 @@ L_345A           lda M0PL
                  beq L_34C0
 L_3468           ldy ENEMY_MOV_TYPE+3
                  ldx #$00
-L_346D           lda MISSIL_GFX,y
+L_346D           lda MISSILE_GFX,y
 L_3470           and #$AF
-                 sta MISSIL_GFX,y
+                 sta MISSILE_GFX,y
                  dey
                  inx
                  cpx #$0C
@@ -1964,9 +1964,9 @@ L_348F           sta $06D0
                  sta $06D1
                  ldx #$00
                  ldy ENEMY_BULLET_Y
-L_349A           lda MISSIL_GFX,y
+L_349A           lda MISSILE_GFX,y
                  and #$FA
-                 sta MISSIL_GFX,y
+                 sta MISSILE_GFX,y
                  iny
                  inx
 L_34A4           cpx #$03
@@ -3475,7 +3475,7 @@ L_4AC0           jsr L_4980
                  sta ENEMY_TYPE
                  ldx #$00
                  txa
-L_4AF2           sta MISSIL_GFX,x
+L_4AF2           sta MISSILE_GFX,x
                  sta L_33FE+2,x
                  sta L_3500,x
                  sta PMGFX0+3,x
@@ -4247,9 +4247,9 @@ L_526E           lda ENEMY_MOV_TYPE+5
                  rts
 L_5274           ldx ENEMY_MOV_TYPE+3
                  ldy #$00
-L_5279           lda MISSIL_GFX,x
+L_5279           lda MISSILE_GFX,x
                  and #$AF
-                 sta MISSIL_GFX,x
+                 sta MISSILE_GFX,x
                  dex
                  iny
                  cpy #$0A
@@ -4265,9 +4265,9 @@ L_5279           lda MISSIL_GFX,x
                  bcc L_52BB
                  stx ENEMY_MOV_TYPE+3
                  ldy #$00
-L_5297           lda MISSIL_GFX,x
+L_5297           lda MISSILE_GFX,x
                  ora #$50
-                 sta MISSIL_GFX,x
+                 sta MISSILE_GFX,x
                  dex
                  iny
                  cpy #$04
@@ -4276,9 +4276,9 @@ L_5297           lda MISSIL_GFX,x
                  beq L_52BA
                  dex
                  dex
-L_52AC           lda MISSIL_GFX,x
+L_52AC           lda MISSILE_GFX,x
                  ora #$50
-                 sta MISSIL_GFX,x
+                 sta MISSILE_GFX,x
                  dex
                  iny
                  cpy #$08
@@ -4358,9 +4358,9 @@ L_534B           lda #$00
                  sta $0656
                  rts
 L_5364           ldx #$00
-L_5366           lda MISSIL_GFX,y
+L_5366           lda MISSILE_GFX,y
                  and STAGE_NO+5
-L_536C           sta MISSIL_GFX,y
+L_536C           sta MISSILE_GFX,y
                  iny
                  inx
                  cpx #$03
@@ -6777,9 +6777,9 @@ L_69D3           lda #$1A
                  inc $069C
 L_69DB           ldy ENEMY_MOV_TYPE+3
                  ldx #$00
-L_69E0           lda MISSIL_GFX,y
+L_69E0           lda MISSILE_GFX,y
                  and #$AF
-                 sta MISSIL_GFX,y
+                 sta MISSILE_GFX,y
                  dey
                  inx
                  cpx #$0C
@@ -7128,9 +7128,9 @@ L_6D60           clc
                  jmp L_6DC5
                  ldy $061E
                  ldx #$00
-L_6D7B           lda MISSIL_GFX,y
+L_6D7B           lda MISSILE_GFX,y
                  and #$FE
-                 sta MISSIL_GFX,y
+                 sta MISSILE_GFX,y
                  iny
                  inx
                  cpx #$03
@@ -7180,9 +7180,9 @@ L_6DE3           clc
                  rts
 L_6DF4           ldy $061F
                  ldx #$00
-L_6DF9           lda MISSIL_GFX,y
+L_6DF9           lda MISSILE_GFX,y
                  and #$FB
-                 sta MISSIL_GFX,y
+                 sta MISSILE_GFX,y
                  iny
                  inx
                  cpx #$03
@@ -7199,9 +7199,9 @@ L_6E1A           jsr L_6E30
                  rts
 L_6E1E           tax
                  ldy #$00
-L_6E21           lda MISSIL_GFX,x
+L_6E21           lda MISSILE_GFX,x
                  ora #$01
-                 sta MISSIL_GFX,x
+                 sta MISSILE_GFX,x
                  inx
                  iny
                  cpy #$03
@@ -7209,9 +7209,9 @@ L_6E21           lda MISSIL_GFX,x
                  rts
 L_6E30           tax
                  ldy #$00
-L_6E33           lda MISSIL_GFX,x
+L_6E33           lda MISSILE_GFX,x
                  ora #$04
-                 sta MISSIL_GFX,x
+                 sta MISSILE_GFX,x
                  inx
                  iny
                  cpy #$03
@@ -9704,9 +9704,9 @@ L_B277           lda ENEMY_Y
                  inc $06D8
 L_B283           ldx #$00
                  ldy ENEMY_BULLET_Y
-L_B288           lda MISSIL_GFX,y
+L_B288           lda MISSILE_GFX,y
                  and #$FA
-                 sta MISSIL_GFX,y
+                 sta MISSILE_GFX,y
                  iny
                  inx
                  cpx #$03
@@ -9717,9 +9717,9 @@ L_B288           lda MISSIL_GFX,y
                  sta $06D8
                  beq L_B2B2
 L_B2A1           sty ENEMY_BULLET_Y
-L_B2A4           lda MISSIL_GFX,y
+L_B2A4           lda MISSILE_GFX,y
                  ora #$05
-                 sta MISSIL_GFX,y
+                 sta MISSILE_GFX,y
                  iny
                  inx
                  cpx #$06
@@ -9804,9 +9804,9 @@ L_B35A           lda M0PL
                  beq L_B3C0
 L_B368           ldy ENEMY_MOV_TYPE+3
                  ldx #$00
-L_B36D           lda MISSIL_GFX,y
+L_B36D           lda MISSILE_GFX,y
                  and #$AF
-                 sta MISSIL_GFX,y
+                 sta MISSILE_GFX,y
                  dey
                  inx
                  cpx #$0C
@@ -9823,9 +9823,9 @@ L_B36D           lda MISSIL_GFX,y
                  sta $06D1
                  ldx #$00
                  ldy ENEMY_BULLET_Y
-L_B39A           lda MISSIL_GFX,y
+L_B39A           lda MISSILE_GFX,y
                  and #$FA
-                 sta MISSIL_GFX,y
+                 sta MISSILE_GFX,y
                  iny
                  inx
                  cpx #$03
