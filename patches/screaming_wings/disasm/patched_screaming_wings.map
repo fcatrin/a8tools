@@ -164,9 +164,17 @@ word 0
 
 ; label B700 START
 label 0615 ENEMY_TYPE
+label 0616 ENEMY_MOV_TYPE
 label 06B2 STAGE_NO
 label 060F PLANE_X
+label 0684 BIGPLANE_FIRE_TYPE
+label 0690 ENEMY_Y
 label 06A0 ENEMY_X
+label 06D9 ENEMY_BULLET_Y
+
+label 3300 MISSIL_GFX
+label 34CC BP_CHECK_Y_DOWN
+label 34E0 BP_CHECK_Y_UP
 
 label B200 BIGPLANE_CHECK2
 label B205 BIGPLANE_ON2
@@ -181,10 +189,19 @@ label 5E9D ENEMY_SETS2
 label 5EA8 ENEMY_SETS3
 label 5EB3 ENEMY_SETS4
 
-rem 3305 intialize big plan
+rem 3305 intialize big plane
 rem 3319 set big plane intial position
 rem 3334 set quadruple size players
 rem 33F0 set big plane X position
+rem 3357 big plane fire wide
+rem 3369 big plane fire narrow
+rem 34CF check big plane bottom Y
+rem 34E3 check big plane top Y
+
+label 3357 BIGPLANE_WIDE
+label 3369 BIGPLANE_NARROW
+label 3388 BP_MISSILE_DEL
+label 33A4 BP_MISSILE_ADD
 
 label 4020 DLI_1
 label 4075 DLI_2
@@ -198,4 +215,16 @@ rem 40B5 reset charbase and color for score panel
 rem 40E0 set color for score line
 rem 40F2 reset everything at the end of the screen
 
+label 3565 BIG_PLANE_GFX1
+label 358D BIG_PLANE_GFX2
+label B465 BIG_PLANE_GFX1C
+label B47D BIG_PLANE_GFX2C
+label B49D BIG_PLANE_GFX3C
+label B4B5 BIG_PLANE_GFX4C
+
+label 35FD PMGFX0
+label 3700 PMGFX1
+
+label 34FA BP_GFX_1_DRAW
+label 350D BP_GFX_2_DRAW
 
