@@ -150,10 +150,12 @@ public class Disassembler {
 		asmcode = String.format(".byte ");
 		int index = 0;
 		int lastAddr = getLastAddr(blockIndex);
+		System.out.println(String.format("block " + blockIndex + " last addr %04X", lastAddr));
 		while (index < 8) {
 			int offset = addr + index;
 			
 			if (sectionType == SectionType.Byte) {
+				System.out.println(String.format("check offset %04X <= %04X", offset, lastAddr));
 				if (offset > lastAddr) break;
 				if (mapper.getSectionType(blockIndex, offset) != SectionType.Byte) break;
 			}
@@ -163,7 +165,7 @@ public class Disassembler {
 			asmcode += (index > 0 ? ", " : "") + byteValue;
 			
 			index++;
-			if (sectionType == SectionType.Code) break;
+			if (sectionType != SectionType.Byte) break;
 		}
 		
 		size = index;
