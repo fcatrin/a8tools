@@ -8,14 +8,14 @@ If you need to do simple changes on a XEX game, these are the steps that I recom
 1. Run the game
 2. Press F8 to open the monitor
 3. Examine the changes and/or do the changes in the memory using the "c" command
-4. Write down your changes to a simple text patch file
-5. Use the cont command to continue the game
+4. Write your changes down on a simple text patch file
+5. Use the *cont* command to continue the game
 6. Go to step 2
 
 As you progress you will have a text patch file with several "c" commands and probably some annotations for yourself.
 You can see [my patch file for Screaming Wings](https://github.com/fcatrin/a8tools/blob/master/patches/screaming_wings/screaming_wings.monpatch).
 
-As you progress you can run your "c" commands with a simple copy/past to the monitor, but at some point you will want to create
+As you progress you can run your "c" commands with a simple copy/paste from your patch file to the emulator monitor, but at some point you will want to create
 a new XEX file with all your changes applied. This is where you use this tool.
 
 # Running the patcher
@@ -57,4 +57,4 @@ For more advanced patches you can use the [a8disasm tool](https://github.com/fca
 Here you will find a [full post (in spanish) about patching Scraming Wings with this patcher and a8diasm]
 (http://franco.arealinux.cl/2020/06/a8tools-y-como-mejorar-screaming-wings-para-atari-800/).
 
-Franco Catrin 2020
+Franco Catrin
