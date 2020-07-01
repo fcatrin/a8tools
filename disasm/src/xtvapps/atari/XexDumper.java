@@ -86,13 +86,6 @@ public class XexDumper {
 			pwInc.println(line);
 		}
 		
-		/*
-		
-		for(String usedLabel : usedLabels) {
-			usedTargets.remove(usedLabel);
-		}
-		*/
-		
 		for(String key : usedTargets.keySet()) {
 			if (usedLabels.contains(key)) continue;
 			if (!key.startsWith("L_")) continue;
@@ -271,8 +264,16 @@ public class XexDumper {
 
 	
 	public static void main(String[] args) throws IOException {
-		File xexFile = new File("/home/fcatrin/git/a8tools/patches/screaming_wings/patched_screaming_wings.xex");
-		// File xexFile = new File("/home/fcatrin/git/a8tools/patches/screaming_wings/disasm/patched_screaming_wings.obx");
+		if (args.length < 1) {
+			System.out.println("No xexfile specified\n");
+			return;
+		}
+		File xexFile = new File(args[0]);
+		if (!xexFile.exists()) {
+			System.out.println("XEX file not found: " + xexFile.getAbsolutePath());
+			return;
+		}
+		
 		XexDumper xexDumper = new XexDumper(xexFile);
 		xexDumper.dump();
 	}
