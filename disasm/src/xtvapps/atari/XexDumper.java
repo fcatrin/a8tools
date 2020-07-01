@@ -270,7 +270,7 @@ public class XexDumper {
 		}
 		File xexFile = new File(args[0]);
 		if (!xexFile.exists()) {
-			System.out.println("XEX file not found: " + xexFile.getAbsolutePath());
+			System.out.println(String.format("XEX file not found: %s\n",xexFile.getAbsolutePath()));
 			return;
 		}
 		
