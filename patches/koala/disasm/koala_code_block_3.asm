@@ -3,4 +3,4 @@
 
                  org $02E2
 
-                 .word START
+/* 02E2: 15 33    */                   .word START

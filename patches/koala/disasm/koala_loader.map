@@ -27,13 +27,14 @@ label 0C2C BLOCK_NUM
 label 0C2E LOADED_ADDR_START
 label 0C30 LOADED_ADDR_END
 
+label 09D5 SET_SCREEN_3
 label 0C32 SAVED_COLOR
 label 0C37 SAVED_DL_L
 label 0C38 SAVED_DL_H
 label 0C39 SAVED_DMA
 label 0C3A SAVED_CHBAS
 label 0C3B BUFFER
-
+label 0C3D BUFFER_BLOCK_NUM
 
 
 rem 0734 Set Screen 2
@@ -43,11 +44,12 @@ rem 078E Screen text 1
 rem 0842 Display list 2
 rem 0861 Display list 3
 rem 0877 Screen text 3
-rem 09E0 Write 0C2E at (CB) and (CF)
-rem 09EC Write 0004 at (CD)
+rem 09E0 Write 0C2E at (DST_PTR) and (CHUNK_START_ADDR)
+rem 09EC Write 0004 at (CHUNK_SIZE)
 rem 09F9 Load Block at $0xC3B size $100
 rem 0A4C Stop motor
 rem 0A59 Is START pressed?
+rem 0B72 Stop motor
 rem 0A9B Reset keyboard
 rem 0BE1 Stop motor
 rem 0BE9 Execute 
