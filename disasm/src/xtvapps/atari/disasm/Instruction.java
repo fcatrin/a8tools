@@ -10,6 +10,7 @@ public class Instruction {
 	
 	int target;
 	String targetLabel;
+	String bytecode;
 	
 	public Instruction(int addr, String text, String code, int size) {
 		super();
@@ -17,6 +18,14 @@ public class Instruction {
 		this.text = text;
 		this.size = size;
 		this.code = code;
+	}
+
+	public void setByteCode(String bytecode) {
+		this.bytecode = bytecode;
+	}
+
+	public String getByteCode() {
+		return bytecode;
 	}
 
 	public String getTargetLabel() {

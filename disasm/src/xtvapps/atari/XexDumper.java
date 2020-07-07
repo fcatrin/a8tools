@@ -20,7 +20,9 @@ public class XexDumper {
 	public static final String LOGTAG = XexDumper.class.getSimpleName();
 
 	private static final int DISASM_WIDTH = 30;
-	private static final String MARGIN = "                ";
+	private static final int ASM_WIDTH = 20;
+	private static final String MARGIN_LABEL    = "                ";
+	private static final String MARGIN_BYTECODE = "              ";
 
 	private File xexFile;
 	private File asmFile;
@@ -30,6 +32,8 @@ public class XexDumper {
 
 	Map<String, Integer> usedTargets = new HashMap<String, Integer>();
 	Set<String> usedLabels = new HashSet<String>();
+	
+	private static boolean includeByteCodeInAsm = true;
 
 	public XexDumper(File xexFile) {
 		this.xexFile = xexFile;
@@ -109,20 +113,30 @@ public class XexDumper {
 
 	}
 
-	private String buildMargin(String text) {
+	private String buildMargin(String text, String marginTemplate) {
 		if (text == null) {
 			text = "";
 		}
-		String result =  text + MARGIN ;
-		return result.substring(0, text.length() > MARGIN.length() ? text.length() : MARGIN.length());
+		String result =  text + marginTemplate ;
+		return result.substring(0, text.length() > marginTemplate.length() ? text.length() : marginTemplate.length());
+	}
+	
+	private String buildLabelMargin(String text) {
+		return buildMargin(text, MARGIN_LABEL);
+	}
+
+	private String buildByteCodeMargin(String text) {
+		return buildMargin(text, MARGIN_BYTECODE);
 	}
 	
 	private String buildColumns(String c1, int size, String c2, String separator) {
 		if (c2 == null) return c1;
 		
-		String line = c1 + MARGIN;
+		String line = c1 +"|" + MARGIN_LABEL + MARGIN_BYTECODE;
 		if (c1.length() < size) {
 			line = line.substring(0, size);
+		} else {
+			line = line.trim();
 		}
 		return line + separator + c2;
 	}
@@ -138,7 +152,7 @@ public class XexDumper {
 		pwAsm.println(String.format("  icl \"%s\"", asmFileBlock.getName()));
 		
 		pwAsmBlock.println(String.format("\n; BLOCK %d %s\n", blockIndex, xexFile.getName()));
-		pwAsmBlock.println(MARGIN + " " + String.format("org $%04X\n", addr));
+		pwAsmBlock.println(MARGIN_LABEL + " " + String.format("org $%04X\n", addr));
 		
 		int base = 0;
 
@@ -190,14 +204,32 @@ public class XexDumper {
 				usedLabels.add(label);
 			}
 			
-			String margin = buildMargin(label);
+			String margin = buildLabelMargin(label);
 			String comment = Disassembler.getComment(addr + base);
+			String bytecode = buildByteCodeMargin(instruction.getByteCode());
+			String targetLabel = instruction.getTargetLabel();
+			
+			int disasmWidth = DISASM_WIDTH;
+			int asmWidth = ASM_WIDTH;
+			if (includeByteCodeInAsm) {
+				margin = String.format("/* %s */  %s", bytecode, margin);
+			}
+			
+			String disasm = bytecode + "  " + instruction.getText();
 			if (comment == null) {
 				pwAsmBlock.println(margin + " " + instruction.getCode());
-				pwDis.println(buildColumns(instruction.getText(), DISASM_WIDTH, instruction.getTargetLabel(), " ; "));
+				if (targetLabel == null) {
+					pwDis.println(disasm);
+				} else {
+					pwDis.println(buildColumns(disasm, disasmWidth, targetLabel, " ; "));
+				}
 			} else {
-				pwAsmBlock.println(buildColumns(margin + " " + instruction.getCode(), DISASM_WIDTH, comment, " ; "));
-				pwDis.println(buildColumns(instruction.getText(), DISASM_WIDTH, comment + " " + instruction.getTargetLabel(), " ; "));
+				pwAsmBlock.println(margin + " "  + buildColumns(instruction.getCode(), asmWidth, comment, " ; "));
+				if (targetLabel == null) {
+					pwDis.println(buildColumns(disasm, disasmWidth, comment, " ; "));
+				} else {
+					pwDis.println(buildColumns(disasm, disasmWidth, comment + " / " + targetLabel, " ; "));
+				}
 			}
 			
 			base += instruction.getSize();

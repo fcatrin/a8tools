@@ -89,6 +89,7 @@ public class Disassembler {
 		
 		int op = getMemory(addr);
 		String comment = null;
+		String bytecode = null;
 		size = 1;
 		if (isDisplayListTarget) {
 			isDisplayListTarget = false;
@@ -97,19 +98,22 @@ public class Disassembler {
 			int h = getMemory(addr+1);
 			target = l + 256 * h;
 			targetLabel = findLabel(0, target);
-			line    = String.format("%04X: %02X %02X     WORD $%04X", addr, l, h, target);
-			asmcode = String.format(".word ");
+			bytecode = String.format("%04X: %02X %02X", addr, l, h);
+			line     = String.format("WORD $%04X", target);
+			asmcode  = String.format(".word ");
 			if (targetLabel != null) {
 				asmcode += targetLabel;
 			} else {
 				asmcode += String.format("$%04X", target);
 			}
+			
 			size = 2;
 		} else if ((op & 0x0F) == 0) {
 			int scanlines = 1 + ((op & 0xF0) >> 4);
-			line    = String.format("%04X: %02X        BYTE $%02X", addr, op, op);
-			asmcode = String.format(".byte $%02X", op);
-			comment = String.format(scanlines != 1 ? "%d scanlines" : "%d scanline", scanlines);
+			bytecode = String.format("%04X: %02X", addr, op);
+			line     = String.format("BYTE $%02X", op);
+			asmcode  = String.format(".byte $%02X", op);
+			comment  = String.format(scanlines != 1 ? "%d scanlines" : "%d scanline", scanlines);
 		} else {
 			int inst = op & 0xF0;
 			int mode = op & 0x0F;
@@ -120,13 +124,14 @@ public class Disassembler {
 			boolean isDLI  = (inst& 0x80) != 0;
 			if (isJMP) isLMS = false;
 			
-			line    = String.format("%04X: %02X        BYTE $%02X", addr, op, op);
-			asmcode = String.format(".byte $%02X", op);
-			comment = isJMP ? "JMP" : "";
-			comment = (comment + (isLMS ? " LMS" : "")).trim();
-			comment = (comment + (isDLI ? " DLI" : "")).trim();
-			comment = (comment + (isVSC ? " Vertical Scroll" : "")).trim();
-			comment = (comment + (isHSC ? " Horizontal Scroll" : "")).trim();
+			bytecode = String.format("%04X: %02X", addr, op);
+			line     = String.format("BYTE $%02X", op);
+			asmcode  = String.format(".byte $%02X", op);
+			comment  = isJMP ? "JMP" : "";
+			comment  = (comment + (isLMS ? " LMS" : "")).trim();
+			comment  = (comment + (isDLI ? " DLI" : "")).trim();
+			comment  = (comment + (isVSC ? " Vertical Scroll" : "")).trim();
+			comment  = (comment + (isHSC ? " Horizontal Scroll" : "")).trim();
 			if (!isJMP) {
 				comment = (comment + (" Antic Mode " + mode)).trim();
 			}
@@ -138,24 +143,19 @@ public class Disassembler {
 			asmcode  += " ; DL " + comment;
 		}
 		
-		return buildInstruction(addr, line, asmcode, size, target, targetLabel);
+		return buildInstruction(addr, line, asmcode, size, bytecode, target, targetLabel);
 	}
 	
 	private static Instruction getByteInstruction(int blockIndex, int addr, SectionType sectionType, String mnemonic) {
-		String line;
-		String asmcode;
-		int size;
-		
-		line    = String.format("%04X:           BYTE ", addr, getMemory(addr));
-		asmcode = String.format(".byte ");
+		String bytecode = String.format("%04X: %02X", addr, getMemory(addr));
+		String line     = String.format("BYTE ", getMemory(addr));
+		String asmcode  = String.format(".byte ");
 		int index = 0;
 		int lastAddr = getLastAddr(blockIndex);
-		System.out.println(String.format("block " + blockIndex + " last addr %04X", lastAddr));
 		while (index < 8) {
 			int offset = addr + index;
 			
 			if (sectionType == SectionType.Byte) {
-				System.out.println(String.format("check offset %04X <= %04X", offset, lastAddr));
 				if (offset > lastAddr) break;
 				if (mapper.getSectionType(blockIndex, offset) != SectionType.Byte) break;
 			}
@@ -168,9 +168,9 @@ public class Disassembler {
 			if (sectionType != SectionType.Byte) break;
 		}
 		
-		size = index;
+		int size = index;
 
-		return buildInstruction(addr, line, asmcode, size);
+		return buildInstruction(addr, line, asmcode, size, bytecode);
 	}
 	
 	private static Instruction getWordInstruction(int blockIndex, int addr) {
@@ -180,11 +180,12 @@ public class Disassembler {
 
 		String targetLabel = findLabel(0, word);
 
-		String line    = String.format("%04X: %02X %02X     WORD $%04X", addr, op1, op2, word);
-		String asmcode = ".word " + (targetLabel != null ? targetLabel : String.format(".word $%04X", word)); 
+		String bytecode = String.format("%04X: %02X %02X", addr, op1, op2);
+		String line     = String.format("WORD $%04X", word);
+		String asmcode  = ".word " + (targetLabel != null ? targetLabel : String.format(".word $%04X", word)); 
 		int size = 2;
 		
-		return buildInstruction(addr, line, asmcode, size, word, targetLabel);
+		return buildInstruction(addr, line, asmcode, size, bytecode, word, targetLabel);
 	}
 
 	private static Instruction getBranchInstruction(int blockIndex, int addr, String mnemonic) {
@@ -196,10 +197,11 @@ public class Disassembler {
 		String code    = mnemonic.replace("0", String.format("$%04X", target));
 		String asmcode = mnemonic.replace("0", targetLabel != null ? targetLabel : String.format("$%04X", target));
 		
-		String line = String.format("%04X: %02X %02X     %s", addr, getMemory(addr), op, code);
+		String bytecode = String.format("%04X: %02X %02X", addr, getMemory(addr), op);
+		String line     = String.format("%s",code);
 		int size = 2;
 		
-		return buildInstruction(addr, line, asmcode, size, target, targetLabel);
+		return buildInstruction(addr, line, asmcode, size, bytecode, target, targetLabel);
 	}
 
 	private static Instruction getOp1Instruction(int blockIndex, int addr, String mnemonic) {
@@ -218,10 +220,11 @@ public class Disassembler {
 		String code    = mnemonic.replace("1", String.format("$%02X", op));
 		String asmcode = mnemonic.replace("1", targetLabel != null ? targetLabel : String.format("$%02X", value));
 		
-		String line = String.format("%04X: %02X %02X     %s", addr, instr, op, code);
+		String bytecode = String.format("%04X: %02X %02X", addr, instr, op);
+		String line     = String.format("%s", code);
 		int size = 2;
 		
-		return buildInstruction(addr, line, asmcode, size, target, targetLabel);
+		return buildInstruction(addr, line, asmcode, size, bytecode, target, targetLabel);
 	}
 	
 	private static Instruction getOp2Instruction(int blockIndex, int addr, String mnemonic) {
@@ -235,10 +238,11 @@ public class Disassembler {
 		String code    = mnemonic.replace("2", String.format("$%04X", target));
 		String asmcode = mnemonic.replace("2", targetLabel != null ? targetLabel : String.format("$%04X", target));
 		
-		String line = String.format("%04X: %02X %02X %02X  %s", addr, instr, op1, op2, code);
+		String bytecode = String.format("%04X: %02X %02X %02X", addr, instr, op1, op2);
+		String line     = String.format("%s", code);
 		int size = 3;
 
-		return buildInstruction(addr, line, asmcode, size, target, targetLabel);
+		return buildInstruction(addr, line, asmcode, size, bytecode, target, targetLabel);
 	}
 
 	private static Instruction getOp0Instruction(int blockIndex, int addr, String mnemonic) {
@@ -247,21 +251,23 @@ public class Disassembler {
 		String code    = mnemonic;
 		String asmcode = mnemonic;
 		
-		String line = String.format("%04X: %02X        %s", addr, instr, code);
+		String bytecode = String.format("%04X: %02X", addr, instr);
+		String line     = String.format("%s", code);
 		int size = 1;
 		
-		return buildInstruction(addr, line, asmcode, size);
+		return buildInstruction(addr, line, asmcode, size, bytecode);
 	}
 	
-	private static Instruction buildInstruction(int addr, String line, String asmcode, int size) {
-		return buildInstruction(addr, line, asmcode, size, -1, null);
+	private static Instruction buildInstruction(int addr, String line, String asmcode, int size, String bytecode) {
+		return buildInstruction(addr, line, asmcode, size, bytecode, -1, null);
 	}
 	
-	private static Instruction buildInstruction(int addr, String line, String asmcode, int size, int target, String targetLabel) {
+	private static Instruction buildInstruction(int addr, String line, String asmcode, int size, String bytecode, int target, String targetLabel) {
 		Instruction instruction = new Instruction(addr, line, asmcode, size);
 		instruction.setTarget(target);
 		instruction.setTargetLabel(targetLabel);
 		instruction.setLabel(symtableUser.get(addr));
+		instruction.setByteCode(bytecode);
 		return instruction;
 	}
 
