@@ -1,5 +1,3 @@
-TOADR      = $0066
-ENDPT      = $0074
 DDEVIC     = $0300
 DUNIT      = $0301
 DCOMND     = $0302
