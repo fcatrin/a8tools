@@ -3,7 +3,7 @@
 ; BLOCK 1 koala_loader.xex
 
 06FE:           BYTE $55 $55
-0700: 4C 3F 09  jmp $093F      ; L_093F
+0700: 4C 3F 09  jmp $093F      ; START
 0703: A0 00     ldy #$00
 0705: A9 01     lda #$01
 0707: 8D 1E 02  sta $021E      ; CDTMV4
@@ -12,7 +12,7 @@
 070F: A9 01     lda #$01
 0711: 8D 1E 02  sta $021E      ; CDTMV4
 0714: A9 00     lda #$00
-0716: 99 61 08  sta $0861,y    ; L_0861
+0716: 99 61 08  sta $0861,y    ; DLIST3
 0719: C8        iny
 071A: C0 0C     cpy #$0C
 071C: D0 EC     bne $070A      ; L_070A
@@ -22,11 +22,11 @@
 0725: A9 01     lda #$01
 0727: 8D 1E 02  sta $021E      ; CDTMV4
 072A: A9 70     lda #$70
-072C: 99 61 08  sta $0861,y    ; L_0861
+072C: 99 61 08  sta $0861,y    ; DLIST3
 072F: C8        iny
 0730: C0 0C     cpy #$0C
 0732: D0 EC     bne $0720      ; L_0720
-0734: A9 42     lda #$42
+0734: A9 42     lda #$42       ; Set Screen 2 null
 0736: 8D 30 02  sta $0230      ; SDLSTL
 0739: A9 08     lda #$08
 073B: 8D 31 02  sta $0231      ; SDLSTH
@@ -36,7 +36,7 @@
 0745: A9 01     lda #$01
 0747: 8D 1E 02  sta $021E      ; CDTMV4
 074A: A9 70     lda #$70
-074C: 99 42 08  sta $0842,y    ; L_0842
+074C: 99 42 08  sta $0842,y    ; DLIST2
 074F: C8        iny
 0750: C0 15     cpy #$15
 0752: D0 EC     bne $0740      ; L_0740
@@ -46,408 +46,171 @@
 075B: A9 01     lda #$01
 075D: 8D 1E 02  sta $021E      ; CDTMV4
 0760: A9 00     lda #$00
-0762: 99 42 08  sta $0842,y    ; L_0842
+0762: 99 42 08  sta $0842,y    ; DLIST2
 0765: C8        iny
 0766: C0 15     cpy #$15
 0768: D0 EC     bne $0756      ; L_0756
-076A: A9 61     lda #$61
+076A: A9 61     lda #$61       ; Restore Screen 3 null
 076C: 8D 30 02  sta $0230      ; SDLSTL
 076F: A9 08     lda #$08
 0771: 8D 31 02  sta $0231      ; SDLSTH
 0774: 60        rts
-0775: 70 70     bvs $07E7      ; L_07E7
-0777: 70 70     bvs $07E9      ; L_07E9
-0779: 46 8E     lsr $8E        ; RUNSTK
-077B:           BYTE $07
-077C: 70 70     bvs $07EE      ; L_07ED+1
-077E:           BYTE $02
-077F:           BYTE $02
-0780:           BYTE $02
-0781: 70 70     bvs $07F3      ; L_07F3
-0783: 70 70     bvs $07F5      ; L_07F5
-0785: 06 70     asl $70        ; ROWAC
-0787: 70 70     bvs $07F9      ; L_07F9
-0789: 70 06     bvs $0791      ; L_0791
-078B: 41 75     eor ($75,x)    ; ENDPT+1
-078D:           BYTE $07
-078E: 00        brk
-078F: 00        brk
-0790: 00        brk
-0791: 00        brk
-0792: 00        brk
-0793: 30 32     bmi $07C7      ; L_07C7
-0795: 29 33     and #$33
-0797: 2D 21 00  and $0021      ; ICDNOZ
-079A:           BYTE $33
-079B:           BYTE $2F
-079C: 26 34     rol $34        ; BFENLO
-079E: 00        brk
-079F: 00        brk
-07A0: 00        brk
-07A1: 00        brk
-07A2: 51 52     eor ($52),y    ; LMARGN
-07A4:           BYTE $57
-07A5:           BYTE $52
-07A6:           BYTE $52
-07A7:           BYTE $52
-07A8:           BYTE $52
-07A9:           BYTE $52
-07AA:           BYTE $52
-07AB:           BYTE $52
-07AC:           BYTE $52
-07AD:           BYTE $52
-07AE:           BYTE $52
-07AF:           BYTE $52
-07B0:           BYTE $52
-07B1:           BYTE $52
-07B2:           BYTE $57
-07B3:           BYTE $52
-07B4:           BYTE $52
-07B5:           BYTE $52
-07B6:           BYTE $52
-07B7:           BYTE $52
-07B8:           BYTE $52
-07B9:           BYTE $52
-07BA:           BYTE $52
-07BB:           BYTE $57
-07BC:           BYTE $52
-07BD:           BYTE $52
-07BE:           BYTE $52
-07BF:           BYTE $52
-07C0:           BYTE $52
-07C1:           BYTE $52
-07C2:           BYTE $52
-07C3:           BYTE $52
-07C4:           BYTE $52
-07C5:           BYTE $52
-07C6:           BYTE $52
-07C7:           BYTE $57
-07C8:           BYTE $52
-07C9: 45 7C     eor $7C        ; HOLDCH
-07CB: 00        brk
-07CC:           BYTE $7C
-07CD: 46 47     lsr $47        ; FMSZPG+4
-07CF: 46 47     lsr $47        ; FMSZPG+4
-07D1: 46 47     lsr $47        ; FMSZPG+4
-07D3: 46 47     lsr $47        ; FMSZPG+4
-07D5: 46 47     lsr $47        ; FMSZPG+4
-07D7: 46 47     lsr $47        ; FMSZPG+4
-07D9: 46 7C     lsr $7C        ; HOLDCH
-07DB: 30 32     bmi $080F      ; L_080F
-07DD: 25 33     and $33        ; BUFRHI
-07DF: 25 2E     and $2E        ; ICIDNO
-07E1:           BYTE $34
-07E2: 21 7C     and ($7C,x)    ; HOLDCH
-07E4:           BYTE $47
-07E5: 46 47     lsr $47        ; FMSZPG+4
-07E7: 46 47     lsr $47        ; FMSZPG+4
-07E9: 46 47     lsr $47        ; FMSZPG+4
-07EB: 46 47     lsr $47        ; FMSZPG+4
-07ED: 46 47     lsr $47        ; FMSZPG+4
-07EF:           BYTE $7C
-07F0: 00        brk
-07F1:           BYTE $7C
-07F2:           BYTE $5A
-07F3:           BYTE $52
-07F4: 58        cli
-07F5:           BYTE $52
-07F6:           BYTE $52
-07F7:           BYTE $52
-07F8:           BYTE $52
-07F9:           BYTE $52
-07FA:           BYTE $52
-07FB:           BYTE $52
-07FC:           BYTE $52
-07FD:           BYTE $52
-07FE:           BYTE $52
-07FF:           BYTE $52
-0800:           BYTE $52
-0801:           BYTE $52
-0802: 58        cli
-0803:           BYTE $52
-0804:           BYTE $52
-0805:           BYTE $52
-0806:           BYTE $52
-0807:           BYTE $52
-0808:           BYTE $52
-0809:           BYTE $52
-080A:           BYTE $52
-080B: 58        cli
-080C:           BYTE $52
-080D:           BYTE $52
-080E:           BYTE $52
-080F:           BYTE $52
-0810:           BYTE $52
-0811:           BYTE $52
-0812:           BYTE $52
-0813:           BYTE $52
-0814:           BYTE $52
-0815:           BYTE $52
-0816:           BYTE $52
-0817: 58        cli
-0818:           BYTE $52
-0819:           BYTE $43
-081A: 00        brk
-081B: 00        brk
-081C: 00        brk
-081D: 00        brk
-081E: 00        brk
-081F: 00        brk
-0820: 00        brk
-0821: 00        brk
-0822:           BYTE $2B
-0823:           BYTE $2F
-0824: 21 2C     and ($2C,x)    ; ICSPRZ
-0826: 21 00     and ($00,x)    ; LNFLG
-0828: 00        brk
-0829: 00        brk
-082A: 00        brk
-082B: 00        brk
-082C: 00        brk
-082D: 00        brk
-082E: 00        brk
-082F: 26 21     rol $21        ; ICDNOZ
-0831: 2C 34 21  bit $2134
-0834: 2E 00 10  rol $1000
-0837: 16 16     asl $16,x      ; BUFADR+1
-0839: 00        brk
-083A:           BYTE $22
-083B: 2C 2F 31  bit $312F
-083E: 35 25     and $25,x      ; ICBAHZ
-0840:           BYTE $33
-0841: 00        brk
-0842: 70 70     bvs $08B4      ; L_08B4
-0844: 70 70     bvs $08B6      ; L_08B5+1
-0846: 70 70     bvs $08B8      ; L_08B8
-0848: 70 70     bvs $08BA      ; L_08BA
-084A: 70 70     bvs $08BC      ; L_08BC
-084C: 70 70     bvs $08BE      ; L_08BE
-084E: 00        brk
-084F: 00        brk
-0850: 00        brk
-0851: 00        brk
-0852: 00        brk
-0853: 00        brk
-0854: 00        brk
-0855: 00        brk
-0856: 00        brk
-0857:           BYTE $42
-0858:           BYTE $77
-0859: 08        php
-085A:           BYTE $02
-085B:           BYTE $02
-085C:           BYTE $02
-085D:           BYTE $02
-085E: 41 42     eor ($42,x)    ; CRITIC
-0860: 08        php
-0861: 70 70     bvs $08D3      ; L_08D2+1
-0863: 70 70     bvs $08D5      ; L_08D5
-0865: 70 70     bvs $08D7      ; L_08D6+1
-0867: 70 70     bvs $08D9      ; L_08D9
-0869: 70 70     bvs $08DB      ; L_08DB
-086B: 70 70     bvs $08DD      ; L_08DD
-086D:           BYTE $42
-086E:           BYTE $77
-086F: 08        php
-0870:           BYTE $02
-0871:           BYTE $02
-0872:           BYTE $02
-0873:           BYTE $02
-0874: 41 61     eor ($61,x)    ; FKDEF+1
-0876: 08        php
-0877: 51 52     eor ($52),y    ; LMARGN
-0879:           BYTE $52
-087A:           BYTE $52
-087B:           BYTE $52
-087C:           BYTE $52
-087D:           BYTE $52
-087E:           BYTE $52
-087F:           BYTE $52
-0880:           BYTE $52
-0881:           BYTE $52
-0882:           BYTE $52
-0883:           BYTE $52
-0884:           BYTE $52
-0885:           BYTE $52
-0886:           BYTE $52
-0887:           BYTE $52
-0888:           BYTE $52
-0889:           BYTE $52
-088A:           BYTE $52
-088B:           BYTE $52
-088C:           BYTE $52
-088D:           BYTE $52
-088E:           BYTE $52
-088F:           BYTE $52
-0890:           BYTE $52
-0891:           BYTE $52
-0892:           BYTE $52
-0893:           BYTE $52
-0894:           BYTE $52
-0895:           BYTE $52
-0896:           BYTE $52
-0897:           BYTE $52
-0898:           BYTE $52
-0899:           BYTE $52
-089A:           BYTE $52
-089B:           BYTE $52
-089C:           BYTE $52
-089D:           BYTE $52
-089E: 45 7C     eor $7C        ; HOLDCH
-08A0:           BYTE $33
-08A1: 75 00     adc $00,x      ; LNFLG
-08A3: 70 72     bvs $0917      ; L_0917
-08A5:           BYTE $6F
-08A6:           BYTE $67
-08A7:           BYTE $72
-08A8: 61 6D     adc ($6D,x)    ; BUFSTR+1
-08AA: 61 00     adc ($00,x)    ; LNFLG
-08AC:           BYTE $73
-08AD: 65 00     adc $00        ; LNFLG
-08AF:           BYTE $64
-08B0: 65 74     adc $74        ; ENDPT
-08B2: 75 76     adc $76,x      ; DELTAR
-08B4:           BYTE $6F
-08B5: 0E 00 70  asl $7000
-08B8:           BYTE $6F
-08B9:           BYTE $72
-08BA: 66 61     ror $61        ; FKDEF+1
-08BC: 76 6F     ror $6F,x      ; SHFAMT
-08BE:           BYTE $72
-08BF: 00        brk
-08C0: 00        brk
-08C1: 00        brk
-08C2: 00        brk
-08C3: 00        brk
-08C4: 00        brk
-08C5: 00        brk
-08C6:           BYTE $7C
-08C7:           BYTE $7C
-08C8:           BYTE $72
-08C9: 65 74     adc $74        ; ENDPT
-08CB:           BYTE $72
-08CC:           BYTE $6F
-08CD:           BYTE $63
-08CE: 65 64     adc $64        ; ADRESS
-08D0: 61 00     adc ($00,x)    ; LNFLG
-08D2: 6C 61 00  jmp ($0061)    ; FKDEF+1
-08D5:           BYTE $63
-08D6: 69 6E     adc #$6E
-08D8:           BYTE $74
-08D9: 61 00     adc ($00,x)    ; LNFLG
-08DB:           BYTE $13
-08DC: 00        brk
-08DD: 76 75     ror $75,x      ; ENDPT+1
-08DF: 65 6C     adc $6C        ; BUFSTR
-08E1:           BYTE $74
-08E2: 61 73     adc ($73,x)    ; COLAC+1
-08E4: 00        brk
-08E5: 79 00 70  adc $7000,y
-08E8: 75 6C     adc $6C,x      ; BUFSTR
-08EA:           BYTE $73
-08EB: 65 00     adc $00        ; LNFLG
-08ED: 00        brk
-08EE:           BYTE $7C
-08EF:           BYTE $7C
-08F0: 6C 61 00  jmp ($0061)    ; FKDEF+1
-08F3:           BYTE $74
-08F4: 65 63     adc $63        ; LOGCOL
-08F6: 6C 61 00  jmp ($0061)    ; FKDEF+1
-08F9:           BYTE $80
-08FA:           BYTE $F3
-08FB:           BYTE $F4
-08FC: E1 F2     sbc ($F2,x)    ; CIX
-08FE:           BYTE $F4
-08FF:           BYTE $80
-0900: 0E 00 21  asl $2100
-0903:           BYTE $34
-0904:           BYTE $34
-0905: 25 00     and $00        ; LNFLG
-0907: 30 72     bmi $097B      ; L_097B
-0909: 69 73     adc #$73
-090B: 6D 61 00  adc $0061      ; FKDEF+1
-090E:           BYTE $33
-090F:           BYTE $6F
-0910: 66 74     ror $74        ; ENDPT
-0912: 0E 00 00  asl $0000      ; LNFLG
-0915: 00        brk
-0916:           BYTE $7C
-0917:           BYTE $5A
-0918:           BYTE $52
-0919:           BYTE $52
-091A:           BYTE $52
-091B:           BYTE $52
-091C:           BYTE $52
-091D:           BYTE $52
-091E:           BYTE $52
-091F:           BYTE $52
-0920:           BYTE $52
-0921:           BYTE $52
-0922:           BYTE $52
-0923:           BYTE $52
-0924:           BYTE $52
-0925:           BYTE $52
-0926:           BYTE $52
-0927:           BYTE $52
-0928:           BYTE $52
-0929:           BYTE $52
-092A:           BYTE $52
-092B:           BYTE $52
-092C:           BYTE $52
-092D:           BYTE $52
-092E:           BYTE $52
-092F:           BYTE $52
-0930:           BYTE $52
-0931:           BYTE $52
-0932:           BYTE $52
-0933:           BYTE $52
-0934:           BYTE $52
-0935:           BYTE $52
-0936:           BYTE $52
-0937:           BYTE $52
-0938:           BYTE $52
-0939:           BYTE $52
-093A:           BYTE $52
-093B:           BYTE $52
-093C:           BYTE $52
-093D:           BYTE $52
-093E:           BYTE $43
+0775: 70        BYTE $70 ; DL 8 scanlines                 ; Display list 1 null
+0776: 70        BYTE $70 ; DL 8 scanlines
+0777: 70        BYTE $70 ; DL 8 scanlines
+0778: 70        BYTE $70 ; DL 8 scanlines
+0779: 46        BYTE $46 ; DL LMS Antic Mode 6
+077A: 8E 07     WORD $078E     ; L_078E
+077C: 70        BYTE $70 ; DL 8 scanlines
+077D: 70        BYTE $70 ; DL 8 scanlines
+077E: 02        BYTE $02 ; DL Antic Mode 2
+077F: 02        BYTE $02 ; DL Antic Mode 2
+0780: 02        BYTE $02 ; DL Antic Mode 2
+0781: 70        BYTE $70 ; DL 8 scanlines
+0782: 70        BYTE $70 ; DL 8 scanlines
+0783: 70        BYTE $70 ; DL 8 scanlines
+0784: 70        BYTE $70 ; DL 8 scanlines
+0785: 06        BYTE $06 ; DL Antic Mode 6
+0786: 70        BYTE $70 ; DL 8 scanlines
+0787: 70        BYTE $70 ; DL 8 scanlines
+0788: 70        BYTE $70 ; DL 8 scanlines
+0789: 70        BYTE $70 ; DL 8 scanlines
+078A: 06        BYTE $06 ; DL Antic Mode 6
+078B: 41        BYTE $41 ; DL JMP
+078C: 75 07     WORD $0775     ; DLIST1
+078E:           BYTE $00 $00 $00 $00 $00 $30 $32 $29                 ; Screen text 1 null
+0796:           BYTE $33 $2D $21 $00 $33 $2F $26 $34
+079E:           BYTE $00 $00 $00 $00 $51 $52 $57 $52
+07A6:           BYTE $52 $52 $52 $52 $52 $52 $52 $52
+07AE:           BYTE $52 $52 $52 $52 $57 $52 $52 $52
+07B6:           BYTE $52 $52 $52 $52 $52 $57 $52 $52
+07BE:           BYTE $52 $52 $52 $52 $52 $52 $52 $52
+07C6:           BYTE $52 $57 $52 $45 $7C $00 $7C $46
+07CE:           BYTE $47 $46 $47 $46 $47 $46 $47 $46
+07D6:           BYTE $47 $46 $47 $46 $7C $30 $32 $25
+07DE:           BYTE $33 $25 $2E $34 $21 $7C $47 $46
+07E6:           BYTE $47 $46 $47 $46 $47 $46 $47 $46
+07EE:           BYTE $47 $7C $00 $7C $5A $52 $58 $52
+07F6:           BYTE $52 $52 $52 $52 $52 $52 $52 $52
+07FE:           BYTE $52 $52 $52 $52 $58 $52 $52 $52
+0806:           BYTE $52 $52 $52 $52 $52 $58 $52 $52
+080E:           BYTE $52 $52 $52 $52 $52 $52 $52 $52
+0816:           BYTE $52 $58 $52 $43 $00 $00 $00 $00
+081E:           BYTE $00 $00 $00 $00 $2B $2F $21 $2C
+0826:           BYTE $21 $00 $00 $00 $00 $00 $00 $00
+082E:           BYTE $00 $26 $21 $2C $34 $21 $2E $00
+0836:           BYTE $10 $16 $16 $00 $22 $2C $2F $31
+083E:           BYTE $35 $25 $33 $00
+0842: 70        BYTE $70 ; DL 8 scanlines                 ; Display list 2 null
+0843: 70        BYTE $70 ; DL 8 scanlines
+0844: 70        BYTE $70 ; DL 8 scanlines
+0845: 70        BYTE $70 ; DL 8 scanlines
+0846: 70        BYTE $70 ; DL 8 scanlines
+0847: 70        BYTE $70 ; DL 8 scanlines
+0848: 70        BYTE $70 ; DL 8 scanlines
+0849: 70        BYTE $70 ; DL 8 scanlines
+084A: 70        BYTE $70 ; DL 8 scanlines
+084B: 70        BYTE $70 ; DL 8 scanlines
+084C: 70        BYTE $70 ; DL 8 scanlines
+084D: 70        BYTE $70 ; DL 8 scanlines
+084E: 00        BYTE $00 ; DL 1 scanline
+084F: 00        BYTE $00 ; DL 1 scanline
+0850: 00        BYTE $00 ; DL 1 scanline
+0851: 00        BYTE $00 ; DL 1 scanline
+0852: 00        BYTE $00 ; DL 1 scanline
+0853: 00        BYTE $00 ; DL 1 scanline
+0854: 00        BYTE $00 ; DL 1 scanline
+0855: 00        BYTE $00 ; DL 1 scanline
+0856: 00        BYTE $00 ; DL 1 scanline
+0857: 42        BYTE $42 ; DL LMS Antic Mode 2
+0858: 77 08     WORD $0877     ; L_0877
+085A: 02        BYTE $02 ; DL Antic Mode 2
+085B: 02        BYTE $02 ; DL Antic Mode 2
+085C: 02        BYTE $02 ; DL Antic Mode 2
+085D: 02        BYTE $02 ; DL Antic Mode 2
+085E: 41        BYTE $41 ; DL JMP
+085F: 42 08     WORD $0842     ; DLIST2
+0861: 70        BYTE $70 ; DL 8 scanlines                 ; Display list 3 null
+0862: 70        BYTE $70 ; DL 8 scanlines
+0863: 70        BYTE $70 ; DL 8 scanlines
+0864: 70        BYTE $70 ; DL 8 scanlines
+0865: 70        BYTE $70 ; DL 8 scanlines
+0866: 70        BYTE $70 ; DL 8 scanlines
+0867: 70        BYTE $70 ; DL 8 scanlines
+0868: 70        BYTE $70 ; DL 8 scanlines
+0869: 70        BYTE $70 ; DL 8 scanlines
+086A: 70        BYTE $70 ; DL 8 scanlines
+086B: 70        BYTE $70 ; DL 8 scanlines
+086C: 70        BYTE $70 ; DL 8 scanlines
+086D: 42        BYTE $42 ; DL LMS Antic Mode 2
+086E: 77 08     WORD $0877     ; L_0877
+0870: 02        BYTE $02 ; DL Antic Mode 2
+0871: 02        BYTE $02 ; DL Antic Mode 2
+0872: 02        BYTE $02 ; DL Antic Mode 2
+0873: 02        BYTE $02 ; DL Antic Mode 2
+0874: 41        BYTE $41 ; DL JMP
+0875: 61 08     WORD $0861     ; DLIST3
+0877:           BYTE $51 $52 $52 $52 $52 $52 $52 $52                 ; Screen text 3 null
+087F:           BYTE $52 $52 $52 $52 $52 $52 $52 $52
+0887:           BYTE $52 $52 $52 $52 $52 $52 $52 $52
+088F:           BYTE $52 $52 $52 $52 $52 $52 $52 $52
+0897:           BYTE $52 $52 $52 $52 $52 $52 $52 $45
+089F:           BYTE $7C $33 $75 $00 $70 $72 $6F $67
+08A7:           BYTE $72 $61 $6D $61 $00 $73 $65 $00
+08AF:           BYTE $64 $65 $74 $75 $76 $6F $0E $00
+08B7:           BYTE $70 $6F $72 $66 $61 $76 $6F $72
+08BF:           BYTE $00 $00 $00 $00 $00 $00 $00 $7C
+08C7:           BYTE $7C $72 $65 $74 $72 $6F $63 $65
+08CF:           BYTE $64 $61 $00 $6C $61 $00 $63 $69
+08D7:           BYTE $6E $74 $61 $00 $13 $00 $76 $75
+08DF:           BYTE $65 $6C $74 $61 $73 $00 $79 $00
+08E7:           BYTE $70 $75 $6C $73 $65 $00 $00 $7C
+08EF:           BYTE $7C $6C $61 $00 $74 $65 $63 $6C
+08F7:           BYTE $61 $00 $80 $F3 $F4 $E1 $F2 $F4
+08FF:           BYTE $80 $0E $00 $21 $34 $34 $25 $00
+0907:           BYTE $30 $72 $69 $73 $6D $61 $00 $33
+090F:           BYTE $6F $66 $74 $0E $00 $00 $00 $7C
+0917:           BYTE $5A $52 $52 $52 $52 $52 $52 $52
+091F:           BYTE $52 $52 $52 $52 $52 $52 $52 $52
+0927:           BYTE $52 $52 $52 $52 $52 $52 $52 $52
+092F:           BYTE $52 $52 $52 $52 $52 $52 $52 $52
+0937:           BYTE $52 $52 $52 $52 $52 $52 $52 $43
 093F: A9 02     lda #$02
 0941: 85 09     sta $09        ; BOOT
 0943: A9 00     lda #$00
 0945: 8D 44 02  sta $0244      ; COLDST
 0948: 85 D2     sta $D2        ; VTYPE
-094A: 20 53 09  jsr $0953      ; L_0953
-094D: 20 9F 09  jsr $099F      ; L_099F
+094A: 20 53 09  jsr $0953      ; SCREEN_SAVE
+094D: 20 9F 09  jsr $099F      ; SCREEN_SET
 0950: 4C E0 09  jmp $09E0      ; L_09E0
 0953: A2 00     ldx #$00
 0955: BD C4 02  lda $02C4,x    ; COLOR0
-0958: 9D 32 0C  sta $0C32,x    ; L_0C2C+6
+0958: 9D 32 0C  sta $0C32,x    ; SAVED_COLOR
 095B: E8        inx
 095C: E0 05     cpx #$05
 095E: D0 F5     bne $0955      ; L_0955
 0960: AD 30 02  lda $0230      ; SDLSTL
-0963: 8D 37 0C  sta $0C37
+0963: 8D 37 0C  sta $0C37      ; SAVED_DL_L
 0966: AD 31 02  lda $0231      ; SDLSTH
-0969: 8D 38 0C  sta $0C38
+0969: 8D 38 0C  sta $0C38      ; SAVED_DL_H
 096C: AD 2F 02  lda $022F      ; SDMCTL
-096F: 8D 39 0C  sta $0C39
+096F: 8D 39 0C  sta $0C39      ; SAVED_DMA
 0972: AD F4 02  lda $02F4      ; CHBAS
-0975: 8D 3A 0C  sta $0C3A
+0975: 8D 3A 0C  sta $0C3A      ; SAVED_CHBAS
 0978: 60        rts
 0979: A2 00     ldx #$00
-097B: BD 32 0C  lda $0C32,x    ; L_0C2C+6
+097B: BD 32 0C  lda $0C32,x    ; SAVED_COLOR
 097E: 9D C4 02  sta $02C4,x    ; COLOR0
 0981: E8        inx
 0982: E0 05     cpx #$05
 0984: D0 F5     bne $097B      ; L_097B
-0986: AD 37 0C  lda $0C37
+0986: AD 37 0C  lda $0C37      ; SAVED_DL_L
 0989: 8D 30 02  sta $0230      ; SDLSTL
-098C: AD 38 0C  lda $0C38
+098C: AD 38 0C  lda $0C38      ; SAVED_DL_H
 098F: 8D 31 02  sta $0231      ; SDLSTH
-0992: AD 39 0C  lda $0C39
+0992: AD 39 0C  lda $0C39      ; SAVED_DMA
 0995: 8D 2F 02  sta $022F      ; SDMCTL
-0998: AD 3A 0C  lda $0C3A
+0998: AD 3A 0C  lda $0C3A      ; SAVED_CHBAS
 099B: 8D F4 02  sta $02F4      ; CHBAS
 099E: 60        rts
 099F: A9 75     lda #$75
@@ -480,19 +243,19 @@
 09DA: A9 08     lda #$08
 09DC: 8D 31 02  sta $0231      ; SDLSTH
 09DF: 60        rts
-09E0: A9 2E     lda #$2E
+09E0: A9 2E     lda #$2E       ; Write 0C2E at (CB) and (CF) null
 09E2: 85 CB     sta $CB
 09E4: 85 CF     sta $CF
 09E6: A9 0C     lda #$0C
 09E8: 85 CC     sta $CC
 09EA: 85 D0     sta $D0
-09EC: A9 04     lda #$04
+09EC: A9 04     lda #$04       ; Write 0004 at (CD) null
 09EE: 85 CD     sta $CD
 09F0: A9 00     lda #$00
 09F2: 85 CE     sta $CE
 09F4: A9 00     lda #$00
 09F6: 8D 3A 0D  sta $0D3A
-09F9: A9 60     lda #$60
+09F9: A9 60     lda #$60       ; Load Block at $0xC3B size $100 null
 09FB: 8D 00 03  sta $0300      ; DDEVIC
 09FE: A9 00     lda #$00
 0A00: 8D 01 03  sta $0301      ; DUNIT
@@ -519,18 +282,18 @@
 0A35: AD 3A 0D  lda $0D3A
 0A38: C9 3B     cmp #$3B
 0A3A: D0 0D     bne $0A49      ; L_0A49
-0A3C: AD 3D 0C  lda $0C3D
+0A3C: AD 3D 0C  lda $0C3D      ; SAVED_CHBAS+3
 0A3F: CD 2C 0C  cmp $0C2C      ; L_0C2C
 0A42: F0 68     beq $0AAC      ; L_0AAC
 0A44: 90 03     bcc $0A49      ; L_0A49
 0A46: 4C F4 09  jmp $09F4      ; L_09F4
 0A49: 20 D5 09  jsr $09D5      ; L_09D5
-0A4C: A9 3C     lda #$3C
+0A4C: A9 3C     lda #$3C       ; Stop motor null
 0A4E: 8D 02 D3  sta $D302      ; PACTL
 0A51: A9 FD     lda #$FD
 0A53: 20 B0 F2  jsr $F2B0
-0A56: 20 03 07  jsr $0703      ; L_0703
-0A59: AD 1F D0  lda $D01F      ; CONSOL
+0A56: 20 03 07  jsr $0703      ; RETRY_MSG?
+0A59: AD 1F D0  lda $D01F      ; Is START pressed? CONSOL
 0A5C: C9 06     cmp #$06
 0A5E: D0 F9     bne $0A59      ; L_0A59
 0A60: AD 1F D0  lda $D01F      ; CONSOL
@@ -559,33 +322,33 @@
 0A94: AD 2D 0C  lda $0C2D      ; L_0C2C+1
 0A97: C9 00     cmp #$00
 0A99: D0 EF     bne $0A8A      ; L_0A8A
-0A9B: A9 13     lda #$13
+0A9B: A9 13     lda #$13       ; Reset keyboard null
 0A9D: 8D 32 02  sta $0232      ; SSKCTL
 0AA0: A9 FF     lda #$FF
 0AA2: 8D 0F D2  sta $D20F      ; SKCTL
 0AA5: 58        cli
-0AA6: 20 9F 09  jsr $099F      ; L_099F
+0AA6: 20 9F 09  jsr $099F      ; SCREEN_SET
 0AA9: 4C F4 09  jmp $09F4      ; L_09F4
-0AAC: AD 38 08  lda $0838      ; L_0837+1
+0AAC: AD 38 08  lda $0838      ; L_0836+2
 0AAF: C9 10     cmp #$10
 0AB1: F0 06     beq $0AB9      ; L_0AB9
-0AB3: CE 38 08  dec $0838      ; L_0837+1
+0AB3: CE 38 08  dec $0838      ; L_0836+2
 0AB6: 4C D3 0A  jmp $0AD3      ; L_0AD3
 0AB9: A9 19     lda #$19
-0ABB: 8D 38 08  sta $0838      ; L_0837+1
-0ABE: AD 37 08  lda $0837      ; L_0837
+0ABB: 8D 38 08  sta $0838      ; L_0836+2
+0ABE: AD 37 08  lda $0837      ; L_0836+1
 0AC1: C9 10     cmp #$10
 0AC3: F0 06     beq $0ACB      ; L_0ACB
-0AC5: CE 37 08  dec $0837      ; L_0837
+0AC5: CE 37 08  dec $0837      ; L_0836+1
 0AC8: 4C D3 0A  jmp $0AD3      ; L_0AD3
 0ACB: A9 19     lda #$19
-0ACD: 8D 37 08  sta $0837      ; L_0837
-0AD0: CE 36 08  dec $0836      ; L_0834+2
+0ACD: 8D 37 08  sta $0837      ; L_0836+1
+0AD0: CE 36 08  dec $0836      ; L_0836
 0AD3: A0 03     ldy #$03
 0AD5: CE 2C 0C  dec $0C2C      ; L_0C2C
 0AD8: A2 00     ldx #$00
 0ADA: 86 4D     stx $4D        ; ATRACT
-0ADC: B9 3B 0C  lda $0C3B,y
+0ADC: B9 3B 0C  lda $0C3B,y    ; SAVED_CHBAS+1
 0ADF: 81 CB     sta ($CB,x)
 0AE1: C8        iny
 0AE2: C6 CD     dec $CD
@@ -643,10 +406,10 @@
 0B54: C9 E3     cmp #$E3
 0B56: D0 23     bne $0B7B      ; L_0B7B
 0B58: 84 D1     sty $D1
-0B5A: 20 79 09  jsr $0979      ; L_0979
+0B5A: 20 79 09  jsr $0979      ; SCREEN_RESTORE
 0B5D: 20 6B 0B  jsr $0B6B      ; L_0B6B
-0B60: 20 53 09  jsr $0953      ; L_0953
-0B63: 20 9F 09  jsr $099F      ; L_099F
+0B60: 20 53 09  jsr $0953      ; SCREEN_SAVE
+0B63: 20 9F 09  jsr $099F      ; SCREEN_SET
 0B66: A4 D1     ldy $D1
 0B68: 4C 7B 0B  jmp $0B7B      ; L_0B7B
 0B6B: AD E3 02  lda $02E3      ; INITAD+1
@@ -700,10 +463,10 @@
 0BD9: AD 2C 0C  lda $0C2C      ; L_0C2C
 0BDC: F0 03     beq $0BE1      ; L_0BE1
 0BDE: 4C F4 09  jmp $09F4      ; L_09F4
-0BE1: A9 3C     lda #$3C
+0BE1: A9 3C     lda #$3C       ; Stop motor null
 0BE3: 8D 02 D3  sta $D302      ; PACTL
-0BE6: 20 79 09  jsr $0979      ; L_0979
-0BE9: 6C E0 02  jmp ($02E0)    ; RUNAD
+0BE6: 20 79 09  jsr $0979      ; SCREEN_RESTORE
+0BE9: 6C E0 02  jmp ($02E0)    ; Execute RUNAD
 0BEC: AD 2E 0C  lda $0C2E      ; L_0C2C+2
 0BEF: C9 FE     cmp #$FE
 0BF1: D0 0C     bne $0BFF      ; L_0BFF
@@ -718,8 +481,8 @@
 0C02: BD C4 02  lda $02C4,x    ; COLOR0
 0C05: DD D0 09  cmp $09D0,x    ; L_09D0
 0C08: F0 07     beq $0C11      ; L_0C11
-0C0A: 20 53 09  jsr $0953      ; L_0953
-0C0D: 20 9F 09  jsr $099F      ; L_099F
+0C0A: 20 53 09  jsr $0953      ; SCREEN_SAVE
+0C0D: 20 9F 09  jsr $099F      ; SCREEN_SET
 0C10: 60        rts
 0C11: E8        inx
 0C12: E0 05     cpx #$05

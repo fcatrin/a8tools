@@ -1,3 +1,40 @@
 block 1
 byte 06fe
 code 0700
+dlst 0775
+byte 078E
+dlst 0842
+dlst 0861
+byte 0877
+code 093F
+
+label 0775 DLIST1
+label 0842 DLIST2
+label 0861 DLIST3
+label 093F START
+label 0953 SCREEN_SAVE
+label 0979 SCREEN_RESTORE
+label 099F SCREEN_SET
+label 0C32 SAVED_COLOR
+label 0C37 SAVED_DL_L
+label 0C38 SAVED_DL_H
+label 0C39 SAVED_DMA
+label 0C3A SAVED_CHBAS
+label 0703 RETRY_MSG?
+
+rem 0734 Set Screen 2
+rem 076A Restore Screen 3
+rem 0775 Display list 1
+rem 078E Screen text 1
+rem 0842 Display list 2
+rem 0861 Display list 3
+rem 0877 Screen text 3
+rem 09E0 Write 0C2E at (CB) and (CF)
+rem 09EC Write 0004 at (CD)
+rem 09F9 Load Block at $0xC3B size $100
+rem 0A4C Stop motor
+rem 0A59 Is START pressed?
+rem 0A9B Reset keyboard
+rem 0BE1 Stop motor
+rem 0BE9 Execute 
+

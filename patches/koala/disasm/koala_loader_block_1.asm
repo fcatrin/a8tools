@@ -4,8 +4,8 @@
                  org $06FE
 
                  .byte $55, $55
-                 jmp L_093F
-L_0703           ldy #$00
+                 jmp START
+RETRY_MSG?       ldy #$00
                  lda #$01
                  sta CDTMV4
 L_070A           lda CDTMV4
@@ -13,7 +13,7 @@ L_070A           lda CDTMV4
                  lda #$01
                  sta CDTMV4
                  lda #$00
-                 sta L_0861,y
+                 sta DLIST3,y
                  iny
                  cpy #$0C
                  bne L_070A
@@ -23,11 +23,11 @@ L_0720           lda CDTMV4
                  lda #$01
                  sta CDTMV4
                  lda #$70
-                 sta L_0861,y
+                 sta DLIST3,y
                  iny
                  cpy #$0C
                  bne L_0720
-                 lda #$42
+                 lda #$42      ; Set Screen 2
                  sta SDLSTL
                  lda #$08
                  sta SDLSTH
@@ -37,7 +37,7 @@ L_0740           lda CDTMV4
                  lda #$01
                  sta CDTMV4
                  lda #$70
-                 sta L_0842,y
+                 sta DLIST2,y
                  iny
                  cpy #$15
                  bne L_0740
@@ -47,411 +47,174 @@ L_0756           lda CDTMV4
                  lda #$01
                  sta CDTMV4
                  lda #$00
-                 sta L_0842,y
+                 sta DLIST2,y
                  iny
                  cpy #$15
                  bne L_0756
-                 lda #$61
+                 lda #$61      ; Restore Screen 3
                  sta SDLSTL
                  lda #$08
                  sta SDLSTH
                  rts
-                 bvs L_07E7
-                 bvs L_07E9
-                 lsr RUNSTK
-                 .byte $07
-                 bvs L_07ED+1
-                 .byte $02
-                 .byte $02
-                 .byte $02
-                 bvs L_07F3
-                 bvs L_07F5
-                 asl ROWAC
-                 bvs L_07F9
-                 bvs L_0791
-                 eor (ENDPT+1,x)
-                 .byte $07
-                 brk
-                 brk
-                 brk
-L_0791           brk
-                 brk
-                 bmi L_07C7
-                 and #$33
-                 and ICDNOZ
-                 .byte $33
-                 .byte $2F
-                 rol BFENLO
-                 brk
-                 brk
-                 brk
-                 brk
-                 eor (LMARGN),y
-                 .byte $57
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $57
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $57
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-L_07C7           .byte $57
-                 .byte $52
-                 eor HOLDCH
-                 brk
-                 .byte $7C
-                 lsr FMSZPG+4
-                 lsr FMSZPG+4
-                 lsr FMSZPG+4
-                 lsr FMSZPG+4
-                 lsr FMSZPG+4
-                 lsr FMSZPG+4
-                 lsr HOLDCH
-                 bmi L_080F
-                 and BUFRHI
-                 and ICIDNO
-                 .byte $34
-                 and (HOLDCH,x)
-                 .byte $47
-                 lsr FMSZPG+4
-L_07E7           lsr FMSZPG+4
-L_07E9           lsr FMSZPG+4
-                 lsr FMSZPG+4
-L_07ED           lsr FMSZPG+4
-                 .byte $7C
-                 brk
-                 .byte $7C
-                 .byte $5A
-L_07F3           .byte $52
-                 cli
-L_07F5           .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-L_07F9           .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 cli
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 cli
-                 .byte $52
-                 .byte $52
-                 .byte $52
-L_080F           .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 cli
-                 .byte $52
-                 .byte $43
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 .byte $2B
-                 .byte $2F
-                 and (ICSPRZ,x)
-                 and (LNFLG,x)
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 rol ICDNOZ
-                 bit $2134
-L_0834           rol $1000
-L_0837           asl BUFADR+1,x
-                 brk
-                 .byte $22
-                 bit $312F
-                 and ICBAHZ,x
-                 .byte $33
-                 brk
-L_0842           bvs L_08B4
-                 bvs L_08B5+1
-                 bvs L_08B8
-                 bvs L_08BA
-                 bvs L_08BC
-                 bvs L_08BE
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 .byte $42
-                 .byte $77
-                 php
-                 .byte $02
-                 .byte $02
-                 .byte $02
-                 .byte $02
-                 eor (CRITIC,x)
-                 php
-L_0861           bvs L_08D2+1
-                 bvs L_08D5
-                 bvs L_08D6+1
-                 bvs L_08D9
-                 bvs L_08DB
-                 bvs L_08DD
-                 .byte $42
-                 .byte $77
-                 php
-                 .byte $02
-                 .byte $02
-                 .byte $02
-                 .byte $02
-                 eor (FKDEF+1,x)
-                 php
-                 eor (LMARGN),y
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 eor HOLDCH
-                 .byte $33
-                 adc LNFLG,x
-                 bvs L_0917
-                 .byte $6F
-                 .byte $67
-                 .byte $72
-                 adc (BUFSTR+1,x)
-                 adc (LNFLG,x)
-                 .byte $73
-                 adc LNFLG
-                 .byte $64
-                 adc ENDPT
-                 adc DELTAR,x
-L_08B4           .byte $6F
-L_08B5           asl $7000
-L_08B8           .byte $6F
-                 .byte $72
-L_08BA           ror FKDEF+1
-L_08BC           ror SHFAMT,x
-L_08BE           .byte $72
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 .byte $7C
-                 .byte $7C
-                 .byte $72
-                 adc ENDPT
-                 .byte $72
-                 .byte $6F
-                 .byte $63
-                 adc ADRESS
-                 adc (LNFLG,x)
-L_08D2           jmp (FKDEF+1)
-L_08D5           .byte $63
-L_08D6           adc #$6E
-                 .byte $74
-L_08D9           adc (LNFLG,x)
-L_08DB           .byte $13
-                 brk
-L_08DD           ror ENDPT+1,x
-                 adc BUFSTR
-                 .byte $74
-                 adc (COLAC+1,x)
-                 brk
-                 adc $7000,y
-                 adc BUFSTR,x
-                 .byte $73
-                 adc LNFLG
-                 brk
-                 .byte $7C
-                 .byte $7C
-                 jmp (FKDEF+1)
-                 .byte $74
-                 adc LOGCOL
-                 jmp (FKDEF+1)
-                 .byte $80
-                 .byte $F3
-                 .byte $F4
-                 sbc (CIX,x)
-                 .byte $F4
-                 .byte $80
-                 asl $2100
-                 .byte $34
-                 .byte $34
-                 and LNFLG
-                 bmi L_097B
-                 adc #$73
-                 adc FKDEF+1
-                 .byte $33
-                 .byte $6F
-                 ror ENDPT
-                 asl LNFLG
-                 brk
-                 .byte $7C
-L_0917           .byte $5A
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $52
-                 .byte $43
-L_093F           lda #$02
+DLIST1           .byte $70 ; DL 8 scanlines                 ; Display list 1
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $46 ; DL LMS Antic Mode 6
+                 .word L_078E
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $02 ; DL Antic Mode 2
+                 .byte $02 ; DL Antic Mode 2
+                 .byte $02 ; DL Antic Mode 2
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $06 ; DL Antic Mode 6
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $06 ; DL Antic Mode 6
+                 .byte $41 ; DL JMP
+                 .word DLIST1
+L_078E           .byte $00, $00, $00, $00, $00, $30, $32, $29                 ; Screen text 1
+                 .byte $33, $2D, $21, $00, $33, $2F, $26, $34
+                 .byte $00, $00, $00, $00, $51, $52, $57, $52
+                 .byte $52, $52, $52, $52, $52, $52, $52, $52
+                 .byte $52, $52, $52, $52, $57, $52, $52, $52
+                 .byte $52, $52, $52, $52, $52, $57, $52, $52
+                 .byte $52, $52, $52, $52, $52, $52, $52, $52
+                 .byte $52, $57, $52, $45, $7C, $00, $7C, $46
+                 .byte $47, $46, $47, $46, $47, $46, $47, $46
+                 .byte $47, $46, $47, $46, $7C, $30, $32, $25
+                 .byte $33, $25, $2E, $34, $21, $7C, $47, $46
+                 .byte $47, $46, $47, $46, $47, $46, $47, $46
+                 .byte $47, $7C, $00, $7C, $5A, $52, $58, $52
+                 .byte $52, $52, $52, $52, $52, $52, $52, $52
+                 .byte $52, $52, $52, $52, $58, $52, $52, $52
+                 .byte $52, $52, $52, $52, $52, $58, $52, $52
+                 .byte $52, $52, $52, $52, $52, $52, $52, $52
+                 .byte $52, $58, $52, $43, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $2B, $2F, $21, $2C
+                 .byte $21, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $26, $21, $2C, $34, $21, $2E, $00
+L_0836           .byte $10, $16, $16, $00, $22, $2C, $2F, $31
+                 .byte $35, $25, $33, $00
+DLIST2           .byte $70 ; DL 8 scanlines                 ; Display list 2
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $00 ; DL 1 scanline
+                 .byte $00 ; DL 1 scanline
+                 .byte $00 ; DL 1 scanline
+                 .byte $00 ; DL 1 scanline
+                 .byte $00 ; DL 1 scanline
+                 .byte $00 ; DL 1 scanline
+                 .byte $00 ; DL 1 scanline
+                 .byte $00 ; DL 1 scanline
+                 .byte $00 ; DL 1 scanline
+                 .byte $42 ; DL LMS Antic Mode 2
+                 .word L_0877
+                 .byte $02 ; DL Antic Mode 2
+                 .byte $02 ; DL Antic Mode 2
+                 .byte $02 ; DL Antic Mode 2
+                 .byte $02 ; DL Antic Mode 2
+                 .byte $41 ; DL JMP
+                 .word DLIST2
+DLIST3           .byte $70 ; DL 8 scanlines                 ; Display list 3
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $42 ; DL LMS Antic Mode 2
+                 .word L_0877
+                 .byte $02 ; DL Antic Mode 2
+                 .byte $02 ; DL Antic Mode 2
+                 .byte $02 ; DL Antic Mode 2
+                 .byte $02 ; DL Antic Mode 2
+                 .byte $41 ; DL JMP
+                 .word DLIST3
+L_0877           .byte $51, $52, $52, $52, $52, $52, $52, $52                 ; Screen text 3
+                 .byte $52, $52, $52, $52, $52, $52, $52, $52
+                 .byte $52, $52, $52, $52, $52, $52, $52, $52
+                 .byte $52, $52, $52, $52, $52, $52, $52, $52
+                 .byte $52, $52, $52, $52, $52, $52, $52, $45
+                 .byte $7C, $33, $75, $00, $70, $72, $6F, $67
+                 .byte $72, $61, $6D, $61, $00, $73, $65, $00
+                 .byte $64, $65, $74, $75, $76, $6F, $0E, $00
+                 .byte $70, $6F, $72, $66, $61, $76, $6F, $72
+                 .byte $00, $00, $00, $00, $00, $00, $00, $7C
+                 .byte $7C, $72, $65, $74, $72, $6F, $63, $65
+                 .byte $64, $61, $00, $6C, $61, $00, $63, $69
+                 .byte $6E, $74, $61, $00, $13, $00, $76, $75
+                 .byte $65, $6C, $74, $61, $73, $00, $79, $00
+                 .byte $70, $75, $6C, $73, $65, $00, $00, $7C
+                 .byte $7C, $6C, $61, $00, $74, $65, $63, $6C
+                 .byte $61, $00, $80, $F3, $F4, $E1, $F2, $F4
+                 .byte $80, $0E, $00, $21, $34, $34, $25, $00
+                 .byte $30, $72, $69, $73, $6D, $61, $00, $33
+                 .byte $6F, $66, $74, $0E, $00, $00, $00, $7C
+                 .byte $5A, $52, $52, $52, $52, $52, $52, $52
+                 .byte $52, $52, $52, $52, $52, $52, $52, $52
+                 .byte $52, $52, $52, $52, $52, $52, $52, $52
+                 .byte $52, $52, $52, $52, $52, $52, $52, $52
+                 .byte $52, $52, $52, $52, $52, $52, $52, $43
+START            lda #$02
                  sta BOOT
                  lda #$00
                  sta COLDST
                  sta VTYPE
-                 jsr L_0953
-                 jsr L_099F
+                 jsr SCREEN_SAVE
+                 jsr SCREEN_SET
                  jmp L_09E0
-L_0953           ldx #$00
+SCREEN_SAVE      ldx #$00
 L_0955           lda COLOR0,x
-                 sta L_0C2C+6,x
+                 sta SAVED_COLOR,x
                  inx
                  cpx #$05
                  bne L_0955
                  lda SDLSTL
-                 sta $0C37
+                 sta SAVED_DL_L
                  lda SDLSTH
-                 sta $0C38
+                 sta SAVED_DL_H
                  lda SDMCTL
-                 sta $0C39
+                 sta SAVED_DMA
                  lda CHBAS
-                 sta $0C3A
+                 sta SAVED_CHBAS
                  rts
-L_0979           ldx #$00
-L_097B           lda L_0C2C+6,x
+SCREEN_RESTORE   ldx #$00
+L_097B           lda SAVED_COLOR,x
                  sta COLOR0,x
                  inx
                  cpx #$05
                  bne L_097B
-                 lda $0C37
+                 lda SAVED_DL_L
                  sta SDLSTL
-                 lda $0C38
+                 lda SAVED_DL_H
                  sta SDLSTH
-                 lda $0C39
+                 lda SAVED_DMA
                  sta SDMCTL
-                 lda $0C3A
+                 lda SAVED_CHBAS
                  sta CHBAS
                  rts
-L_099F           lda #$75
+SCREEN_SET       lda #$75
                  sta SDLSTL
                  sta DLISTL
                  lda #$07
@@ -481,19 +244,19 @@ L_09D5           lda #$61
                  lda #$08
                  sta SDLSTH
                  rts
-L_09E0           lda #$2E
+L_09E0           lda #$2E      ; Write 0C2E at (CB) and (CF)
                  sta $CB
                  sta $CF
                  lda #$0C
                  sta $CC
                  sta $D0
-                 lda #$04
+                 lda #$04      ; Write 0004 at (CD)
                  sta $CD
                  lda #$00
                  sta $CE
 L_09F4           lda #$00
                  sta $0D3A
-                 lda #$60
+                 lda #$60      ; Load Block at $0xC3B size $100
                  sta DDEVIC
                  lda #$00
                  sta DUNIT
@@ -520,18 +283,18 @@ L_09F4           lda #$00
 L_0A35           lda $0D3A
                  cmp #$3B
                  bne L_0A49
-                 lda $0C3D
+                 lda SAVED_CHBAS+3
                  cmp L_0C2C
                  beq L_0AAC
                  bcc L_0A49
                  jmp L_09F4
 L_0A49           jsr L_09D5
-                 lda #$3C
+                 lda #$3C      ; Stop motor
                  sta PACTL
                  lda #$FD
                  jsr $F2B0
-                 jsr L_0703
-L_0A59           lda CONSOL
+                 jsr RETRY_MSG?
+L_0A59           lda CONSOL    ; Is START pressed?
                  cmp #$06
                  bne L_0A59
 L_0A60           lda CONSOL
@@ -560,33 +323,33 @@ L_0A8A           lda SKSTAT
                  lda L_0C2C+1
                  cmp #$00
                  bne L_0A8A
-                 lda #$13
+                 lda #$13      ; Reset keyboard
                  sta SSKCTL
                  lda #$FF
                  sta SKCTL
                  cli
-                 jsr L_099F
+                 jsr SCREEN_SET
                  jmp L_09F4
-L_0AAC           lda L_0837+1
+L_0AAC           lda L_0836+2
                  cmp #$10
                  beq L_0AB9
-                 dec L_0837+1
+                 dec L_0836+2
                  jmp L_0AD3
 L_0AB9           lda #$19
-                 sta L_0837+1
-                 lda L_0837
+                 sta L_0836+2
+                 lda L_0836+1
                  cmp #$10
                  beq L_0ACB
-                 dec L_0837
+                 dec L_0836+1
                  jmp L_0AD3
 L_0ACB           lda #$19
-                 sta L_0837
-                 dec L_0834+2
+                 sta L_0836+1
+                 dec L_0836
 L_0AD3           ldy #$03
                  dec L_0C2C
 L_0AD8           ldx #$00
                  stx ATRACT
-                 lda $0C3B,y
+                 lda SAVED_CHBAS+1,y
                  sta ($CB,x)
                  iny
                  dec $CD
@@ -644,10 +407,10 @@ L_0B4B           lda $CF
                  cmp #$E3
                  bne L_0B7B
 L_0B58           sty $D1
-                 jsr L_0979
+                 jsr SCREEN_RESTORE
                  jsr L_0B6B
-                 jsr L_0953
-                 jsr L_099F
+                 jsr SCREEN_SAVE
+                 jsr SCREEN_SET
                  ldy $D1
                  jmp L_0B7B
 L_0B6B           lda INITAD+1
@@ -701,10 +464,10 @@ L_0BD2           cpy #$FF
 L_0BD9           lda L_0C2C
                  beq L_0BE1
                  jmp L_09F4
-L_0BE1           lda #$3C
+L_0BE1           lda #$3C      ; Stop motor
                  sta PACTL
-                 jsr L_0979
-                 jmp (RUNAD)
+                 jsr SCREEN_RESTORE
+                 jmp (RUNAD)   ; Execute
 L_0BEC           lda L_0C2C+2
                  cmp #$FE
                  bne L_0BFF
@@ -719,8 +482,8 @@ L_0C00           ldx #$00
 L_0C02           lda COLOR0,x
                  cmp L_09D0,x
                  beq L_0C11
-L_0C0A           jsr L_0953
-                 jsr L_099F
+L_0C0A           jsr SCREEN_SAVE
+                 jsr SCREEN_SET
                  rts
 L_0C11           inx
                  cpx #$05
