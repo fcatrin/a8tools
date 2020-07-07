@@ -372,20 +372,20 @@ NEXT_CHUNK       lda CHUNK_START_ADDR
                  lda CHUNK_START_ADDR+1
                  cmp #$0C
                  bne L_0B3B
-                 lda BLOCK_NUM+2
+                 lda LOADED_ADDR_START
                  cmp #$FF
                  bne L_0B38
-                 lda BLOCK_NUM+3
+                 lda LOADED_ADDR_START+1
                  cmp #$FF
                  bne L_0B38
                  lda #$02
                  sta CHUNK_SIZE
                  lda #$00
                  sta CHUNK_SIZE+1
-                 lda BLOCK_NUM+4
-                 sta BLOCK_NUM+2
-                 lda BLOCK_NUM+5
-                 sta BLOCK_NUM+3
+                 lda LOADED_ADDR_END
+                 sta LOADED_ADDR_START
+                 lda LOADED_ADDR_END+1
+                 sta LOADED_ADDR_START+1
                  lda #$30
                  sta DST_PTR
                  lda #$0C
@@ -403,7 +403,7 @@ L_0B3B           lda CHUNK_START_ADDR+1
 L_0B4B           lda CHUNK_START_ADDR
                  cmp #$E2
                  beq L_0B58
-                 lda BLOCK_NUM+4
+                 lda LOADED_ADDR_END
                  cmp #$E3
                  bne L_0B7B
 L_0B58           sty CHUNK_START_ADDR+2
@@ -441,18 +441,18 @@ L_0B7B           jsr L_0C00
                  sta RUNAD+1
                  jmp L_0BD2
 L_0BA8           jsr L_0BEC
-                 lda BLOCK_NUM+2
+                 lda LOADED_ADDR_START
                  sta DST_PTR
                  sta CHUNK_START_ADDR
-                 lda BLOCK_NUM+3
+                 lda LOADED_ADDR_START+1
                  sta DST_PTR+1
                  sta CHUNK_START_ADDR+1
                  sec
-                 lda BLOCK_NUM+4
-                 sbc BLOCK_NUM+2
+                 lda LOADED_ADDR_END
+                 sbc LOADED_ADDR_START
                  sta CHUNK_SIZE
-                 lda BLOCK_NUM+5
-                 sbc BLOCK_NUM+3
+                 lda LOADED_ADDR_END+1
+                 sbc LOADED_ADDR_START+1
                  sta CHUNK_SIZE+1
                  inc CHUNK_SIZE
                  lda CHUNK_SIZE
@@ -468,10 +468,10 @@ L_0BE1           lda #$3C      ; Stop motor
                  sta PACTL
                  jsr SCREEN_RESTORE
                  jmp (RUNAD)   ; Execute
-L_0BEC           lda BLOCK_NUM+2
+L_0BEC           lda LOADED_ADDR_START                 ; Check if there are more blocks (FEFE = End)
                  cmp #$FE
                  bne L_0BFF
-                 lda BLOCK_NUM+3
+                 lda LOADED_ADDR_START+1
                  cmp #$FE
                  bne L_0BFF
                  pla

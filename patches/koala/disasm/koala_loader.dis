@@ -371,20 +371,20 @@
 0B05: A5 D0     lda $D0        ; CHUNK_START_ADDR+1
 0B07: C9 0C     cmp #$0C
 0B09: D0 30     bne $0B3B      ; L_0B3B
-0B0B: AD 2E 0C  lda $0C2E      ; BLOCK_NUM+2
+0B0B: AD 2E 0C  lda $0C2E      ; LOADED_ADDR_START
 0B0E: C9 FF     cmp #$FF
 0B10: D0 26     bne $0B38      ; L_0B38
-0B12: AD 2F 0C  lda $0C2F      ; BLOCK_NUM+3
+0B12: AD 2F 0C  lda $0C2F      ; LOADED_ADDR_START+1
 0B15: C9 FF     cmp #$FF
 0B17: D0 1F     bne $0B38      ; L_0B38
 0B19: A9 02     lda #$02
 0B1B: 85 CD     sta $CD        ; CHUNK_SIZE
 0B1D: A9 00     lda #$00
 0B1F: 85 CE     sta $CE        ; CHUNK_SIZE+1
-0B21: AD 30 0C  lda $0C30      ; BLOCK_NUM+4
-0B24: 8D 2E 0C  sta $0C2E      ; BLOCK_NUM+2
-0B27: AD 31 0C  lda $0C31      ; BLOCK_NUM+5
-0B2A: 8D 2F 0C  sta $0C2F      ; BLOCK_NUM+3
+0B21: AD 30 0C  lda $0C30      ; LOADED_ADDR_END
+0B24: 8D 2E 0C  sta $0C2E      ; LOADED_ADDR_START
+0B27: AD 31 0C  lda $0C31      ; LOADED_ADDR_END+1
+0B2A: 8D 2F 0C  sta $0C2F      ; LOADED_ADDR_START+1
 0B2D: A9 30     lda #$30
 0B2F: 85 CB     sta $CB        ; DST_PTR
 0B31: A9 0C     lda #$0C
@@ -402,7 +402,7 @@
 0B4B: A5 CF     lda $CF        ; CHUNK_START_ADDR
 0B4D: C9 E2     cmp #$E2
 0B4F: F0 07     beq $0B58      ; L_0B58
-0B51: AD 30 0C  lda $0C30      ; BLOCK_NUM+4
+0B51: AD 30 0C  lda $0C30      ; LOADED_ADDR_END
 0B54: C9 E3     cmp #$E3
 0B56: D0 23     bne $0B7B      ; L_0B7B
 0B58: 84 D1     sty $D1        ; CHUNK_START_ADDR+2
@@ -440,18 +440,18 @@
 0BA2: 8D E1 02  sta $02E1      ; RUNAD+1
 0BA5: 4C D2 0B  jmp $0BD2      ; L_0BD2
 0BA8: 20 EC 0B  jsr $0BEC      ; L_0BEC
-0BAB: AD 2E 0C  lda $0C2E      ; BLOCK_NUM+2
+0BAB: AD 2E 0C  lda $0C2E      ; LOADED_ADDR_START
 0BAE: 85 CB     sta $CB        ; DST_PTR
 0BB0: 85 CF     sta $CF        ; CHUNK_START_ADDR
-0BB2: AD 2F 0C  lda $0C2F      ; BLOCK_NUM+3
+0BB2: AD 2F 0C  lda $0C2F      ; LOADED_ADDR_START+1
 0BB5: 85 CC     sta $CC        ; DST_PTR+1
 0BB7: 85 D0     sta $D0        ; CHUNK_START_ADDR+1
 0BB9: 38        sec
-0BBA: AD 30 0C  lda $0C30      ; BLOCK_NUM+4
-0BBD: ED 2E 0C  sbc $0C2E      ; BLOCK_NUM+2
+0BBA: AD 30 0C  lda $0C30      ; LOADED_ADDR_END
+0BBD: ED 2E 0C  sbc $0C2E      ; LOADED_ADDR_START
 0BC0: 85 CD     sta $CD        ; CHUNK_SIZE
-0BC2: AD 31 0C  lda $0C31      ; BLOCK_NUM+5
-0BC5: ED 2F 0C  sbc $0C2F      ; BLOCK_NUM+3
+0BC2: AD 31 0C  lda $0C31      ; LOADED_ADDR_END+1
+0BC5: ED 2F 0C  sbc $0C2F      ; LOADED_ADDR_START+1
 0BC8: 85 CE     sta $CE        ; CHUNK_SIZE+1
 0BCA: E6 CD     inc $CD        ; CHUNK_SIZE
 0BCC: A5 CD     lda $CD        ; CHUNK_SIZE
@@ -467,10 +467,10 @@
 0BE3: 8D 02 D3  sta $D302      ; PACTL
 0BE6: 20 79 09  jsr $0979      ; SCREEN_RESTORE
 0BE9: 6C E0 02  jmp ($02E0)    ; Execute RUNAD
-0BEC: AD 2E 0C  lda $0C2E      ; BLOCK_NUM+2
+0BEC: AD 2E 0C  lda $0C2E      ; Check if there are more blocks (FEFE = End) LOADED_ADDR_START
 0BEF: C9 FE     cmp #$FE
 0BF1: D0 0C     bne $0BFF      ; L_0BFF
-0BF3: AD 2F 0C  lda $0C2F      ; BLOCK_NUM+3
+0BF3: AD 2F 0C  lda $0C2F      ; LOADED_ADDR_START+1
 0BF6: C9 FE     cmp #$FE
 0BF8: D0 05     bne $0BFF      ; L_0BFF
 0BFA: 68        pla

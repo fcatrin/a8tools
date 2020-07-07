@@ -24,6 +24,9 @@ label 09F4 NEXT_BLOCK
 label 0AFF NEXT_CHUNK
 label 0B6B EXEC_CHUNK
 label 0C2C BLOCK_NUM
+label 0C2E LOADED_ADDR_START
+label 0C30 LOADED_ADDR_END
+
 label 0C32 SAVED_COLOR
 label 0C37 SAVED_DL_L
 label 0C38 SAVED_DL_H
@@ -48,4 +51,4 @@ rem 0A59 Is START pressed?
 rem 0A9B Reset keyboard
 rem 0BE1 Stop motor
 rem 0BE9 Execute 
-
+rem 0BEC Check if there are more blocks (FEFE = End)
