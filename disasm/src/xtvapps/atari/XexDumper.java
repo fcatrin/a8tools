@@ -33,7 +33,7 @@ public class XexDumper {
 	Map<String, Integer> usedTargets = new HashMap<String, Integer>();
 	Set<String> usedLabels = new HashSet<String>();
 	
-	private static boolean includeByteCodeInAsm = true;
+	private static boolean includeByteCodeInAsm = false;
 
 	public XexDumper(File xexFile) {
 		this.xexFile = xexFile;
@@ -132,7 +132,7 @@ public class XexDumper {
 	private String buildColumns(String c1, int size, String c2, String separator) {
 		if (c2 == null) return c1;
 		
-		String line = c1 +"|" + MARGIN_LABEL + MARGIN_BYTECODE;
+		String line = c1 + MARGIN_LABEL + MARGIN_BYTECODE;
 		if (c1.length() < size) {
 			line = line.substring(0, size);
 		} else {
