@@ -8,6 +8,11 @@ dlst 0861
 byte 0877
 code 093F
 
+label CB DST_PTR
+label CD CHUNK_SIZE
+label CF CHUNK_START_ADDR
+
+label 0703 RETRY_MSG?
 label 0775 DLIST1
 label 0842 DLIST2
 label 0861 DLIST3
@@ -15,12 +20,18 @@ label 093F START
 label 0953 SCREEN_SAVE
 label 0979 SCREEN_RESTORE
 label 099F SCREEN_SET
+label 09F4 NEXT_BLOCK
+label 0AFF NEXT_CHUNK
+label 0B6B EXEC_CHUNK
+label 0C2C BLOCK_NUM
 label 0C32 SAVED_COLOR
 label 0C37 SAVED_DL_L
 label 0C38 SAVED_DL_H
 label 0C39 SAVED_DMA
 label 0C3A SAVED_CHBAS
-label 0703 RETRY_MSG?
+label 0C3B BUFFER
+
+
 
 rem 0734 Set Screen 2
 rem 076A Restore Screen 3

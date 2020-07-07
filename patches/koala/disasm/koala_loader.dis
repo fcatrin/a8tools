@@ -179,7 +179,7 @@
 0941: 85 09     sta $09        ; BOOT
 0943: A9 00     lda #$00
 0945: 8D 44 02  sta $0244      ; COLDST
-0948: 85 D2     sta $D2        ; VTYPE
+0948: 85 D2     sta $D2        ; CHUNK_START_ADDR+3
 094A: 20 53 09  jsr $0953      ; SCREEN_SAVE
 094D: 20 9F 09  jsr $099F      ; SCREEN_SET
 0950: 4C E0 09  jmp $09E0      ; L_09E0
@@ -244,15 +244,15 @@
 09DC: 8D 31 02  sta $0231      ; SDLSTH
 09DF: 60        rts
 09E0: A9 2E     lda #$2E       ; Write 0C2E at (CB) and (CF) null
-09E2: 85 CB     sta $CB
-09E4: 85 CF     sta $CF
+09E2: 85 CB     sta $CB        ; DST_PTR
+09E4: 85 CF     sta $CF        ; CHUNK_START_ADDR
 09E6: A9 0C     lda #$0C
-09E8: 85 CC     sta $CC
-09EA: 85 D0     sta $D0
+09E8: 85 CC     sta $CC        ; DST_PTR+1
+09EA: 85 D0     sta $D0        ; CHUNK_START_ADDR+1
 09EC: A9 04     lda #$04       ; Write 0004 at (CD) null
-09EE: 85 CD     sta $CD
+09EE: 85 CD     sta $CD        ; CHUNK_SIZE
 09F0: A9 00     lda #$00
-09F2: 85 CE     sta $CE
+09F2: 85 CE     sta $CE        ; CHUNK_SIZE+1
 09F4: A9 00     lda #$00
 09F6: 8D 3A 0D  sta $0D3A
 09F9: A9 60     lda #$60       ; Load Block at $0xC3B size $100 null
@@ -282,11 +282,11 @@
 0A35: AD 3A 0D  lda $0D3A
 0A38: C9 3B     cmp #$3B
 0A3A: D0 0D     bne $0A49      ; L_0A49
-0A3C: AD 3D 0C  lda $0C3D      ; SAVED_CHBAS+3
-0A3F: CD 2C 0C  cmp $0C2C      ; L_0C2C
+0A3C: AD 3D 0C  lda $0C3D      ; BUFFER+2
+0A3F: CD 2C 0C  cmp $0C2C      ; BLOCK_NUM
 0A42: F0 68     beq $0AAC      ; L_0AAC
 0A44: 90 03     bcc $0A49      ; L_0A49
-0A46: 4C F4 09  jmp $09F4      ; L_09F4
+0A46: 4C F4 09  jmp $09F4      ; NEXT_BLOCK
 0A49: 20 D5 09  jsr $09D5      ; L_09D5
 0A4C: A9 3C     lda #$3C       ; Stop motor null
 0A4E: 8D 02 D3  sta $D302      ; PACTL
@@ -314,12 +314,12 @@
 0A81: C9 7F     cmp #$7F
 0A83: D0 F9     bne $0A7E      ; L_0A7E
 0A85: A9 F0     lda #$F0
-0A87: 8D 2D 0C  sta $0C2D      ; L_0C2C+1
+0A87: 8D 2D 0C  sta $0C2D      ; BLOCK_NUM+1
 0A8A: AD 0F D2  lda $D20F      ; SKSTAT
 0A8D: C9 7F     cmp #$7F
 0A8F: D0 ED     bne $0A7E      ; L_0A7E
-0A91: CE 2D 0C  dec $0C2D      ; L_0C2C+1
-0A94: AD 2D 0C  lda $0C2D      ; L_0C2C+1
+0A91: CE 2D 0C  dec $0C2D      ; BLOCK_NUM+1
+0A94: AD 2D 0C  lda $0C2D      ; BLOCK_NUM+1
 0A97: C9 00     cmp #$00
 0A99: D0 EF     bne $0A8A      ; L_0A8A
 0A9B: A9 13     lda #$13       ; Reset keyboard null
@@ -328,7 +328,7 @@
 0AA2: 8D 0F D2  sta $D20F      ; SKCTL
 0AA5: 58        cli
 0AA6: 20 9F 09  jsr $099F      ; SCREEN_SET
-0AA9: 4C F4 09  jmp $09F4      ; L_09F4
+0AA9: 4C F4 09  jmp $09F4      ; NEXT_BLOCK
 0AAC: AD 38 08  lda $0838      ; L_0836+2
 0AAF: C9 10     cmp #$10
 0AB1: F0 06     beq $0AB9      ; L_0AB9
@@ -345,72 +345,72 @@
 0ACD: 8D 37 08  sta $0837      ; L_0836+1
 0AD0: CE 36 08  dec $0836      ; L_0836
 0AD3: A0 03     ldy #$03
-0AD5: CE 2C 0C  dec $0C2C      ; L_0C2C
+0AD5: CE 2C 0C  dec $0C2C      ; BLOCK_NUM
 0AD8: A2 00     ldx #$00
 0ADA: 86 4D     stx $4D        ; ATRACT
-0ADC: B9 3B 0C  lda $0C3B,y    ; SAVED_CHBAS+1
-0ADF: 81 CB     sta ($CB,x)
+0ADC: B9 3B 0C  lda $0C3B,y    ; BUFFER
+0ADF: 81 CB     sta ($CB,x)    ; DST_PTR
 0AE1: C8        iny
-0AE2: C6 CD     dec $CD
-0AE4: A5 CD     lda $CD
+0AE2: C6 CD     dec $CD        ; CHUNK_SIZE
+0AE4: A5 CD     lda $CD        ; CHUNK_SIZE
 0AE6: C9 FF     cmp #$FF
 0AE8: D0 02     bne $0AEC      ; L_0AEC
-0AEA: C6 CE     dec $CE
-0AEC: E6 CB     inc $CB
-0AEE: A5 CB     lda $CB
+0AEA: C6 CE     dec $CE        ; CHUNK_SIZE+1
+0AEC: E6 CB     inc $CB        ; DST_PTR
+0AEE: A5 CB     lda $CB        ; DST_PTR
 0AF0: D0 02     bne $0AF4      ; L_0AF4
-0AF2: E6 CC     inc $CC
-0AF4: A5 CD     lda $CD
+0AF2: E6 CC     inc $CC        ; DST_PTR+1
+0AF4: A5 CD     lda $CD        ; CHUNK_SIZE
 0AF6: D0 04     bne $0AFC      ; L_0AFC
-0AF8: A5 CE     lda $CE
-0AFA: F0 03     beq $0AFF      ; L_0AFF
+0AF8: A5 CE     lda $CE        ; CHUNK_SIZE+1
+0AFA: F0 03     beq $0AFF      ; NEXT_CHUNK
 0AFC: 4C D2 0B  jmp $0BD2      ; L_0BD2
-0AFF: A5 CF     lda $CF
+0AFF: A5 CF     lda $CF        ; CHUNK_START_ADDR
 0B01: C9 2E     cmp #$2E
 0B03: D0 36     bne $0B3B      ; L_0B3B
-0B05: A5 D0     lda $D0
+0B05: A5 D0     lda $D0        ; CHUNK_START_ADDR+1
 0B07: C9 0C     cmp #$0C
 0B09: D0 30     bne $0B3B      ; L_0B3B
-0B0B: AD 2E 0C  lda $0C2E      ; L_0C2C+2
+0B0B: AD 2E 0C  lda $0C2E      ; BLOCK_NUM+2
 0B0E: C9 FF     cmp #$FF
 0B10: D0 26     bne $0B38      ; L_0B38
-0B12: AD 2F 0C  lda $0C2F      ; L_0C2C+3
+0B12: AD 2F 0C  lda $0C2F      ; BLOCK_NUM+3
 0B15: C9 FF     cmp #$FF
 0B17: D0 1F     bne $0B38      ; L_0B38
 0B19: A9 02     lda #$02
-0B1B: 85 CD     sta $CD
+0B1B: 85 CD     sta $CD        ; CHUNK_SIZE
 0B1D: A9 00     lda #$00
-0B1F: 85 CE     sta $CE
-0B21: AD 30 0C  lda $0C30      ; L_0C2C+4
-0B24: 8D 2E 0C  sta $0C2E      ; L_0C2C+2
-0B27: AD 31 0C  lda $0C31      ; L_0C2C+5
-0B2A: 8D 2F 0C  sta $0C2F      ; L_0C2C+3
+0B1F: 85 CE     sta $CE        ; CHUNK_SIZE+1
+0B21: AD 30 0C  lda $0C30      ; BLOCK_NUM+4
+0B24: 8D 2E 0C  sta $0C2E      ; BLOCK_NUM+2
+0B27: AD 31 0C  lda $0C31      ; BLOCK_NUM+5
+0B2A: 8D 2F 0C  sta $0C2F      ; BLOCK_NUM+3
 0B2D: A9 30     lda #$30
-0B2F: 85 CB     sta $CB
+0B2F: 85 CB     sta $CB        ; DST_PTR
 0B31: A9 0C     lda #$0C
-0B33: 85 CC     sta $CC
+0B33: 85 CC     sta $CC        ; DST_PTR+1
 0B35: 4C D2 0B  jmp $0BD2      ; L_0BD2
 0B38: 4C A8 0B  jmp $0BA8      ; L_0BA8
-0B3B: A5 D0     lda $D0
+0B3B: A5 D0     lda $D0        ; CHUNK_START_ADDR+1
 0B3D: C9 02     cmp #$02
 0B3F: D0 3A     bne $0B7B      ; L_0B7B
-0B41: A5 CF     lda $CF
+0B41: A5 CF     lda $CF        ; CHUNK_START_ADDR
 0B43: C9 E0     cmp #$E0
 0B45: D0 04     bne $0B4B      ; L_0B4B
 0B47: A9 01     lda #$01
-0B49: 85 D2     sta $D2        ; VTYPE
-0B4B: A5 CF     lda $CF
+0B49: 85 D2     sta $D2        ; CHUNK_START_ADDR+3
+0B4B: A5 CF     lda $CF        ; CHUNK_START_ADDR
 0B4D: C9 E2     cmp #$E2
 0B4F: F0 07     beq $0B58      ; L_0B58
-0B51: AD 30 0C  lda $0C30      ; L_0C2C+4
+0B51: AD 30 0C  lda $0C30      ; BLOCK_NUM+4
 0B54: C9 E3     cmp #$E3
 0B56: D0 23     bne $0B7B      ; L_0B7B
-0B58: 84 D1     sty $D1
+0B58: 84 D1     sty $D1        ; CHUNK_START_ADDR+2
 0B5A: 20 79 09  jsr $0979      ; SCREEN_RESTORE
-0B5D: 20 6B 0B  jsr $0B6B      ; L_0B6B
+0B5D: 20 6B 0B  jsr $0B6B      ; EXEC_CHUNK
 0B60: 20 53 09  jsr $0953      ; SCREEN_SAVE
 0B63: 20 9F 09  jsr $099F      ; SCREEN_SET
-0B66: A4 D1     ldy $D1
+0B66: A4 D1     ldy $D1        ; CHUNK_START_ADDR+2
 0B68: 4C 7B 0B  jmp $0B7B      ; L_0B7B
 0B6B: AD E3 02  lda $02E3      ; INITAD+1
 0B6E: C9 01     cmp #$01
@@ -421,56 +421,56 @@
 0B7A: 60        rts
 0B7B: 20 00 0C  jsr $0C00      ; L_0C00
 0B7E: A9 04     lda #$04
-0B80: 85 CD     sta $CD
+0B80: 85 CD     sta $CD        ; CHUNK_SIZE
 0B82: A9 00     lda #$00
-0B84: 85 CE     sta $CE
+0B84: 85 CE     sta $CE        ; CHUNK_SIZE+1
 0B86: A9 2E     lda #$2E
-0B88: 85 CB     sta $CB
-0B8A: 85 CF     sta $CF
+0B88: 85 CB     sta $CB        ; DST_PTR
+0B8A: 85 CF     sta $CF        ; CHUNK_START_ADDR
 0B8C: A9 0C     lda #$0C
-0B8E: 85 CC     sta $CC
-0B90: 85 D0     sta $D0
-0B92: A5 D2     lda $D2        ; VTYPE
+0B8E: 85 CC     sta $CC        ; DST_PTR+1
+0B90: 85 D0     sta $D0        ; CHUNK_START_ADDR+1
+0B92: A5 D2     lda $D2        ; CHUNK_START_ADDR+3
 0B94: D0 3C     bne $0BD2      ; L_0BD2
-0B96: A5 CF     lda $CF
+0B96: A5 CF     lda $CF        ; CHUNK_START_ADDR
 0B98: 8D E0 02  sta $02E0      ; RUNAD
-0B9B: A5 CF     lda $CF
+0B9B: A5 CF     lda $CF        ; CHUNK_START_ADDR
 0B9D: 8D E0 02  sta $02E0      ; RUNAD
-0BA0: A5 D0     lda $D0
+0BA0: A5 D0     lda $D0        ; CHUNK_START_ADDR+1
 0BA2: 8D E1 02  sta $02E1      ; RUNAD+1
 0BA5: 4C D2 0B  jmp $0BD2      ; L_0BD2
 0BA8: 20 EC 0B  jsr $0BEC      ; L_0BEC
-0BAB: AD 2E 0C  lda $0C2E      ; L_0C2C+2
-0BAE: 85 CB     sta $CB
-0BB0: 85 CF     sta $CF
-0BB2: AD 2F 0C  lda $0C2F      ; L_0C2C+3
-0BB5: 85 CC     sta $CC
-0BB7: 85 D0     sta $D0
+0BAB: AD 2E 0C  lda $0C2E      ; BLOCK_NUM+2
+0BAE: 85 CB     sta $CB        ; DST_PTR
+0BB0: 85 CF     sta $CF        ; CHUNK_START_ADDR
+0BB2: AD 2F 0C  lda $0C2F      ; BLOCK_NUM+3
+0BB5: 85 CC     sta $CC        ; DST_PTR+1
+0BB7: 85 D0     sta $D0        ; CHUNK_START_ADDR+1
 0BB9: 38        sec
-0BBA: AD 30 0C  lda $0C30      ; L_0C2C+4
-0BBD: ED 2E 0C  sbc $0C2E      ; L_0C2C+2
-0BC0: 85 CD     sta $CD
-0BC2: AD 31 0C  lda $0C31      ; L_0C2C+5
-0BC5: ED 2F 0C  sbc $0C2F      ; L_0C2C+3
-0BC8: 85 CE     sta $CE
-0BCA: E6 CD     inc $CD
-0BCC: A5 CD     lda $CD
+0BBA: AD 30 0C  lda $0C30      ; BLOCK_NUM+4
+0BBD: ED 2E 0C  sbc $0C2E      ; BLOCK_NUM+2
+0BC0: 85 CD     sta $CD        ; CHUNK_SIZE
+0BC2: AD 31 0C  lda $0C31      ; BLOCK_NUM+5
+0BC5: ED 2F 0C  sbc $0C2F      ; BLOCK_NUM+3
+0BC8: 85 CE     sta $CE        ; CHUNK_SIZE+1
+0BCA: E6 CD     inc $CD        ; CHUNK_SIZE
+0BCC: A5 CD     lda $CD        ; CHUNK_SIZE
 0BCE: D0 02     bne $0BD2      ; L_0BD2
-0BD0: E6 CE     inc $CE
+0BD0: E6 CE     inc $CE        ; CHUNK_SIZE+1
 0BD2: C0 FF     cpy #$FF
 0BD4: F0 03     beq $0BD9      ; L_0BD9
 0BD6: 4C D8 0A  jmp $0AD8      ; L_0AD8
-0BD9: AD 2C 0C  lda $0C2C      ; L_0C2C
+0BD9: AD 2C 0C  lda $0C2C      ; BLOCK_NUM
 0BDC: F0 03     beq $0BE1      ; L_0BE1
-0BDE: 4C F4 09  jmp $09F4      ; L_09F4
+0BDE: 4C F4 09  jmp $09F4      ; NEXT_BLOCK
 0BE1: A9 3C     lda #$3C       ; Stop motor null
 0BE3: 8D 02 D3  sta $D302      ; PACTL
 0BE6: 20 79 09  jsr $0979      ; SCREEN_RESTORE
 0BE9: 6C E0 02  jmp ($02E0)    ; Execute RUNAD
-0BEC: AD 2E 0C  lda $0C2E      ; L_0C2C+2
+0BEC: AD 2E 0C  lda $0C2E      ; BLOCK_NUM+2
 0BEF: C9 FE     cmp #$FE
 0BF1: D0 0C     bne $0BFF      ; L_0BFF
-0BF3: AD 2F 0C  lda $0C2F      ; L_0C2C+3
+0BF3: AD 2F 0C  lda $0C2F      ; BLOCK_NUM+3
 0BF6: C9 FE     cmp #$FE
 0BF8: D0 05     bne $0BFF      ; L_0BFF
 0BFA: 68        pla

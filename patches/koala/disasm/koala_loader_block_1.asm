@@ -180,7 +180,7 @@ START            lda #$02
                  sta BOOT
                  lda #$00
                  sta COLDST
-                 sta VTYPE
+                 sta CHUNK_START_ADDR+3
                  jsr SCREEN_SAVE
                  jsr SCREEN_SET
                  jmp L_09E0
@@ -245,16 +245,16 @@ L_09D5           lda #$61
                  sta SDLSTH
                  rts
 L_09E0           lda #$2E      ; Write 0C2E at (CB) and (CF)
-                 sta $CB
-                 sta $CF
+                 sta DST_PTR
+                 sta CHUNK_START_ADDR
                  lda #$0C
-                 sta $CC
-                 sta $D0
+                 sta DST_PTR+1
+                 sta CHUNK_START_ADDR+1
                  lda #$04      ; Write 0004 at (CD)
-                 sta $CD
+                 sta CHUNK_SIZE
                  lda #$00
-                 sta $CE
-L_09F4           lda #$00
+                 sta CHUNK_SIZE+1
+NEXT_BLOCK       lda #$00
                  sta $0D3A
                  lda #$60      ; Load Block at $0xC3B size $100
                  sta DDEVIC
@@ -283,11 +283,11 @@ L_09F4           lda #$00
 L_0A35           lda $0D3A
                  cmp #$3B
                  bne L_0A49
-                 lda SAVED_CHBAS+3
-                 cmp L_0C2C
+                 lda BUFFER+2
+                 cmp BLOCK_NUM
                  beq L_0AAC
                  bcc L_0A49
-                 jmp L_09F4
+                 jmp NEXT_BLOCK
 L_0A49           jsr L_09D5
                  lda #$3C      ; Stop motor
                  sta PACTL
@@ -315,12 +315,12 @@ L_0A7E           lda SKSTAT
                  cmp #$7F
                  bne L_0A7E
                  lda #$F0
-                 sta L_0C2C+1
+                 sta BLOCK_NUM+1
 L_0A8A           lda SKSTAT
                  cmp #$7F
                  bne L_0A7E
-                 dec L_0C2C+1
-                 lda L_0C2C+1
+                 dec BLOCK_NUM+1
+                 lda BLOCK_NUM+1
                  cmp #$00
                  bne L_0A8A
                  lda #$13      ; Reset keyboard
@@ -329,7 +329,7 @@ L_0A8A           lda SKSTAT
                  sta SKCTL
                  cli
                  jsr SCREEN_SET
-                 jmp L_09F4
+                 jmp NEXT_BLOCK
 L_0AAC           lda L_0836+2
                  cmp #$10
                  beq L_0AB9
@@ -346,74 +346,74 @@ L_0ACB           lda #$19
                  sta L_0836+1
                  dec L_0836
 L_0AD3           ldy #$03
-                 dec L_0C2C
+                 dec BLOCK_NUM
 L_0AD8           ldx #$00
                  stx ATRACT
-                 lda SAVED_CHBAS+1,y
-                 sta ($CB,x)
+                 lda BUFFER,y
+                 sta (DST_PTR,x)
                  iny
-                 dec $CD
-                 lda $CD
+                 dec CHUNK_SIZE
+                 lda CHUNK_SIZE
                  cmp #$FF
                  bne L_0AEC
-                 dec $CE
-L_0AEC           inc $CB
-                 lda $CB
+                 dec CHUNK_SIZE+1
+L_0AEC           inc DST_PTR
+                 lda DST_PTR
                  bne L_0AF4
-                 inc $CC
-L_0AF4           lda $CD
+                 inc DST_PTR+1
+L_0AF4           lda CHUNK_SIZE
                  bne L_0AFC
-                 lda $CE
-                 beq L_0AFF
+                 lda CHUNK_SIZE+1
+                 beq NEXT_CHUNK
 L_0AFC           jmp L_0BD2
-L_0AFF           lda $CF
+NEXT_CHUNK       lda CHUNK_START_ADDR
                  cmp #$2E
                  bne L_0B3B
-                 lda $D0
+                 lda CHUNK_START_ADDR+1
                  cmp #$0C
                  bne L_0B3B
-                 lda L_0C2C+2
+                 lda BLOCK_NUM+2
                  cmp #$FF
                  bne L_0B38
-                 lda L_0C2C+3
+                 lda BLOCK_NUM+3
                  cmp #$FF
                  bne L_0B38
                  lda #$02
-                 sta $CD
+                 sta CHUNK_SIZE
                  lda #$00
-                 sta $CE
-                 lda L_0C2C+4
-                 sta L_0C2C+2
-                 lda L_0C2C+5
-                 sta L_0C2C+3
+                 sta CHUNK_SIZE+1
+                 lda BLOCK_NUM+4
+                 sta BLOCK_NUM+2
+                 lda BLOCK_NUM+5
+                 sta BLOCK_NUM+3
                  lda #$30
-                 sta $CB
+                 sta DST_PTR
                  lda #$0C
-                 sta $CC
+                 sta DST_PTR+1
                  jmp L_0BD2
 L_0B38           jmp L_0BA8
-L_0B3B           lda $D0
+L_0B3B           lda CHUNK_START_ADDR+1
                  cmp #$02
                  bne L_0B7B
-                 lda $CF
+                 lda CHUNK_START_ADDR
                  cmp #$E0
                  bne L_0B4B
                  lda #$01
-                 sta VTYPE
-L_0B4B           lda $CF
+                 sta CHUNK_START_ADDR+3
+L_0B4B           lda CHUNK_START_ADDR
                  cmp #$E2
                  beq L_0B58
-                 lda L_0C2C+4
+                 lda BLOCK_NUM+4
                  cmp #$E3
                  bne L_0B7B
-L_0B58           sty $D1
+L_0B58           sty CHUNK_START_ADDR+2
                  jsr SCREEN_RESTORE
-                 jsr L_0B6B
+                 jsr EXEC_CHUNK
                  jsr SCREEN_SAVE
                  jsr SCREEN_SET
-                 ldy $D1
+                 ldy CHUNK_START_ADDR+2
                  jmp L_0B7B
-L_0B6B           lda INITAD+1
+EXEC_CHUNK       lda INITAD+1
                  cmp #$01
                  beq L_0B7A
                  lda #$3C
@@ -422,56 +422,56 @@ L_0B6B           lda INITAD+1
 L_0B7A           rts
 L_0B7B           jsr L_0C00
                  lda #$04
-                 sta $CD
+                 sta CHUNK_SIZE
                  lda #$00
-                 sta $CE
+                 sta CHUNK_SIZE+1
                  lda #$2E
-                 sta $CB
-                 sta $CF
+                 sta DST_PTR
+                 sta CHUNK_START_ADDR
                  lda #$0C
-                 sta $CC
-                 sta $D0
-                 lda VTYPE
+                 sta DST_PTR+1
+                 sta CHUNK_START_ADDR+1
+                 lda CHUNK_START_ADDR+3
                  bne L_0BD2
-                 lda $CF
+                 lda CHUNK_START_ADDR
                  sta RUNAD
-                 lda $CF
+                 lda CHUNK_START_ADDR
                  sta RUNAD
-                 lda $D0
+                 lda CHUNK_START_ADDR+1
                  sta RUNAD+1
                  jmp L_0BD2
 L_0BA8           jsr L_0BEC
-                 lda L_0C2C+2
-                 sta $CB
-                 sta $CF
-                 lda L_0C2C+3
-                 sta $CC
-                 sta $D0
+                 lda BLOCK_NUM+2
+                 sta DST_PTR
+                 sta CHUNK_START_ADDR
+                 lda BLOCK_NUM+3
+                 sta DST_PTR+1
+                 sta CHUNK_START_ADDR+1
                  sec
-                 lda L_0C2C+4
-                 sbc L_0C2C+2
-                 sta $CD
-                 lda L_0C2C+5
-                 sbc L_0C2C+3
-                 sta $CE
-                 inc $CD
-                 lda $CD
+                 lda BLOCK_NUM+4
+                 sbc BLOCK_NUM+2
+                 sta CHUNK_SIZE
+                 lda BLOCK_NUM+5
+                 sbc BLOCK_NUM+3
+                 sta CHUNK_SIZE+1
+                 inc CHUNK_SIZE
+                 lda CHUNK_SIZE
                  bne L_0BD2
-                 inc $CE
+                 inc CHUNK_SIZE+1
 L_0BD2           cpy #$FF
                  beq L_0BD9
                  jmp L_0AD8
-L_0BD9           lda L_0C2C
+L_0BD9           lda BLOCK_NUM
                  beq L_0BE1
-                 jmp L_09F4
+                 jmp NEXT_BLOCK
 L_0BE1           lda #$3C      ; Stop motor
                  sta PACTL
                  jsr SCREEN_RESTORE
                  jmp (RUNAD)   ; Execute
-L_0BEC           lda L_0C2C+2
+L_0BEC           lda BLOCK_NUM+2
                  cmp #$FE
                  bne L_0BFF
-                 lda L_0C2C+3
+                 lda BLOCK_NUM+3
                  cmp #$FE
                  bne L_0BFF
                  pla
@@ -498,4 +498,4 @@ L_0C11           inx
                  cmp #$22
                  bne L_0C0A
                  rts
-L_0C2C           .byte $42
+BLOCK_NUM        .byte $42
