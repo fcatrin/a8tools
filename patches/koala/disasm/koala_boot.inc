@@ -1,0 +1,14 @@
+TOADR      = $0066
+ENDPT      = $0074
+DDEVIC     = $0300
+DUNIT      = $0301
+DCOMND     = $0302
+DSTATS     = $0303
+DBUFLO     = $0304
+DBUFHI     = $0305
+DTIMLO     = $0306
+DBYTLO     = $0308
+DBYTHI     = $0309
+DAUX2      = $030B
+SIOV       = $E459
+L_0700     = $0700
