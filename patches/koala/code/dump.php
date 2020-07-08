@@ -75,6 +75,6 @@ $code = array(
 $xex = dumper_read_blocks($code);
 $s   = dumper_pack($xex);
 
-file_put_contents('koala_code.xex', $s);
+file_put_contents('koala.xex', $s);
 
 ?>

@@ -1,5 +1,5 @@
 
-; BLOCK 2 koala_code.xex
+; BLOCK 2 koala.xex
 
                  org $0000
 

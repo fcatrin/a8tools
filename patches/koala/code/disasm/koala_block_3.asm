@@ -1,5 +1,5 @@
 
-; BLOCK 3 koala_code.xex
+; BLOCK 3 koala.xex
 
                  org $02E2
 

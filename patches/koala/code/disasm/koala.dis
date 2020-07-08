@@ -1,6 +1,6 @@
 
 
-; BLOCK 1 koala_code.xex
+; BLOCK 1 koala.xex
 
 2000: 00        BYTE $00 $00 $00 $00 $00 $00 $00 $00
 2008: 50        BYTE $50 $50 $50 $50 $50 $50 $50 $50
@@ -5251,11 +5251,11 @@
 5FF5: 4C B3 3D  jmp $3DB3      ; L_3DB3
 
 
-; BLOCK 2 koala_code.xex
+; BLOCK 2 koala.xex
 
 0000: 02        BYTE $02
 
 
-; BLOCK 3 koala_code.xex
+; BLOCK 3 koala.xex
 
 02E2: 15 33     WORD $3315     ; START
