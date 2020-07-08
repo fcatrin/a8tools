@@ -37,10 +37,12 @@ public class XexDumper {
 
 	public XexDumper(File xexFile) {
 		this.xexFile = xexFile;
-		this.asmFile = Utils.changeFileExtension(xexFile, "asm");
-		this.incFile = Utils.changeFileExtension(xexFile, "inc");
+		
+		String subdir = "disasm";
+		this.asmFile = Utils.changeFileExtension(xexFile, "asm", subdir);
+		this.incFile = Utils.changeFileExtension(xexFile, "inc", subdir);
+		this.disFile = Utils.changeFileExtension(xexFile, "dis", subdir);
 		this.mapFile = Utils.changeFileExtension(xexFile, "map");
-		this.disFile = Utils.changeFileExtension(xexFile, "dis");
 		
 		asmFile.getParentFile().mkdirs();
 		

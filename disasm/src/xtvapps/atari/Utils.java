@@ -208,12 +208,15 @@ public final class Utils {
 	}
 
 	public static File changeFileExtension(File file, String ext) {
-		File dir = new File(file.getParentFile(), "disasm");
+		return changeFileExtension(file, ext, ".");
+	}
+	
+	public static File changeFileExtension(File file, String ext, String subdir) {
+		File dir = new File(file.getParentFile(), subdir);
 		
 		String name = file.getName();
 		int p = name.lastIndexOf(".");
 		name = name.substring(0, p) + "." + ext;
-		
 		return new File(dir, name);
 	}
 }
