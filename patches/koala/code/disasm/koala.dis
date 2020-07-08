@@ -650,32 +650,32 @@
 3366: A9 FF     lda #$FF
 3368: 8D 44 02  sta $0244      ; COLDST
 336B: 4C A1 33  jmp $33A1      ; L_33A1
-336E: AD 78 02  lda $0278      ; STICK0
+336E: AD 78 02  lda $0278      ; check JoyStick / STICK0
 3371: C9 FF     cmp #$FF
-3373: F0 F9     beq $336E      ; L_336E
+3373: F0 F9     beq $336E      ; WAIT_STICK
 3375: A2 FF     ldx #$FF
 3377: 8E 78 02  stx $0278      ; STICK0
 337A: A8        tay
-337B: 29 01     and #$01
+337B: 29 01     and #$01       ; check JoyStick Y
 337D: D0 02     bne $3381      ; L_3381
-337F: C6 01     dec $01        ; NGFLAG
+337F: C6 01     dec $01        ; STICK_Y
 3381: 98        tya
 3382: 29 02     and #$02
 3384: D0 02     bne $3388      ; L_3388
-3386: E6 01     inc $01        ; NGFLAG
+3386: E6 01     inc $01        ; STICK_Y
 3388: 98        tya
-3389: 29 04     and #$04
+3389: 29 04     and #$04       ; check JoyStick X
 338B: D0 02     bne $338F      ; L_338F
-338D: C6 00     dec $00        ; LNFLG
+338D: C6 00     dec $00        ; STICK_X
 338F: 98        tya
 3390: 29 08     and #$08
 3392: D0 02     bne $3396      ; L_3396
-3394: E6 00     inc $00        ; LNFLG
+3394: E6 00     inc $00        ; STICK_X
 3396: A0 00     ldy #$00
 3398: 8A        txa
-3399: C5 00     cmp $00        ; LNFLG
+3399: C5 00     cmp $00        ; STICK_X
 339B: D0 03     bne $33A0      ; L_33A0
-339D: E6 00     inc $00        ; LNFLG
+339D: E6 00     inc $00        ; STICK_X
 339F: C8        iny
 33A0: 60        rts
 33A1: A5 09     lda $09        ; BOOT
@@ -720,8 +720,8 @@
 33EF: 85 BE     sta $BE        ; SAVCUR
 33F1: 8D 61 05  sta $0561
 33F4: A0 00     ldy #$00
-33F6: 84 CF     sty $CF
-33F8: 84 D0     sty $D0
+33F6: 84 CF     sty $CF        ; SAVE_STICK_Y+1
+33F8: 84 D0     sty $D0        ; SAVE_STICK_Y+2
 33FA: 18        clc
 33FB: B9 A1 04  lda $04A1,y
 33FE: 69 28     adc #$28
@@ -898,7 +898,7 @@
 3671: 20 87 3F  jsr $3F87      ; L_3F87
 3674: A9 00     lda #$00
 3676: 85 FC     sta $FC        ; FLPTR
-3678: 85 CF     sta $CF
+3678: 85 CF     sta $CF        ; SAVE_STICK_Y+1
 367A: 20 B8 4D  jsr $4DB8      ; L_4DB8
 367D: 20 D6 34  jsr $34D6      ; L_34D6
 3680: A9 04     lda #$04
@@ -994,7 +994,7 @@
 38F1: 20 87 3D  jsr $3D87      ; L_3D87
 38F4: 20 23 45  jsr $4523      ; L_4523
 38F7: A9 00     lda #$00
-38F9: 85 CF     sta $CF
+38F9: 85 CF     sta $CF        ; SAVE_STICK_Y+1
 38FB: 8D 01 D0  sta $D001      ; HPOSP1
 38FE: 85 92     sta $92        ; MEOLFLG
 3900: 20 B8 4D  jsr $4DB8      ; L_4DB8
@@ -1454,7 +1454,7 @@
 3DBF: 4C 1E 3E  jmp $3E1E      ; L_3E1E
 3DC2: 20 20 3F  jsr $3F20      ; L_3F20
 3DC5: A9 00     lda #$00
-3DC7: 85 CF     sta $CF
+3DC7: 85 CF     sta $CF        ; SAVE_STICK_Y+1
 3DC9: 20 03 40  jsr $4003      ; L_4003
 3DCC: A9 08     lda #$08
 3DCE: 85 B3     sta $B3        ; ONLOOP
@@ -1532,8 +1532,8 @@
 3E7C: A5 AC     lda $AC        ; EXSVPR
 3E7E: 85 B3     sta $B3        ; ONLOOP
 3E80: 20 5C 56  jsr $565C      ; L_565C
-3E83: A5 D0     lda $D0
-3E85: 85 CF     sta $CF
+3E83: A5 D0     lda $D0        ; SAVE_STICK_Y+2
+3E85: 85 CF     sta $CF        ; SAVE_STICK_Y+1
 3E87: A6 E2     ldx $E2        ; FR1+2
 3E89: BD 48 5E  lda $5E48,x    ; L_5E48
 3E8C: BC 36 5E  ldy $5E36,x    ; L_5E30+6
@@ -1640,13 +1640,13 @@
 3F71: 8D 2F 02  sta $022F      ; SDMCTL
 3F74: 8D 00 D4  sta $D400      ; DMACTL
 3F77: 8D 1D D0  sta $D01D      ; GRACTL
-3F7A: A5 D0     lda $D0
-3F7C: 85 CF     sta $CF
+3F7A: A5 D0     lda $D0        ; SAVE_STICK_Y+2
+3F7C: 85 CF     sta $CF        ; SAVE_STICK_Y+1
 3F7E: AC 9A 04  ldy $049A
 3F81: AD 99 04  lda $0499
 3F84: 4C F8 4D  jmp $4DF8      ; L_4DF8
 3F87: A9 00     lda #$00
-3F89: 85 CF     sta $CF
+3F89: 85 CF     sta $CF        ; SAVE_STICK_Y+1
 3F8B: AD 30 02  lda $0230      ; SDLSTL
 3F8E: 8D 99 04  sta $0499
 3F91: AD 31 02  lda $0231      ; SDLSTH
@@ -1798,7 +1798,7 @@
 40B6: 85 BC     sta $BC        ; TRAPLN
 40B8: A6 A8     ldx $A8        ; STINDEX
 40BA: 20 CC 40  jsr $40CC      ; L_40CC
-40BD: A5 D0     lda $D0
+40BD: A5 D0     lda $D0        ; SAVE_STICK_Y+2
 40BF: F0 05     beq $40C6      ; L_40C6
 40C1: A2 0D     ldx #$0D
 40C3: 20 CC 40  jsr $40CC      ; L_40CC
@@ -1840,7 +1840,7 @@
 412B: A9 00     lda #$00
 412D: 85 FC     sta $FC        ; FLPTR
 412F: 85 92     sta $92        ; MEOLFLG
-4131: 85 CF     sta $CF
+4131: 85 CF     sta $CF        ; SAVE_STICK_Y+1
 4133: 20 B8 4D  jsr $4DB8      ; L_4DB8
 4136: A9 08     lda #$08
 4138: 85 B3     sta $B3        ; ONLOOP
@@ -3161,14 +3161,14 @@
 4E54: C5 A9     cmp $A9        ; OPSTKX
 4E56: F0 11     beq $4E69      ; L_4E69
 4E58: 85 A4     sta $A4        ; ECSIZE
-4E5A: A5 CF     lda $CF
+4E5A: A5 CF     lda $CF        ; SAVE_STICK_Y+1
 4E5C: 48        pha
 4E5D: A9 00     lda #$00
-4E5F: 85 CF     sta $CF
+4E5F: 85 CF     sta $CF        ; SAVE_STICK_Y+1
 4E61: 85 B0     sta $B0        ; COMCNT
 4E63: 20 6F 4E  jsr $4E6F      ; L_4E6F
 4E66: 68        pla
-4E67: 85 CF     sta $CF
+4E67: 85 CF     sta $CF        ; SAVE_STICK_Y+1
 4E69: A9 FF     lda #$FF
 4E6B: 8D FC 02  sta $02FC      ; CH
 4E6E: 60        rts
@@ -3600,36 +3600,36 @@
 51CF: A5 E6     lda $E6        ; FR2
 51D1: C9 08     cmp #$08
 51D3: F0 62     beq $5237      ; L_5237
-51D5: A5 CE     lda $CE
+51D5: A5 CE     lda $CE        ; restrict Y >= 10 / SAVE_STICK_Y
 51D7: C9 0A     cmp #$0A
 51D9: B0 02     bcs $51DD      ; L_51DD
 51DB: A9 0A     lda #$0A
-51DD: C9 CA     cmp #$CA
+51DD: C9 CA     cmp #$CA       ; restrict Y <= 201
 51DF: 90 02     bcc $51E3      ; L_51E3
 51E1: A9 C9     lda #$C9
 51E3: 38        sec
-51E4: E9 0A     sbc #$0A
-51E6: 85 CE     sta $CE
-51E8: A6 CD     ldx $CD
-51EA: A4 CF     ldy $CF
-51EC: F0 45     beq $5233      ; L_5233
-51EE: A4 D1     ldy $D1
-51F0: D0 41     bne $5233      ; L_5233
-51F2: 46 CD     lsr $CD
-51F4: 46 CD     lsr $CD
-51F6: 46 CE     lsr $CE
-51F8: 46 CE     lsr $CE
+51E4: E9 0A     sbc #$0A       ; normalize Y to 0 offset
+51E6: 85 CE     sta $CE        ; SAVE_STICK_Y
+51E8: A6 CD     ldx $CD        ; SAVE_STICK_X
+51EA: A4 CF     ldy $CF        ; SAVE_STICK_Y+1
+51EC: F0 45     beq $5233      ; STORE_EXIT
+51EE: A4 D1     ldy $D1        ; SAVE_STICK_Y+3
+51F0: D0 41     bne $5233      ; STORE_EXIT
+51F2: 46 CD     lsr $CD        ; divide coords by 4 (magnifier) / SAVE_STICK_X
+51F4: 46 CD     lsr $CD        ; SAVE_STICK_X
+51F6: 46 CE     lsr $CE        ; SAVE_STICK_Y
+51F8: 46 CE     lsr $CE        ; SAVE_STICK_Y
 51FA: A5 86     lda $86        ; VVTP
 51FC: F0 1E     beq $521C      ; L_521C
-51FE: A5 CD     lda $CD
+51FE: A5 CD     lda $CD        ; SAVE_STICK_X
 5200: 38        sec
 5201: E5 CB     sbc $CB
-5203: 85 D5     sta $D5        ; FR0+1
+5203: 85 D5     sta $D5        ; SAVE_STICK_Y+7
 5205: A2 9F     ldx #$9F
 5207: 90 02     bcc $520B      ; L_520B
 5209: A2 00     ldx #$00
 520B: 86 D7     stx $D7        ; FR0+3
-520D: A5 CE     lda $CE
+520D: A5 CE     lda $CE        ; SAVE_STICK_Y
 520F: 38        sec
 5210: E5 CC     sbc $CC
 5212: 85 D6     sta $D6        ; FR0+2
@@ -3637,18 +3637,18 @@
 5216: 90 02     bcc $521A      ; L_521A
 5218: A2 00     ldx #$00
 521A: 86 D8     stx $D8        ; FR0+4
-521C: A5 CD     lda $CD
+521C: A5 CD     lda $CD        ; SAVE_STICK_X
 521E: 38        sec
-521F: E5 D5     sbc $D5        ; FR0+1
+521F: E5 D5     sbc $D5        ; SAVE_STICK_Y+7
 5221: C9 A0     cmp #$A0
 5223: 90 02     bcc $5227      ; L_5227
 5225: A5 D7     lda $D7        ; FR0+3
 5227: AA        tax
-5228: A5 CE     lda $CE
+5228: A5 CE     lda $CE        ; SAVE_STICK_Y
 522A: 38        sec
 522B: E5 D6     sbc $D6        ; FR0+2
 522D: C9 C0     cmp #$C0
-522F: 90 02     bcc $5233      ; L_5233
+522F: 90 02     bcc $5233      ; STORE_EXIT
 5231: A5 D8     lda $D8        ; FR0+4
 5233: 85 CC     sta $CC
 5235: 86 CB     stx $CB
@@ -3690,14 +3690,14 @@
 5281: E0 E4     cpx #$E4
 5283: 90 04     bcc $5289      ; L_5289
 5285: CA        dex
-5286: 86 01     stx $01        ; NGFLAG
+5286: 86 01     stx $01        ; STICK_Y
 5288: C8        iny
 5289: C0 02     cpy #$02
 528B: B0 B6     bcs $5243      ; L_5243
-528D: A5 00     lda $00        ; LNFLG
-528F: 85 CD     sta $CD
-5291: A5 01     lda $01        ; NGFLAG
-5293: 85 CE     sta $CE
+528D: A5 00     lda $00        ; STICK_X
+528F: 85 CD     sta $CD        ; SAVE_STICK_X
+5291: A5 01     lda $01        ; STICK_Y
+5293: 85 CE     sta $CE        ; SAVE_STICK_Y
 5295: EA        nop
 5296: EA        nop
 5297: EA        nop
@@ -3714,13 +3714,13 @@
 52A8: A5 AD     lda $AD        ; LELNUM
 52AA: F0 03     beq $52AF      ; L_52AF
 52AC: 20 93 4D  jsr $4D93      ; L_4D93
-52AF: A4 CE     ldy $CE
+52AF: A4 CE     ldy $CE        ; SAVE_STICK_Y
 52B1: A5 E0     lda $E0        ; FR1
 52B3: D0 AE     bne $5263      ; L_5263
 52B5: A9 00     lda #$00
 52B7: 85 DF     sta $DF        ; FRE+5
 52B9: 85 4D     sta $4D        ; ATRACT
-52BB: A5 CD     lda $CD
+52BB: A5 CD     lda $CD        ; SAVE_STICK_X
 52BD: AA        tax
 52BE: 38        sec
 52BF: E5 E7     sbc $E7        ; FR2+1
@@ -3733,7 +3733,7 @@
 52CD: 84 E8     sty $E8        ; FR2+2
 52CF: B0 98     bcs $5269      ; L_5269
 52D1: 38        sec
-52D2: E5 CE     sbc $CE
+52D2: E5 CE     sbc $CE        ; SAVE_STICK_Y
 52D4: B0 04     bcs $52DA      ; L_52DA
 52D6: 49 FF     eor #$FF
 52D8: 69 01     adc #$01
@@ -3744,7 +3744,7 @@
 52E3: 85 DF     sta $DF        ; FRE+5
 52E5: 85 8C     sta $8C        ; STARP
 52E7: 85 81     sta $81        ; LOMEM+1
-52E9: A5 CD     lda $CD
+52E9: A5 CD     lda $CD        ; SAVE_STICK_X
 52EB: 4A        lsr
 52EC: 85 80     sta $80        ; LOMEM
 52EE: 66 81     ror $81        ; LOMEM+1
@@ -3753,10 +3753,10 @@
 52F4: 4A        lsr
 52F5: 85 82     sta $82        ; VNTP
 52F7: 66 83     ror $83        ; VNTP+1
-52F9: A5 CD     lda $CD
+52F9: A5 CD     lda $CD        ; SAVE_STICK_X
 52FB: 0A        asl
 52FC: 26 8C     rol $8C        ; STARP
-52FE: 65 CD     adc $CD
+52FE: 65 CD     adc $CD        ; SAVE_STICK_X
 5300: 90 03     bcc $5305      ; L_5305
 5302: E6 8C     inc $8C        ; STARP
 5304: 18        clc
@@ -3768,7 +3768,7 @@
 530E: A5 8C     lda $8C        ; STARP
 5310: 65 80     adc $80        ; LOMEM
 5312: 65 82     adc $82        ; VNTP
-5314: 85 CD     sta $CD
+5314: 85 CD     sta $CD        ; SAVE_STICK_X
 5316: 20 D9 53  jsr $53D9      ; L_53D9
 5319: F0 12     beq $532D      ; L_532D
 531B: 85 4D     sta $4D        ; ATRACT
@@ -3813,25 +3813,25 @@
 536B: AD FC 02  lda $02FC      ; CH
 536E: 29 3F     and #$3F
 5370: 4C 3A 52  jmp $523A      ; L_523A
-5373: 20 6E 33  jsr $336E      ; L_336E
-5376: A6 00     ldx $00        ; LNFLG
+5373: 20 6E 33  jsr $336E      ; WAIT_STICK
+5376: A6 00     ldx $00        ; STICK_X
 5378: E0 D2     cpx #$D2
 537A: 90 04     bcc $5380      ; L_5380
 537C: CA        dex
-537D: 86 00     stx $00        ; LNFLG
+537D: 86 00     stx $00        ; STICK_X
 537F: C8        iny
-5380: C5 01     cmp $01        ; NGFLAG
+5380: C5 01     cmp $01        ; STICK_Y
 5382: D0 03     bne $5387      ; L_5387
-5384: E6 01     inc $01        ; NGFLAG
+5384: E6 01     inc $01        ; STICK_Y
 5386: C8        iny
-5387: A6 01     ldx $01        ; NGFLAG
+5387: A6 01     ldx $01        ; STICK_Y
 5389: 60        rts
 538A: A5 86     lda $86        ; VVTP
 538C: F0 10     beq $539E      ; L_539E
 538E: A2 04     ldx #$04
-5390: A5 CD     lda $CD
+5390: A5 CD     lda $CD        ; SAVE_STICK_X
 5392: 9D 80 04  sta $0480,x
-5395: A5 CE     lda $CE
+5395: A5 CE     lda $CE        ; SAVE_STICK_Y
 5397: 9D 81 04  sta $0481,x
 539A: CA        dex
 539B: CA        dex
@@ -3841,16 +3841,16 @@
 53A3: 9D 82 04  sta $0482,x
 53A6: CA        dex
 53A7: 10 F7     bpl $53A0      ; L_53A0
-53A9: A5 CD     lda $CD
+53A9: A5 CD     lda $CD        ; SAVE_STICK_X
 53AB: 8D 80 04  sta $0480
 53AE: A2 06     ldx #$06
 53B0: 20 C2 53  jsr $53C2      ; L_53C2
-53B3: 85 CD     sta $CD
-53B5: A5 CE     lda $CE
+53B3: 85 CD     sta $CD        ; SAVE_STICK_X
+53B5: A5 CE     lda $CE        ; SAVE_STICK_Y
 53B7: 8D 81 04  sta $0481
 53BA: A2 07     ldx #$07
 53BC: 20 C2 53  jsr $53C2      ; L_53C2
-53BF: 85 CE     sta $CE
+53BF: 85 CE     sta $CE        ; SAVE_STICK_Y
 53C1: 60        rts
 53C2: A9 00     lda #$00
 53C4: 85 85     sta $85        ; VNTD+1
@@ -3891,7 +3891,7 @@
 5405: 85 E9     sta $E9        ; FR2+3
 5407: A5 F4     lda $F4        ; INBUFF+1
 5409: 8D 09 D4  sta $D409      ; CHBASE
-540C: A5 CF     lda $CF
+540C: A5 CF     lda $CF        ; SAVE_STICK_Y+1
 540E: F0 64     beq $5474      ; L_5474
 5410: A5 CC     lda $CC
 5412: C9 0C     cmp #$0C
@@ -3906,29 +3906,29 @@
 5423: C9 15     cmp #$15
 5425: B0 0A     bcs $5431      ; L_5431
 5427: A9 00     lda #$00
-5429: 85 D3     sta $D3        ; VNUM
+5429: 85 D3     sta $D3        ; SAVE_STICK_Y+5
 542B: A9 0F     lda #$0F
-542D: 85 D2     sta $D2        ; VTYPE
+542D: 85 D2     sta $D2        ; SAVE_STICK_Y+4
 542F: D0 19     bne $544A      ; L_544A
 5431: C9 8C     cmp #$8C
 5433: 90 02     bcc $5437      ; L_5437
 5435: A9 8C     lda #$8C
 5437: 38        sec
 5438: E9 15     sbc #$15
-543A: 85 D3     sta $D3        ; VNUM
+543A: 85 D3     sta $D3        ; SAVE_STICK_Y+5
 543C: 29 03     and #$03
 543E: 49 03     eor #$03
 5440: 0A        asl
 5441: 0A        asl
-5442: 85 D2     sta $D2        ; VTYPE
-5444: A5 D3     lda $D3        ; VNUM
+5442: 85 D2     sta $D2        ; SAVE_STICK_Y+4
+5444: A5 D3     lda $D3        ; SAVE_STICK_Y+5
 5446: 4A        lsr
 5447: 4A        lsr
-5448: 85 D3     sta $D3        ; VNUM
+5448: 85 D3     sta $D3        ; SAVE_STICK_Y+5
 544A: A2 46     ldx #$46
 544C: 18        clc
 544D: B9 A1 04  lda $04A1,y
-5450: 65 D3     adc $D3        ; VNUM
+5450: 65 D3     adc $D3        ; SAVE_STICK_Y+5
 5452: 9D 24 06  sta $0624,x
 5455: B9 61 05  lda $0561,y
 5458: 69 00     adc #$00
@@ -3942,7 +3942,7 @@
 5465: 8D 02 D4  sta $D402      ; DLISTL
 5468: A9 06     lda #$06
 546A: 8D 03 D4  sta $D403      ; DLISTH
-546D: A5 D2     lda $D2        ; VTYPE
+546D: A5 D2     lda $D2        ; SAVE_STICK_Y+4
 546F: 8D 04 D4  sta $D404      ; HSCROL
 5472: A9 01     lda #$01
 5474: A5 EA     lda $EA        ; FR2+4
@@ -3955,7 +3955,7 @@
 5483: C8        iny
 5484: CA        dex
 5485: D0 FA     bne $5481      ; L_5481
-5487: A5 CF     lda $CF
+5487: A5 CF     lda $CF        ; SAVE_STICK_Y+1
 5489: F0 67     beq $54F2      ; L_54F2
 548B: A9 03     lda #$03
 548D: 8D 08 D0  sta $D008      ; SIZEP0
@@ -3991,7 +3991,7 @@
 54C2: 18        clc
 54C3: 69 30     adc #$30
 54C5: A8        tay
-54C6: A5 D2     lda $D2        ; VTYPE
+54C6: A5 D2     lda $D2        ; SAVE_STICK_Y+4
 54C8: C9 0F     cmp #$0F
 54CA: D0 01     bne $54CD      ; L_54CD
 54CC: 88        dey
@@ -4053,7 +4053,7 @@
 552F: 20 87 3F  jsr $3F87      ; L_3F87
 5532: A9 00     lda #$00
 5534: 85 FC     sta $FC        ; FLPTR
-5536: 85 CF     sta $CF
+5536: 85 CF     sta $CF        ; SAVE_STICK_Y+1
 5538: 20 B8 4D  jsr $4DB8      ; L_4DB8
 553B: 20 D6 34  jsr $34D6      ; L_34D6
 553E: A9 04     lda #$04
@@ -5163,10 +5163,10 @@
 5F2A: 85 97     sta $97        ; SVESA
 5F2C: 4C 84 50  jmp $5084      ; L_5084
 5F2F: A0 00     ldy #$00
-5F31: A5 D0     lda $D0
+5F31: A5 D0     lda $D0        ; SAVE_STICK_Y+2
 5F33: 49 FF     eor #$FF
-5F35: 85 D0     sta $D0
-5F37: 84 D1     sty $D1
+5F35: 85 D0     sta $D0        ; SAVE_STICK_Y+2
+5F37: 84 D1     sty $D1        ; SAVE_STICK_Y+3
 5F39: 4C A9 3D  jmp $3DA9      ; L_3DA9
 5F3C: 8A        txa
 5F3D: 20 D4 58  jsr $58D4      ; L_58D4

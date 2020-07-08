@@ -53,4 +53,21 @@ code 5E5A
 block 3
 word 0
 
+label 0000 STICK_X
+label 0001 STICK_Y
+label 00CD SAVE_STICK_X
+label 00CE SAVE_STICK_Y
+
 label 3315 START
+label 336E WAIT_STICK
+label 5233 STORE_EXIT
+
+rem 336E check JoyStick
+rem 337B check JoyStick Y
+rem 3389 check JoyStick X
+
+rem 51F2 divide coords by 4 (magnifier)
+rem 51D5 restrict Y >= 10
+rem 51DD restrict Y <= 201
+rem 51E4 normalize Y to 0 offset
+

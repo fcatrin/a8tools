@@ -651,32 +651,32 @@ L_334B           lda $049B,x
                  lda #$FF
                  sta COLDST
                  jmp L_33A1
-L_336E           lda STICK0
+WAIT_STICK       lda STICK0           ; check JoyStick
                  cmp #$FF
-                 beq L_336E
+                 beq WAIT_STICK
                  ldx #$FF
                  stx STICK0
                  tay
-                 and #$01
+                 and #$01             ; check JoyStick Y
                  bne L_3381
-                 dec NGFLAG
+                 dec STICK_Y
 L_3381           tya
                  and #$02
                  bne L_3388
-                 inc NGFLAG
+                 inc STICK_Y
 L_3388           tya
-                 and #$04
+                 and #$04             ; check JoyStick X
                  bne L_338F
-                 dec LNFLG
+                 dec STICK_X
 L_338F           tya
                  and #$08
                  bne L_3396
-                 inc LNFLG
+                 inc STICK_X
 L_3396           ldy #$00
                  txa
-                 cmp LNFLG
+                 cmp STICK_X
                  bne L_33A0
-                 inc LNFLG
+                 inc STICK_X
                  iny
 L_33A0           rts
 L_33A1           lda BOOT
@@ -721,8 +721,8 @@ L_33DC           iny
                  sta SAVCUR
                  sta $0561
                  ldy #$00
-                 sty $CF
-                 sty $D0
+                 sty SAVE_STICK_Y+1
+                 sty SAVE_STICK_Y+2
 L_33FA           clc
                  lda $04A1,y
                  adc #$28
@@ -899,7 +899,7 @@ L_3522           .byte $97, $06, $70, $70, $70, $57, $38, $36
                  jsr L_3F87
 L_3674           lda #$00
                  sta FLPTR
-                 sta $CF
+                 sta SAVE_STICK_Y+1
                  jsr L_4DB8
                  jsr L_34D6
                  lda #$04
@@ -995,7 +995,7 @@ L_3695           jsr L_53D9
 L_38F1           jsr L_3D87
 L_38F4           jsr L_4523
                  lda #$00
-                 sta $CF
+                 sta SAVE_STICK_Y+1
                  sta HPOSP1
                  sta MEOLFLG
                  jsr L_4DB8
@@ -1455,7 +1455,7 @@ L_3DB3           ldx FRE+3
                  jmp L_3E1E
 L_3DC2           jsr L_3F20
 L_3DC5           lda #$00
-                 sta $CF
+                 sta SAVE_STICK_Y+1
                  jsr L_4003
                  lda #$08
                  sta ONLOOP
@@ -1533,8 +1533,8 @@ L_3E76           lda #$08
                  lda EXSVPR
 L_3E7E           sta ONLOOP
                  jsr L_565C
-                 lda $D0
-                 sta $CF
+                 lda SAVE_STICK_Y+2
+                 sta SAVE_STICK_Y+1
                  ldx FR1+2
                  lda L_5E48,x
                  ldy L_5E30+6,x
@@ -1641,13 +1641,13 @@ L_3F66           lda $049B,x
                  sta SDMCTL
                  sta DMACTL
                  sta GRACTL
-                 lda $D0
-                 sta $CF
+                 lda SAVE_STICK_Y+2
+                 sta SAVE_STICK_Y+1
                  ldy $049A
                  lda $0499
                  jmp L_4DF8
 L_3F87           lda #$00
-                 sta $CF
+                 sta SAVE_STICK_Y+1
                  lda SDLSTL
                  sta $0499
                  lda SDLSTH
@@ -1799,7 +1799,7 @@ L_40AD           dex
                  sta TRAPLN
                  ldx STINDEX
                  jsr L_40CC
-                 lda $D0
+                 lda SAVE_STICK_Y+2
                  beq L_40C6
                  ldx #$0D
                  jsr L_40CC
@@ -1841,7 +1841,7 @@ L_4116           .byte $9B, $C0, $3B, $47, $53, $5F, $6B, $77
 L_412B           lda #$00
                  sta FLPTR
                  sta MEOLFLG
-                 sta $CF
+                 sta SAVE_STICK_Y+1
                  jsr L_4DB8
                  lda #$08
                  sta ONLOOP
@@ -3162,14 +3162,14 @@ L_4E51           jsr L_5104
                  cmp OPSTKX
                  beq L_4E69
                  sta ECSIZE
-                 lda $CF
+                 lda SAVE_STICK_Y+1
                  pha
                  lda #$00
-                 sta $CF
+                 sta SAVE_STICK_Y+1
                  sta COMCNT
                  jsr L_4E6F
                  pla
-                 sta $CF
+                 sta SAVE_STICK_Y+1
 L_4E69           lda #$FF
                  sta CH
                  rts
@@ -3601,36 +3601,36 @@ L_51C6           lda #$00
                  lda FR2
                  cmp #$08
                  beq L_5237
-                 lda $CE
+                 lda SAVE_STICK_Y     ; restrict Y >= 10
                  cmp #$0A
                  bcs L_51DD
                  lda #$0A
-L_51DD           cmp #$CA
+L_51DD           cmp #$CA             ; restrict Y <= 201
                  bcc L_51E3
                  lda #$C9
 L_51E3           sec
-                 sbc #$0A
-                 sta $CE
-                 ldx $CD
-                 ldy $CF
-                 beq L_5233
-                 ldy $D1
-                 bne L_5233
-                 lsr $CD
-                 lsr $CD
-                 lsr $CE
-                 lsr $CE
+                 sbc #$0A             ; normalize Y to 0 offset
+                 sta SAVE_STICK_Y
+                 ldx SAVE_STICK_X
+                 ldy SAVE_STICK_Y+1
+                 beq STORE_EXIT
+                 ldy SAVE_STICK_Y+3
+                 bne STORE_EXIT
+                 lsr SAVE_STICK_X     ; divide coords by 4 (magnifier)
+                 lsr SAVE_STICK_X
+                 lsr SAVE_STICK_Y
+                 lsr SAVE_STICK_Y
                  lda VVTP
                  beq L_521C
-                 lda $CD
+                 lda SAVE_STICK_X
                  sec
                  sbc $CB
-                 sta FR0+1
+                 sta SAVE_STICK_Y+7
                  ldx #$9F
                  bcc L_520B
                  ldx #$00
 L_520B           stx FR0+3
-                 lda $CE
+                 lda SAVE_STICK_Y
                  sec
                  sbc $CC
                  sta FR0+2
@@ -3638,20 +3638,20 @@ L_520B           stx FR0+3
                  bcc L_521A
                  ldx #$00
 L_521A           stx FR0+4
-L_521C           lda $CD
+L_521C           lda SAVE_STICK_X
                  sec
-                 sbc FR0+1
+                 sbc SAVE_STICK_Y+7
                  cmp #$A0
                  bcc L_5227
                  lda FR0+3
 L_5227           tax
-                 lda $CE
+                 lda SAVE_STICK_Y
                  sec
                  sbc FR0+2
                  cmp #$C0
-                 bcc L_5233
+                 bcc STORE_EXIT
                  lda FR0+4
-L_5233           sta $CC
+STORE_EXIT       sta $CC
                  stx $CB
 L_5237           rts
 L_5238           lda #$21
@@ -3691,14 +3691,14 @@ L_5277           lda CH
                  cpx #$E4
                  bcc L_5289
                  dex
-                 stx NGFLAG
+                 stx STICK_Y
                  iny
 L_5289           cpy #$02
                  bcs L_5243
-                 lda LNFLG
-                 sta $CD
-                 lda NGFLAG
-                 sta $CE
+                 lda STICK_X
+                 sta SAVE_STICK_X
+                 lda STICK_Y
+                 sta SAVE_STICK_Y
                  nop
                  nop
                  nop
@@ -3715,13 +3715,13 @@ L_5289           cpy #$02
                  lda LELNUM
                  beq L_52AF
 L_52AC           jsr L_4D93
-L_52AF           ldy $CE
+L_52AF           ldy SAVE_STICK_Y
                  lda FR1
                  bne L_5263
                  lda #$00
                  sta FRE+5
                  sta ATRACT
-                 lda $CD
+                 lda SAVE_STICK_X
                  tax
                  sec
                  sbc FR2+1
@@ -3734,7 +3734,7 @@ L_52C9           cmp #$04
                  sty FR2+2
                  bcs L_5269
                  sec
-                 sbc $CE
+                 sbc SAVE_STICK_Y
                  bcs L_52DA
                  eor #$FF
                  adc #$01
@@ -3745,7 +3745,7 @@ L_52DA           cmp #$04
                  sta FRE+5
                  sta STARP
                  sta LOMEM+1
-                 lda $CD
+                 lda SAVE_STICK_X
                  lsr
                  sta LOMEM
                  ror LOMEM+1
@@ -3754,10 +3754,10 @@ L_52DA           cmp #$04
                  lsr
                  sta VNTP
                  ror VNTP+1
-                 lda $CD
+                 lda SAVE_STICK_X
                  asl
                  rol STARP
-                 adc $CD
+                 adc SAVE_STICK_X
                  bcc L_5305
                  inc STARP
                  clc
@@ -3769,7 +3769,7 @@ L_530C           adc VNTP+1
                  lda STARP
                  adc LOMEM
                  adc VNTP
-                 sta $CD
+                 sta SAVE_STICK_X
                  jsr L_53D9
                  beq L_532D
                  sta ATRACT
@@ -3814,25 +3814,25 @@ L_5369           pla
 L_536B           lda CH
                  and #$3F
                  jmp L_523A
-L_5373           jsr L_336E
-                 ldx LNFLG
+L_5373           jsr WAIT_STICK
+                 ldx STICK_X
                  cpx #$D2
                  bcc L_5380
                  dex
-                 stx LNFLG
+                 stx STICK_X
                  iny
-L_5380           cmp NGFLAG
+L_5380           cmp STICK_Y
                  bne L_5387
-                 inc NGFLAG
+                 inc STICK_Y
                  iny
-L_5387           ldx NGFLAG
+L_5387           ldx STICK_Y
                  rts
 L_538A           lda VVTP
                  beq L_539E
                  ldx #$04
-L_5390           lda $CD
+L_5390           lda SAVE_STICK_X
                  sta $0480,x
-                 lda $CE
+                 lda SAVE_STICK_Y
                  sta $0481,x
                  dex
                  dex
@@ -3842,16 +3842,16 @@ L_53A0           lda $0480,x
                  sta $0482,x
                  dex
                  bpl L_53A0
-                 lda $CD
+                 lda SAVE_STICK_X
                  sta $0480
                  ldx #$06
                  jsr L_53C2
-                 sta $CD
-                 lda $CE
+                 sta SAVE_STICK_X
+                 lda SAVE_STICK_Y
                  sta $0481
                  ldx #$07
                  jsr L_53C2
-                 sta $CE
+                 sta SAVE_STICK_Y
                  rts
 L_53C2           lda #$00
                  sta VNTD+1
@@ -3892,7 +3892,7 @@ L_5400           sta ATRACT
                  sta FR2+3
                  lda INBUFF+1
                  sta CHBASE
-                 lda $CF
+                 lda SAVE_STICK_Y+1
                  beq L_5474
                  lda $CC
                  cmp #$0C
@@ -3907,29 +3907,29 @@ L_541E           adc #$0C
                  cmp #$15
                  bcs L_5431
                  lda #$00
-                 sta VNUM
+                 sta SAVE_STICK_Y+5
                  lda #$0F
-                 sta VTYPE
+                 sta SAVE_STICK_Y+4
                  bne L_544A
 L_5431           cmp #$8C
                  bcc L_5437
                  lda #$8C
 L_5437           sec
                  sbc #$15
-                 sta VNUM
+                 sta SAVE_STICK_Y+5
                  and #$03
                  eor #$03
                  asl
                  asl
-                 sta VTYPE
-                 lda VNUM
+                 sta SAVE_STICK_Y+4
+                 lda SAVE_STICK_Y+5
                  lsr
                  lsr
-                 sta VNUM
+                 sta SAVE_STICK_Y+5
 L_544A           ldx #$46
 L_544C           clc
                  lda $04A1,y
-                 adc VNUM
+                 adc SAVE_STICK_Y+5
                  sta $0624,x
                  lda $0561,y
                  adc #$00
@@ -3943,7 +3943,7 @@ L_544C           clc
                  sta DLISTL
                  lda #$06
                  sta DLISTH
-                 lda VTYPE
+                 lda SAVE_STICK_Y+4
                  sta HSCROL
                  lda #$01
 L_5474           lda FR2+4
@@ -3956,7 +3956,7 @@ L_5481           sta (FCHRFLG),y
                  iny
                  dex
                  bne L_5481
-                 lda $CF
+                 lda SAVE_STICK_Y+1
                  beq L_54F2
                  lda #$03
                  sta SIZEP0
@@ -3992,7 +3992,7 @@ L_54BD           sec
                  clc
                  adc #$30
                  tay
-                 lda VTYPE
+                 lda SAVE_STICK_Y+4
                  cmp #$0F
                  bne L_54CD
                  dey
@@ -4054,7 +4054,7 @@ L_5520           lda PCOLR0
                  jsr L_3F87
 L_5532           lda #$00
                  sta FLPTR
-                 sta $CF
+                 sta SAVE_STICK_Y+1
                  jsr L_4DB8
                  jsr L_34D6
                  lda #$04
@@ -5164,10 +5164,10 @@ L_5F21           jsr L_5A69
                  sta SVESA
                  jmp L_5084
                  ldy #$00
-                 lda $D0
+                 lda SAVE_STICK_Y+2
                  eor #$FF
-                 sta $D0
-                 sty $D1
+                 sta SAVE_STICK_Y+2
+                 sty SAVE_STICK_Y+3
                  jmp L_3DA9
 L_5F3C           txa
                  jsr L_58D4

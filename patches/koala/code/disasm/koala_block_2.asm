@@ -3,4 +3,4 @@
 
                  org $0000
 
-                 .byte $02
+STICK_X          .byte $02
