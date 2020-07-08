@@ -721,8 +721,8 @@ L_33DC           iny
                  sta SAVCUR
                  sta $0561
                  ldy #$00
-                 sty SAVE_STICK_Y+1
-                 sty SAVE_STICK_Y+2
+                 sty $CF
+                 sty $D0
 L_33FA           clc
                  lda $04A1,y
                  adc #$28
@@ -751,7 +751,7 @@ L_342D           sta $0624,x
                  dex
                  dex
                  bpl L_342D
-                 jsr L_347E+1
+                 jsr $347F
                  tsx
                  stx FRE+3
                  lda #$00
@@ -786,11 +786,11 @@ L_342D           sta $0624,x
                  .byte $73
                  jsr $6F43
                  .byte $72
-                 bvs L_34A7+2
+                 bvs $34A9
                  .byte $53
                  .byte $44
                  .byte $52
-L_347E           jmp $8720
+                 jmp $8720
                  .byte $3F
                  jsr L_4DB8
                  ldx #$04
@@ -808,7 +808,7 @@ L_3487           lda L_34D1,x
                  sta VDSLST+1
                  ldy #$31
                  lda #$98
-L_34A7           jsr L_4DF8
+                 jsr L_4DF8
                  lda #$FF
                  sta CH
                  jsr L_4DE6
@@ -852,7 +852,7 @@ L_34FA           .byte $C6, $86, $0A, $1E, $00, $70, $70, $70
                  .byte $84, $04, $04, $84, $04, $04, $04, $04
                  .byte $04, $04, $84, $00, $64, $A8, $30, $25
                  .byte $24, $24, $64, $20, $31, $84, $04, $41
-L_3522           .byte $97, $06, $70, $70, $70, $57, $38, $36
+                 .byte $97, $06, $70, $70, $70, $57, $38, $36
                  .byte $30, $56, $5A, $35, $70, $56, $6D, $35
                  .byte $70, $42, $7D, $35, $00, $42, $99, $35
                  .byte $00, $42, $B5, $35, $00, $42, $18, $36
@@ -899,7 +899,7 @@ L_3522           .byte $97, $06, $70, $70, $70, $57, $38, $36
                  jsr L_3F87
 L_3674           lda #$00
                  sta FLPTR
-                 sta SAVE_STICK_Y+1
+                 sta $CF
                  jsr L_4DB8
                  jsr L_34D6
                  lda #$04
@@ -995,7 +995,7 @@ L_3695           jsr L_53D9
 L_38F1           jsr L_3D87
 L_38F4           jsr L_4523
                  lda #$00
-                 sta SAVE_STICK_Y+1
+                 sta $CF
                  sta HPOSP1
                  sta MEOLFLG
                  jsr L_4DB8
@@ -1036,13 +1036,13 @@ L_393B           lda L_3BB3,x
                  lda #$08
                  sta SVESA+1
 L_3958           ldx SVESA+1
-                 ldy L_3C9E+2,x
+                 ldy $3CA0,x
                  sty STMCUR+1
-                 ldy L_3C96+1,x
+                 ldy $3C97,x
                  sty STMCUR
-                 lda L_3CA6+3,x
+                 lda $3CA9,x
                  sta TOPSTK
-                 lda L_3CAE+4,x
+                 lda $3CB2,x
                  sta TOPSTK+1
                  jsr L_5C52
                  jsr L_5C8B
@@ -1147,12 +1147,12 @@ L_3A39           jsr L_5147
                  lda #$FF
                  sta CH
                  lda FR2
-L_3A49           cmp #$08
+                 cmp #$08
                  bne L_3A5D
                  lda FRE+4
                  and #$3F
                  ldx #$02
-L_3A53           cmp L_3AF6+4,x
+L_3A53           cmp $3AFA,x
                  beq L_3A89
                  dex
                  bpl L_3A53
@@ -1171,15 +1171,15 @@ L_3A5D           lda $CC
                  bcs L_3ACB
                  jsr L_3ADA
                  ldx #$04
-L_3A7A           cmp L_3B0E+5,x
+L_3A7A           cmp $3B13,x
                  beq L_3A84
                  dex
                  bpl L_3A7A
                  bmi L_3A39
-L_3A84           lda L_3B16+2,x
+L_3A84           lda $3B18,x
                  bcs L_3A89
 L_3A89           ldx #$0A
-L_3A8B           cmp L_3AEE+4,x
+L_3A8B           cmp $3AF2,x
                  beq L_3AB2
                  dex
                  bpl L_3A8B
@@ -1195,8 +1195,8 @@ L_3A95           lda #$00
 L_3AAA           jsr L_3B9C
                  stx OPSTKX
                  jmp L_3986
-L_3AB2           lda L_3AF6+7,x
-                 ldy L_3B06+2,x
+L_3AB2           lda $3AFD,x
+                 ldy $3B08,x
                  jmp L_4D8C
                  stx OPSTKX
                  jmp L_3986
@@ -1226,11 +1226,11 @@ L_3AE9           dex
                  sta $049B,x
                  rts
 L_3AEE           .byte $53, $77, $9B, $C0, $32, $1F, $1E, $1A
-L_3AF6           .byte $28, $3F, $3A, $00, $21, $1C, $0C, $BB
+                 .byte $28, $3F, $3A, $00, $21, $1C, $0C, $BB
                  .byte $BB, $BB, $BB, $BB, $E1, $64, $77, $95
-L_3B06           .byte $95, $95, $3A, $3A, $3A, $3A, $3C, $3C
-L_3B0E           .byte $3D, $3D, $3A, $3A, $3A, $07, $09, $0B
-L_3B16           .byte $0D, $0E, $28, $3A, $00, $3F, $3F
+                 .byte $95, $95, $3A, $3A, $3A, $3A, $3C, $3C
+                 .byte $3D, $3D, $3A, $3A, $3A, $07, $09, $0B
+                 .byte $0D, $0E, $28, $3A, $00, $3F, $3F
                  pha
                  lda FR2+3
                  bne L_3B37
@@ -1305,7 +1305,7 @@ L_3B9C           lda $CB
                  bcs L_3BB2
                  dex
 L_3BB2           rts
-L_3BB3           bvs L_3C1E+7
+L_3BB3           bvs $3C25
                  rts
                  .byte $C2, $DC, $3B, $C2, $DC, $3B, $82, $82
                  .byte $82, $82, $82, $82, $82, $82, $82, $82
@@ -1320,7 +1320,7 @@ L_3BB3           bvs L_3C1E+7
                  .byte $65, $20, $73, $74, $79, $6C, $75, $73
                  .byte $20, $74, $6F, $20, $73, $65, $6C, $65
                  .byte $63, $74, $9B, $2D, $63, $75, $72, $72
-L_3C1E           .byte $65, $6E, $74, $20, $63, $6F, $6C, $6F
+                 .byte $65, $6E, $74, $20, $63, $6F, $6C, $6F
                  .byte $72, $20, $62, $6F, $78, $9B, $2D, $6E
                  .byte $65, $77, $20, $63, $6F, $6C, $6F, $72
                  .byte $20, $26, $20, $6C, $65, $76, $65, $6C
@@ -1335,10 +1335,10 @@ L_3C1E           .byte $65, $6E, $74, $20, $63, $6F, $6C, $6F
                  .byte $41, $64, $6A, $75, $73, $74, $20, $43
                  .byte $6F, $6C, $6F, $72, $73, $9B, $6F, $6E
                  .byte $20, $50, $69, $63, $74, $75, $72, $65
-L_3C96           .byte $9B, $02, $03, $03, $09, $02, $02, $02
-L_3C9E           .byte $02, $0C, $01, $02, $03, $05, $07, $09
-L_3CA6           .byte $0B, $0D, $0E, $04, $19, $2C, $3F, $46
-L_3CAE           .byte $56, $67, $7C, $8C, $3C, $3C, $3C, $3C
+                 .byte $9B, $02, $03, $03, $09, $02, $02, $02
+                 .byte $02, $0C, $01, $02, $03, $05, $07, $09
+                 .byte $0B, $0D, $0E, $04, $19, $2C, $3F, $46
+                 .byte $56, $67, $7C, $8C, $3C, $3C, $3C, $3C
                  .byte $3C, $3C, $3C, $3C, $3C
                  jsr L_3F64
                  jsr L_3D93
@@ -1455,7 +1455,7 @@ L_3DB3           ldx FRE+3
                  jmp L_3E1E
 L_3DC2           jsr L_3F20
 L_3DC5           lda #$00
-                 sta SAVE_STICK_Y+1
+                 sta $CF
                  jsr L_4003
                  lda #$08
                  sta ONLOOP
@@ -1476,22 +1476,22 @@ L_3DEC           dex
                  cmp L_3E00,x
                  bcc L_3DEC
 L_3DF4           stx VNTD
-                 lda L_3E11+3,x
+                 lda $3E14,x
                  pha
-                 lda L_3E09+1,x
+                 lda $3E0A,x
                  pha
                  lda $CB
 L_3E00           rts
                  .byte $0C, $2C, $4C, $6C, $72, $83, $A1, $A6
-L_3E09           .byte $B7, $D2, $A7, $A7, $A7, $D2, $CE, $02
-L_3E11           .byte $D2, $F7, $D2, $3D, $3E, $3E, $3E, $3D
+                 .byte $B7, $D2, $A7, $A7, $A7, $D2, $CE, $02
+                 .byte $D2, $F7, $D2, $3D, $3E, $3E, $3E, $3D
                  .byte $3E, $3F, $3D, $3E, $3D
 L_3E1E           lda FRE+4
                  and #$3F
                  cmp #$21
                  beq L_3E3A
                  ldx #$11
-L_3E28           cmp L_5E20+4,x
+L_3E28           cmp $5E24,x
                  beq L_3E5B
                  dex
                  bpl L_3E28
@@ -1504,7 +1504,7 @@ L_3E3A           lda FLPTR
                  jmp L_3DC2
 L_3E41           ldx #$11
                  lda FR1+1
-L_3E45           cmp L_5E20+4,x
+L_3E45           cmp $5E24,x
                  beq L_3E4F
                  dex
                  bne L_3E45
@@ -1533,25 +1533,25 @@ L_3E76           lda #$08
                  lda EXSVPR
 L_3E7E           sta ONLOOP
                  jsr L_565C
-                 lda SAVE_STICK_Y+2
-                 sta SAVE_STICK_Y+1
+                 lda $D0
+                 sta $CF
                  ldx FR1+2
                  lda L_5E48,x
-                 ldy L_5E30+6,x
-L_3E8F           jmp L_4D8C
+                 ldy $5E36,x
+                 jmp L_4D8C
                  ora (ICDNOZ),y
                  and (SOUNDR),y
                  eor (FKDEF+1),y
                  adc (LOMEM+1),y
-L_3E9A           sta (MVLNG),y
+                 sta (MVLNG),y
                  asl
 L_3E9D           dex
                  beq L_3EA5
-                 cmp L_3E8F+2,x
+                 cmp $3E91,x
                  bcc L_3E9D
 L_3EA5           stx VNTD+1
                  rts
-                 jsr L_3E9A+1
+                 jsr $3E9B
                  lsr VNTD+1
                  dec VNTD
                  lda VNTD
@@ -1565,7 +1565,7 @@ L_3EA5           stx VNTD+1
                  jmp L_3E1E
 L_3EC0           .byte $3A, $0A, $00, $05, $28, $38, $10, $16
                  .byte $08, $2F, $2A, $3E, $25, $17, $12
-                 jsr L_3E9A+1
+                 jsr $3E9B
                  txa
                  beq L_3EE5
                  cmp #$09
@@ -1583,7 +1583,7 @@ L_3EEA           clc
                  ldy #$0D
 L_3EEF           dey
                  beq L_3EF7
-                 cmp L_4116+1,y
+                 cmp $4117,y
                  bcc L_3EEF
 L_3EF7           rts
                  jsr L_3EEA
@@ -1610,7 +1610,7 @@ L_3F20           jsr L_5354
                  jsr L_34D6
                  ldx #$25
                  stx FLPTR
-L_3F30           lda L_34FA+5,x
+L_3F30           lda $34FF,x
                  sta $0697,x
                  dex
                  bpl L_3F30
@@ -1641,13 +1641,13 @@ L_3F66           lda $049B,x
                  sta SDMCTL
                  sta DMACTL
                  sta GRACTL
-                 lda SAVE_STICK_Y+2
-                 sta SAVE_STICK_Y+1
+                 lda $D0
+                 sta $CF
                  ldy $049A
                  lda $0499
                  jmp L_4DF8
 L_3F87           lda #$00
-                 sta SAVE_STICK_Y+1
+                 sta $CF
                  lda SDLSTL
                  sta $0499
                  lda SDLSTH
@@ -1762,7 +1762,7 @@ L_4066           lda L_410E,x
                  dex
                  bpl L_4066
                  ldx OPSTKX
-                 lda L_410E+6,x
+                 lda $4114,x
                  sta HPOSP2
                  lda #$00
                  sta TRAPLN+1
@@ -1799,7 +1799,7 @@ L_40AD           dex
                  sta TRAPLN
                  ldx STINDEX
                  jsr L_40CC
-                 lda SAVE_STICK_Y+2
+                 lda $D0
                  beq L_40C6
                  ldx #$0D
                  jsr L_40CC
@@ -1811,7 +1811,7 @@ L_40CC           lda STOPLN+1
                  adc L_40E7,x
                  sta STARP
                  lda TRAPLN
-                 adc L_40F2+4,x
+                 adc $40F6,x
                  sta STARP+1
                  ldy #$07
 L_40DD           lda (STARP),y
@@ -1820,10 +1820,10 @@ L_40DD           lda (STARP),y
                  dey
                  bne L_40DD
 L_40E6           rts
-L_40E7           bvc L_4140+1
+L_40E7           bvc $4141
                  rts
                  .byte $68, $70, $F0, $F8, $00, $08, $10, $90
-L_40F2           .byte $98, $A0, $A8, $B0, $00, $00, $00, $00
+                 .byte $98, $A0, $A8, $B0, $00, $00, $00, $00
                  .byte $00, $00, $00, $01, $01, $01, $01, $01
                  .byte $01, $01, $01
 L_4105           ldy #$00
@@ -1833,7 +1833,7 @@ L_4108           sta (STOPLN+1),y
                  bne L_4108
                  rts
 L_410E           .byte $3F, $1F, $0F, $07, $03, $01, $53, $77
-L_4116           .byte $9B, $C0, $3B, $47, $53, $5F, $6B, $77
+                 .byte $9B, $C0, $3B, $47, $53, $5F, $6B, $77
                  .byte $83, $8F, $9B, $A7, $B3, $BF
                  lda FLPTR
                  bne L_412B
@@ -1841,13 +1841,13 @@ L_4116           .byte $9B, $C0, $3B, $47, $53, $5F, $6B, $77
 L_412B           lda #$00
                  sta FLPTR
                  sta MEOLFLG
-                 sta SAVE_STICK_Y+1
+                 sta $CF
                  jsr L_4DB8
                  lda #$08
                  sta ONLOOP
                  jsr L_565C
                  jsr L_4146
-L_4140           jsr L_3F64
+                 jsr L_3F64
                  jmp L_3DA9
 L_4146           jsr L_4523
 L_4149           jsr L_5CEF
@@ -1870,22 +1870,22 @@ L_4167           cmp L_4170,x
 L_4170           .byte $FF
                  .byte $9F
                  rts
-L_4173           .byte $57, $4E, $45, $3C, $30, $1C, $0C, $21
+                 .byte $57, $4E, $45, $3C, $30, $1C, $0C, $21
 L_417B           .byte $41, $41, $42, $41, $42, $44, $44, $41
-L_4183           .byte $41, $41, $6F, $49, $19, $B4, $C1, $61
+                 .byte $41, $41, $6F, $49, $19, $B4, $C1, $61
                  .byte $29, $49, $6F, $6F
 L_418F           lda #$FF
                  sta CH
                  lda FRE+4
                  and #$3F
                  ldy #$02
-L_419A           cmp L_4173+5,y
+L_419A           cmp $4178,y
                  beq L_41A4
                  dey
                  bpl L_419A
                  bmi L_4151
 L_41A4           ldx #$00
-L_41A6           lda L_4183+2,x
+L_41A6           lda $4185,x
                  ldy L_417B,x
                  ldx #$FF
                  stx CH
@@ -1968,7 +1968,7 @@ L_4268           jmp L_4149
                  .byte $9B, $20, $20, $20, $20, $20, $20, $20
                  .byte $20, $20, $20, $20, $20, $20, $20, $20
                  .byte $20, $20, $20, $20, $9B, $20, $20, $20
-L_42BB           .byte $20, $20, $20, $20, $20, $9B
+                 .byte $20, $20, $20, $20, $20, $9B
                  jsr L_46FD
                  lda #$F4
                  sta MVTA+1
@@ -2073,7 +2073,7 @@ L_439E           cmp L_43F6,x
                  bcs L_43A6
                  dex
                  bne L_439E
-L_43A6           ldy L_43F7+2,x
+L_43A6           ldy $43F9,x
                  ldx #$03
                  lda $CB
 L_43AD           cmp L_43FC,x
@@ -2110,7 +2110,7 @@ L_43DE           jsr L_3F64
                  jmp L_4753
 L_43F3           jmp L_4146
 L_43F6           brk
-L_43F7           adc VNTP,y
+                 adc VNTP,y
                  .byte $04
                  php
 L_43FC           brk
@@ -2215,7 +2215,7 @@ L_4523           lda #$E0
                  lda #$06
                  sta COLOR1
                  ldx #$36
-L_4539           lda L_3522+2,x
+L_4539           lda $3524,x
                  sta $0697,x
                  dex
                  bpl L_4539
@@ -2347,7 +2347,7 @@ L_4658           lda $06DB,x
                  bne L_4658
                  dex
 L_4669           ldy #$04
-L_466B           lda L_42BB+1,y
+L_466B           lda $42BC,y
                  sta $06DF,x
                  dex
                  bmi L_4678
@@ -2458,7 +2458,7 @@ L_4753           sty $93
                  jsr L_5C77
                  ldx #$0E
                  lda $93
-L_4775           cmp L_47AC+7,x
+L_4775           cmp $47B3,x
                  beq L_4786
                  bcs L_4784
                  cmp L_47A4,x
@@ -2466,8 +2466,8 @@ L_4775           cmp L_47AC+7,x
                  dex
                  bne L_4775
 L_4784           ldx #$00
-L_4786           lda L_47BC+6,x
-                 ldy L_47CC+5,x
+L_4786           lda $47C2,x
+                 ldy $47D1,x
                  jsr L_5C87
                  jsr L_5917
 L_4792           lda CH
@@ -2479,11 +2479,11 @@ L_479E           ldx FRE+3
                  txs
                  jmp L_412B
 L_47A4           .byte $00, $80, $82, $84, $88, $8A, $90, $91
-L_47AC           .byte $A0, $A2, $A3, $A5, $A7, $A9, $AA, $00
+                 .byte $A0, $A2, $A3, $A5, $A7, $A9, $AA, $00
                  .byte $80, $82, $84, $89, $8F, $90, $9F, $A0
-L_47BC           .byte $A2, $A4, $A5, $A7, $A9, $AA, $E0, $ED
+                 .byte $A2, $A4, $A5, $A7, $A9, $AA, $E0, $ED
                  .byte $02, $95, $13, $22, $33, $33, $A5, $3D
-L_47CC           .byte $33, $4A, $5F, $71, $83, $47, $47, $48
+                 .byte $33, $4A, $5F, $71, $83, $47, $47, $48
                  .byte $48, $48, $48, $48, $48, $48, $48, $48
                  .byte $48, $48, $48, $48, $53, $79, $73, $74
                  .byte $65, $6D, $20, $45, $72, $72, $6F, $72
@@ -3162,14 +3162,14 @@ L_4E51           jsr L_5104
                  cmp OPSTKX
                  beq L_4E69
                  sta ECSIZE
-                 lda SAVE_STICK_Y+1
+                 lda $CF
                  pha
                  lda #$00
-                 sta SAVE_STICK_Y+1
+                 sta $CF
                  sta COMCNT
                  jsr L_4E6F
                  pla
-                 sta SAVE_STICK_Y+1
+                 sta $CF
 L_4E69           lda #$FF
                  sta CH
                  rts
@@ -3500,7 +3500,7 @@ L_50F2           ldx POKADR+1
                  txa
                  and #$03
                  tax
-                 lda L_4E09+4,x
+                 lda $4E0D,x
                  eor (STOPLN+1),y
                  sta (STOPLN+1),y
                  rts
@@ -3516,7 +3516,7 @@ L_5104           ldy SVESA
                  lda POKADR+1
                  and #$03
                  tax
-                 lda L_4E09+4,x
+                 lda $4E0D,x
                  and (STOPLN+1),y
                  cmp #$04
                  bcc L_5130
@@ -3612,9 +3612,9 @@ L_51E3           sec
                  sbc #$0A             ; normalize Y to 0 offset
                  sta SAVE_STICK_Y
                  ldx SAVE_STICK_X
-                 ldy SAVE_STICK_Y+1
+                 ldy $CF
                  beq STORE_EXIT
-                 ldy SAVE_STICK_Y+3
+                 ldy $D1
                  bne STORE_EXIT
                  lsr SAVE_STICK_X     ; divide coords by 4 (magnifier)
                  lsr SAVE_STICK_X
@@ -3625,7 +3625,7 @@ L_51E3           sec
                  lda SAVE_STICK_X
                  sec
                  sbc $CB
-                 sta SAVE_STICK_Y+7
+                 sta FR0+1
                  ldx #$9F
                  bcc L_520B
                  ldx #$00
@@ -3640,7 +3640,7 @@ L_520B           stx FR0+3
 L_521A           stx FR0+4
 L_521C           lda SAVE_STICK_X
                  sec
-                 sbc SAVE_STICK_Y+7
+                 sbc FR0+1
                  cmp #$A0
                  bcc L_5227
                  lda FR0+3
@@ -3892,7 +3892,7 @@ L_5400           sta ATRACT
                  sta FR2+3
                  lda INBUFF+1
                  sta CHBASE
-                 lda SAVE_STICK_Y+1
+                 lda $CF
                  beq L_5474
                  lda $CC
                  cmp #$0C
@@ -3907,29 +3907,29 @@ L_541E           adc #$0C
                  cmp #$15
                  bcs L_5431
                  lda #$00
-                 sta SAVE_STICK_Y+5
+                 sta VNUM
                  lda #$0F
-                 sta SAVE_STICK_Y+4
+                 sta VTYPE
                  bne L_544A
 L_5431           cmp #$8C
                  bcc L_5437
                  lda #$8C
 L_5437           sec
                  sbc #$15
-                 sta SAVE_STICK_Y+5
+                 sta VNUM
                  and #$03
                  eor #$03
                  asl
                  asl
-                 sta SAVE_STICK_Y+4
-                 lda SAVE_STICK_Y+5
+                 sta VTYPE
+                 lda VNUM
                  lsr
                  lsr
-                 sta SAVE_STICK_Y+5
+                 sta VNUM
 L_544A           ldx #$46
 L_544C           clc
                  lda $04A1,y
-                 adc SAVE_STICK_Y+5
+                 adc VNUM
                  sta $0624,x
                  lda $0561,y
                  adc #$00
@@ -3943,7 +3943,7 @@ L_544C           clc
                  sta DLISTL
                  lda #$06
                  sta DLISTH
-                 lda SAVE_STICK_Y+4
+                 lda VTYPE
                  sta HSCROL
                  lda #$01
 L_5474           lda FR2+4
@@ -3956,7 +3956,7 @@ L_5481           sta (FCHRFLG),y
                  iny
                  dex
                  bne L_5481
-                 lda SAVE_STICK_Y+1
+                 lda $CF
                  beq L_54F2
                  lda #$03
                  sta SIZEP0
@@ -3992,7 +3992,7 @@ L_54BD           sec
                  clc
                  adc #$30
                  tay
-                 lda SAVE_STICK_Y+4
+                 lda VTYPE
                  cmp #$0F
                  bne L_54CD
                  dey
@@ -4054,7 +4054,7 @@ L_5520           lda PCOLR0
                  jsr L_3F87
 L_5532           lda #$00
                  sta FLPTR
-                 sta SAVE_STICK_Y+1
+                 sta $CF
                  jsr L_4DB8
                  jsr L_34D6
                  lda #$04
@@ -4132,15 +4132,15 @@ L_565C           jsr L_56A4
                  lda #$00
                  sta LELNUM+1
                  ldx ONLOOP
-                 lda L_5DB8+1,x
+                 lda $5DB9,x
                  sta FR2+5
-                 lda L_5DC0+3,x
+                 lda $5DC3,x
                  sta FRX
-                 lda L_5DC8+5,x
+                 lda $5DCD,x
                  sta EEXP
-                 lda L_5DD0+7,x
+                 lda $5DD7,x
                  sta NSIGN
-                 lda L_5DE0+1,x
+                 lda $5DE1,x
                  sta ESIGN
                  jsr L_4D93
 L_5681           lda (SAVCUR+1),y
@@ -5023,7 +5023,7 @@ L_5D29           and #$3F
                  sta CH
                  lda L_5D35,y
 L_5D34           rts
-L_5D35           jmp L_3A49+1
+L_5D35           jmp $3A4A
                  .byte $FF, $FF, $4B, $1E, $1F, $4F, $FF, $50
                  .byte $55, $9B, $49, $FF, $FF, $56, $FF, $43
                  .byte $FF, $FF, $42, $58, $5A, $34, $FF, $33
@@ -5040,12 +5040,12 @@ L_5D35           jmp L_3A49+1
                  .byte $AA, $06, $A0, $68, $18, $10, $FF, $09
                  .byte $02, $02, $A1, $88, $4A, $86, $21, $A3
                  .byte $04, $00, $00, $3F, $04, $00, $00, $3F
-L_5DB8           .byte $00, $01, $03, $05, $09, $0B, $01, $06
-L_5DC0           .byte $05, $09, $10, $00, $01, $01, $01, $00
-L_5DC8           .byte $04, $03, $02, $03, $03, $00, $01, $02
-L_5DD0           .byte $04, $05, $00, $03, $02, $04, $04, $EB
+                 .byte $00, $01, $03, $05, $09, $0B, $01, $06
+                 .byte $05, $09, $10, $00, $01, $01, $01, $00
+                 .byte $04, $03, $02, $03, $03, $00, $01, $02
+                 .byte $04, $05, $00, $03, $02, $04, $04, $EB
                  .byte $EC, $EF, $F4, $FD, $08, $09, $0F, $1B
-L_5DE0           .byte $14, $5D, $5D, $5D, $5D, $5D, $5E, $5E
+                 .byte $14, $5D, $5D, $5D, $5D, $5D, $5E, $5E
                  .byte $5E, $5E, $5E, $80, $C0, $C0, $C0, $80
                  .byte $00, $00, $00, $20, $20, $00, $00, $00
                  .byte $40, $00, $00, $00, $80, $80, $80, $80
@@ -5053,9 +5053,9 @@ L_5DE0           .byte $14, $5D, $5D, $5D, $5D, $5D, $5E, $5E
                  .byte $FF, $C0, $60, $30, $18, $0C, $06, $20
                  .byte $50, $88, $50, $20, $95, $95, $95, $D5
                  .byte $85, $D5, $00, $10, $10, $10, $28, $C6
-L_5E20           .byte $28, $10, $10, $10, $2A, $17, $25, $36
+                 .byte $28, $10, $10, $10, $2A, $17, $25, $36
                  .byte $37, $3E, $26, $12, $3A, $0A, $00, $05
-L_5E30           .byte $28, $38, $10, $16, $08, $2F, $55, $5F
+                 .byte $28, $38, $10, $16, $08, $2F, $55, $5F
                  .byte $5E, $49, $49, $41, $36, $38, $5F, $5F
                  .byte $5F, $5F, $5F, $5F, $5F, $5F, $5E, $5E
 L_5E48           .byte $2B, $2F, $5A, $FD, $1F, $24, $6D, $EA
@@ -5164,10 +5164,10 @@ L_5F21           jsr L_5A69
                  sta SVESA
                  jmp L_5084
                  ldy #$00
-                 lda SAVE_STICK_Y+2
+                 lda $D0
                  eor #$FF
-                 sta SAVE_STICK_Y+2
-                 sty SAVE_STICK_Y+3
+                 sta $D0
+                 sty $D1
                  jmp L_3DA9
 L_5F3C           txa
                  jsr L_58D4
