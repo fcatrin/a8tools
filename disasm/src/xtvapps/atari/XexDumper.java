@@ -160,7 +160,7 @@ public class XexDumper {
 
 		while (base < block.length) {
 			Instruction instruction = Disassembler.getInstruction(blockIndex, addr + base);
-			Disassembler.addUserLabel(instruction.getAddr(), "L_" +  String.format("%04X", instruction.getAddr()));
+			Disassembler.addUserLabel(instruction.getAddr(), "L_" +  String.format("%04X", instruction.getAddr()), instruction.getSize());
 			base += instruction.getSize();
 		}
 		
