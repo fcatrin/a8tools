@@ -126,10 +126,16 @@ public class Processor {
 public static class Sym {
 	public String name;
 	public int addr;
+	public int size;
 	
-	public Sym(String name, int addr) {
+	public Sym(String name, int addr, int size) {
 		this.name = name;
 		this.addr = addr;
+		this.size = size;
+	}
+
+	public Sym(String name, int addr) {
+		this(name, addr, 1);
 	}
 }
 	

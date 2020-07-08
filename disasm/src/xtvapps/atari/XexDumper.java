@@ -101,9 +101,9 @@ public class XexDumper {
 			pwInc.println(line);
 		}
 
-		Map<Integer, String> labels = Disassembler.getMapperLabels();
-		for(Entry<Integer, String> label : labels.entrySet()) {
-			String name = label.getValue();
+		Map<Integer, Sym> labels = Disassembler.getMapperLabels();
+		for(Entry<Integer, Sym> label : labels.entrySet()) {
+			String name = label.getValue().name;
 			if (usedLabels.contains(name)) continue;
 			
 			int addr = label.getKey();
@@ -165,9 +165,10 @@ public class XexDumper {
 		}
 		
 		// they may be overritten, so add them here after the automatic labels
-		Map<Integer, String> labels = Disassembler.getMapperLabels();
-		for(Entry<Integer, String> label : labels.entrySet()) {
-			Disassembler.addUserLabel(label.getKey(), label.getValue());
+		Map<Integer, Sym> labels = Disassembler.getMapperLabels();
+		for(Entry<Integer, Sym> label : labels.entrySet()) {
+			Sym sym = label.getValue();
+			Disassembler.addUserLabel(label.getKey(), sym.name, sym.size);
 		}
 		
 		base = 0;
@@ -200,9 +201,9 @@ public class XexDumper {
 				label = "";
 			}
 			
-			String userLabel = Disassembler.getMapperLabel(addr + base);
+			Sym userLabel = Disassembler.getMapperLabel(addr + base);
 			if (userLabel!=null) {
-				label = userLabel;
+				label = userLabel.name;
 				usedLabels.add(label);
 			}
 			
@@ -273,9 +274,16 @@ public class XexDumper {
 				int addr = Utils.strHex2i(parts[1], 0);
 				Disassembler.addSection(blockIndex, SectionType.DisplayList, addr);
 			} else if (cmd.equals("label")) {
+				int size = 1;
 				int addr = Utils.strHex2i(parts[1], 0);
 				String name = parts[2];
-				Disassembler.addMapperLabel(addr, name);
+				if (parts.length > 3) {
+					String sizeSpec = parts[3];
+					if ("word".equals(sizeSpec)) size = 2;
+					else if ("dword".equals(sizeSpec)) size = 4;
+					else size = Utils.str2i(sizeSpec, 1);
+				}
+				Disassembler.addMapperLabel(addr, name, size);
 			} else if (cmd.equals("rem")) {
 				int addr = Utils.strHex2i(parts[1], 0);
 				

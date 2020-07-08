@@ -4,11 +4,12 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import xtvapps.atari.disasm.Processor.Sym;
 import xtvapps.atari.disasm.mapper.Section.SectionType;
 
 public class Mapper {
-	Map<Integer, Block> blocks = new HashMap<Integer, Block>();
-	Map<Integer, String> labels = new LinkedHashMap<Integer, String>();
+	Map<Integer, Block>    blocks = new HashMap<Integer, Block>();
+	Map<Integer, Sym>      labels = new LinkedHashMap<Integer, Sym>();
 	Map<Integer, String> comments = new LinkedHashMap<Integer, String>();
 
 	public Mapper() {}
@@ -53,15 +54,15 @@ public class Mapper {
 		comments.clear();
 	}
 	
-	public void addLabel(int addr, String name) {
-		labels.put(addr, name);
+	public void addLabel(int addr, String name, int size) {
+		labels.put(addr, new Sym(name, addr, size));
 	}
 	
-	public String getLabel(int addr) {
+	public Sym getLabel(int addr) {
 		return labels.get(addr);
 	}
 
-	public Map<Integer, String> getLabels() {
+	public Map<Integer, Sym> getLabels() {
 		return labels;
 	}
 

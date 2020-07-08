@@ -19,7 +19,7 @@ import xtvapps.atari.disasm.mapper.Section.SectionType;
 public class Disassembler {
 	private static final int MAX_MEMORY = 0x10000;
 	
-	private static Map<Integer, String> symtableUser = new HashMap<Integer, String>();
+	private static Map<Integer, Sym> symtableUser = new HashMap<Integer, Sym>();
 	private static int memory[];
 	
 	private static String lblFileName;
@@ -266,7 +266,10 @@ public class Disassembler {
 		Instruction instruction = new Instruction(addr, line, asmcode, size);
 		instruction.setTarget(target);
 		instruction.setTargetLabel(targetLabel);
-		instruction.setLabel(symtableUser.get(addr));
+		Sym sym = symtableUser.get(addr);
+		if (sym!=null) {
+			instruction.setLabel(sym.name);
+		}
 		instruction.setByteCode(bytecode);
 		return instruction;
 	}
@@ -340,20 +343,24 @@ public class Disassembler {
 	}
 	
 	private static String findLabel(int value, boolean isWrite) {
-		String label = symtableUser.get(value);
-		if (label!=null) return label;
+		Sym sym = symtableUser.get(value);
+		if (sym!=null) {
+			return sym.name;
+		}
 		
 		// lookahead just in case
 		for(int delta = 0; delta < 8; delta++) {
 			int addr = value - delta;
 			if (addr<0) break;
 			
-			label = symtableUser.get(addr);
-			if (label!=null) return label + "+" + delta;
+			sym = symtableUser.get(addr);
+			if (sym!=null && sym.size > delta) {
+				return sym.name + "+" + delta;
+			}
 		}
 
 		for(int i =0; i< Processor.symtableBuiltin.length; i++) {
-			Sym sym = Processor.symtableBuiltin[i];
+			sym = Processor.symtableBuiltin[i];
 			if (sym.addr != value) continue;
 			
 			if (isWrite && i < Processor.symtableBuiltin.length - 1 && Processor.symtableBuiltin[i+1].addr == value) {
@@ -447,7 +454,8 @@ public class Disassembler {
 				
 				int addr = Integer.parseInt(parts[1], 16);
 				String label = parts[2].trim();
-				symtableUser.put(addr, label);
+				Sym sym = new Sym(label, addr);
+				symtableUser.put(addr, sym);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -457,7 +465,11 @@ public class Disassembler {
 	}
 	
 	public static void addUserLabel(int addr, String label) {
-		symtableUser.put(addr, label);
+		addUserLabel(addr, label, 1);
+	}
+	
+	public static void addUserLabel(int addr, String label, int size) {
+		symtableUser.put(addr, new Sym(label, addr, size));
 	}
 	
 	public static void addSection(int blockIndex, SectionType sectionType, int addr) {
@@ -472,15 +484,19 @@ public class Disassembler {
 		return mapper.getLastAddr(blockIndex);
 	}
 
-	public static Map<Integer, String> getMapperLabels() {
+	public static Map<Integer, Sym> getMapperLabels() {
 		return mapper.getLabels();
 	}
 	
 	public static void addMapperLabel(int addr, String name) {
-		mapper.addLabel(addr, name);
+		addMapperLabel(addr, name, 1);
 	}
 
-	public static String getMapperLabel(int addr) {
+	public static void addMapperLabel(int addr, String name, int size) {
+		mapper.addLabel(addr, name, size);
+	}
+
+	public static Sym getMapperLabel(int addr) {
 		return mapper.getLabel(addr);
 	}
 
