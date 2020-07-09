@@ -78,28 +78,28 @@
 0414: A9 E0     lda #$E0
 0416: A0 98     ldy #$98
 0418: A2 04     ldx #$04
-041A: 20 64 04  jsr $0464      ; Move $400 bytes from $E000 to $9800 / MOVE_MEM
+041A: 20 64 04  jsr $0464      ; Move $400  bytes from $E000 to $9800 - $E000->$E3FF is set to 0 / MOVE_MEM
 041D: CE 01 D3  dec $D301      ; PORTB
 0420: A9 90     lda #$90
 0422: A0 D8     ldy #$D8
-0424: 20 62 04  jsr $0462      ; L_0462
+0424: 20 62 04  jsr $0462      ; Move $1000 bytes from $9000 -> $D800 - $9000->$9FFF is set to 0 / MOVE_MEM_4K
 0427: A9 90     lda #$90
 0429: A0 C0     ldy #$C0
-042B: 20 62 04  jsr $0462      ; L_0462
+042B: 20 62 04  jsr $0462      ; Move $1000 bytes from $9000 -> $C000 - $C000->$CFFF is set to 0 ? / MOVE_MEM_4K
 042E: A9 C1     lda #$C1
 0430: 8D FA FF  sta $FFFA
 0433: A9 DA     lda #$DA
-0435: 8D FB FF  sta $FFFB
+0435: 8D FB FF  sta $FFFB      ; Set NMI pointer to $DAC1
 0438: A9 40     lda #$40
 043A: 8D 0E D4  sta $D40E      ; NMIEN
-043D: A0 53     ldy #$53
+043D: A0 53     ldy #$53       ; ths is later used to build $30 + $53 = $83
 043F: A9 AF     lda #$AF
 0441: 38        sec
 0442: A2 50     ldx #$50
-0444: FF 0D DA  ins $DA0D,x
+0444: FF 0D DA  ins $DA0D,x    ; INC + SBC
 0447: CA        dex
 0448: 10 FA     bpl $0444      ; L_0444
-044A: 97 30     sax $30,y      ; STATUS
+044A: 97 30     sax $30,y      ; write A & X to $83 / STATUS
 044C: A9 27     lda #$27
 044E: 18        clc
 044F: A2 3B     ldx #$3B
