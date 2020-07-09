@@ -68,17 +68,17 @@
 
 0400: 78        sei
 0401: AC 13 D0  ldy $D013      ; TRIG3
-0404: D0 FE     bne $0404      ; L_0404
+0404: D0 FE     bne $0404      ; WAIT
 0406: 8C 0E D4  sty $D40E      ; NMIEN
-0409: 84 85     sty $85        ; VNTD+1
-040B: 84 87     sty $87        ; VVTP+1
+0409: 84 85     sty $85        ; SRC
+040B: 84 87     sty $87        ; DST
 040D: 88        dey
 040E: 8C 01 D3  sty $D301      ; PORTB
 0411: 8C F8 03  sty $03F8      ; BASICF
 0414: A9 E0     lda #$E0
 0416: A0 98     ldy #$98
 0418: A2 04     ldx #$04
-041A: 20 64 04  jsr $0464      ; L_0464
+041A: 20 64 04  jsr $0464      ; Move $400 bytes from $E000 to $9800 / MOVE_MEM
 041D: CE 01 D3  dec $D301      ; PORTB
 0420: A9 90     lda #$90
 0422: A0 D8     ldy #$D8
@@ -112,19 +112,19 @@
 045D: 97 31     sax $31,y      ; CHKSUM
 045F: 4C 25 D8  jmp $D825
 0462: A2 10     ldx #$10
-0464: 85 86     sta $86        ; VVTP
-0466: 84 88     sty $88        ; STMTAB
+0464: 85 86     sta $86        ; SRC+1
+0466: 84 88     sty $88        ; DST+1
 0468: A0 00     ldy #$00
-046A: B1 85     lda ($85),y    ; VNTD+1
-046C: 91 87     sta ($87),y    ; VVTP+1
+046A: B1 85     lda ($85),y    ; SRC
+046C: 91 87     sta ($87),y    ; DST
 046E: A9 00     lda #$00
-0470: 91 85     sta ($85),y    ; VNTD+1
+0470: 91 85     sta ($85),y    ; SRC
 0472: C8        iny
-0473: D0 F5     bne $046A      ; L_046A
-0475: E6 88     inc $88        ; STMTAB
-0477: E6 86     inc $86        ; VVTP
+0473: D0 F5     bne $046A      ; MOVE_NEXT
+0475: E6 88     inc $88        ; DST+1
+0477: E6 86     inc $86        ; SRC+1
 0479: CA        dex
-047A: D0 EE     bne $046A      ; L_046A
+047A: D0 EE     bne $046A      ; MOVE_NEXT
 047C: 60        rts
 047D: 00        brk
 047E: 00        brk

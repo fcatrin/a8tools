@@ -5,17 +5,17 @@
 
                  sei
                  ldy TRIG3
-L_0404           bne L_0404
+WAIT             bne WAIT
                  sty NMIEN
-                 sty VNTD+1
-                 sty VVTP+1
+                 sty SRC
+                 sty DST
                  dey
                  sty PORTB
                  sty BASICF
                  lda #$E0
                  ldy #$98
                  ldx #$04
-                 jsr L_0464
+                 jsr MOVE_MEM         ; Move $400 bytes from $E000 to $9800
                  dec PORTB
                  lda #$90
                  ldy #$D8
@@ -49,19 +49,19 @@ L_0451           dcm $DA85,x
                  sax CHKSUM,y
                  jmp $D825
 L_0462           ldx #$10
-L_0464           sta VVTP
-                 sty STMTAB
+MOVE_MEM         sta SRC+1
+                 sty DST+1
                  ldy #$00
-L_046A           lda (VNTD+1),y
-                 sta (VVTP+1),y
+MOVE_NEXT        lda (SRC),y
+                 sta (DST),y
                  lda #$00
-                 sta (VNTD+1),y
+                 sta (SRC),y
                  iny
-                 bne L_046A
-                 inc STMTAB
-                 inc VVTP
+                 bne MOVE_NEXT
+                 inc DST+1
+                 inc SRC+1
                  dex
-                 bne L_046A
+                 bne MOVE_NEXT
                  rts
                  brk
                  brk

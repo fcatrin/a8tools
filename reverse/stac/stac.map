@@ -1,0 +1,8 @@
+label 0085 SRC word
+label 0087 DST word
+
+label 0404 WAIT
+label 0464 MOVE_MEM
+label 046a MOVE_NEXT
+
+rem 041A Move $400 bytes from $E000 to $9800 
