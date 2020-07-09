@@ -96,21 +96,21 @@
 043F: A9 AF     lda #$AF
 0441: 38        sec
 0442: A2 50     ldx #$50
-0444: FF 0D DA  ins $DA0D,x    ; INC + SBC
+0444: FF 0D DA  ins $DA0D,x    ; INC + SBC -- $DA0D,X += (1 - $AF) carry included
 0447: CA        dex
-0448: 10 FA     bpl $0444      ; L_0444
+0448: 10 FA     bpl $0444      ; UNLOCK1
 044A: 97 30     sax $30,y      ; write A & X to $83 / STATUS
 044C: A9 27     lda #$27
 044E: 18        clc
 044F: A2 3B     ldx #$3B
-0451: DF 85 DA  dcm $DA85,x
+0451: DF 85 DA  dcm $DA85,x    ; DEC $DAB5,X
 0454: 18        clc
 0455: 04 30     nop $30        ; STATUS
 0457: 7D 85 DA  adc $DA85,x
 045A: CA        dex
-045B: 10 F4     bpl $0451      ; L_0451
+045B: 10 F4     bpl $0451      ; UNLOCK2
 045D: 97 31     sax $31,y      ; CHKSUM
-045F: 4C 25 D8  jmp $D825
+045F: 4C 25 D8  jmp $D825      ; Exec the loader
 0462: A2 10     ldx #$10
 0464: 85 86     sta $86        ; SRC+1
 0466: 84 88     sty $88        ; DST+1

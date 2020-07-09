@@ -2,6 +2,8 @@ label 0085 SRC word
 label 0087 DST word
 
 label 0404 WAIT
+label 0444 UNLOCK1
+label 0451 UNLOCK2
 label 0464 MOVE_MEM
 label 0462 MOVE_MEM_4K
 label 046a MOVE_NEXT
@@ -11,6 +13,7 @@ rem 0424 Move $1000 bytes from $9000 -> $D800 - $9000->$9FFF is set to 0
 rem 042B Move $1000 bytes from $9000 -> $C000 - $C000->$CFFF is set to 0 ?
 rem 0435 Set NMI pointer to $DAC1
 rem 043D ths is later used to build $30 + $53 = $83
-rem 0444 INC + SBC
+rem 0444 INC + SBC -- $DA0D,X += (1 - $AF) carry included
 rem 044A write A & X to $83 
-
+rem 0451 DEC $DAB5,X
+rem 045F Exec the loader

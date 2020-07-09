@@ -33,21 +33,21 @@ WAIT             bne WAIT
                  lda #$AF
                  sec
                  ldx #$50
-L_0444           ins $DA0D,x          ; INC + SBC
+UNLOCK1          ins $DA0D,x          ; INC + SBC -- $DA0D,X += (1 - $AF) carry included
                  dex
-                 bpl L_0444
+                 bpl UNLOCK1
                  sax STATUS,y         ; write A & X to $83
                  lda #$27
                  clc
                  ldx #$3B
-L_0451           dcm $DA85,x
+UNLOCK2          dcm $DA85,x          ; DEC $DAB5,X
                  clc
                  nop STATUS
                  adc $DA85,x
                  dex
-                 bpl L_0451
+                 bpl UNLOCK2
                  sax CHKSUM,y
-                 jmp $D825
+                 jmp $D825            ; Exec the loader
 MOVE_MEM_4K      ldx #$10
 MOVE_MEM         sta SRC+1
                  sty DST+1
