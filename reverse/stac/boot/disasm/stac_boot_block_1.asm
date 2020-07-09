@@ -1,5 +1,5 @@
 
-; BLOCK 1 stac.xex
+; BLOCK 1 stac_boot.xex
 
                  org $9000
 

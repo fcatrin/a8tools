@@ -1,6 +1,6 @@
 
 
-; BLOCK 1 stac.xex
+; BLOCK 1 stac_boot.xex
 
 9000: 18        clc
 9001: 60        rts
@@ -64,7 +64,7 @@
 9078: 91 83     sta ($83),y    ; VNTP+1
 
 
-; BLOCK 2 stac.xex
+; BLOCK 2 stac_boot.xex
 
 0400: 78        sei
 0401: AC 13 D0  ldy $D013      ; TRIG3
