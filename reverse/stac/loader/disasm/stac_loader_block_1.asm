@@ -3,10 +3,8 @@
 
                  org $D800
 
-                 brk
-                 ora #$00
-                 bcc L_D805
-L_D805           nop DSKFMS
+                 .byte $00, $09, $00, $90, $00, $04
+                 clc
                  rts
 L_D808           ldx #$F0
                  ldy #$D9
@@ -21,7 +19,7 @@ L_D81C           lda #$FD
 L_D820           lda RTCLOK+2
                  bne L_D820
                  rts
-                 clc
+START            clc                  ; This is the Entry Point
                  lda #$C0
                  sta RAMTOP
                  lda #$C8
@@ -156,18 +154,18 @@ L_D92D           lda FEOF
                  bmi L_D8DA
                  ldy #$19
                  ldx #$0F
-                 dec L_DA60
-                 cpx L_DA60
+                 dec COUNTER+3
+                 cpx COUNTER+3
                  bcc L_D95C
-                 sty L_DA60
-                 dec L_DA5E+1
-                 cpx L_DA5E+1
+                 sty COUNTER+3
+                 dec COUNTER+2
+                 cpx COUNTER+2
                  bcc L_D95C
-                 sty L_DA5E+1
-                 dec L_DA5E
-                 cpx L_DA5E
+                 sty COUNTER+2
+                 dec COUNTER+1
+                 cpx COUNTER+1
                  bcc L_D95C
-                 sty L_DA5E
+                 sty COUNTER+1
 L_D95C           lda #$00
                  sta BPTR
                  ldx #$C8
@@ -207,148 +205,64 @@ L_D986           ldy #$01
                  ldy #$03
                  sty B0_ICCOM
                  jmp CIOV
-                 eor XMTDON
-                 shs $7070,y
-                 bvs L_DA2E+2
-                 lse COLOR
-                 cmp $0770,y
-                 eor (TRAPLN,x)
-                 cmp $E500,y
-                 escape #$F2
-                 ins CIX
-                 ora $3200
-                 and ICCOMZ
-                 rla $2922
-                 rol ICBAHZ
-                 and LNFLG,y
-                 bmi L_DA11
-                 and BUFRHI
-                 and #$2F
-                 rol ICBAHZ
-                 brk
-                 brk
-                 brk
-                 brk
-                 ins (INBUFF+1),y
-                 sbc (CIX,x)
-                 nop LNFLG,x
-                 bvs L_DA62
-                 bvs L_DA63+1
-                 cim
-                 ora $70DA
-                 asl ROWAC
-                 bvs L_D9FE
-                 bvs L_DA6C+2
-L_D9FE           bvs L_DA70
-                 bvs L_DA08+1
-                 bvs L_DA74
-                 bvs L_DA76
-                 bvs L_DA0C+2
-L_DA08           bvs L_DA0C
-                 eor (FCHRFLG,x)
-L_DA0C           cmp LNFLG,y
-                 rol ADRESS+1,x
-L_DA11           ror $7A65
-                 adc ADRESS+1,x
-                 jmp (FKDEF+1)
-                 cim
-                 bpl L_DA35
-                 ora LNFLG,x
-                 rla (ICDNOZ,x)
-                 bmi L_DA4B
-                 nop ICDNOZ,x
-                 bit $3400
-                 adc BUFSTR
-                 asl $1900
-                 nop RTCLOK,x
-L_DA2E           ora $1412
-                 clc
-                 cim
-                 brk
-                 brk
-L_DA35           brk
-                 ins (ESIGN,x)
-                 sbc $F5F0
-                 ins (FRX,x)
-                 sbc FR1+2,x
-                 brk
-                 ora DOSINI+1
-                 adc (ENDPT,x)
-                 adc (COLAC,x)
-                 adc #$00
-                 brk
-                 brk
-L_DA4B           bmi L_DABD+2
-                 adc COLAC+1
-                 adc BITMSK
-                 nop FKDEF+1,x
-                 brk
-                 nop ADRESS+1
-                 ror $7274
-                 rra $6400
-                 adc LNFLG
-L_DA5E           bpl L_DA79
-L_DA60           cim
-                 brk
-L_DA62           cim
-L_DA63           jmp ($716F)
-                 adc ADRESS+1,x
-                 rra (LNFLG),y
-                 adc (LNFLG,x)
-L_DA6C           asl $0E0E
-                 brk
-L_DA70           brk
-                 brk
-                 brk
-                 brk
-L_DA74           brk
-                 brk
-L_DA76           brk
-                 rol ICBLHZ,x
-L_DA79           rla (ICBLHZ),y
-                 rla (ICDNOZ,x)
-                 bit ICSTAZ
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 rra (SHFAMT,x)
-                 ror $7300
-                 adc #$73
-                 nop ADRESS+1,x
-                 adc FKDEF+1
-                 ora $F300
-                 nop FR1+1,x
-                 ins (LNFLG,x)
-                 brk
-                 brk
-                 rla (BFENLO),y
-                 and (ICSTAZ,x)
-                 brk
-                 php
-                 cim
-                 ora #$00
-                 bvs L_DB15
-                 cim
-                 brk
-                 and #$2C
-                 rol
-                 rla BUFRLO
-                 asl
-                 asl
-                 brk
-                 ora (DSKFMS+1),y
-                 clc
-                 clc
-                 brk
-                 and (BUFRLO,x)
-                 rla ICBAHZ
-                 rol $2934
-L_DABD           rol ICDNOZ
-                 brk
-                 sta NMIRES
+                 .byte $45, $3A, $9B, $70, $70, $70, $70, $47
+                 .byte $C8, $D9, $70, $07, $41, $BC, $D9, $00
+                 .byte $E5, $F2, $F2, $EF, $F2, $00, $0D, $00
+                 .byte $32, $25, $22, $2F, $22, $29, $2E, $25
+                 .byte $00, $39, $00, $00, $30, $32, $25, $33
+                 .byte $29, $2F, $2E, $25, $00, $00, $00, $00
+                 .byte $00, $F3, $F4, $E1, $F2, $F4, $00
+L_D9F0           .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $42 ; DL LMS Antic Mode 2
+                 .word SCREEN_DATA
+                 .byte $70 ; DL 8 scanlines
+                 .byte $06 ; DL Antic Mode 6
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $02 ; DL Antic Mode 2
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $07 ; DL Antic Mode 7
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $06 ; DL Antic Mode 6
+                 .byte $70 ; DL 8 scanlines
+                 .byte $02 ; DL Antic Mode 2
+                 .byte $41 ; DL JMP
+                 .word L_D9F0
+SCREEN_DATA      .byte $00, $00, $36, $65, $6E, $65, $7A, $75
+                 .byte $65, $6C, $61, $00, $12, $10, $19, $15
+                 .byte $00, $23, $21, $30, $29, $34, $21, $2C
+                 .byte $00, $34, $65, $6C, $0E, $00, $19, $14
+                 .byte $12, $0D, $12, $14, $18, $12, $00, $00
+                 .byte $00, $E3, $EF, $ED, $F0, $F5, $E3, $EC
+                 .byte $F5, $E2, $00, $0D, $0D, $00, $61, $74
+                 .byte $61, $72, $69, $00, $00, $00, $30, $72
+                 .byte $65, $73, $65, $6E, $74, $61, $00, $64
+                 .byte $65, $6E, $74, $72, $6F, $00, $64, $65
+COUNTER          .byte $00, $10, $19, $12, $00, $62, $6C, $6F
+                 .byte $71, $75, $65, $73, $00, $61, $00, $0E
+                 .byte $0E, $0E, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $36, $29, $33, $29, $23, $21
+                 .byte $2C, $23, $00, $00, $00, $00, $00, $00
+                 .byte $00, $63, $6F, $6E, $00, $73, $69, $73
+                 .byte $74, $65, $6D, $61, $00, $0D, $00, $F3
+                 .byte $F4, $E1, $E3, $00, $00, $00, $33, $34
+                 .byte $21, $23, $00, $08, $32, $09, $00, $70
+                 .byte $6F, $72, $00, $29, $2C, $2A, $2F, $32
+                 .byte $00, $0A, $0A, $00, $11, $19, $18, $18
+                 .byte $00, $21, $32, $27, $25, $2E, $34, $29
+                 .byte $2E, $21, $00, $00
+NMI              sta NMIRES
                  pha
                  txa
                  pha
@@ -390,7 +304,7 @@ L_DB08           lda #$FF
                  tsx
                  stx BUFRFL
                  ldy #$B4
-L_DB15           sty NOCKSM
+                 sty NOCKSM
                  ldy #$00
                  sty CHKSUM
                  sty CHKSNT
@@ -522,7 +436,7 @@ L_DC21           cmp #$7C
                  rts
 L_DC29           clc
                  ldx PALNTS
-                 adc L_DC6B+1,x
+                 adc L_DC68+4,x
                  rts
 L_DC30           lda #$13
                  sta SSKCTL
@@ -549,14 +463,6 @@ L_DC60           sta AUDC1,x
                  dex
                  bpl L_DC60
                  rts
-L_DC68           adc $8364,x
-L_DC6B           shy $2007,x
-                 ora (NGFLAG,x)
-                 ora (NGFLAG,x)
-                 ora (NGFLAG,x)
-                 ora (NGFLAG,x)
-                 ora (NGFLAG,x)
-                 ora (NGFLAG,x)
-                 ora (NGFLAG,x)
-                 ora (NGFLAG,x)
-                 ora (NGFLAG,x)
+L_DC68           .byte $7D, $64, $83, $9C, $07, $20, $01, $01
+                 .byte $01, $01, $01, $01, $01, $01, $01, $01
+                 .byte $01, $01, $01, $01, $01, $01, $01, $01

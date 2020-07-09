@@ -2,10 +2,8 @@
 
 ; BLOCK 1 stac_loader.xex
 
-D800: 00        brk
-D801: 09 00     ora #$00
-D803: 90 00     bcc $D805      ; L_D805
-D805: 04 18     nop $18        ; DSKFMS
+D800: 00        BYTE $00 $09 $00 $90 $00 $04
+D806: 18        clc
 D807: 60        rts
 D808: A2 F0     ldx #$F0
 D80A: A0 D9     ldy #$D9
@@ -20,7 +18,7 @@ D81E: 85 14     sta $14        ; RTCLOK+2
 D820: A5 14     lda $14        ; RTCLOK+2
 D822: D0 FC     bne $D820      ; L_D820
 D824: 60        rts
-D825: 18        clc
+D825: 18        clc            ; This is the Entry Point
 D826: A9 C0     lda #$C0
 D828: 85 6A     sta $6A        ; RAMTOP
 D82A: A9 C8     lda #$C8
@@ -155,18 +153,18 @@ D934: 98        tya
 D935: 30 A3     bmi $D8DA      ; L_D8DA
 D937: A0 19     ldy #$19
 D939: A2 0F     ldx #$0F
-D93B: CE 60 DA  dec $DA60      ; L_DA60
-D93E: EC 60 DA  cpx $DA60      ; L_DA60
+D93B: CE 60 DA  dec $DA60      ; COUNTER+3
+D93E: EC 60 DA  cpx $DA60      ; COUNTER+3
 D941: 90 19     bcc $D95C      ; L_D95C
-D943: 8C 60 DA  sty $DA60      ; L_DA60
-D946: CE 5F DA  dec $DA5F      ; L_DA5E+1
-D949: EC 5F DA  cpx $DA5F      ; L_DA5E+1
+D943: 8C 60 DA  sty $DA60      ; COUNTER+3
+D946: CE 5F DA  dec $DA5F      ; COUNTER+2
+D949: EC 5F DA  cpx $DA5F      ; COUNTER+2
 D94C: 90 0E     bcc $D95C      ; L_D95C
-D94E: 8C 5F DA  sty $DA5F      ; L_DA5E+1
-D951: CE 5E DA  dec $DA5E      ; L_DA5E
-D954: EC 5E DA  cpx $DA5E      ; L_DA5E
+D94E: 8C 5F DA  sty $DA5F      ; COUNTER+2
+D951: CE 5E DA  dec $DA5E      ; COUNTER+1
+D954: EC 5E DA  cpx $DA5E      ; COUNTER+1
 D957: 90 03     bcc $D95C      ; L_D95C
-D959: 8C 5E DA  sty $DA5E      ; L_DA5E
+D959: 8C 5E DA  sty $DA5E      ; COUNTER+1
 D95C: A9 00     lda #$00
 D95E: 85 3D     sta $3D        ; BPTR
 D960: A2 C8     ldx #$C8
@@ -206,147 +204,63 @@ D9AE: 8D 45 03  sta $0345      ; B0_ICBAH
 D9B1: A0 03     ldy #$03
 D9B3: 8C 42 03  sty $0342      ; B0_ICCOM
 D9B6: 4C 56 E4  jmp $E456      ; CIOV
-D9B9: 45 3A     eor $3A        ; XMTDON
-D9BB: 9B 70 70  shs $7070,y
-D9BE: 70 70     bvs $DA30      ; L_DA2E+2
-D9C0: 47 C8     lse $C8        ; COLOR
-D9C2: D9 70 07  cmp $0770,y
-D9C5: 41 BC     eor ($BC,x)    ; TRAPLN
-D9C7: D9 00 E5  cmp $E500,y
-D9CA: F2 F2     escape #$F2
-D9CC: EF F2 00  ins $00F2      ; CIX
-D9CF: 0D 00 32  ora $3200
-D9D2: 25 22     and $22        ; ICCOMZ
-D9D4: 2F 22 29  rla $2922
-D9D7: 2E 25 00  rol $0025      ; ICBAHZ
-D9DA: 39 00 00  and $0000,y    ; LNFLG
-D9DD: 30 32     bmi $DA11      ; L_DA11
-D9DF: 25 33     and $33        ; BUFRHI
-D9E1: 29 2F     and #$2F
-D9E3: 2E 25 00  rol $0025      ; ICBAHZ
-D9E6: 00        brk
-D9E7: 00        brk
-D9E8: 00        brk
-D9E9: 00        brk
-D9EA: F3 F4     ins ($F4),y    ; INBUFF+1
-D9EC: E1 F2     sbc ($F2,x)    ; CIX
-D9EE: F4 00     nop $00,x      ; LNFLG
-D9F0: 70 70     bvs $DA62      ; L_DA62
-D9F2: 70 70     bvs $DA64      ; L_DA63+1
-D9F4: 42        cim
-D9F5: 0D DA 70  ora $70DA
-D9F8: 06 70     asl $70        ; ROWAC
-D9FA: 70 02     bvs $D9FE      ; L_D9FE
-D9FC: 70 70     bvs $DA6E      ; L_DA6C+2
-D9FE: 70 70     bvs $DA70      ; L_DA70
-DA00: 70 07     bvs $DA09      ; L_DA08+1
-DA02: 70 70     bvs $DA74      ; L_DA74
-DA04: 70 70     bvs $DA76      ; L_DA76
-DA06: 70 06     bvs $DA0E      ; L_DA0C+2
-DA08: 70 02     bvs $DA0C      ; L_DA0C
-DA0A: 41 F0     eor ($F0,x)    ; FCHRFLG
-DA0C: D9 00 00  cmp $0000,y    ; LNFLG
-DA0F: 36 65     rol $65,x      ; ADRESS+1
-DA11: 6E 65 7A  ror $7A65
-DA14: 75 65     adc $65,x      ; ADRESS+1
-DA16: 6C 61 00  jmp ($0061)    ; FKDEF+1
-DA19: 12        cim
-DA1A: 10 19     bpl $DA35      ; L_DA35
-DA1C: 15 00     ora $00,x      ; LNFLG
-DA1E: 23 21     rla ($21,x)    ; ICDNOZ
-DA20: 30 29     bmi $DA4B      ; L_DA4B
-DA22: 34 21     nop $21,x      ; ICDNOZ
-DA24: 2C 00 34  bit $3400
-DA27: 65 6C     adc $6C        ; BUFSTR
-DA29: 0E 00 19  asl $1900
-DA2C: 14 12     nop $12,x      ; RTCLOK
-DA2E: 0D 12 14  ora $1412
-DA31: 18        clc
-DA32: 12        cim
-DA33: 00        brk
-DA34: 00        brk
-DA35: 00        brk
-DA36: E3 EF     ins ($EF,x)    ; ESIGN
-DA38: ED F0 F5  sbc $F5F0
-DA3B: E3 EC     ins ($EC,x)    ; FRX
-DA3D: F5 E2     sbc $E2,x      ; FR1+2
-DA3F: 00        brk
-DA40: 0D 0D 00  ora $000D      ; DOSINI+1
-DA43: 61 74     adc ($74,x)    ; ENDPT
-DA45: 61 72     adc ($72,x)    ; COLAC
-DA47: 69 00     adc #$00
-DA49: 00        brk
-DA4A: 00        brk
-DA4B: 30 72     bmi $DABF      ; L_DABD+2
-DA4D: 65 73     adc $73        ; COLAC+1
-DA4F: 65 6E     adc $6E        ; BITMSK
-DA51: 74 61     nop $61,x      ; FKDEF+1
-DA53: 00        brk
-DA54: 64 65     nop $65        ; ADRESS+1
-DA56: 6E 74 72  ror $7274
-DA59: 6F 00 64  rra $6400
-DA5C: 65 00     adc $00        ; LNFLG
-DA5E: 10 19     bpl $DA79      ; L_DA79
-DA60: 12        cim
-DA61: 00        brk
-DA62: 62        cim
-DA63: 6C 6F 71  jmp ($716F)
-DA66: 75 65     adc $65,x      ; ADRESS+1
-DA68: 73 00     rra ($00),y    ; LNFLG
-DA6A: 61 00     adc ($00,x)    ; LNFLG
-DA6C: 0E 0E 0E  asl $0E0E
-DA6F: 00        brk
-DA70: 00        brk
-DA71: 00        brk
-DA72: 00        brk
-DA73: 00        brk
-DA74: 00        brk
-DA75: 00        brk
-DA76: 00        brk
-DA77: 36 29     rol $29,x      ; ICBLHZ
-DA79: 33 29     rla ($29),y    ; ICBLHZ
-DA7B: 23 21     rla ($21,x)    ; ICDNOZ
-DA7D: 2C 23 00  bit $0023      ; ICSTAZ
-DA80: 00        brk
-DA81: 00        brk
-DA82: 00        brk
-DA83: 00        brk
-DA84: 00        brk
-DA85: 00        brk
-DA86: 63 6F     rra ($6F,x)    ; SHFAMT
-DA88: 6E 00 73  ror $7300
-DA8B: 69 73     adc #$73
-DA8D: 74 65     nop $65,x      ; ADRESS+1
-DA8F: 6D 61 00  adc $0061      ; FKDEF+1
-DA92: 0D 00 F3  ora $F300
-DA95: F4 E1     nop $E1,x      ; FR1+1
-DA97: E3 00     ins ($00,x)    ; LNFLG
-DA99: 00        brk
-DA9A: 00        brk
-DA9B: 33 34     rla ($34),y    ; BFENLO
-DA9D: 21 23     and ($23,x)    ; ICSTAZ
-DA9F: 00        brk
-DAA0: 08        php
-DAA1: 32        cim
-DAA2: 09 00     ora #$00
-DAA4: 70 6F     bvs $DB15      ; L_DB15
-DAA6: 72        cim
-DAA7: 00        brk
-DAA8: 29 2C     and #$2C
-DAAA: 2A        rol
-DAAB: 2F 32 00  rla $0032      ; BUFRLO
-DAAE: 0A        asl
-DAAF: 0A        asl
-DAB0: 00        brk
-DAB1: 11 19     ora ($19),y    ; DSKFMS+1
-DAB3: 18        clc
-DAB4: 18        clc
-DAB5: 00        brk
-DAB6: 21 32     and ($32,x)    ; BUFRLO
-DAB8: 27 25     rla $25        ; ICBAHZ
-DABA: 2E 34 29  rol $2934
-DABD: 2E 21 00  rol $0021      ; ICDNOZ
-DAC0: 00        brk
+D9B9: 45        BYTE $45 $3A $9B $70 $70 $70 $70 $47
+D9C1: C8        BYTE $C8 $D9 $70 $07 $41 $BC $D9 $00
+D9C9: E5        BYTE $E5 $F2 $F2 $EF $F2 $00 $0D $00
+D9D1: 32        BYTE $32 $25 $22 $2F $22 $29 $2E $25
+D9D9: 00        BYTE $00 $39 $00 $00 $30 $32 $25 $33
+D9E1: 29        BYTE $29 $2F $2E $25 $00 $00 $00 $00
+D9E9: 00        BYTE $00 $F3 $F4 $E1 $F2 $F4 $00
+D9F0: 70        BYTE $70 ; DL 8 scanlines
+D9F1: 70        BYTE $70 ; DL 8 scanlines
+D9F2: 70        BYTE $70 ; DL 8 scanlines
+D9F3: 70        BYTE $70 ; DL 8 scanlines
+D9F4: 42        BYTE $42 ; DL LMS Antic Mode 2
+D9F5: 0D DA     WORD $DA0D     ; SCREEN_DATA
+D9F7: 70        BYTE $70 ; DL 8 scanlines
+D9F8: 06        BYTE $06 ; DL Antic Mode 6
+D9F9: 70        BYTE $70 ; DL 8 scanlines
+D9FA: 70        BYTE $70 ; DL 8 scanlines
+D9FB: 02        BYTE $02 ; DL Antic Mode 2
+D9FC: 70        BYTE $70 ; DL 8 scanlines
+D9FD: 70        BYTE $70 ; DL 8 scanlines
+D9FE: 70        BYTE $70 ; DL 8 scanlines
+D9FF: 70        BYTE $70 ; DL 8 scanlines
+DA00: 70        BYTE $70 ; DL 8 scanlines
+DA01: 07        BYTE $07 ; DL Antic Mode 7
+DA02: 70        BYTE $70 ; DL 8 scanlines
+DA03: 70        BYTE $70 ; DL 8 scanlines
+DA04: 70        BYTE $70 ; DL 8 scanlines
+DA05: 70        BYTE $70 ; DL 8 scanlines
+DA06: 70        BYTE $70 ; DL 8 scanlines
+DA07: 06        BYTE $06 ; DL Antic Mode 6
+DA08: 70        BYTE $70 ; DL 8 scanlines
+DA09: 02        BYTE $02 ; DL Antic Mode 2
+DA0A: 41        BYTE $41 ; DL JMP
+DA0B: F0 D9     WORD $D9F0     ; L_D9F0
+DA0D: 00        BYTE $00 $00 $36 $65 $6E $65 $7A $75
+DA15: 65        BYTE $65 $6C $61 $00 $12 $10 $19 $15
+DA1D: 00        BYTE $00 $23 $21 $30 $29 $34 $21 $2C
+DA25: 00        BYTE $00 $34 $65 $6C $0E $00 $19 $14
+DA2D: 12        BYTE $12 $0D $12 $14 $18 $12 $00 $00
+DA35: 00        BYTE $00 $E3 $EF $ED $F0 $F5 $E3 $EC
+DA3D: F5        BYTE $F5 $E2 $00 $0D $0D $00 $61 $74
+DA45: 61        BYTE $61 $72 $69 $00 $00 $00 $30 $72
+DA4D: 65        BYTE $65 $73 $65 $6E $74 $61 $00 $64
+DA55: 65        BYTE $65 $6E $74 $72 $6F $00 $64 $65
+DA5D: 00        BYTE $00 $10 $19 $12 $00 $62 $6C $6F
+DA65: 71        BYTE $71 $75 $65 $73 $00 $61 $00 $0E
+DA6D: 0E        BYTE $0E $0E $00 $00 $00 $00 $00 $00
+DA75: 00        BYTE $00 $00 $36 $29 $33 $29 $23 $21
+DA7D: 2C        BYTE $2C $23 $00 $00 $00 $00 $00 $00
+DA85: 00        BYTE $00 $63 $6F $6E $00 $73 $69 $73
+DA8D: 74        BYTE $74 $65 $6D $61 $00 $0D $00 $F3
+DA95: F4        BYTE $F4 $E1 $E3 $00 $00 $00 $33 $34
+DA9D: 21        BYTE $21 $23 $00 $08 $32 $09 $00 $70
+DAA5: 6F        BYTE $6F $72 $00 $29 $2C $2A $2F $32
+DAAD: 00        BYTE $00 $0A $0A $00 $11 $19 $18 $18
+DAB5: 00        BYTE $00 $21 $32 $27 $25 $2E $34 $29
+DABD: 2E        BYTE $2E $21 $00 $00
 DAC1: 8D 0F D4  sta $D40F      ; NMIRES
 DAC4: 48        pha
 DAC5: 8A        txa
@@ -521,7 +435,7 @@ DC26: E9 7C     sbc #$7C
 DC28: 60        rts
 DC29: 18        clc
 DC2A: A6 62     ldx $62        ; PALNTS
-DC2C: 7D 6C DC  adc $DC6C,x    ; L_DC6B+1
+DC2C: 7D 6C DC  adc $DC6C,x    ; L_DC68+4
 DC2F: 60        rts
 DC30: A9 13     lda #$13
 DC32: 8D 32 02  sta $0232      ; SSKCTL
@@ -548,14 +462,6 @@ DC63: CA        dex
 DC64: CA        dex
 DC65: 10 F9     bpl $DC60      ; L_DC60
 DC67: 60        rts
-DC68: 7D 64 83  adc $8364,x
-DC6B: 9C 07 20  shy $2007,x
-DC6E: 01 01     ora ($01,x)    ; NGFLAG
-DC70: 01 01     ora ($01,x)    ; NGFLAG
-DC72: 01 01     ora ($01,x)    ; NGFLAG
-DC74: 01 01     ora ($01,x)    ; NGFLAG
-DC76: 01 01     ora ($01,x)    ; NGFLAG
-DC78: 01 01     ora ($01,x)    ; NGFLAG
-DC7A: 01 01     ora ($01,x)    ; NGFLAG
-DC7C: 01 01     ora ($01,x)    ; NGFLAG
-DC7E: 01 01     ora ($01,x)    ; NGFLAG
+DC68: 7D        BYTE $7D $64 $83 $9C $07 $20 $01 $01
+DC70: 01        BYTE $01 $01 $01 $01 $01 $01 $01 $01
+DC78: 01        BYTE $01 $01 $01 $01 $01 $01 $01 $01
