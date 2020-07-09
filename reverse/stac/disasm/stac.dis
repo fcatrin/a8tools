@@ -78,14 +78,14 @@
 0414: A9 E0     lda #$E0
 0416: A0 98     ldy #$98
 0418: A2 04     ldx #$04
-041A: 20 64 04  jsr $0464      ; Move $400  bytes from $E000 to $9800 - $E000->$E3FF is set to 0 / MOVE_MEM
+041A: 20 64 04  jsr $0464      ; Backup charset / MOVE_MEM
 041D: CE 01 D3  dec $D301      ; PORTB
 0420: A9 90     lda #$90
 0422: A0 D8     ldy #$D8
-0424: 20 62 04  jsr $0462      ; Move $1000 bytes from $9000 -> $D800 - $9000->$9FFF is set to 0 / MOVE_MEM_4K
+0424: 20 62 04  jsr $0462      ; Move $1000 bytes from $9000 -> $D800 ; Loader at $D800 Charset at $E000 again / MOVE_MEM_4K
 0427: A9 90     lda #$90
 0429: A0 C0     ldy #$C0
-042B: 20 62 04  jsr $0462      ; Move $1000 bytes from $9000 -> $C000 - $C000->$CFFF is set to 0 ? / MOVE_MEM_4K
+042B: 20 62 04  jsr $0462      ; Move $1000 bytes from $9000 -> $C000 ; This just clear the original code at $9000 / MOVE_MEM_4K
 042E: A9 C1     lda #$C1
 0430: 8D FA FF  sta $FFFA
 0433: A9 DA     lda #$DA

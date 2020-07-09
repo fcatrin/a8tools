@@ -8,9 +8,9 @@ label 0464 MOVE_MEM
 label 0462 MOVE_MEM_4K
 label 046a MOVE_NEXT
 
-rem 041A Move $400  bytes from $E000 to $9800 - $E000->$E3FF is set to 0
-rem 0424 Move $1000 bytes from $9000 -> $D800 - $9000->$9FFF is set to 0
-rem 042B Move $1000 bytes from $9000 -> $C000 - $C000->$CFFF is set to 0 ?
+rem 041A Backup charset
+rem 0424 Move $1000 bytes from $9000 -> $D800 ; Loader at $D800 Charset at $E000 again
+rem 042B Move $1000 bytes from $9000 -> $C000 ; This just clear the original code at $9000
 rem 0435 Set NMI pointer to $DAC1
 rem 043D ths is later used to build $30 + $53 = $83
 rem 0444 INC + SBC -- $DA0D,X += (1 - $AF) carry included

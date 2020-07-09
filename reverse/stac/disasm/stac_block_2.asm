@@ -15,14 +15,14 @@ WAIT             bne WAIT
                  lda #$E0
                  ldy #$98
                  ldx #$04
-                 jsr MOVE_MEM         ; Move $400  bytes from $E000 to $9800 - $E000->$E3FF is set to 0
+                 jsr MOVE_MEM         ; Backup charset
                  dec PORTB
                  lda #$90
                  ldy #$D8
-                 jsr MOVE_MEM_4K      ; Move $1000 bytes from $9000 -> $D800 - $9000->$9FFF is set to 0
+                 jsr MOVE_MEM_4K      ; Move $1000 bytes from $9000 -> $D800 ; Loader at $D800 Charset at $E000 again
                  lda #$90
                  ldy #$C0
-                 jsr MOVE_MEM_4K      ; Move $1000 bytes from $9000 -> $C000 - $C000->$CFFF is set to 0 ?
+                 jsr MOVE_MEM_4K      ; Move $1000 bytes from $9000 -> $C000 ; This just clear the original code at $9000
                  lda #$C1
                  sta $FFFA
                  lda #$DA
