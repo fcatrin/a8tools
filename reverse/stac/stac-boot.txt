@@ -1,0 +1,45 @@
+	.byte $00
+	.byte $09
+	.word $9000
+	.word $0400
+
+	* = $0400
+
+0400 78         SEI
+0401 AC 13 D0   LDY $D013
+0404 D0 FE      BNE $0404
+0406 8C 0E D4   STY $D40E
+0409 84 85      STY $85
+040B 84 87      STY $87
+040D 88         DEY
+040E 8C 01 D3   STY $D301
+0411 8C F8 03   STY $03F8
+0414 A9 E0      LDA #$E0
+0416 A0 98      LDY #$98
+0418 A2 04      LDY #$04
+041A 20 64 04   JSR $0464
+041D CE 01 D3   DEC $D301
+0429 A9 90      LDA #$90
+042B A0 D8      LDY #$D8
+042D 20 62 04   JSR $0462
+0430 A9 90      LDA #$90
+0432 A0 C0      LDY #$C0
+0434 20 62 04   JSR $0462
+0437 A9 C1      LDA #$C1
+0439 8D FA FF   STA $FFFA
+043C A9 DA      LDA #$DA
+043E 8D FB FF   STA $FFFB
+0441 A9 40      LDA #$40
+0443 8D 0E D4   STA $D40E
+0446 A0 53      LDY #$53
+0448 A9 AF      LDA #$AF
+044A 38         SEC
+044B A2 50      LDX #$50
+044D FF 0D DA   ??? $DA0D
+0450 CA         DEX
+0452 10 FA      BPL $044D
+0454 97 ??
+
+
+ff 0d da ca 10 fa 97 30 a9 27 18 a2 3b df 85 da 18 04 30 7d 85 da ca 10 f4 97 31 4c 25 d8 a2 10 85 86 84 88 a0 00 b1 85 91 87 a9 00 91 85 c8 d0 f5 e6 88 e6 86 ca d0 ee 60 00 00 00 b0 ; record=10 ; length=132 ; checksum=b0 OK
+
