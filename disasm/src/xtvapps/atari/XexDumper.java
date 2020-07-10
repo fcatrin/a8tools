@@ -20,7 +20,7 @@ import xtvapps.atari.disasm.mapper.Section.SectionType;
 public class XexDumper {
 	public static final String LOGTAG = XexDumper.class.getSimpleName();
 
-	private static final int DISASM_WIDTH = 30;
+	private static final int DISASM_WIDTH = 46;
 	private static final int ASM_WIDTH = 20;
 	private static final String MARGIN_LABEL    = "                ";
 	private static final String MARGIN_BYTECODE = "              ";
@@ -238,7 +238,7 @@ public class XexDumper {
 				margin = String.format("/* %s */  %s", bytecode, margin);
 			}
 			
-			String disasm = bytecode + "  " + instruction.getText();
+			String disasm = bytecode + "  " + margin + " " + instruction.getText();
 			if (comment == null) {
 				pwAsmBlock.println(margin + " " + instruction.getCode());
 				if (targetLabel == null) {
