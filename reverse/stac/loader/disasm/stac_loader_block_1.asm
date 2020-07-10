@@ -19,6 +19,7 @@ WAIT_3FRAMES     lda #$FD             ; Wait 3 frames
 WAIT_FRAME       lda FRAMECOUNT
                  bne WAIT_FRAME
                  rts
+
 START            clc                  ; This is the Entry Point
                  lda #$C0
                  sta RAMTOP
@@ -147,6 +148,7 @@ READ_BYTE        ldx BUF_INDEX
                  inc BUF_INDEX
                  lda BUFFER,x
                  rts
+
 READ_BLOCK       lda FEOF
                  bmi L_D973
                  jsr L_DB08
@@ -306,6 +308,7 @@ SIO_BIT_HOLD     and SKSTAT
                  ldy FRAMECOUNT
                  bmi SIO_BIT_HOLD
                  rts
+
 L_DB08           lda #$FF
                  ldy #$03
                  sta BUFRLO

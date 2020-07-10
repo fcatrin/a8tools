@@ -46,5 +46,8 @@ comment DAC1 Copy shadow values for Display List and Colors
 
 comment DAF1 Wait for bit 1 and then 2 frames with the same bit 
 
+space D825
+space D92D
+space DB08
 
 
