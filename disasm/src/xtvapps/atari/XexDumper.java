@@ -35,6 +35,7 @@ public class XexDumper {
 	Set<String> usedLabels = new HashSet<String>();
 	
 	Map<Integer, List<String>> blockComments = new HashMap<Integer, List<String>>();
+	Set<Integer> spaces = new HashSet<Integer>();
 	
 	private static boolean includeByteCodeInAsm = false;
 
@@ -208,6 +209,9 @@ public class XexDumper {
 				}
 				pwDis.println();
 				pwAsmBlock.println();
+			} else if (spaces.contains(lineAddr)) {
+				pwDis.println();
+				pwAsmBlock.println();
 			}
 			
 			String label = instruction.getLabel();
@@ -316,6 +320,9 @@ public class XexDumper {
 				
 				String comment = line.substring(addrpos + spacepos).trim();
 				addBlockComment(addr, comment);
+			} else if (cmd.equals("space")) {
+				int addr = Utils.strHex2i(parts[1], 0);
+				spaces.add(addr);
 			}
 		}
 		Disassembler.dumpMapper();
