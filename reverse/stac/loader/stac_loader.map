@@ -7,9 +7,38 @@ byte DA0D
 code DAC1
 byte DC68
 
-label DAC1 NMI
+
+label 0014 FRAMECOUNT
+label 003C FRAME_TIMER
+label 003D BUF_INDEX
+label 003E BUF_LEN
+label 0400 BUFFER
+
+
+label D808 SET_SCREEN0
+label D81C WAIT_3FRAMES
+label D820 WAIT_FRAME
+label D921 READ_BYTE
+label D92D READ_BLOCK
 label D825 START
 label DA0D SCREEN_DATA
 label DA5D COUNTER 4
+label DAC1 NMI
+label DAD1 SHADOW_DL
+label DAE4 SHADOW_COLOR
+label D9F0 DLIST
+label DC5E SET_VOL_A
+label DC60 NEXT_CHANNEL
+label DAF1 WAIT_SIO_BIT
+label DAFE SIO_BIT_HOLD
 
+rem D82A Set Buffer Index at Buffer End to force a block read
+rem D808 Set Display List at $D9F0
+rem D81C Wait 3 frames
 rem D825 This is the Entry Point
+rem DC5C Mute all sound
+rem DAC1 Interrupt service routine
+rem DAC4 Increment Frame Counter
+rem DAC5 Decrement Frame Timer
+rem DAC6 Copy shadow values for Display List and Colors
+rem DAF1 Wait for bit 1 and then 2 frames with the same bit 

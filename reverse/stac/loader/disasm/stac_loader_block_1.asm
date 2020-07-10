@@ -6,7 +6,7 @@
                  .byte $00, $09, $00, $90, $00, $04
                  clc
                  rts
-L_D808           ldx #$F0
+SET_SCREEN0      ldx #$F0             ; Set Display List at $D9F0
                  ldy #$D9
 L_D80C           lda #$00
                  sta COLOR2
@@ -14,17 +14,17 @@ L_D80C           lda #$00
                  sta COLOR0
                  stx SDLSTL
                  sty SDLSTH
-L_D81C           lda #$FD
-                 sta RTCLOK+2
-L_D820           lda RTCLOK+2
-                 bne L_D820
+WAIT_3FRAMES     lda #$FD             ; Wait 3 frames
+                 sta FRAMECOUNT
+WAIT_FRAME       lda FRAMECOUNT
+                 bne WAIT_FRAME
                  rts
 START            clc                  ; This is the Entry Point
                  lda #$C0
                  sta RAMTOP
-                 lda #$C8
-                 sta BPTR
-                 sta FTYPE
+                 lda #$C8             ; Set Buffer Index at Buffer End to force a block read
+                 sta BUF_INDEX
+                 sta BUF_LEN
                  ldy DOSINI
                  sty BFENLO
                  nop #$D0
@@ -32,12 +32,12 @@ START            clc                  ; This is the Entry Point
                  tya
                  ins CHLINK,x
                  sta FEOF
-                 jsr L_D808
-L_D841           jsr L_D921
+                 jsr SET_SCREEN0
+L_D841           jsr READ_BYTE
                  bne L_D887
-                 jsr L_D921
+                 jsr READ_BYTE
                  pha
-                 jsr L_D921
+                 jsr READ_BYTE
                  tay
                  pla
                  bmi L_D857
@@ -46,7 +46,7 @@ L_D841           jsr L_D921
 L_D857           and #$7F
                  sta VNTP
                  sty LOMEM+1
-                 jsr L_D921
+                 jsr READ_BYTE
                  bne L_D86B
                  clc
                  lda VNTP
@@ -71,7 +71,7 @@ L_D87E           sta (VNTP+1),y
 L_D887           bpl L_D8A6
                  and #$7F
                  sta LOMEM+1
-                 jsr L_D921
+                 jsr READ_BYTE
                  ldy LOMEM+1
                  dey
 L_D893           sta (VNTP+1),y
@@ -87,7 +87,7 @@ L_D8A3           jmp L_D841
 L_D8A6           sta LOMEM+1
                  ldy #$00
 L_D8AA           sty LOMEM
-                 jsr L_D921
+                 jsr READ_BYTE
                  ldy LOMEM
                  sta (VNTP+1),y
                  iny
@@ -96,7 +96,7 @@ L_D8AA           sty LOMEM
                  beq L_D898
 L_D8BA           sty LOMEM+1
                  sta VNTP
-L_D8BE           jsr L_D921
+L_D8BE           jsr READ_BYTE
                  ldy #$00
                  sta (VNTP+1),y
                  inc VNTP+1
@@ -128,9 +128,9 @@ L_D8F8           lda CONSOL
                  bcc L_D8F8
                  lda #$34
                  sta PACTL
-                 jsr L_D808
-                 jsr L_D81C
-                 jsr L_DAF1
+                 jsr SET_SCREEN0
+                 jsr WAIT_3FRAMES
+                 jsr WAIT_SIO_BIT
                  ldy BFENLO
                  beq L_D8DA
 L_D910           jsr L_DB08
@@ -141,13 +141,13 @@ L_D910           jsr L_DB08
                  cmp BFENLO
                  bcc L_D910
                  bne L_D8DA
-L_D921           ldx BPTR
-                 cpx FTYPE
-                 beq L_D92D
-                 inc BPTR
-                 lda $0400,x
+READ_BYTE        ldx BUF_INDEX
+                 cpx BUF_LEN
+                 beq READ_BLOCK
+                 inc BUF_INDEX
+                 lda BUFFER,x
                  rts
-L_D92D           lda FEOF
+READ_BLOCK       lda FEOF
                  bmi L_D973
                  jsr L_DB08
                  tya
@@ -167,23 +167,23 @@ L_D92D           lda FEOF
                  bcc L_D95C
                  sty COUNTER+1
 L_D95C           lda #$00
-                 sta BPTR
+                 sta BUF_INDEX
                  ldx #$C8
                  lda $03FF
                  sta BFENLO
                  bne L_D96E
                  dec FEOF
                  ldx $04C7
-L_D96E           stx FTYPE
-                 jmp L_D921
+L_D96E           stx BUF_LEN
+                 jmp READ_BYTE
 L_D973           lda #$3C
                  sta PACTL
                  ldx #$35
 L_D97A           lda L_D986,x
-                 sta $0400,x
+                 sta BUFFER,x
                  dex
                  bpl L_D97A
-                 jmp $0400
+                 jmp BUFFER
 L_D986           ldy #$01
                  sty BOOT
                  dey
@@ -212,7 +212,7 @@ L_D986           ldy #$01
                  .byte $00, $39, $00, $00, $30, $32, $25, $33
                  .byte $29, $2F, $2E, $25, $00, $00, $00, $00
                  .byte $00, $F3, $F4, $E1, $F2, $F4, $00
-L_D9F0           .byte $70 ; DL 8 scanlines
+DLIST            .byte $70 ; DL 8 scanlines
                  .byte $70 ; DL 8 scanlines
                  .byte $70 ; DL 8 scanlines
                  .byte $70 ; DL 8 scanlines
@@ -238,7 +238,7 @@ L_D9F0           .byte $70 ; DL 8 scanlines
                  .byte $70 ; DL 8 scanlines
                  .byte $02 ; DL Antic Mode 2
                  .byte $41 ; DL JMP
-                 .word L_D9F0
+                 .word DLIST
 SCREEN_DATA      .byte $00, $00, $36, $65, $6E, $65, $7A, $75
                  .byte $65, $6C, $61, $00, $12, $10, $19, $15
                  .byte $00, $23, $21, $30, $29, $34, $21, $2C
@@ -262,40 +262,40 @@ COUNTER          .byte $00, $10, $19, $12, $00, $62, $6C, $6F
                  .byte $00, $0A, $0A, $00, $11, $19, $18, $18
                  .byte $00, $21, $32, $27, $25, $2E, $34, $29
                  .byte $2E, $21, $00, $00
-NMI              sta NMIRES
-                 pha
-                 txa
-                 pha
-                 inc RTCLOK+2
-                 lda NOCKSM
-                 beq L_DAD1
-                 dec NOCKSM
-                 bne L_DAD1
-L_DAD1           lda SDLSTH
+NMI              sta NMIRES           ; Interrupt service routine
+                 pha                  ; Increment Frame Counter
+                 txa                  ; Decrement Frame Timer
+                 pha                  ; Copy shadow values for Display List and Colors
+                 inc FRAMECOUNT
+                 lda FRAME_TIMER
+                 beq SHADOW_DL
+                 dec FRAME_TIMER
+                 bne SHADOW_DL
+SHADOW_DL        lda SDLSTH
                  sta DLISTH
                  lda SDLSTL
                  sta DLISTL
                  lda #$08
                  sta CONSOL
                  ldx #$04
-L_DAE4           lda COLOR0,x
+SHADOW_COLOR     lda COLOR0,x
                  sta COLPF0,x
                  dex
-                 bpl L_DAE4
+                 bpl SHADOW_COLOR
                  pla
                  tax
                  pla
                  rti
-L_DAF1           lda SKSTAT
+WAIT_SIO_BIT     lda SKSTAT           ; Wait for bit 1 and then 2 frames with the same bit
                  and #$10
-                 beq L_DAF1
+                 beq WAIT_SIO_BIT
                  ldy #$FE
-                 sty RTCLOK+2
+                 sty FRAMECOUNT
                  lda #$10
-L_DAFE           and SKSTAT
-                 beq L_DAF1
-                 ldy RTCLOK+2
-                 bmi L_DAFE
+SIO_BIT_HOLD     and SKSTAT
+                 beq WAIT_SIO_BIT
+                 ldy FRAMECOUNT
+                 bmi SIO_BIT_HOLD
                  rts
 L_DB08           lda #$FF
                  ldy #$03
@@ -304,7 +304,7 @@ L_DB08           lda #$FF
                  tsx
                  stx BUFRFL
                  ldy #$B4
-                 sty NOCKSM
+                 sty FRAME_TIMER
                  ldy #$00
                  sty CHKSUM
                  sty CHKSNT
@@ -318,7 +318,7 @@ L_DB26           ldy CHKSNT
 L_DB2C           jsr L_DB86
                  jsr L_DC30
 L_DB32           ldy #$8A
-                 lda NOCKSM
+                 lda FRAME_TIMER
                  beq L_DB74
                  lda IRQST
                  and #$20
@@ -357,18 +357,18 @@ L_DB79           ldx BUFRFL
                  rts
 L_DB82           lda #$8A
                  bne L_DB77
-L_DB86           lda NOCKSM
+L_DB86           lda FRAME_TIMER
                  beq L_DB82
                  lda SKSTAT
                  and #$10
                  bne L_DB86
                  sta BFENHI
                  ldx VCOUNT
-                 ldy RTCLOK+2
+                 ldy FRAMECOUNT
                  stx TIMER1
                  sty TIMER1+1
                  ldy #$13
-L_DBA0           lda NOCKSM
+L_DBA0           lda FRAME_TIMER
                  beq L_DB82
                  lda SKSTAT
                  and #$10
@@ -378,7 +378,7 @@ L_DBA0           lda NOCKSM
                  dey
                  bne L_DBA0
                  lda VCOUNT
-                 ldy RTCLOK+2
+                 ldy FRAMECOUNT
                  jsr L_DBD1
                  sta AUDF3
                  sty AUDF4
@@ -449,19 +449,19 @@ L_DC30           lda #$13
                  lda #$28
                  sta AUDCTL
                  lda #$A8
-                 jsr L_DC5E
+                 jsr SET_VOL_A
                  lda #$A0
                  sta AUDC3
                  rts
 L_DC55           lda #$C0
                  sta POKMSK
                  sta IRQEN
-                 lda #$00
-L_DC5E           ldx #$06
-L_DC60           sta AUDC1,x
+                 lda #$00             ; Mute all sound
+SET_VOL_A        ldx #$06
+NEXT_CHANNEL     sta AUDC1,x
                  dex
                  dex
-                 bpl L_DC60
+                 bpl NEXT_CHANNEL
                  rts
 L_DC68           .byte $7D, $64, $83, $9C, $07, $20, $01, $01
                  .byte $01, $01, $01, $01, $01, $01, $01, $01

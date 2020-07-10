@@ -5,7 +5,7 @@
 D800: 00        BYTE $00 $09 $00 $90 $00 $04
 D806: 18        clc
 D807: 60        rts
-D808: A2 F0     ldx #$F0
+D808: A2 F0     ldx #$F0       ; Set Display List at $D9F0
 D80A: A0 D9     ldy #$D9
 D80C: A9 00     lda #$00
 D80E: 8D C6 02  sta $02C6      ; COLOR2
@@ -13,17 +13,17 @@ D811: A9 3A     lda #$3A
 D813: 8D C4 02  sta $02C4      ; COLOR0
 D816: 8E 30 02  stx $0230      ; SDLSTL
 D819: 8C 31 02  sty $0231      ; SDLSTH
-D81C: A9 FD     lda #$FD
-D81E: 85 14     sta $14        ; RTCLOK+2
-D820: A5 14     lda $14        ; RTCLOK+2
-D822: D0 FC     bne $D820      ; L_D820
+D81C: A9 FD     lda #$FD       ; Wait 3 frames
+D81E: 85 14     sta $14        ; FRAMECOUNT
+D820: A5 14     lda $14        ; FRAMECOUNT
+D822: D0 FC     bne $D820      ; WAIT_FRAME
 D824: 60        rts
 D825: 18        clc            ; This is the Entry Point
 D826: A9 C0     lda #$C0
 D828: 85 6A     sta $6A        ; RAMTOP
-D82A: A9 C8     lda #$C8
-D82C: 85 3D     sta $3D        ; BPTR
-D82E: 85 3E     sta $3E        ; FTYPE
+D82A: A9 C8     lda #$C8       ; Set Buffer Index at Buffer End to force a block read
+D82C: 85 3D     sta $3D        ; BUF_INDEX
+D82E: 85 3E     sta $3E        ; BUF_LEN
 D830: A4 0C     ldy $0C        ; DOSINI
 D832: 84 34     sty $34        ; BFENLO
 D834: 80 D0     nop #$D0
@@ -31,12 +31,12 @@ D836: B7 0D     lax $0D,x      ; DOSINI+1
 D838: 98        tya
 D839: FF FB 03  ins $03FB,x    ; CHLINK
 D83C: 85 3F     sta $3F        ; FEOF
-D83E: 20 08 D8  jsr $D808      ; L_D808
-D841: 20 21 D9  jsr $D921      ; L_D921
+D83E: 20 08 D8  jsr $D808      ; SET_SCREEN0
+D841: 20 21 D9  jsr $D921      ; READ_BYTE
 D844: D0 41     bne $D887      ; L_D887
-D846: 20 21 D9  jsr $D921      ; L_D921
+D846: 20 21 D9  jsr $D921      ; READ_BYTE
 D849: 48        pha
-D84A: 20 21 D9  jsr $D921      ; L_D921
+D84A: 20 21 D9  jsr $D921      ; READ_BYTE
 D84D: A8        tay
 D84E: 68        pla
 D84F: 30 06     bmi $D857      ; L_D857
@@ -45,7 +45,7 @@ D854: 4C 41 D8  jmp $D841      ; L_D841
 D857: 29 7F     and #$7F
 D859: 85 82     sta $82        ; VNTP
 D85B: 84 81     sty $81        ; LOMEM+1
-D85D: 20 21 D9  jsr $D921      ; L_D921
+D85D: 20 21 D9  jsr $D921      ; READ_BYTE
 D860: D0 09     bne $D86B      ; L_D86B
 D862: 18        clc
 D863: A5 82     lda $82        ; VNTP
@@ -70,7 +70,7 @@ D885: F0 11     beq $D898      ; L_D898
 D887: 10 1D     bpl $D8A6      ; L_D8A6
 D889: 29 7F     and #$7F
 D88B: 85 81     sta $81        ; LOMEM+1
-D88D: 20 21 D9  jsr $D921      ; L_D921
+D88D: 20 21 D9  jsr $D921      ; READ_BYTE
 D890: A4 81     ldy $81        ; LOMEM+1
 D892: 88        dey
 D893: 91 83     sta ($83),y    ; VNTP+1
@@ -86,7 +86,7 @@ D8A3: 4C 41 D8  jmp $D841      ; L_D841
 D8A6: 85 81     sta $81        ; LOMEM+1
 D8A8: A0 00     ldy #$00
 D8AA: 84 80     sty $80        ; LOMEM
-D8AC: 20 21 D9  jsr $D921      ; L_D921
+D8AC: 20 21 D9  jsr $D921      ; READ_BYTE
 D8AF: A4 80     ldy $80        ; LOMEM
 D8B1: 91 83     sta ($83),y    ; VNTP+1
 D8B3: C8        iny
@@ -95,7 +95,7 @@ D8B6: D0 F2     bne $D8AA      ; L_D8AA
 D8B8: F0 DE     beq $D898      ; L_D898
 D8BA: 84 81     sty $81        ; LOMEM+1
 D8BC: 85 82     sta $82        ; VNTP
-D8BE: 20 21 D9  jsr $D921      ; L_D921
+D8BE: 20 21 D9  jsr $D921      ; READ_BYTE
 D8C1: A0 00     ldy #$00
 D8C3: 91 83     sta ($83),y    ; VNTP+1
 D8C5: E6 83     inc $83        ; VNTP+1
@@ -127,9 +127,9 @@ D8FB: 4A        lsr
 D8FC: 90 FA     bcc $D8F8      ; L_D8F8
 D8FE: A9 34     lda #$34
 D900: 8D 02 D3  sta $D302      ; PACTL
-D903: 20 08 D8  jsr $D808      ; L_D808
-D906: 20 1C D8  jsr $D81C      ; L_D81C
-D909: 20 F1 DA  jsr $DAF1      ; L_DAF1
+D903: 20 08 D8  jsr $D808      ; SET_SCREEN0
+D906: 20 1C D8  jsr $D81C      ; WAIT_3FRAMES
+D909: 20 F1 DA  jsr $DAF1      ; WAIT_SIO_BIT
 D90C: A4 34     ldy $34        ; BFENLO
 D90E: F0 CA     beq $D8DA      ; L_D8DA
 D910: 20 08 DB  jsr $DB08      ; L_DB08
@@ -140,11 +140,11 @@ D919: F0 BF     beq $D8DA      ; L_D8DA
 D91B: C5 34     cmp $34        ; BFENLO
 D91D: 90 F1     bcc $D910      ; L_D910
 D91F: D0 B9     bne $D8DA      ; L_D8DA
-D921: A6 3D     ldx $3D        ; BPTR
-D923: E4 3E     cpx $3E        ; FTYPE
-D925: F0 06     beq $D92D      ; L_D92D
-D927: E6 3D     inc $3D        ; BPTR
-D929: BD 00 04  lda $0400,x
+D921: A6 3D     ldx $3D        ; BUF_INDEX
+D923: E4 3E     cpx $3E        ; BUF_LEN
+D925: F0 06     beq $D92D      ; READ_BLOCK
+D927: E6 3D     inc $3D        ; BUF_INDEX
+D929: BD 00 04  lda $0400,x    ; BUFFER
 D92C: 60        rts
 D92D: A5 3F     lda $3F        ; FEOF
 D92F: 30 42     bmi $D973      ; L_D973
@@ -166,23 +166,23 @@ D954: EC 5E DA  cpx $DA5E      ; COUNTER+1
 D957: 90 03     bcc $D95C      ; L_D95C
 D959: 8C 5E DA  sty $DA5E      ; COUNTER+1
 D95C: A9 00     lda #$00
-D95E: 85 3D     sta $3D        ; BPTR
+D95E: 85 3D     sta $3D        ; BUF_INDEX
 D960: A2 C8     ldx #$C8
 D962: AD FF 03  lda $03FF
 D965: 85 34     sta $34        ; BFENLO
 D967: D0 05     bne $D96E      ; L_D96E
 D969: C6 3F     dec $3F        ; FEOF
 D96B: AE C7 04  ldx $04C7
-D96E: 86 3E     stx $3E        ; FTYPE
-D970: 4C 21 D9  jmp $D921      ; L_D921
+D96E: 86 3E     stx $3E        ; BUF_LEN
+D970: 4C 21 D9  jmp $D921      ; READ_BYTE
 D973: A9 3C     lda #$3C
 D975: 8D 02 D3  sta $D302      ; PACTL
 D978: A2 35     ldx #$35
 D97A: BD 86 D9  lda $D986,x    ; L_D986
-D97D: 9D 00 04  sta $0400,x
+D97D: 9D 00 04  sta $0400,x    ; BUFFER
 D980: CA        dex
 D981: 10 F7     bpl $D97A      ; L_D97A
-D983: 4C 00 04  jmp $0400
+D983: 4C 00 04  jmp $0400      ; BUFFER
 D986: A0 01     ldy #$01
 D988: 84 09     sty $09        ; BOOT
 D98A: 88        dey
@@ -237,7 +237,7 @@ DA07: 06        BYTE $06 ; DL Antic Mode 6
 DA08: 70        BYTE $70 ; DL 8 scanlines
 DA09: 02        BYTE $02 ; DL Antic Mode 2
 DA0A: 41        BYTE $41 ; DL JMP
-DA0B: F0 D9     WORD $D9F0     ; L_D9F0
+DA0B: F0 D9     WORD $D9F0     ; DLIST
 DA0D: 00        BYTE $00 $00 $36 $65 $6E $65 $7A $75
 DA15: 65        BYTE $65 $6C $61 $00 $12 $10 $19 $15
 DA1D: 00        BYTE $00 $23 $21 $30 $29 $34 $21 $2C
@@ -261,15 +261,15 @@ DAA5: 6F        BYTE $6F $72 $00 $29 $2C $2A $2F $32
 DAAD: 00        BYTE $00 $0A $0A $00 $11 $19 $18 $18
 DAB5: 00        BYTE $00 $21 $32 $27 $25 $2E $34 $29
 DABD: 2E        BYTE $2E $21 $00 $00
-DAC1: 8D 0F D4  sta $D40F      ; NMIRES
-DAC4: 48        pha
-DAC5: 8A        txa
-DAC6: 48        pha
-DAC7: E6 14     inc $14        ; RTCLOK+2
-DAC9: A5 3C     lda $3C        ; NOCKSM
-DACB: F0 04     beq $DAD1      ; L_DAD1
-DACD: C6 3C     dec $3C        ; NOCKSM
-DACF: D0 00     bne $DAD1      ; L_DAD1
+DAC1: 8D 0F D4  sta $D40F      ; Interrupt service routine / NMIRES
+DAC4: 48        pha            ; Increment Frame Counter
+DAC5: 8A        txa            ; Decrement Frame Timer
+DAC6: 48        pha            ; Copy shadow values for Display List and Colors
+DAC7: E6 14     inc $14        ; FRAMECOUNT
+DAC9: A5 3C     lda $3C        ; FRAME_TIMER
+DACB: F0 04     beq $DAD1      ; SHADOW_DL
+DACD: C6 3C     dec $3C        ; FRAME_TIMER
+DACF: D0 00     bne $DAD1      ; SHADOW_DL
 DAD1: AD 31 02  lda $0231      ; SDLSTH
 DAD4: 8D 03 D4  sta $D403      ; DLISTH
 DAD7: AD 30 02  lda $0230      ; SDLSTL
@@ -280,21 +280,21 @@ DAE2: A2 04     ldx #$04
 DAE4: BD C4 02  lda $02C4,x    ; COLOR0
 DAE7: 9D 16 D0  sta $D016,x    ; COLPF0
 DAEA: CA        dex
-DAEB: 10 F7     bpl $DAE4      ; L_DAE4
+DAEB: 10 F7     bpl $DAE4      ; SHADOW_COLOR
 DAED: 68        pla
 DAEE: AA        tax
 DAEF: 68        pla
 DAF0: 40        rti
-DAF1: AD 0F D2  lda $D20F      ; SKSTAT
+DAF1: AD 0F D2  lda $D20F      ; Wait for bit 1 and then 2 frames with the same bit / SKSTAT
 DAF4: 29 10     and #$10
-DAF6: F0 F9     beq $DAF1      ; L_DAF1
+DAF6: F0 F9     beq $DAF1      ; WAIT_SIO_BIT
 DAF8: A0 FE     ldy #$FE
-DAFA: 84 14     sty $14        ; RTCLOK+2
+DAFA: 84 14     sty $14        ; FRAMECOUNT
 DAFC: A9 10     lda #$10
 DAFE: 2D 0F D2  and $D20F      ; SKSTAT
-DB01: F0 EE     beq $DAF1      ; L_DAF1
-DB03: A4 14     ldy $14        ; RTCLOK+2
-DB05: 30 F7     bmi $DAFE      ; L_DAFE
+DB01: F0 EE     beq $DAF1      ; WAIT_SIO_BIT
+DB03: A4 14     ldy $14        ; FRAMECOUNT
+DB05: 30 F7     bmi $DAFE      ; SIO_BIT_HOLD
 DB07: 60        rts
 DB08: A9 FF     lda #$FF
 DB0A: A0 03     ldy #$03
@@ -303,7 +303,7 @@ DB0E: 84 33     sty $33        ; BUFRHI
 DB10: BA        tsx
 DB11: 86 38     stx $38        ; BUFRFL
 DB13: A0 B4     ldy #$B4
-DB15: 84 3C     sty $3C        ; NOCKSM
+DB15: 84 3C     sty $3C        ; FRAME_TIMER
 DB17: A0 00     ldy #$00
 DB19: 84 31     sty $31        ; CHKSUM
 DB1B: 84 3B     sty $3B        ; CHKSNT
@@ -317,7 +317,7 @@ DB2A: D0 06     bne $DB32      ; L_DB32
 DB2C: 20 86 DB  jsr $DB86      ; L_DB86
 DB2F: 20 30 DC  jsr $DC30      ; L_DC30
 DB32: A0 8A     ldy #$8A
-DB34: A5 3C     lda $3C        ; NOCKSM
+DB34: A5 3C     lda $3C        ; FRAME_TIMER
 DB36: F0 3C     beq $DB74      ; L_DB74
 DB38: AD 0E D2  lda $D20E      ; IRQST
 DB3B: 29 20     and #$20
@@ -356,18 +356,18 @@ DB7F: A4 30     ldy $30        ; STATUS
 DB81: 60        rts
 DB82: A9 8A     lda #$8A
 DB84: D0 F1     bne $DB77      ; L_DB77
-DB86: A5 3C     lda $3C        ; NOCKSM
+DB86: A5 3C     lda $3C        ; FRAME_TIMER
 DB88: F0 F8     beq $DB82      ; L_DB82
 DB8A: AD 0F D2  lda $D20F      ; SKSTAT
 DB8D: 29 10     and #$10
 DB8F: D0 F5     bne $DB86      ; L_DB86
 DB91: 85 35     sta $35        ; BFENHI
 DB93: AE 0B D4  ldx $D40B      ; VCOUNT
-DB96: A4 14     ldy $14        ; RTCLOK+2
+DB96: A4 14     ldy $14        ; FRAMECOUNT
 DB98: 8E 0C 03  stx $030C      ; TIMER1
 DB9B: 8C 0D 03  sty $030D      ; TIMER1+1
 DB9E: A0 13     ldy #$13
-DBA0: A5 3C     lda $3C        ; NOCKSM
+DBA0: A5 3C     lda $3C        ; FRAME_TIMER
 DBA2: F0 DE     beq $DB82      ; L_DB82
 DBA4: AD 0F D2  lda $D20F      ; SKSTAT
 DBA7: 29 10     and #$10
@@ -377,7 +377,7 @@ DBAD: 85 35     sta $35        ; BFENHI
 DBAF: 88        dey
 DBB0: D0 EE     bne $DBA0      ; L_DBA0
 DBB2: AD 0B D4  lda $D40B      ; VCOUNT
-DBB5: A4 14     ldy $14        ; RTCLOK+2
+DBB5: A4 14     ldy $14        ; FRAMECOUNT
 DBB7: 20 D1 DB  jsr $DBD1      ; L_DBD1
 DBBA: 8D 04 D2  sta $D204      ; AUDF3
 DBBD: 8C 06 D2  sty $D206      ; AUDF4
@@ -448,19 +448,19 @@ DC42: 8D 0E D2  sta $D20E      ; IRQEN
 DC45: A9 28     lda #$28
 DC47: 8D 08 D2  sta $D208      ; AUDCTL
 DC4A: A9 A8     lda #$A8
-DC4C: 20 5E DC  jsr $DC5E      ; L_DC5E
+DC4C: 20 5E DC  jsr $DC5E      ; SET_VOL_A
 DC4F: A9 A0     lda #$A0
 DC51: 8D 05 D2  sta $D205      ; AUDC3
 DC54: 60        rts
 DC55: A9 C0     lda #$C0
 DC57: 85 10     sta $10        ; POKMSK
 DC59: 8D 0E D2  sta $D20E      ; IRQEN
-DC5C: A9 00     lda #$00
+DC5C: A9 00     lda #$00       ; Mute all sound
 DC5E: A2 06     ldx #$06
 DC60: 9D 01 D2  sta $D201,x    ; AUDC1
 DC63: CA        dex
 DC64: CA        dex
-DC65: 10 F9     bpl $DC60      ; L_DC60
+DC65: 10 F9     bpl $DC60      ; NEXT_CHANNEL
 DC67: 60        rts
 DC68: 7D        BYTE $7D $64 $83 $9C $07 $20 $01 $01
 DC70: 01        BYTE $01 $01 $01 $01 $01 $01 $01 $01
