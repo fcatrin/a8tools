@@ -25,7 +25,7 @@ public class Disassembler {
 	private static String lblFileName;
 	private static String xexFileName;
 	
-	private static boolean allowInvalidOpCodes = false;
+	private static boolean allowInvalidOpCodes = true;
 	private static boolean useLowerCase = true;
 	
 	private static Set<String> usedSyms = new HashSet<String>();
