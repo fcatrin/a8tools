@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -32,6 +33,8 @@ public class XexDumper {
 
 	Map<String, Integer> usedTargets = new HashMap<String, Integer>();
 	Set<String> usedLabels = new HashSet<String>();
+	
+	Map<Integer, List<String>> blockComments = new HashMap<Integer, List<String>>();
 	
 	private static boolean includeByteCodeInAsm = false;
 
@@ -192,7 +195,20 @@ public class XexDumper {
 		
 		base = 0;
 		while (base < block.length) {
-			Instruction instruction = Disassembler.getInstruction(blockIndex, addr + base);
+			int lineAddr = addr + base;
+			Instruction instruction = Disassembler.getInstruction(blockIndex, lineAddr);
+			
+			List<String> blockComment = blockComments.get(lineAddr);
+			if (blockComment!=null) {
+				pwDis.println();
+				pwAsmBlock.println();
+				for(String lineComment : blockComment) {
+					pwDis.println("  " + lineComment);
+					pwAsmBlock.println(";  " + lineComment);
+				}
+				pwDis.println();
+				pwAsmBlock.println();
+			}
 			
 			String label = instruction.getLabel();
 			if (usedTargets.containsKey(label)) {
@@ -201,14 +217,14 @@ public class XexDumper {
 				label = "";
 			}
 			
-			Sym userLabel = Disassembler.getMapperLabel(addr + base);
+			Sym userLabel = Disassembler.getMapperLabel(lineAddr);
 			if (userLabel!=null) {
 				label = userLabel.name;
 				usedLabels.add(label);
 			}
 			
 			String margin = buildLabelMargin(label);
-			String comment = Disassembler.getComment(addr + base);
+			String comment = Disassembler.getComment(lineAddr);
 			String bytecode = buildByteCodeMargin(instruction.getByteCode());
 			String targetLabel = instruction.getTargetLabel();
 			
@@ -292,6 +308,14 @@ public class XexDumper {
 				
 				String comment = line.substring(addrpos + spacepos).trim();
 				Disassembler.addComment(addr, comment);
+			} else if (cmd.equals("comment")) {
+				int addr = Utils.strHex2i(parts[1], 0);
+				
+				int addrpos = line.indexOf(parts[1]);
+				int spacepos = line.substring(addrpos).indexOf(" ");
+				
+				String comment = line.substring(addrpos + spacepos).trim();
+				addBlockComment(addr, comment);
 			}
 		}
 		Disassembler.dumpMapper();
@@ -304,6 +328,14 @@ public class XexDumper {
 		return new File(path);
 	}
 
+	private void addBlockComment(int addr, String line) {
+		List<String> list = blockComments.get(addr);
+		if (list == null) {
+			list = new ArrayList<String>();
+			blockComments.put(addr, list);
+		}
+		list.add(line);
+	}
 	
 	public static void main(String[] args) throws IOException {
 		if (args.length < 1) {
