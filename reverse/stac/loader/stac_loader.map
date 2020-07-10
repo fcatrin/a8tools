@@ -2,6 +2,8 @@ block 1
 byte D800
 code D806
 byte D9B9
+dlst D9BC
+byte D9C8
 dlst D9F0
 byte DA0D
 code DAC1
@@ -9,13 +11,15 @@ byte DC68
 
 
 label 0014 FRAMECOUNT
+label 0034 BLOCK_NUMBER
 label 003C FRAME_TIMER
 label 003D BUF_INDEX
 label 003E BUF_LEN
+label 003F EOF_FLAG
 label 0400 BUFFER
 
-
 label D808 SET_SCREEN0
+label D80C SET_SCREEN
 label D81C WAIT_3FRAMES
 label D820 WAIT_FRAME
 label D921 READ_BYTE
@@ -26,28 +30,59 @@ label DA5D COUNTER 4
 label DAC1 NMI
 label DAD1 SHADOW_DL
 label DAE4 SHADOW_COLOR
-label D9F0 DLIST
+label D9BC DLIST_ERROR
+label D9C8 ERROR_MSG
+label D9F0 DLIST_MAIN
 label DC5E SET_VOL_A
 label DC60 NEXT_CHANNEL
 label DAF1 WAIT_SIO_BIT
 label DAFE SIO_BIT_HOLD
+label D96E NOT_EOF
+label D973 START_GAME
+label D986 BOOT_GAME_CODE
+label D998 REL_0412
+label D9B3 REL_042D
+label D9B9 REL_0433
+label D8DA DISPLAY_ERROR
 
 rem D82A Set Buffer Index at Buffer End to force a block read
 rem D808 Set Display List at $D9F0
 rem D81C Wait 3 frames
 rem D825 This is the Entry Point
 rem DC5C Mute all sound
-
+rem D937 This is the numbner 9 to wrap the counter
+rem D939 This is used to check if we passed below 0
+rem D96B Contains the partial block size
+rem D992 This calls the relocated subroutine at REL_0412
+rem D995 Looks like a hardcoded execution address per game, skipping standard XEX variables
+rem D99C This calls the relocated subroutine at REL_042D
+rem D998 Close Channel 0
+rem D9B1 Open command
+rem D9A7 Buffer at REL_0433
+rem D9B9 E:
 
 comment DAC1 Interrupt service routine (set from boot EOF)
 comment DAC1 Increments Frame Counter
 comment DAC1 Decrements Frame Timer
 comment DAC1 Copy shadow values for Display List and Colors
-
 comment DAF1 Wait for bit 1 and then 2 frames with the same bit 
+comment D937 Successful read. Decrement block counter on the screen
+comment D95C Set EOF flag, buffer length and block read number
+comment D986 This code is copied to $400 and it is ran to start the game
+comment D9C8 [error] - REBOBINE Y PRESIONE [START]
+comment D99F Open channel 0 as E:
+comment D8DA Stop tape and display error message
 
 space D825
 space D92D
 space DB08
+space D9B9
+space D9BC
+space D9F0
+
+
+
+
+
 
 

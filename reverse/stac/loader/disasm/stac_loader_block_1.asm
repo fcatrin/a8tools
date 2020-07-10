@@ -8,7 +8,7 @@
                  rts
 SET_SCREEN0      ldx #$F0             ; Set Display List at $D9F0
                  ldy #$D9
-L_D80C           lda #$00
+SET_SCREEN       lda #$00
                  sta COLOR2
                  lda #$3A
                  sta COLOR0
@@ -27,12 +27,12 @@ START            clc                  ; This is the Entry Point
                  sta BUF_INDEX
                  sta BUF_LEN
                  ldy DOSINI
-                 sty BFENLO
+                 sty BLOCK_NUMBER
                  nop #$D0
                  lax DOSINI+1,x
                  tya
                  ins CHLINK,x
-                 sta FEOF
+                 sta EOF_FLAG
                  jsr SET_SCREEN0
 L_D841           jsr READ_BYTE
                  bne L_D887
@@ -111,11 +111,14 @@ L_D8D1           dec LOMEM+1
                  ora LOMEM+1
                  bne L_D8BE
                  rts
-L_D8DA           lda #$3C
+
+;  Stop tape and display error message
+
+DISPLAY_ERROR    lda #$3C
                  sta PACTL
                  ldx #$BC
                  ldy #$D9
-                 jsr L_D80C
+                 jsr SET_SCREEN
                  lda #$FD
                  ldx #$00
                  stx B0_ICBLL
@@ -132,16 +135,16 @@ L_D8F8           lda CONSOL
                  jsr SET_SCREEN0
                  jsr WAIT_3FRAMES
                  jsr WAIT_SIO_BIT
-                 ldy BFENLO
-                 beq L_D8DA
+                 ldy BLOCK_NUMBER
+                 beq DISPLAY_ERROR
 L_D910           jsr L_DB08
                  tya
-                 bmi L_D8DA
+                 bmi DISPLAY_ERROR
                  lda $03FF
-                 beq L_D8DA
-                 cmp BFENLO
+                 beq DISPLAY_ERROR
+                 cmp BLOCK_NUMBER
                  bcc L_D910
-                 bne L_D8DA
+                 bne DISPLAY_ERROR
 READ_BYTE        ldx BUF_INDEX
                  cpx BUF_LEN
                  beq READ_BLOCK
@@ -149,13 +152,16 @@ READ_BYTE        ldx BUF_INDEX
                  lda BUFFER,x
                  rts
 
-READ_BLOCK       lda FEOF
-                 bmi L_D973
+READ_BLOCK       lda EOF_FLAG
+                 bmi START_GAME
                  jsr L_DB08
                  tya
-                 bmi L_D8DA
-                 ldy #$19
-                 ldx #$0F
+                 bmi DISPLAY_ERROR
+
+;  Successful read. Decrement block counter on the screen
+
+                 ldy #$19             ; This is the numbner 9 to wrap the counter
+                 ldx #$0F             ; This is used to check if we passed below 0
                  dec COUNTER+3
                  cpx COUNTER+3
                  bcc L_D95C
@@ -168,53 +174,77 @@ READ_BLOCK       lda FEOF
                  cpx COUNTER+1
                  bcc L_D95C
                  sty COUNTER+1
+
+;  Set EOF flag, buffer length and block read number
+
 L_D95C           lda #$00
                  sta BUF_INDEX
                  ldx #$C8
                  lda $03FF
-                 sta BFENLO
-                 bne L_D96E
-                 dec FEOF
-                 ldx $04C7
-L_D96E           stx BUF_LEN
+                 sta BLOCK_NUMBER
+                 bne NOT_EOF
+                 dec EOF_FLAG
+                 ldx $04C7            ; Contains the partial block size
+NOT_EOF          stx BUF_LEN
                  jmp READ_BYTE
-L_D973           lda #$3C
+START_GAME       lda #$3C
                  sta PACTL
                  ldx #$35
-L_D97A           lda L_D986,x
+L_D97A           lda BOOT_GAME_CODE,x
                  sta BUFFER,x
                  dex
                  bpl L_D97A
                  jmp BUFFER
-L_D986           ldy #$01
+
+;  This code is copied to $400 and it is ran to start the game
+
+BOOT_GAME_CODE   ldy #$01
                  sty BOOT
                  dey
                  sty COLDST
                  inc PORTB
                  cli
-                 jsr $0412
-                 jmp $1B33
-                 ldx #$00
+                 jsr $0412            ; This calls the relocated subroutine at REL_0412
+                 jmp $1B33            ; Looks like a hardcoded execution address per game, skipping standard XEX variables
+REL_0412         ldx #$00             ; Close Channel 0
                  ldy #$0C
-                 jsr $042D
+                 jsr $042D            ; This calls the relocated subroutine at REL_042D
+
+;  Open channel 0 as E:
+
                  stx B0_ICAX2
                  lda #$0C
                  sta B0_ICAX1
-                 lda #$33
+                 lda #$33             ; Buffer at REL_0433
                  sta B0_ICBAL
                  lda #$04
                  sta B0_ICBAH
-                 ldy #$03
-                 sty B0_ICCOM
+                 ldy #$03             ; Open command
+REL_042D         sty B0_ICCOM
                  jmp CIOV
-                 .byte $45, $3A, $9B, $70, $70, $70, $70, $47
-                 .byte $C8, $D9, $70, $07, $41, $BC, $D9, $00
-                 .byte $E5, $F2, $F2, $EF, $F2, $00, $0D, $00
-                 .byte $32, $25, $22, $2F, $22, $29, $2E, $25
-                 .byte $00, $39, $00, $00, $30, $32, $25, $33
-                 .byte $29, $2F, $2E, $25, $00, $00, $00, $00
-                 .byte $00, $F3, $F4, $E1, $F2, $F4, $00
-DLIST            .byte $70 ; DL 8 scanlines
+
+REL_0433         .byte $45, $3A, $9B  ; E:
+
+DLIST_ERROR      .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $70 ; DL 8 scanlines
+                 .byte $47 ; DL LMS Antic Mode 7
+                 .word ERROR_MSG
+                 .byte $70 ; DL 8 scanlines
+                 .byte $07 ; DL Antic Mode 7
+                 .byte $41 ; DL JMP
+                 .word DLIST_ERROR
+
+;  [error] - REBOBINE Y PRESIONE [START]
+
+ERROR_MSG        .byte $00, $E5, $F2, $F2, $EF, $F2, $00, $0D
+                 .byte $00, $32, $25, $22, $2F, $22, $29, $2E
+                 .byte $25, $00, $39, $00, $00, $30, $32, $25
+                 .byte $33, $29, $2F, $2E, $25, $00, $00, $00
+                 .byte $00, $00, $F3, $F4, $E1, $F2, $F4, $00
+
+DLIST_MAIN       .byte $70 ; DL 8 scanlines
                  .byte $70 ; DL 8 scanlines
                  .byte $70 ; DL 8 scanlines
                  .byte $70 ; DL 8 scanlines
@@ -240,7 +270,7 @@ DLIST            .byte $70 ; DL 8 scanlines
                  .byte $70 ; DL 8 scanlines
                  .byte $02 ; DL Antic Mode 2
                  .byte $41 ; DL JMP
-                 .word DLIST
+                 .word DLIST_MAIN
 SCREEN_DATA      .byte $00, $00, $36, $65, $6E, $65, $7A, $75
                  .byte $65, $6C, $61, $00, $12, $10, $19, $15
                  .byte $00, $23, $21, $30, $29, $34, $21, $2C

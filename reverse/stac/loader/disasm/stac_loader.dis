@@ -7,7 +7,7 @@ D806: 18                         clc
 D807: 60                         rts
 D808: A2 F0     SET_SCREEN0      ldx #$F0      ; Set Display List at $D9F0
 D80A: A0 D9                      ldy #$D9
-D80C: A9 00     L_D80C           lda #$00
+D80C: A9 00     SET_SCREEN       lda #$00
 D80E: 8D C6 02                   sta $02C6     ; COLOR2
 D811: A9 3A                      lda #$3A
 D813: 8D C4 02                   sta $02C4     ; COLOR0
@@ -26,12 +26,12 @@ D82A: A9 C8                      lda #$C8      ; Set Buffer Index at Buffer End 
 D82C: 85 3D                      sta $3D       ; BUF_INDEX
 D82E: 85 3E                      sta $3E       ; BUF_LEN
 D830: A4 0C                      ldy $0C       ; DOSINI
-D832: 84 34                      sty $34       ; BFENLO
+D832: 84 34                      sty $34       ; BLOCK_NUMBER
 D834: 80 D0                      nop #$D0
 D836: B7 0D                      lax $0D,x     ; DOSINI+1
 D838: 98                         tya
 D839: FF FB 03                   ins $03FB,x   ; CHLINK
-D83C: 85 3F                      sta $3F       ; FEOF
+D83C: 85 3F                      sta $3F       ; EOF_FLAG
 D83E: 20 08 D8                   jsr $D808     ; SET_SCREEN0
 D841: 20 21 D9  L_D841           jsr $D921     ; READ_BYTE
 D844: D0 41                      bne $D887     ; L_D887
@@ -110,11 +110,14 @@ D8D3: A5 82                      lda $82       ; VNTP
 D8D5: 05 81                      ora $81       ; LOMEM+1
 D8D7: D0 E5                      bne $D8BE     ; L_D8BE
 D8D9: 60                         rts
-D8DA: A9 3C     L_D8DA           lda #$3C
+
+  Stop tape and display error message
+
+D8DA: A9 3C     DISPLAY_ERROR    lda #$3C
 D8DC: 8D 02 D3                   sta $D302     ; PACTL
 D8DF: A2 BC                      ldx #$BC
 D8E1: A0 D9                      ldy #$D9
-D8E3: 20 0C D8                   jsr $D80C     ; L_D80C
+D8E3: 20 0C D8                   jsr $D80C     ; SET_SCREEN
 D8E6: A9 FD                      lda #$FD
 D8E8: A2 00                      ldx #$00
 D8EA: 8E 48 03                   stx $0348     ; B0_ICBLL
@@ -131,16 +134,16 @@ D900: 8D 02 D3                   sta $D302     ; PACTL
 D903: 20 08 D8                   jsr $D808     ; SET_SCREEN0
 D906: 20 1C D8                   jsr $D81C     ; WAIT_3FRAMES
 D909: 20 F1 DA                   jsr $DAF1     ; WAIT_SIO_BIT
-D90C: A4 34                      ldy $34       ; BFENLO
-D90E: F0 CA                      beq $D8DA     ; L_D8DA
+D90C: A4 34                      ldy $34       ; BLOCK_NUMBER
+D90E: F0 CA                      beq $D8DA     ; DISPLAY_ERROR
 D910: 20 08 DB  L_D910           jsr $DB08     ; L_DB08
 D913: 98                         tya
-D914: 30 C4                      bmi $D8DA     ; L_D8DA
+D914: 30 C4                      bmi $D8DA     ; DISPLAY_ERROR
 D916: AD FF 03                   lda $03FF
-D919: F0 BF                      beq $D8DA     ; L_D8DA
-D91B: C5 34                      cmp $34       ; BFENLO
+D919: F0 BF                      beq $D8DA     ; DISPLAY_ERROR
+D91B: C5 34                      cmp $34       ; BLOCK_NUMBER
 D91D: 90 F1                      bcc $D910     ; L_D910
-D91F: D0 B9                      bne $D8DA     ; L_D8DA
+D91F: D0 B9                      bne $D8DA     ; DISPLAY_ERROR
 D921: A6 3D     READ_BYTE        ldx $3D       ; BUF_INDEX
 D923: E4 3E                      cpx $3E       ; BUF_LEN
 D925: F0 06                      beq $D92D     ; READ_BLOCK
@@ -148,13 +151,16 @@ D927: E6 3D                      inc $3D       ; BUF_INDEX
 D929: BD 00 04                   lda $0400,x   ; BUFFER
 D92C: 60                         rts
 
-D92D: A5 3F     READ_BLOCK       lda $3F       ; FEOF
-D92F: 30 42                      bmi $D973     ; L_D973
+D92D: A5 3F     READ_BLOCK       lda $3F       ; EOF_FLAG
+D92F: 30 42                      bmi $D973     ; START_GAME
 D931: 20 08 DB                   jsr $DB08     ; L_DB08
 D934: 98                         tya
-D935: 30 A3                      bmi $D8DA     ; L_D8DA
-D937: A0 19                      ldy #$19
-D939: A2 0F                      ldx #$0F
+D935: 30 A3                      bmi $D8DA     ; DISPLAY_ERROR
+
+  Successful read. Decrement block counter on the screen
+
+D937: A0 19                      ldy #$19      ; This is the numbner 9 to wrap the counter
+D939: A2 0F                      ldx #$0F      ; This is used to check if we passed below 0
 D93B: CE 60 DA                   dec $DA60     ; COUNTER+3
 D93E: EC 60 DA                   cpx $DA60     ; COUNTER+3
 D941: 90 19                      bcc $D95C     ; L_D95C
@@ -167,53 +173,77 @@ D951: CE 5E DA                   dec $DA5E     ; COUNTER+1
 D954: EC 5E DA                   cpx $DA5E     ; COUNTER+1
 D957: 90 03                      bcc $D95C     ; L_D95C
 D959: 8C 5E DA                   sty $DA5E     ; COUNTER+1
+
+  Set EOF flag, buffer length and block read number
+
 D95C: A9 00     L_D95C           lda #$00
 D95E: 85 3D                      sta $3D       ; BUF_INDEX
 D960: A2 C8                      ldx #$C8
 D962: AD FF 03                   lda $03FF
-D965: 85 34                      sta $34       ; BFENLO
-D967: D0 05                      bne $D96E     ; L_D96E
-D969: C6 3F                      dec $3F       ; FEOF
-D96B: AE C7 04                   ldx $04C7
-D96E: 86 3E     L_D96E           stx $3E       ; BUF_LEN
+D965: 85 34                      sta $34       ; BLOCK_NUMBER
+D967: D0 05                      bne $D96E     ; NOT_EOF
+D969: C6 3F                      dec $3F       ; EOF_FLAG
+D96B: AE C7 04                   ldx $04C7     ; Contains the partial block size
+D96E: 86 3E     NOT_EOF          stx $3E       ; BUF_LEN
 D970: 4C 21 D9                   jmp $D921     ; READ_BYTE
-D973: A9 3C     L_D973           lda #$3C
+D973: A9 3C     START_GAME       lda #$3C
 D975: 8D 02 D3                   sta $D302     ; PACTL
 D978: A2 35                      ldx #$35
-D97A: BD 86 D9  L_D97A           lda $D986,x   ; L_D986
+D97A: BD 86 D9  L_D97A           lda $D986,x   ; BOOT_GAME_CODE
 D97D: 9D 00 04                   sta $0400,x   ; BUFFER
 D980: CA                         dex
 D981: 10 F7                      bpl $D97A     ; L_D97A
 D983: 4C 00 04                   jmp $0400     ; BUFFER
-D986: A0 01     L_D986           ldy #$01
+
+  This code is copied to $400 and it is ran to start the game
+
+D986: A0 01     BOOT_GAME_CODE   ldy #$01
 D988: 84 09                      sty $09       ; BOOT
 D98A: 88                         dey
 D98B: 8C 44 02                   sty $0244     ; COLDST
 D98E: EE 01 D3                   inc $D301     ; PORTB
 D991: 58                         cli
-D992: 20 12 04                   jsr $0412
-D995: 4C 33 1B                   jmp $1B33
-D998: A2 00                      ldx #$00
+D992: 20 12 04                   jsr $0412     ; This calls the relocated subroutine at REL_0412
+D995: 4C 33 1B                   jmp $1B33     ; Looks like a hardcoded execution address per game, skipping standard XEX variables
+D998: A2 00     REL_0412         ldx #$00      ; Close Channel 0
 D99A: A0 0C                      ldy #$0C
-D99C: 20 2D 04                   jsr $042D
+D99C: 20 2D 04                   jsr $042D     ; This calls the relocated subroutine at REL_042D
+
+  Open channel 0 as E:
+
 D99F: 8E 4B 03                   stx $034B     ; B0_ICAX2
 D9A2: A9 0C                      lda #$0C
 D9A4: 8D 4A 03                   sta $034A     ; B0_ICAX1
-D9A7: A9 33                      lda #$33
+D9A7: A9 33                      lda #$33      ; Buffer at REL_0433
 D9A9: 8D 44 03                   sta $0344     ; B0_ICBAL
 D9AC: A9 04                      lda #$04
 D9AE: 8D 45 03                   sta $0345     ; B0_ICBAH
-D9B1: A0 03                      ldy #$03
-D9B3: 8C 42 03                   sty $0342     ; B0_ICCOM
+D9B1: A0 03                      ldy #$03      ; Open command
+D9B3: 8C 42 03  REL_042D         sty $0342     ; B0_ICCOM
 D9B6: 4C 56 E4                   jmp $E456     ; CIOV
-D9B9: 45                         BYTE $45 $3A $9B $70 $70 $70 $70 $47
-D9C1: C8                         BYTE $C8 $D9 $70 $07 $41 $BC $D9 $00
-D9C9: E5                         BYTE $E5 $F2 $F2 $EF $F2 $00 $0D $00
-D9D1: 32                         BYTE $32 $25 $22 $2F $22 $29 $2E $25
-D9D9: 00                         BYTE $00 $39 $00 $00 $30 $32 $25 $33
-D9E1: 29                         BYTE $29 $2F $2E $25 $00 $00 $00 $00
-D9E9: 00                         BYTE $00 $F3 $F4 $E1 $F2 $F4 $00
-D9F0: 70        DLIST            BYTE $70 ; DL 8 scanlines
+
+D9B9: 45        REL_0433         BYTE $45 $3A $9B ; E:
+
+D9BC: 70        DLIST_ERROR      BYTE $70 ; DL 8 scanlines
+D9BD: 70                         BYTE $70 ; DL 8 scanlines
+D9BE: 70                         BYTE $70 ; DL 8 scanlines
+D9BF: 70                         BYTE $70 ; DL 8 scanlines
+D9C0: 47                         BYTE $47 ; DL LMS Antic Mode 7
+D9C1: C8 D9                      WORD $D9C8    ; ERROR_MSG
+D9C3: 70                         BYTE $70 ; DL 8 scanlines
+D9C4: 07                         BYTE $07 ; DL Antic Mode 7
+D9C5: 41                         BYTE $41 ; DL JMP
+D9C6: BC D9                      WORD $D9BC    ; DLIST_ERROR
+
+  [error] - REBOBINE Y PRESIONE [START]
+
+D9C8: 00        ERROR_MSG        BYTE $00 $E5 $F2 $F2 $EF $F2 $00 $0D
+D9D0: 00                         BYTE $00 $32 $25 $22 $2F $22 $29 $2E
+D9D8: 25                         BYTE $25 $00 $39 $00 $00 $30 $32 $25
+D9E0: 33                         BYTE $33 $29 $2F $2E $25 $00 $00 $00
+D9E8: 00                         BYTE $00 $00 $F3 $F4 $E1 $F2 $F4 $00
+
+D9F0: 70        DLIST_MAIN       BYTE $70 ; DL 8 scanlines
 D9F1: 70                         BYTE $70 ; DL 8 scanlines
 D9F2: 70                         BYTE $70 ; DL 8 scanlines
 D9F3: 70                         BYTE $70 ; DL 8 scanlines
@@ -239,7 +269,7 @@ DA07: 06                         BYTE $06 ; DL Antic Mode 6
 DA08: 70                         BYTE $70 ; DL 8 scanlines
 DA09: 02                         BYTE $02 ; DL Antic Mode 2
 DA0A: 41                         BYTE $41 ; DL JMP
-DA0B: F0 D9                      WORD $D9F0    ; DLIST
+DA0B: F0 D9                      WORD $D9F0    ; DLIST_MAIN
 DA0D: 00        SCREEN_DATA      BYTE $00 $00 $36 $65 $6E $65 $7A $75
 DA15: 65                         BYTE $65 $6C $61 $00 $12 $10 $19 $15
 DA1D: 00                         BYTE $00 $23 $21 $30 $29 $34 $21 $2C
