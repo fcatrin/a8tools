@@ -261,10 +261,16 @@ DAA5: 6F        BYTE $6F $72 $00 $29 $2C $2A $2F $32
 DAAD: 00        BYTE $00 $0A $0A $00 $11 $19 $18 $18
 DAB5: 00        BYTE $00 $21 $32 $27 $25 $2E $34 $29
 DABD: 2E        BYTE $2E $21 $00 $00
-DAC1: 8D 0F D4  sta $D40F      ; Interrupt service routine / NMIRES
-DAC4: 48        pha            ; Increment Frame Counter
-DAC5: 8A        txa            ; Decrement Frame Timer
-DAC6: 48        pha            ; Copy shadow values for Display List and Colors
+
+  Interrupt service routine (set from boot EOF)
+  Increments Frame Counter
+  Decrements Frame Timer
+  Copy shadow values for Display List and Colors
+
+DAC1: 8D 0F D4  sta $D40F      ; NMIRES
+DAC4: 48        pha
+DAC5: 8A        txa
+DAC6: 48        pha
 DAC7: E6 14     inc $14        ; FRAMECOUNT
 DAC9: A5 3C     lda $3C        ; FRAME_TIMER
 DACB: F0 04     beq $DAD1      ; SHADOW_DL
@@ -285,7 +291,10 @@ DAED: 68        pla
 DAEE: AA        tax
 DAEF: 68        pla
 DAF0: 40        rti
-DAF1: AD 0F D2  lda $D20F      ; Wait for bit 1 and then 2 frames with the same bit / SKSTAT
+
+  Wait for bit 1 and then 2 frames with the same bit
+
+DAF1: AD 0F D2  lda $D20F      ; SKSTAT
 DAF4: 29 10     and #$10
 DAF6: F0 F9     beq $DAF1      ; WAIT_SIO_BIT
 DAF8: A0 FE     ldy #$FE

@@ -37,8 +37,14 @@ rem D808 Set Display List at $D9F0
 rem D81C Wait 3 frames
 rem D825 This is the Entry Point
 rem DC5C Mute all sound
-rem DAC1 Interrupt service routine
-rem DAC4 Increment Frame Counter
-rem DAC5 Decrement Frame Timer
-rem DAC6 Copy shadow values for Display List and Colors
-rem DAF1 Wait for bit 1 and then 2 frames with the same bit 
+
+
+comment DAC1 Interrupt service routine (set from boot EOF)
+comment DAC1 Increments Frame Counter
+comment DAC1 Decrements Frame Timer
+comment DAC1 Copy shadow values for Display List and Colors
+
+comment DAF1 Wait for bit 1 and then 2 frames with the same bit 
+
+
+

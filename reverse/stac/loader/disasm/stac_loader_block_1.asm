@@ -262,10 +262,16 @@ COUNTER          .byte $00, $10, $19, $12, $00, $62, $6C, $6F
                  .byte $00, $0A, $0A, $00, $11, $19, $18, $18
                  .byte $00, $21, $32, $27, $25, $2E, $34, $29
                  .byte $2E, $21, $00, $00
-NMI              sta NMIRES           ; Interrupt service routine
-                 pha                  ; Increment Frame Counter
-                 txa                  ; Decrement Frame Timer
-                 pha                  ; Copy shadow values for Display List and Colors
+
+;  Interrupt service routine (set from boot EOF)
+;  Increments Frame Counter
+;  Decrements Frame Timer
+;  Copy shadow values for Display List and Colors
+
+NMI              sta NMIRES
+                 pha
+                 txa
+                 pha
                  inc FRAMECOUNT
                  lda FRAME_TIMER
                  beq SHADOW_DL
@@ -286,7 +292,10 @@ SHADOW_COLOR     lda COLOR0,x
                  tax
                  pla
                  rti
-WAIT_SIO_BIT     lda SKSTAT           ; Wait for bit 1 and then 2 frames with the same bit
+
+;  Wait for bit 1 and then 2 frames with the same bit
+
+WAIT_SIO_BIT     lda SKSTAT
                  and #$10
                  beq WAIT_SIO_BIT
                  ldy #$FE
