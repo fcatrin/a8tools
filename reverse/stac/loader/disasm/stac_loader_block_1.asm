@@ -34,87 +34,103 @@ START            clc                  ; This is the Entry Point
                  ins CHLINK,x
                  sta EOF_FLAG
                  jsr SET_SCREEN0
-L_D841           jsr READ_BYTE
-                 bne L_D887
+NEXT_CHUNK       jsr READ_BYTE
+                 bne CHECK_IS_RAW
                  jsr READ_BYTE
                  pha
                  jsr READ_BYTE
                  tay
                  pla
-                 bmi L_D857
-                 jsr L_D8BA
-                 jmp L_D841
-L_D857           and #$7F
-                 sta VNTP
-                 sty LOMEM+1
+                 bmi CHUNK_RLE_LONG
+                 jsr LOAD_RAW_LONG
+                 jmp NEXT_CHUNK
+
+;  RLE long block compression. Size comes as H, L
+;  Bit 8 in H = 1
+;  Size in Y, A
+
+CHUNK_RLE_LONG   and #$7F
+                 sta DST_SIZE+1
+                 sty DST_SIZE
                  jsr READ_BYTE
-                 bne L_D86B
-                 clc
-                 lda VNTP
-                 adc VNTD
-                 sta VNTD
-                 bcc L_D898
-L_D86B           ldy #$00
+                 bne NONZ_RLE_LONG
+                 clc                  ; Just skip bytes if data is 0
+                 lda DST_SIZE+1
+                 adc DST_ADDR+1
+                 sta DST_ADDR+1
+                 bcc UPDATE_DST_ADDR
+NONZ_RLE_LONG    ldy #$00
                  beq L_D876
-L_D86F           sta (VNTP+1),y
+COPY_RLE_LONG    sta (DST_ADDR),y
                  iny
-                 bne L_D86F
-                 inc VNTD
-L_D876           dec VNTP
-                 bpl L_D86F
-                 cpy LOMEM+1
-                 beq L_D898
-L_D87E           sta (VNTP+1),y
+                 bne COPY_RLE_LONG
+                 inc DST_ADDR+1
+L_D876           dec DST_SIZE+1
+                 bpl COPY_RLE_LONG
+                 cpy DST_SIZE
+                 beq UPDATE_DST_ADDR
+L_D87E           sta (DST_ADDR),y
                  iny
-                 cpy LOMEM+1
+                 cpy DST_SIZE
                  bne L_D87E
-                 beq L_D898
-L_D887           bpl L_D8A6
-                 and #$7F
-                 sta LOMEM+1
+                 beq UPDATE_DST_ADDR
+CHECK_IS_RAW     bpl LOAD_RAW_CHUNK   ; Bit 8 = 0 => Raw bytes. Size in A
+
+;  Bit 8 = 1 indicates RLE short block compression
+;  bits 6-0 = size
+;  Next byte = content
+
+LOAD_RLE_SHORT   and #$7F
+                 sta DST_SIZE
                  jsr READ_BYTE
-                 ldy LOMEM+1
+                 ldy DST_SIZE
                  dey
-L_D893           sta (VNTP+1),y
+COPY_RLE_SHORT   sta (DST_ADDR),y
                  dey
-                 bpl L_D893
-L_D898           clc
-                 lda VNTP+1
-                 adc LOMEM+1
-                 sta VNTP+1
+                 bpl COPY_RLE_SHORT
+UPDATE_DST_ADDR  clc
+                 lda DST_ADDR
+                 adc DST_SIZE
+                 sta DST_ADDR
                  bcc L_D8A3
-                 inc VNTD
-L_D8A3           jmp L_D841
-L_D8A6           sta LOMEM+1
+                 inc DST_ADDR+1
+L_D8A3           jmp NEXT_CHUNK
+
+;  Read short block of raw bytes where size < 128
+
+LOAD_RAW_CHUNK   sta DST_SIZE
                  ldy #$00
-L_D8AA           sty LOMEM
+LOAD_RAW_BYTE    sty DST_INDEX
                  jsr READ_BYTE
-                 ldy LOMEM
-                 sta (VNTP+1),y
+                 ldy DST_INDEX
+                 sta (DST_ADDR),y
                  iny
-                 cpy LOMEM+1
-                 bne L_D8AA
-                 beq L_D898
-L_D8BA           sty LOMEM+1
-                 sta VNTP
-L_D8BE           jsr READ_BYTE
+                 cpy DST_SIZE
+                 bne LOAD_RAW_BYTE
+                 beq UPDATE_DST_ADDR
+
+;  Read long block of raw bytes. Size in Y, A
+
+LOAD_RAW_LONG    sty DST_SIZE
+                 sta DST_SIZE+1
+READ_NEXT_BYTE   jsr READ_BYTE
                  ldy #$00
-                 sta (VNTP+1),y
-                 inc VNTP+1
+                 sta (DST_ADDR),y
+                 inc DST_ADDR
                  bne L_D8CB
-                 inc VNTD
-L_D8CB           lda LOMEM+1
+                 inc DST_ADDR+1
+L_D8CB           lda DST_SIZE
                  bne L_D8D1
-                 dec VNTP
-L_D8D1           dec LOMEM+1
-                 lda VNTP
-                 ora LOMEM+1
-                 bne L_D8BE
+                 dec DST_SIZE+1
+L_D8D1           dec DST_SIZE
+                 lda DST_SIZE+1
+                 ora DST_SIZE
+                 bne READ_NEXT_BYTE
                  rts
 
 ;  Stop tape and display error message
 
-DISPLAY_ERROR    lda #$3C
+DISPLAY_ERROR    lda #$3C             ; Motor off
                  sta PACTL
                  ldx #$BC
                  ldy #$D9
@@ -124,13 +140,13 @@ DISPLAY_ERROR    lda #$3C
                  stx B0_ICBLL
                  stx B0_ICBLH
                  ldy #$09
-L_D8F2           lda CONSOL
+WAIT_START_DN    lda CONSOL
                  lsr
-                 bcs L_D8F2
-L_D8F8           lda CONSOL
+                 bcs WAIT_START_DN
+WAIT_START_UP    lda CONSOL
                  lsr
-                 bcc L_D8F8
-                 lda #$34
+                 bcc WAIT_START_UP
+                 lda #$34             ; Motor on
                  sta PACTL
                  jsr SET_SCREEN0
                  jsr WAIT_3FRAMES
@@ -164,20 +180,20 @@ READ_BLOCK       lda EOF_FLAG
                  ldx #$0F             ; This is used to check if we passed below 0
                  dec COUNTER+3
                  cpx COUNTER+3
-                 bcc L_D95C
+                 bcc SET_BLOCK_VARS
                  sty COUNTER+3
                  dec COUNTER+2
                  cpx COUNTER+2
-                 bcc L_D95C
+                 bcc SET_BLOCK_VARS
                  sty COUNTER+2
                  dec COUNTER+1
                  cpx COUNTER+1
-                 bcc L_D95C
+                 bcc SET_BLOCK_VARS
                  sty COUNTER+1
 
 ;  Set EOF flag, buffer length and block read number
 
-L_D95C           lda #$00
+SET_BLOCK_VARS   lda #$00
                  sta BUF_INDEX
                  ldx #$C8
                  lda $03FF
@@ -187,13 +203,13 @@ L_D95C           lda #$00
                  ldx $04C7            ; Contains the partial block size
 NOT_EOF          stx BUF_LEN
                  jmp READ_BYTE
-START_GAME       lda #$3C
+START_GAME       lda #$3C             ; Motor off
                  sta PACTL
                  ldx #$35
-L_D97A           lda BOOT_GAME_CODE,x
+COPY_BOOT_CODE   lda BOOT_GAME_CODE,x
                  sta BUFFER,x
                  dex
-                 bpl L_D97A
+                 bpl COPY_BOOT_CODE
                  jmp BUFFER
 
 ;  This code is copied to $400 and it is ran to start the game

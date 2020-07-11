@@ -16,6 +16,9 @@ label 003C FRAME_TIMER
 label 003D BUF_INDEX
 label 003E BUF_LEN
 label 003F EOF_FLAG
+label 0080 DST_INDEX
+label 0081 DST_SIZE word
+label 0083 DST_ADDR word
 label 0400 BUFFER
 
 label D808 SET_SCREEN0
@@ -44,6 +47,22 @@ label D998 REL_0412
 label D9B3 REL_042D
 label D9B9 REL_0433
 label D8DA DISPLAY_ERROR
+label D8F2 WAIT_START_DN
+label D8F8 WAIT_START_UP
+label D97A COPY_BOOT_CODE
+label D95C SET_BLOCK_VARS
+label D841 NEXT_CHUNK
+label D857 CHUNK_RLE_LONG
+label D8AA LOAD_RAW_BYTE
+label D8A6 LOAD_RAW_CHUNK 
+label D898 UPDATE_DST_ADDR
+label D887 CHECK_IS_RAW
+label D8BE READ_NEXT_BYTE
+label D8BA LOAD_RAW_LONG
+label D893 COPY_RLE_SHORT
+label D889 LOAD_RLE_SHORT
+label D86B NONZ_RLE_LONG
+label D86F COPY_RLE_LONG
 
 rem D82A Set Buffer Index at Buffer End to force a block read
 rem D808 Set Display List at $D9F0
@@ -60,6 +79,12 @@ rem D998 Close Channel 0
 rem D9B1 Open command
 rem D9A7 Buffer at REL_0433
 rem D9B9 E:
+rem D8DA Motor off
+rem D8FE Motor on
+rem D973 Motor off
+rem D887 Bit 8 = 0 => Raw bytes. Size in A
+rem D862 Just skip bytes if data is 0
+
 
 comment DAC1 Interrupt service routine (set from boot EOF)
 comment DAC1 Increments Frame Counter
@@ -72,6 +97,18 @@ comment D986 This code is copied to $400 and it is ran to start the game
 comment D9C8 [error] - REBOBINE Y PRESIONE [START]
 comment D99F Open channel 0 as E:
 comment D8DA Stop tape and display error message
+
+comment D857 RLE long block compression. Size comes as H, L
+comment D857 Bit 8 in H = 1
+comment D857 Size in Y, A
+
+comment D8A6 Read short block of raw bytes where size < 128
+comment D8BA Read long block of raw bytes. Size in Y, A
+
+comment D889 Bit 8 = 1 indicates RLE short block compression
+comment D889 bits 6-0 = size
+comment D889 Next byte = content
+
 
 space D825
 space D92D

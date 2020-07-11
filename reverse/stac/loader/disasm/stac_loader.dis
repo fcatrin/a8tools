@@ -33,87 +33,103 @@ D838: 98                         tya
 D839: FF FB 03                   ins $03FB,x   ; CHLINK
 D83C: 85 3F                      sta $3F       ; EOF_FLAG
 D83E: 20 08 D8                   jsr $D808     ; SET_SCREEN0
-D841: 20 21 D9  L_D841           jsr $D921     ; READ_BYTE
-D844: D0 41                      bne $D887     ; L_D887
+D841: 20 21 D9  NEXT_CHUNK       jsr $D921     ; READ_BYTE
+D844: D0 41                      bne $D887     ; CHECK_IS_RAW
 D846: 20 21 D9                   jsr $D921     ; READ_BYTE
 D849: 48                         pha
 D84A: 20 21 D9                   jsr $D921     ; READ_BYTE
 D84D: A8                         tay
 D84E: 68                         pla
-D84F: 30 06                      bmi $D857     ; L_D857
-D851: 20 BA D8                   jsr $D8BA     ; L_D8BA
-D854: 4C 41 D8                   jmp $D841     ; L_D841
-D857: 29 7F     L_D857           and #$7F
-D859: 85 82                      sta $82       ; VNTP
-D85B: 84 81                      sty $81       ; LOMEM+1
+D84F: 30 06                      bmi $D857     ; CHUNK_RLE_LONG
+D851: 20 BA D8                   jsr $D8BA     ; LOAD_RAW_LONG
+D854: 4C 41 D8                   jmp $D841     ; NEXT_CHUNK
+
+  RLE long block compression. Size comes as H, L
+  Bit 8 in H = 1
+  Size in Y, A
+
+D857: 29 7F     CHUNK_RLE_LONG   and #$7F
+D859: 85 82                      sta $82       ; DST_SIZE+1
+D85B: 84 81                      sty $81       ; DST_SIZE
 D85D: 20 21 D9                   jsr $D921     ; READ_BYTE
-D860: D0 09                      bne $D86B     ; L_D86B
-D862: 18                         clc
-D863: A5 82                      lda $82       ; VNTP
-D865: 65 84                      adc $84       ; VNTD
-D867: 85 84                      sta $84       ; VNTD
-D869: 90 2D                      bcc $D898     ; L_D898
-D86B: A0 00     L_D86B           ldy #$00
+D860: D0 09                      bne $D86B     ; NONZ_RLE_LONG
+D862: 18                         clc           ; Just skip bytes if data is 0
+D863: A5 82                      lda $82       ; DST_SIZE+1
+D865: 65 84                      adc $84       ; DST_ADDR+1
+D867: 85 84                      sta $84       ; DST_ADDR+1
+D869: 90 2D                      bcc $D898     ; UPDATE_DST_ADDR
+D86B: A0 00     NONZ_RLE_LONG    ldy #$00
 D86D: F0 07                      beq $D876     ; L_D876
-D86F: 91 83     L_D86F           sta ($83),y   ; VNTP+1
+D86F: 91 83     COPY_RLE_LONG    sta ($83),y   ; DST_ADDR
 D871: C8                         iny
-D872: D0 FB                      bne $D86F     ; L_D86F
-D874: E6 84                      inc $84       ; VNTD
-D876: C6 82     L_D876           dec $82       ; VNTP
-D878: 10 F5                      bpl $D86F     ; L_D86F
-D87A: C4 81                      cpy $81       ; LOMEM+1
-D87C: F0 1A                      beq $D898     ; L_D898
-D87E: 91 83     L_D87E           sta ($83),y   ; VNTP+1
+D872: D0 FB                      bne $D86F     ; COPY_RLE_LONG
+D874: E6 84                      inc $84       ; DST_ADDR+1
+D876: C6 82     L_D876           dec $82       ; DST_SIZE+1
+D878: 10 F5                      bpl $D86F     ; COPY_RLE_LONG
+D87A: C4 81                      cpy $81       ; DST_SIZE
+D87C: F0 1A                      beq $D898     ; UPDATE_DST_ADDR
+D87E: 91 83     L_D87E           sta ($83),y   ; DST_ADDR
 D880: C8                         iny
-D881: C4 81                      cpy $81       ; LOMEM+1
+D881: C4 81                      cpy $81       ; DST_SIZE
 D883: D0 F9                      bne $D87E     ; L_D87E
-D885: F0 11                      beq $D898     ; L_D898
-D887: 10 1D     L_D887           bpl $D8A6     ; L_D8A6
-D889: 29 7F                      and #$7F
-D88B: 85 81                      sta $81       ; LOMEM+1
+D885: F0 11                      beq $D898     ; UPDATE_DST_ADDR
+D887: 10 1D     CHECK_IS_RAW     bpl $D8A6     ; Bit 8 = 0 => Raw bytes. Size in A / LOAD_RAW_CHUNK
+
+  Bit 8 = 1 indicates RLE short block compression
+  bits 6-0 = size
+  Next byte = content
+
+D889: 29 7F     LOAD_RLE_SHORT   and #$7F
+D88B: 85 81                      sta $81       ; DST_SIZE
 D88D: 20 21 D9                   jsr $D921     ; READ_BYTE
-D890: A4 81                      ldy $81       ; LOMEM+1
+D890: A4 81                      ldy $81       ; DST_SIZE
 D892: 88                         dey
-D893: 91 83     L_D893           sta ($83),y   ; VNTP+1
+D893: 91 83     COPY_RLE_SHORT   sta ($83),y   ; DST_ADDR
 D895: 88                         dey
-D896: 10 FB                      bpl $D893     ; L_D893
-D898: 18        L_D898           clc
-D899: A5 83                      lda $83       ; VNTP+1
-D89B: 65 81                      adc $81       ; LOMEM+1
-D89D: 85 83                      sta $83       ; VNTP+1
+D896: 10 FB                      bpl $D893     ; COPY_RLE_SHORT
+D898: 18        UPDATE_DST_ADDR  clc
+D899: A5 83                      lda $83       ; DST_ADDR
+D89B: 65 81                      adc $81       ; DST_SIZE
+D89D: 85 83                      sta $83       ; DST_ADDR
 D89F: 90 02                      bcc $D8A3     ; L_D8A3
-D8A1: E6 84                      inc $84       ; VNTD
-D8A3: 4C 41 D8  L_D8A3           jmp $D841     ; L_D841
-D8A6: 85 81     L_D8A6           sta $81       ; LOMEM+1
+D8A1: E6 84                      inc $84       ; DST_ADDR+1
+D8A3: 4C 41 D8  L_D8A3           jmp $D841     ; NEXT_CHUNK
+
+  Read short block of raw bytes where size < 128
+
+D8A6: 85 81     LOAD_RAW_CHUNK   sta $81       ; DST_SIZE
 D8A8: A0 00                      ldy #$00
-D8AA: 84 80     L_D8AA           sty $80       ; LOMEM
+D8AA: 84 80     LOAD_RAW_BYTE    sty $80       ; DST_INDEX
 D8AC: 20 21 D9                   jsr $D921     ; READ_BYTE
-D8AF: A4 80                      ldy $80       ; LOMEM
-D8B1: 91 83                      sta ($83),y   ; VNTP+1
+D8AF: A4 80                      ldy $80       ; DST_INDEX
+D8B1: 91 83                      sta ($83),y   ; DST_ADDR
 D8B3: C8                         iny
-D8B4: C4 81                      cpy $81       ; LOMEM+1
-D8B6: D0 F2                      bne $D8AA     ; L_D8AA
-D8B8: F0 DE                      beq $D898     ; L_D898
-D8BA: 84 81     L_D8BA           sty $81       ; LOMEM+1
-D8BC: 85 82                      sta $82       ; VNTP
-D8BE: 20 21 D9  L_D8BE           jsr $D921     ; READ_BYTE
+D8B4: C4 81                      cpy $81       ; DST_SIZE
+D8B6: D0 F2                      bne $D8AA     ; LOAD_RAW_BYTE
+D8B8: F0 DE                      beq $D898     ; UPDATE_DST_ADDR
+
+  Read long block of raw bytes. Size in Y, A
+
+D8BA: 84 81     LOAD_RAW_LONG    sty $81       ; DST_SIZE
+D8BC: 85 82                      sta $82       ; DST_SIZE+1
+D8BE: 20 21 D9  READ_NEXT_BYTE   jsr $D921     ; READ_BYTE
 D8C1: A0 00                      ldy #$00
-D8C3: 91 83                      sta ($83),y   ; VNTP+1
-D8C5: E6 83                      inc $83       ; VNTP+1
+D8C3: 91 83                      sta ($83),y   ; DST_ADDR
+D8C5: E6 83                      inc $83       ; DST_ADDR
 D8C7: D0 02                      bne $D8CB     ; L_D8CB
-D8C9: E6 84                      inc $84       ; VNTD
-D8CB: A5 81     L_D8CB           lda $81       ; LOMEM+1
+D8C9: E6 84                      inc $84       ; DST_ADDR+1
+D8CB: A5 81     L_D8CB           lda $81       ; DST_SIZE
 D8CD: D0 02                      bne $D8D1     ; L_D8D1
-D8CF: C6 82                      dec $82       ; VNTP
-D8D1: C6 81     L_D8D1           dec $81       ; LOMEM+1
-D8D3: A5 82                      lda $82       ; VNTP
-D8D5: 05 81                      ora $81       ; LOMEM+1
-D8D7: D0 E5                      bne $D8BE     ; L_D8BE
+D8CF: C6 82                      dec $82       ; DST_SIZE+1
+D8D1: C6 81     L_D8D1           dec $81       ; DST_SIZE
+D8D3: A5 82                      lda $82       ; DST_SIZE+1
+D8D5: 05 81                      ora $81       ; DST_SIZE
+D8D7: D0 E5                      bne $D8BE     ; READ_NEXT_BYTE
 D8D9: 60                         rts
 
   Stop tape and display error message
 
-D8DA: A9 3C     DISPLAY_ERROR    lda #$3C
+D8DA: A9 3C     DISPLAY_ERROR    lda #$3C      ; Motor off
 D8DC: 8D 02 D3                   sta $D302     ; PACTL
 D8DF: A2 BC                      ldx #$BC
 D8E1: A0 D9                      ldy #$D9
@@ -123,13 +139,13 @@ D8E8: A2 00                      ldx #$00
 D8EA: 8E 48 03                   stx $0348     ; B0_ICBLL
 D8ED: 8E 49 03                   stx $0349     ; B0_ICBLH
 D8F0: A0 09                      ldy #$09
-D8F2: AD 1F D0  L_D8F2           lda $D01F     ; CONSOL
+D8F2: AD 1F D0  WAIT_START_DN    lda $D01F     ; CONSOL
 D8F5: 4A                         lsr
-D8F6: B0 FA                      bcs $D8F2     ; L_D8F2
-D8F8: AD 1F D0  L_D8F8           lda $D01F     ; CONSOL
+D8F6: B0 FA                      bcs $D8F2     ; WAIT_START_DN
+D8F8: AD 1F D0  WAIT_START_UP    lda $D01F     ; CONSOL
 D8FB: 4A                         lsr
-D8FC: 90 FA                      bcc $D8F8     ; L_D8F8
-D8FE: A9 34                      lda #$34
+D8FC: 90 FA                      bcc $D8F8     ; WAIT_START_UP
+D8FE: A9 34                      lda #$34      ; Motor on
 D900: 8D 02 D3                   sta $D302     ; PACTL
 D903: 20 08 D8                   jsr $D808     ; SET_SCREEN0
 D906: 20 1C D8                   jsr $D81C     ; WAIT_3FRAMES
@@ -163,20 +179,20 @@ D937: A0 19                      ldy #$19      ; This is the numbner 9 to wrap t
 D939: A2 0F                      ldx #$0F      ; This is used to check if we passed below 0
 D93B: CE 60 DA                   dec $DA60     ; COUNTER+3
 D93E: EC 60 DA                   cpx $DA60     ; COUNTER+3
-D941: 90 19                      bcc $D95C     ; L_D95C
+D941: 90 19                      bcc $D95C     ; SET_BLOCK_VARS
 D943: 8C 60 DA                   sty $DA60     ; COUNTER+3
 D946: CE 5F DA                   dec $DA5F     ; COUNTER+2
 D949: EC 5F DA                   cpx $DA5F     ; COUNTER+2
-D94C: 90 0E                      bcc $D95C     ; L_D95C
+D94C: 90 0E                      bcc $D95C     ; SET_BLOCK_VARS
 D94E: 8C 5F DA                   sty $DA5F     ; COUNTER+2
 D951: CE 5E DA                   dec $DA5E     ; COUNTER+1
 D954: EC 5E DA                   cpx $DA5E     ; COUNTER+1
-D957: 90 03                      bcc $D95C     ; L_D95C
+D957: 90 03                      bcc $D95C     ; SET_BLOCK_VARS
 D959: 8C 5E DA                   sty $DA5E     ; COUNTER+1
 
   Set EOF flag, buffer length and block read number
 
-D95C: A9 00     L_D95C           lda #$00
+D95C: A9 00     SET_BLOCK_VARS   lda #$00
 D95E: 85 3D                      sta $3D       ; BUF_INDEX
 D960: A2 C8                      ldx #$C8
 D962: AD FF 03                   lda $03FF
@@ -186,13 +202,13 @@ D969: C6 3F                      dec $3F       ; EOF_FLAG
 D96B: AE C7 04                   ldx $04C7     ; Contains the partial block size
 D96E: 86 3E     NOT_EOF          stx $3E       ; BUF_LEN
 D970: 4C 21 D9                   jmp $D921     ; READ_BYTE
-D973: A9 3C     START_GAME       lda #$3C
+D973: A9 3C     START_GAME       lda #$3C      ; Motor off
 D975: 8D 02 D3                   sta $D302     ; PACTL
 D978: A2 35                      ldx #$35
-D97A: BD 86 D9  L_D97A           lda $D986,x   ; BOOT_GAME_CODE
+D97A: BD 86 D9  COPY_BOOT_CODE   lda $D986,x   ; BOOT_GAME_CODE
 D97D: 9D 00 04                   sta $0400,x   ; BUFFER
 D980: CA                         dex
-D981: 10 F7                      bpl $D97A     ; L_D97A
+D981: 10 F7                      bpl $D97A     ; COPY_BOOT_CODE
 D983: 4C 00 04                   jmp $0400     ; BUFFER
 
   This code is copied to $400 and it is ran to start the game
