@@ -69,7 +69,7 @@ rem D808 Set Display List at $D9F0
 rem D81C Wait 3 frames
 rem D825 This is the Entry Point
 rem DC5C Mute all sound
-rem D937 This is the numbner 9 to wrap the counter
+rem D937 This is the number 9 to wrap the counter
 rem D939 This is used to check if we passed below 0
 rem D96B Contains the partial block size
 rem D992 This calls the relocated subroutine at REL_0412
