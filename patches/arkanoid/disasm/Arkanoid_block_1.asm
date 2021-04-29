@@ -943,7 +943,7 @@ L_1C62           inx
                  cpx #$28
                  bne L_1C37
                  lda #$00
-                 sta L_31F3+1
+                 sta LIVES
                  lda #$8A
                  sta L_443F+1
                  lda #$88
@@ -2139,9 +2139,9 @@ L_2E6C           lda FLPTR
 L_2E77           inx
                  cpx #$13
                  bne L_2E4A
-                 ldx L_31F3+1
+                 ldx LIVES
                  ldy L_23E9+7
-                 sty L_31F3+1
+                 sty LIVES
                  stx L_23E9+7
                  ldx L_3FFD+3
                  ldy L_23F1
@@ -2492,9 +2492,9 @@ L_334D           inx
                  cpx #$13
                  bne L_332D
                  rts
-L_3353           lda L_31F3+1
+L_3353           lda LIVES
                  beq L_33C7
-                 dec L_31F3+1
+                 dec LIVES
                  lda #$00
                  sta SDMCTL
                  lda #$DE
@@ -2846,7 +2846,7 @@ L_37ED           sta $8F00,x
                  bne L_37ED
                  lda #$04
                  sta ATRACT
-                 sta L_31F3+1
+                 sta LIVES
                  jmp L_28A4
                  brk
                  lda $5076
@@ -3114,7 +3114,7 @@ L_3B2D           lda $8F00,x
                  inx
                  cpx #$06
                  bne L_3B2D
-                 lda L_31F3+1
+                 lda LIVES
                  clc
                  adc #$10
                  sta $9F7D

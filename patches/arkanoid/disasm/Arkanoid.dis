@@ -942,7 +942,7 @@
 1C63: E0 28                      cpx #$28
 1C65: D0 D0                      bne $1C37     ; L_1C37
 1C67: A9 00                      lda #$00
-1C69: 8D F4 31                   sta $31F4     ; L_31F3+1
+1C69: 8D F4 31                   sta $31F4     ; LIVES
 1C6C: A9 8A                      lda #$8A
 1C6E: 8D 40 44                   sta $4440     ; L_443F+1
 1C71: A9 88                      lda #$88
@@ -2138,9 +2138,9 @@
 2E77: E8        L_2E77           inx
 2E78: E0 13                      cpx #$13
 2E7A: D0 CE                      bne $2E4A     ; L_2E4A
-2E7C: AE F4 31                   ldx $31F4     ; L_31F3+1
+2E7C: AE F4 31                   ldx $31F4     ; LIVES
 2E7F: AC F0 23                   ldy $23F0     ; L_23E9+7
-2E82: 8C F4 31                   sty $31F4     ; L_31F3+1
+2E82: 8C F4 31                   sty $31F4     ; LIVES
 2E85: 8E F0 23                   stx $23F0     ; L_23E9+7
 2E88: AE 00 40                   ldx $4000     ; L_3FFD+3
 2E8B: AC F1 23                   ldy $23F1     ; L_23F1
@@ -2491,9 +2491,9 @@
 334E: E0 13                      cpx #$13
 3350: D0 DB                      bne $332D     ; L_332D
 3352: 60                         rts
-3353: AD F4 31  L_3353           lda $31F4     ; L_31F3+1
+3353: AD F4 31  L_3353           lda $31F4     ; LIVES
 3356: F0 6F                      beq $33C7     ; L_33C7
-3358: CE F4 31                   dec $31F4     ; L_31F3+1
+3358: CE F4 31                   dec $31F4     ; LIVES
 335B: A9 00                      lda #$00
 335D: 8D 2F 02                   sta $022F     ; SDMCTL
 3360: A9 DE                      lda #$DE
@@ -2845,7 +2845,7 @@
 37F3: D0 F8                      bne $37ED     ; L_37ED
 37F5: A9 04                      lda #$04
 37F7: 85 4D                      sta $4D       ; ATRACT
-37F9: 8D F4 31                   sta $31F4     ; L_31F3+1
+37F9: 8D F4 31                   sta $31F4     ; LIVES
 37FC: 4C A4 28                   jmp $28A4     ; L_28A4
 37FF: 00                         brk
 3800: AD 76 50                   lda $5076
@@ -3113,7 +3113,7 @@
 3B39: E8                         inx
 3B3A: E0 06                      cpx #$06
 3B3C: D0 EF                      bne $3B2D     ; L_3B2D
-3B3E: AD F4 31                   lda $31F4     ; L_31F3+1
+3B3E: AD F4 31                   lda $31F4     ; LIVES
 3B41: 18                         clc
 3B42: 69 10                      adc #$10
 3B44: 8D 7D 9F                   sta $9F7D
@@ -9176,8 +9176,8 @@
 8EFA: 00                         BYTE $00 $00 $00 $00 $00 $00 $10 $10
 8F02: 10                         BYTE $10 $10 $10 $10 $00 $00 $00 $00
 8F0A: 00        L_8F0A           BYTE $00 $00 $00 $00 $00 $00 $00
-8F11: EE F4 31                   inc $31F4     ; L_31F3+1
-8F14: AD F4 31                   lda $31F4     ; L_31F3+1
+8F11: EE F4 31                   inc $31F4     ; LIVES
+8F14: AD F4 31                   lda $31F4     ; LIVES
 8F17: C9 09                      cmp #$09
 8F19: 90 02                      bcc $8F1D     ; L_8F1D
 8F1B: A9 09                      lda #$09
