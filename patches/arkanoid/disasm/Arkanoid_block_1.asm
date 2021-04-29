@@ -3,746 +3,167 @@
 
                  org $1000
 
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_100A           brk
-                 brk
-                 ora (NGFLAG,x)
-                 ora CMCMD
-L_1010           brk
-                 brk
-                 ora COLCRS
-                 bvs $0FF6
-                 nop #$80
-                 brk
-                 eor ESIGN,x
-                 eor FR2+4,x
-                 brk
-                 brk
-                 brk
-                 brk
-L_1021           eor FPTR2+1,x
-                 eor ARSTKX,x
-                 brk
-                 brk
-                 brk
-                 rti
-                 nop OLDADR,x
-L_102B           lse DSKFMS+1,x
-                 brk
-                 brk
-                 brk
-                 ora NGFLAG
-                 rts
-                 cli
-                 eor TOPSTK+1,x
-                 brk
-                 brk
-                 cli
-                 adc BITMSK,x
-                 nop !
-                 asl RAMLO+1,x
-                 brk
-                 brk
-                 sei
-                 sei
-                 sei
-                 adc $7979,y
-                 adc KEYDEF,y
-                 brk
-                 brk
-                 rti
-                 bvc L_1021+1
-L_104E           cpx ADRESS
-                 bpl L_10A5+1
-                 adc MVFA
-                 ldx OPSTKX
-                 tax
-                 nop !
-                 asl ABUFPT+2
-                 ora L_342B+1,y
-                 nop POKMSK,x
-                 brk
-                 brk
-                 brk
-                 brk
-                 cim
-                 cim
-                 cim
-                 cim
-                 cim
-                 and POKADR
-                 lda BUFADR+1
-                 eor $5A2A,y
-                 rol
-L_1070           eor COLCRS,x
-                 sta $AB66,y
-                 ins $FFBF
-                 eor COLCRS,x
-                 sta $A966,y
-                 inc $FEFF,x
-                 nop COLCRS,x
-                 stx ADRESS+1,y
-                 sta OPSTKX,x
-                 lda OPSTKX
-                 brk
-                 brk
-                 brk
-                 nop #$80
-                 rts
-                 jsr $6860
-                 cli
-                 lsr L_1E1E,x
-                 asl ICCOMT,x
-                 aso LNFLG
-                 brk
-                 brk
-                 brk
-                 cim
-                 cim
-                 cim
-                 cim
-                 brk
-                 rol
-                 tax
-                 ldy #$80
-L_10A5           sta BUFADR
-                 nop LNFLG,x
-                 tay
-                 tax
-                 asl
-                 cim
-                 cim
-                 nop RTCLOK+2,x
-                 brk
-                 brk
-                 brk
-                 brk
-                 nop #$80
-                 nop #$80
-                 brk
-                 tax
-                 tax
-                 brk
-                 brk
-                 eor COLCRS,x
-                 brk
-                 ora (NGFLAG,x)
-                 ora (NGFLAG,x)
-                 brk
-                 brk
-                 brk
-                 brk
-                 plp
-                 rol
-                 lsr
-                 rti
-                 bvc L_1121+2
-                 ora LNFLG,x
-                 plp
-                 tay
-                 lda (NGFLAG,x)
-                 ora COLCRS
-                 nop LNFLG,x
-                 rti
-                 rti
-                 rti
-                 rti
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 tax
-                 tax
-                 brk
-                 brk
-                 eor COLCRS,x
-                 brk
-                 pla
-                 cli
-                 asl L_1E1E,x
-                 asl ICCOMT,x
-                 aso BPTR
-                 and #$14
-                 brk
-                 brk
-                 rti
-                 rti
-                 nop BRKKEY
-                 nop HOLD1
-                 sty TOADR,x
-                 sta $AA66,y
-L_1100           ora HOLD1,x
-                 asl SAVMSC+1,x
-                 ror MVFA
-                 ror
-                 tax
-                 ora COLCRS
-                 ror MVFA
-                 ror ARSTKX
-                 ldx $99BA
-                 lsr HOLD1
-                 nop ICBAHZ
-                 asl
-                 brk
-                 brk
-                 ldx $AE6B
-                 arr #$9E
-                 rra COLCRS
-                 ora NSIGN
-L_1121           las $FFFF,y
-                 ins $6BBE,x
-                 eor NSIGN,x
-                 las $FFFF,y
-                 ins $A9FF,x
-                 eor FR2+4,x
-                 lda $B9EA,y
-                 nop
-                 sta $5055,y
-                 ror TOPSTK+1
-                 eor MEOLFLG,x
-                 pha
-                 ldy #$00
-                 brk
-                 and L_1429,x
-                 brk
-                 ora BUFADR
-                 eor ENDPT,x
-                 brk
-                 brk
-                 brk
-                 ora (NGFLAG,x)
-                 ora CMCMD
-                 brk
-                 brk
-                 brk
-                 ora DINDEX
-                 ldx $506A,y
-                 brk
-                 ora DINDEX
-                 adc $95EA,x
-                 nop LNFLG,x
-                 ora COLCRS+1
-                 sbc $A956,y
-                 bvc L_116C
-                 brk
-                 sty ROWCRS,x
-                 eor (FMSZPG+2),y
-L_116C           asl SAVADR+1,x
-                 nop #$00
-                 cim
-                 cim
-                 cim
-                 cim
-                 cim
-                 cim
-                 cim
-                 cim
-                 nop RTCLOK+2,x
-                 nop RTCLOK+2,x
-                 nop RTCLOK+2,x
-                 nop RTCLOK+2,x
-                 plp
-                 plp
-                 plp
-                 plp
-                 plp
-                 plp
-                 plp
-                 plp
-                 rti
-                 rti
-                 rti
-                 rti
-                 rti
-                 rti
-                 rti
-                 rti
-                 nop $0C09
-                 ora #$0C
-                 ora #$0C
-                 nop $6A5A
-                 nop !
-                 ror
-                 eor BUFADR
-                 lsr SAVADR,x
-                 lax CARTAD+1,y
-                 inc $6AAA,x
-                 ldy #$00
-                 ins $FFFE,x
-                 ldx $A9AA
-                 asl
-                 brk
-                 lda OPSTKX
-                 lda OPSTKX
-                 eor (ROWCRS),y
-                 sta ICBLHZ,x
-                 rts
-                 ldy #$A0
-                 jsr L_201F+1
-                 ldy #$60
-                 and #$29
-                 nop LNFLG,x
-                 nop #$68
-                 sty FREQ,x
-                 lda #$69
-                 sta $5964,y
-                 clc
-                 ora RAMLO,x
-                 ldx COLCRS+1
-                 ldx DIRFLG
-                 eor LMARGN,x
-                 ora (COLCRS+1,x)
-                 ora L_1500,y
-                 brk
-                 cim
-                 ora $0106,y
-                 brk
-                 and BRKKEY
-                 ora L_1100,y
-                 ora (DSKFMS+1),y
-                 php
-                 brk
-                 ora (LNFLG,x)
-                 ora RAMLO+1
-                 brk
-                 php
-                 brk
-                 brk
-                 txs
-                 brk
-                 txs
-                 txs
-                 brk
-                 brk
-                 brk
-                 brk
-                 bvc L_11FC
-L_11FC           nop ADRESS
-                 brk
-                 brk
-L_1200           brk
-                 brk
-                 brk
-                 brk
-L_1204           brk
-                 nop ICBLHZ,x
-                 ora RAMLO,x
-                 ora DSKFMS,x
-                 eor $9964,y
-                 adc #$A9
-                 lsr RAMLO+1,x
-                 eor COLCRS+1,x
-                 lda COLCRS+1
-                 ldx DIRFLG
-                 ora L_1500,y
-                 brk
-                 cim
-                 ora $0106,y
-                 ldx #$A2
-                 brk
-                 nop #$80
-                 brk
-                 brk
-                 brk
-                 ldy #$08
-                 cim
-                 cim
-                 asl
-                 asl
-                 jsr $AA0A
-                 tax
-                 tay
-                 tay
-                 ldx #$00
-                 ldx #$A2
-                 asl
-                 jsr $8A8A
-                 ldx #$A2
-                 php
-                 ldy #$29
-                 and #$14
-                 brk
-                 nop #$68
-                 sty FREQ,x
-                 tay
-                 rra (STARP,x)
-                 lse (COLRSH,x)
-                 aso $0413
-                 brk
-                 cmp APPMHI+1
-                 cmp TEMPA+1
-                 dcm TEMPA+1
-                 brk
-                 eor FPTR2+1,x
-                 eor COLCRS,x
-                 ins COLCRS,x
-                 brk
-                 lse (FCHRFLG),y
-                 lse (RMARGN),y
-                 ins (RMARGN),y
-                 brk
-                 and #$C9
-                 and (IOCMD),y
-                 sbc (FCHRFLG),y
-                 cmp RAMLO
-                 ldx COLCRS+1
-                 ldx DIRFLG
-                 eor LMARGN,x
-                 ora (COLCRS+1,x)
-                 ora L_1500,y
-                 brk
-                 cim
-                 ora $0106,y
-                 asl TRAMSZ
-                 asl NGFLAG
-                 ora (NGFLAG,x)
-                 brk
-                 brk
-                 lsr HOLD1
-                 eor (TOPSTK+1),y
-                 sta (COX),y
-                 nop ADRESS
-                 ora $0E0A
-                 php
-                 nop L_2A27+1
-                 and LOMEM
-                 brk
-                 brk
-                 brk
-                 brk
-                 tay
-                 lsr COLCRS,x
-                 brk
-                 brk
-                 brk
-                 ora (RAMLO+1,x)
-                 asl VNTD+1
-                 ror LNFLG
-                 brk
-                 brk
-                 rti
-                 bvc L_12FE
-                 cim
-                 sta CASINI,y
-                 brk
-                 brk
-                 brk
-                 rol
-                 sta COLCRS,x
-                 rts
-                 ldy #$A0
-                 jsr L_201F+1
-                 tay
-                 pla
-                 nop L_4756+2
-                 sha (FMSZPG+4),y
-                 sta (TOADR),y
-                 sty CHKSUM,x
-                 and BUFRLO,x
-                 and BUFRLO,x
-                 and BUFRLO,x
-                 and TOADR,x
-                 txs
-                 las $BFAF,y
-L_12D5           lax $AFBF
-                 sbc FR2+1
-                 inc FR0+3
-                 nop !
-                 lse OLDCOL,x
-                 rts
-                 nop !
-                 shs $97DB,y
-                 sbc FR1+5,x
-                 sbc BOOT
-                 ror ERRNUM
-                 nop
-                 sbc $FEFA,x
-                 nop !
-                 inc $5C5C,x
-                 jmp L_4C9C
-                 shy $9C4C,x
-                 nop BRKKEY
-                 ora (RAMLO),y
-                 ora (RAMLO),y
-L_12FE           ora (BRKKEY),y
-                 and L_1429,x
-                 brk
-                 ora BUFADR
-                 eor L_3175,x
-                 rol BFENHI,x
-                 and NOCKSM,x
-                 ora #$09
-                 anc #$BF
-L_1311           lax $AFBF
-                 rra $6FAB,x
-                 aso $8040,y
-                 brk
-                 brk
-                 brk
-                 aso SWPFLG
-                 ror VDSLST+1
-                 brk
-                 brk
-                 brk
-                 bne L_1393+1
-                 lda $FEFA,y
-                 nop !
-                 inc $E6E9,x
-                 sta L_4CA5,y
-                 shy L_4C5C,x
-                 jsr L_205F+1
-                 ldy #$64
-                 eor BUFADR,x
-                 ora LNFLG
-                 nop ICBLHZ,x
-                 ora ROWCRS,x
-                 bcc L_1311+2
-                 bne L_12D5
-                 bcc L_12D5+2
-                 nop CASINI,x
-                 cim
-                 cim
-                 cim
-                 asl
-                 asl
-                 ora #$09
-                 ror
-                 asl L_1A56,x
-                 lsr COLCRS
-                 stx POKADR+1
-L_1358           lda #$A0
-                 nop #$80
-                 ldy #$E0
-                 cpx STOPLN
-                 ror
-                 asl
-                 cim
-                 cim
-                 asl
-                 anc #$1B
-                 ldy $6499
-                 sta (ADRESS),y
-                 sta PALNTS,x
-                 stx MEOLFLG,y
-                 nop #$C0
-                 nop #$C0
-                 ldy #$70
-                 rts
-                 bvs L_13DD
-                 eor BUFADR,x
-                 ora LNFLG
-                 nop ICBLHZ,x
-                 ora DOSINI+1,x
-                 ora L_3838+1
-L_1384           and BFENLO,x
-L_1386           and BFENLO,x
-                 lda TOADR
-                 lda #$6E
-                 tax
-                 rra $6FAB
-                 shs $A466,y
-L_1393           adc #$5A
-                 stx FR2+4,y
-                 tsx
-                 inc MVFA+1
-                 ora $A96A,y
-                 stx ARSTKX,y
-                 anx #$56
-                 nop !
-                 eor $B96A,y
-                 tax
-                 sbc $70EA,y
-                 bvs L_141B
-                 jmp ($5C1C)
-                 nop L_3D5B+1,x
-                 and #$14
-                 brk
-                 ora BUFADR
-                 eor L_2573+1,x
-                 php
-                 ora #$02
-                 cim
-                 ora (BOOT,x)
-                 plp
-                 lse $596B,x
-L_13C3           eor MVFA,x
-                 stx ICDNOZ
-                 nop NSIGN
-                 ins CARTAD+1,x
-                 ldx $996A
-                 adc ESIGN
-                 ins $FEFF,x
-                 sbc #$E6
-                 sta $F966,y
-                 sbc COX
-                 adc TOPSTK+1
-L_13DD           lsr FMSZPG+5,x
-                 ora (DSKFMS),y
-                 rts
-                 rts
-                 nop #$80
-                 rti
-                 rts
-                 pla
-                 nop COLCRS
-                 ora RAMLO+1,x
-                 brk
-                 nop ICBLHZ,x
-                 ora ROWCRS,x
-                 bcc L_13C3
-                 bne L_1384+1
-                 bcc L_1386+1
-                 nop ICDNOZ,x
-                 and $D1
-                 dec POKADR
-                 lsr FR0+5
-                 lsr LNFLG
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_1408           ldy $A6EB
-                 sbc #$FA
-                 ldx $9A6A,y
-                 nop !
-                 nop
-                 shs $AB6A,y
-                 ldx $A9AA,y
-                 lda $ABEC,x
-L_141B           nop
-                 nop !
-                 ldx $9A6A,y
-                 ror $FB3A
-                 tax
-                 anx #$BE
-                 tax
-                 lda #$A9
-L_1429           ldy #$80
-                 tay
-                 ldx LELNUM,y
-                 ldy $6AAB
-                 asl
-                 cim
-                 nop !
-                 tax
-                 tsx
-                 nop !
-                 nop
-                 lda #$A0
-                 nop #$80
-                 ldy #$A4
-                 tsx
-                 lda $0A6A
-                 cim
-                 cim
-                 asl
-                 nop !
-                 ldx $A97E
-                 ldy #$80
-                 nop #$A0
-                 cpx #$E4
-L_144F           tsx
-                 ror
-                 asl
-                 cim
-                 cim
-                 asl
-                 anc #$1B
-                 ldy LNFLG
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 sta (VNTP,x)
-                 sax (VNTD,x)
-                 sta VVTP
-                 sax STMTAB
-                 nop #$C0
-                 ane #$0C
-                 ora $0F0E
-                 bpl L_1482
-                 cim
-                 sta $809E,x
-                 cim
-                 rla (BFENLO),y
-                 and LTEMP,x
-                 rla LOMEM,x
-                 bne L_144F
-                 nop #$52
-                 lse (ROWCRS),y
-L_1482           eor COLCRS+1,x
-                 lse LOMEM,x
-                 nop #$EF
-                 nop #$59
-                 nop !
-                 lse $5D5C,y
-                 lsr $8080,x
-                 cpx #$80
-                 adc (PALNTS,x)
-                 rra (ADRESS,x)
-                 adc TOADR
-                 nop #$80
-                 inx
-                 nop #$69
-                 ror
-                 arr #$6C
-                 adc $806E
-                 nop #$EF
-                 nop #$70
-                 adc (COLAC),y
-                 rra (ENDPT),y
-                 adc LOMEM,x
-                 nop #$F6
-                 nop #$77
-                 sei
-                 adc $7B7A,y
-                 nop $8080,x
-                 inc $7F80,x
-                 asl
-                 aso L_211F+1,x
-                 cli
-                 nop #$80
-                 ins L_227F+1
-                 rla (ICBALZ,x)
-                 and ICPTLZ
-                 rla LOMEM
-                 nop #$A8
-                 nop #$80
-                 nop #$80
-                 nop #$A9
-                 tax
-                 anx #$AC
-L_14D7           lda $0C0C
-                 nop $0C0C
-                 nop $0C0C
-L_14E0           nop $0C0C
-L_14E3           nop $0C0C
-                 nop $0C0C
-                 nop $0C0C
-                 nop $0C0C
-                 nop $0C0C
-                 nop $0C0C
-                 nop $0C0C
-L_14F8           nop $0C0C
-                 nop LNFLG
-                 brk
-                 brk
-L_1500           jsr L_4018
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+L_1008           .byte $00, $00, $00, $00, $01, $01, $05, $07
+                 .byte $00, $00, $05, $55, $70, $E0, $80, $80
+                 .byte $00, $55, $EF, $55, $EA, $00, $00, $00
+                 .byte $00, $55, $FF, $55, $AA, $00, $00, $00
+                 .byte $40, $14, $5E, $57, $19, $00, $00, $00
+                 .byte $05, $01, $60, $58, $55, $91, $00, $00
+                 .byte $58, $75, $6E, $5A, $16, $05, $00, $00
+                 .byte $78, $78, $78, $79, $79, $79, $79, $79
+                 .byte $00, $00, $00, $40, $50, $D4, $E4, $64
+                 .byte $10, $54, $65, $99, $A6, $A9, $AA, $7A
+                 .byte $06, $1E, $19, $2C, $34, $14, $10, $00
+                 .byte $00, $00, $00, $02, $02, $02, $02, $02
+                 .byte $25, $95, $A5, $16, $59, $2A, $5A, $2A
+                 .byte $55, $55, $99, $66, $AB, $EF, $BF, $FF
+                 .byte $55, $55, $99, $66, $A9, $FE, $FF, $FE
+                 .byte $54, $55, $96, $65, $95, $A9, $A5, $A9
+                 .byte $00, $00, $00, $80, $80, $60, $20, $60
+                 .byte $68, $58, $5E, $1E, $1E, $16, $17, $07
+                 .byte $00, $00, $00, $00, $02, $02, $02, $02
+                 .byte $00, $2A, $AA, $A0, $80, $85, $15, $14
+                 .byte $00, $A8, $AA, $0A, $02, $52, $54, $14
+                 .byte $00, $00, $00, $00, $80, $80, $80, $80
+                 .byte $00, $AA, $AA, $00, $00, $55, $55, $00
+                 .byte $01, $01, $01, $01, $00, $00, $00, $00
+                 .byte $28, $2A, $4A, $40, $50, $55, $15, $00
+                 .byte $28, $A8, $A1, $01, $05, $55, $54, $00
+                 .byte $40, $40, $40, $40, $00, $00, $00, $00
+                 .byte $00, $AA, $AA, $00, $00, $55, $55, $00
+                 .byte $68, $58, $1E, $1E, $1E, $16, $17, $07
+                 .byte $3D, $29, $14, $00, $00, $40, $40, $44
+                 .byte $11, $44, $51, $94, $66, $99, $66, $AA
+                 .byte $15, $51, $16, $59, $66, $99, $6A, $AA
+                 .byte $05, $55, $66, $99, $66, $AA, $AE, $BA
+                 .byte $99, $46, $51, $44, $25, $0A, $00, $00
+                 .byte $AE, $6B, $AE, $6B, $9E, $67, $55, $05
+                 .byte $EE, $BB, $FF, $FF, $FF, $BE, $6B, $55
+                 .byte $EE, $BB, $FF, $FF, $FF, $FF, $A9, $55
+                 .byte $EA, $B9, $EA, $B9, $EA, $99, $55, $50
+                 .byte $66, $91, $55, $92, $48, $A0, $00, $00
+                 .byte $3D, $29, $14, $00, $05, $15, $5D, $74
+                 .byte $00, $00, $00, $00, $01, $01, $05, $07
+                 .byte $00, $00, $00, $05, $57, $BE, $6A, $50
+                 .byte $00, $05, $57, $7D, $EA, $95, $54, $00
+                 .byte $05, $56, $F9, $56, $A9, $50, $05, $00
+                 .byte $94, $54, $51, $45, $16, $69, $80, $00
+                 .byte $02, $02, $02, $02, $02, $02, $02, $02
+                 .byte $14, $14, $14, $14, $14, $14, $14, $14
+                 .byte $28, $28, $28, $28, $28, $28, $28, $28
+                 .byte $40, $40, $40, $40, $40, $40, $40, $40
+                 .byte $0C, $09, $0C, $09, $0C, $09, $0C, $0C
+                 .byte $5A, $6A, $5A, $6A, $45, $15, $56, $68
+                 .byte $BF, $FF, $BF, $FE, $AA, $6A, $A0, $00
+                 .byte $FF, $FE, $FF, $AE, $AA, $A9, $0A, $00
+                 .byte $A5, $A9, $A5, $A9, $51, $54, $95, $29
+                 .byte $60, $A0, $A0, $20, $20, $20, $A0, $60
+                 .byte $29, $29, $14, $00, $80, $68, $94, $40
+                 .byte $A9, $69, $99, $64, $59, $18, $15, $04
+                 .byte $A6, $56, $A6, $A6, $55, $52, $01, $56
+                 .byte $19, $00, $15, $00, $22, $19, $06, $01
+                 .byte $00, $25, $11, $19, $00, $11, $11, $19
+                 .byte $08, $00, $01, $00, $05, $05, $00, $08
+                 .byte $00, $00, $9A, $00, $9A, $9A, $00, $00
+                 .byte $00, $00, $50, $00, $64, $64, $00, $00
+                 .byte $00, $00, $00, $00, $00, $14, $29, $15
+                 .byte $04, $15, $18, $59, $64, $99, $69, $A9
+                 .byte $56, $05, $55, $56, $A5, $56, $A6, $A6
+                 .byte $19, $00, $15, $00, $22, $19, $06, $01
+                 .byte $A2, $A2, $00, $80, $80, $00, $00, $00
+                 .byte $A0, $08, $02, $02, $0A, $0A, $20, $0A
+                 .byte $AA, $AA, $A8, $A8, $A2, $00, $A2, $A2
+                 .byte $0A, $20, $8A, $8A, $A2, $A2, $08, $A0
+                 .byte $29, $29, $14, $00, $80, $68, $94, $40
+                 .byte $A8, $63, $8C, $43, $4F, $0F, $13, $04
+                 .byte $00, $C5, $0F, $C5, $C5, $CF, $C5, $00
+                 .byte $00, $55, $FF, $55, $55, $FF, $55, $00
+                 .byte $00, $53, $F0, $53, $53, $F3, $53, $00
+                 .byte $29, $C9, $31, $C0, $F1, $F0, $C5, $04
+                 .byte $A6, $56, $A6, $A6, $55, $52, $01, $56
+                 .byte $19, $00, $15, $00, $22, $19, $06, $01
+                 .byte $06, $06, $06, $01, $01, $01, $00, $00
+                 .byte $46, $51, $51, $91, $91, $94, $64, $64
+                 .byte $0D, $0A, $0E, $08, $0C, $28, $2A, $25
+                 .byte $80, $00, $00, $00, $00, $A8, $56, $55
+                 .byte $00, $00, $00, $01, $05, $06, $85, $66
+                 .byte $00, $00, $00, $40, $50, $50, $92, $99
+                 .byte $02, $00, $00, $00, $00, $2A, $95, $55
+                 .byte $60, $A0, $A0, $20, $20, $20, $A8, $68
+                 .byte $0C, $58, $47, $93, $47, $91, $66, $94
+                 .byte $31, $35, $32, $35, $32, $35, $32, $35
+                 .byte $66, $9A, $BB, $AF, $BF, $AF, $BF, $AF
+                 .byte $E5, $E7, $E6, $D7, $DA, $57, $5B, $60
+                 .byte $DA, $9B, $DB, $97, $F5, $E5, $E5, $09
+                 .byte $66, $B9, $EA, $FD, $FA, $FE, $FA, $FE
+                 .byte $5C, $5C, $4C, $9C, $4C, $9C, $4C, $9C
+                 .byte $04, $11, $11, $04, $11, $04, $11, $11
+                 .byte $3D, $29, $14, $00, $05, $15, $5D, $75
+                 .byte $31, $36, $35, $35, $3C, $09, $09, $0B
+                 .byte $BF, $AF, $BF, $AF, $7F, $AB, $6F, $1B
+                 .byte $40, $80, $00, $00, $00, $07, $7B, $6E
+                 .byte $01, $02, $00, $00, $00, $D0, $6D, $B9
+                 .byte $FA, $FE, $FA, $FE, $E9, $E6, $99, $A5
+                 .byte $4C, $9C, $5C, $4C, $20, $60, $20, $A0
+                 .byte $64, $55, $15, $05, $00, $14, $29, $15
+                 .byte $54, $90, $D0, $D0, $90, $90, $90, $54
+                 .byte $02, $02, $02, $02, $0A, $0A, $09, $09
+                 .byte $6A, $1E, $56, $1A, $46, $55, $86, $96
+L_1358           .byte $A9, $A0, $80, $80, $A0, $E0, $E4, $BA
+                 .byte $6A, $0A, $02, $02, $0A, $0B, $1B, $AC
+                 .byte $99, $64, $91, $64, $95, $62, $96, $92
+                 .byte $80, $C0, $80, $C0, $A0, $70, $60, $70
+                 .byte $64, $55, $15, $05, $00, $14, $29, $15
+                 .byte $0D, $0D, $39, $38, $35, $34, $35, $34
+                 .byte $A5, $66, $A9, $6E, $AA, $6F, $AB, $6F
+                 .byte $9B, $66, $A4, $69, $5A, $96, $EA, $BA
+                 .byte $E6, $9A, $19, $6A, $A9, $96, $AA, $AB
+                 .byte $56, $5A, $59, $6A, $B9, $AA, $F9, $EA
+                 .byte $70, $70, $70, $6C, $1C, $5C, $1C, $5C
+                 .byte $3D, $29, $14, $00, $05, $15, $5D, $74
+                 .byte $25, $08, $09, $02, $02, $01, $09, $28
+                 .byte $5F, $6B, $59, $55, $99, $86, $21, $44
+                 .byte $EE, $FF, $FF, $BF, $AE, $6A, $99, $65
+                 .byte $EF, $FF, $FF, $FE, $E9, $E6, $99, $66
+                 .byte $F9, $E5, $94, $65, $91, $56, $48, $11
+                 .byte $18, $60, $60, $80, $80, $40, $60, $68
+                 .byte $64, $55, $15, $05, $00, $14, $29, $15
+                 .byte $54, $90, $D0, $D0, $90, $90, $90, $54
+                 .byte $21, $25, $D1, $C6, $95, $46, $D9, $46
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+L_1408           .byte $AC, $EB, $A6, $E9, $FA, $BE, $6A, $9A
+                 .byte $3A, $EA, $9B, $6A, $AB, $BE, $AA, $A9
+                 .byte $BD, $EC, $AB, $EA, $FA, $BE, $6A, $9A
+                 .byte $6E, $3A, $FB, $AA, $AB, $BE, $AA, $A9
+                 .byte $A9, $A0, $80, $A8, $B6, $AD, $AC, $AB
+                 .byte $6A, $0A, $02, $1A, $AA, $BA, $3A, $EA
+                 .byte $A9, $A0, $80, $80, $A0, $A4, $BA, $AD
+                 .byte $6A, $0A, $02, $02, $0A, $1A, $AE, $7E
+                 .byte $A9, $A0, $80, $80, $A0, $E0, $E4, $BA
+                 .byte $6A, $0A, $02, $02, $0A, $0B, $1B, $AC
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $81, $82, $83, $84, $85, $86, $87, $88
+                 .byte $89, $C0, $8B, $0C, $0D, $0E, $0F, $10
+                 .byte $11, $92, $9D, $9E, $80, $32, $33, $34
+                 .byte $35, $36, $37, $80, $D0, $D1, $80, $52
+                 .byte $53, $54, $55, $56, $57, $80, $80, $EF
+                 .byte $80, $59, $5A, $5B, $5C, $5D, $5E, $80
+                 .byte $80, $E0, $80, $61, $62, $63, $64, $65
+                 .byte $66, $80, $80, $E8, $80, $69, $6A, $6B
+                 .byte $6C, $6D, $6E, $80, $80, $EF, $80, $70
+                 .byte $71, $72, $73, $74, $75, $80, $80, $F6
+                 .byte $80, $77, $78, $79, $7A, $7B, $7C, $80
+                 .byte $80, $FE, $80, $7F, $0A, $1F, $20, $21
+                 .byte $58, $80, $80, $EF, $80, $22, $23, $24
+                 .byte $25, $26, $27, $80, $80, $A8, $80, $80
+                 .byte $80, $80, $80, $A9, $AA, $AB, $AC, $AD
+L_14D8           .byte $0C, $0C, $0C, $0C, $0C, $0C, $0C, $0C
+L_14E0           .byte $0C, $0C, $0C, $0C, $0C, $0C, $0C, $0C
+                 .byte $0C, $0C, $0C, $0C, $0C, $0C, $0C, $0C
+                 .byte $0C, $0C, $0C, $0C, $0C, $0C, $0C, $0C
+L_14F8           .byte $0C, $0C, $0C, $0C, $00, $00, $00, $00
+                 jsr L_4018
 L_1503           ldx #$00
 L_1505           lda L_1408,x
                  sta L_1358,x
@@ -751,7 +172,7 @@ L_1505           lda L_1408,x
                  bne L_1505
                  ldx #$D8
                  ldy #$14
-                 stx L_3C22
+                 stx L_3C1B+7
                  sty L_3C23
                  lda #$10
                  sta CHBAS
@@ -819,7 +240,7 @@ L_1583           inc FLPTR+1
                  ldx #$00
 L_1595           ldy #$00
                  lda #$0C
-                 sta L_14D7+1,x
+                 sta L_14D8,x
                  sta L_14E0,x
                  lda #$2E
                  sta (FRE+4),y
@@ -880,17 +301,17 @@ L_15FD           lda #$17
                  cpx #$1A
                  bne L_15FD
                  lda #$2A
-                 sta L_1700
+                 sta L_16FD+3
                  lda #$00
-                 sta L_1701
+                 sta L_16FD+4
                  sta L_1A66
                  sta L_1A67
                  sta L_1B00
                  sta L_1B00+1
                  lda #$08
-                 sta L_1702
+                 sta L_16FD+5
                  lda #$14
-                 sta L_1703
+                 sta L_16FD+6
                  ldx #$18
                  stx $9F3E
                  inx
@@ -906,18 +327,18 @@ L_15FD           lda #$17
                  jsr L_43D5
                  ldx #$00
                  txa
-                 sta L_1703+1
+                 sta L_16FD+7
                  sta L_1705
-                 sta L_1706
-L_165A           sta L_1769,x
+                 sta L_1705+1
+L_165A           sta L_1765+4,x
                  inx
                  cpx #$1A
                  bne L_165A
                  ldx #$00
                  ldy #$38
 L_1666           tya
-                 sta L_4400,x
-                 sta L_4403+1,x
+                 sta L_43FD+3,x
+                 sta L_43FD+7,x
                  inx
                  iny
                  cpx #$04
@@ -927,32 +348,32 @@ L_1666           tya
                  lda #$B4
                  sta $5071
                  jmp $5113
-L_1680           jsr L_2C07+1
+L_1680           jsr L_2C03+5
                  jmp $5003
                  bvs L_16D7+1
                  lda #$B4
                  sta $5071
                  jmp L_1CE4
-L_1690           lda L_3C24
+L_1690           lda L_3C23+1
                  cmp #$1C
                  bmi L_16A4
-                 jsr L_46FC+1
-                 lda L_3C24
+                 jsr L_46FD
+                 lda L_3C23+1
                  cmp #$2A
                  bmi L_16A4
                  jsr L_1783
-L_16A4           lda L_3C25
+L_16A4           lda L_3C23+2
                  beq L_1690
                  jsr L_44CB
                  jsr L_44F1
-                 jsr L_46FC+1
+                 jsr L_46FD
 L_16B2           jsr $FFFF
                  jsr L_1CD0
                  jsr L_1680
                  lda L_1A66
                  cmp #$10
                  bpl L_16DA
-                 lda L_460B
+                 lda L_4607+4
                  cmp #$6A
                  bcs L_16F0
                  ldx #$00
@@ -964,133 +385,70 @@ L_16D2           inx
                  bne L_16CB
 L_16D7           jmp L_1690
 L_16DA           jmp L_1BA0
-L_16DD           lda L_4409
+L_16DD           lda L_4405+4
                  clc
                  adc #$2E
-                 cmp L_1772,x
+                 cmp L_176D+5,x
                  bcs L_16D2
                  clc
                  adc #$18
-                 cmp L_1772,x
+                 cmp L_176D+5,x
                  bcc L_16D2
 L_16F0           lda #$8A
                  sta L_443F+1
                  lda #$88
                  sta L_4452+1
                  jmp L_3000
-                 brk
-                 brk
-                 brk
-L_1700           brk
-L_1701           brk
-L_1702           cli
-L_1703           nop LNFLG,x
-L_1705           brk
-L_1706           brk
-L_1707           bmi L_1781
-                 nop $907C,x
-                 pla
-L_170D           bmi L_170F
-L_170F           rts
-                 sed
-                 ldy $5C7C,x
-                 jsr ABUFPT
-                 rts
-L_1718           beq L_16D2
-                 cli
-                 nop L_102B+1,x
-                 brk
-                 cpy #$60
-                 beq L_1752+1
-                 cli
-                 bit POKMSK
-                 brk
-                 nop #$C0
-                 rts
-                 bmi L_1744+1
-                 php
-                 brk
-L_172F           brk
-                 nop #$60
-                 bcs L_178B+1
-                 plp
-                 nop WARMST,x
-                 brk
-                 rts
-                 bcc L_179A+1
-L_173B           beq L_17B3+2
-                 sei
-                 bmi L_179E+2
-                 bcc L_17A8+2
-                 beq L_173B+1
-L_1744           beq L_17B6
-                 brk
-L_1747           cim
-                 ora (POKMSK),y
-                 aso $0D0E
-                 asl
-                 asl
-                 asl
-                 ora #$08
-L_1752           aso TRAMSZ
-                 ora NGFLAG
-                 aso (CASINI,x)
-                 ora (LNFLG,x)
-                 ora (CASINI,x)
-                 aso (RAMLO,x)
-                 ora TRAMSZ
-                 aso WARMST
-                 ora #$0A
-                 anc #$0C
-                 ora $0F0E
-L_1769           sta (LNFLG,x)
-                 brk
-L_176C           rra LNFLG,x
-L_176F           ora (LNFLG,x)
-L_1771           brk
-L_1772           sta (LNFLG,x)
-                 brk
-L_1775           rol LNFLG,x
-L_1778           ora (LNFLG,x)
-                 brk
-L_177B           ora LNFLG,x
-                 brk
-L_177E           ora LNFLG
-                 brk
-L_1781           ora (CASINI,x)
-L_1783           ldx L_1781
+L_16FD           .byte $00, $00, $00, $00, $00, $58, $14, $00
+L_1705           .byte $00, $00, $30, $78, $FC, $7C, $90, $68
+                 .byte $30, $00, $60, $F8, $BC, $7C, $5C, $20
+                 .byte $1C, $00, $60, $F0, $B8, $58, $3C, $2C
+                 .byte $10, $00, $C0, $60, $F0, $30, $58, $2C
+                 .byte $10, $00, $00, $80, $C0, $60, $30, $18
+L_172D           .byte $08, $00, $00, $80, $60, $B0, $58, $28
+                 .byte $14, $08, $00, $60, $90, $60, $F0, $78
+                 .byte $78, $30, $60, $90, $68, $F0, $F8, $F0
+L_1745           .byte $70, $00, $12, $11, $10, $0F, $0E, $0D
+                 .byte $0A, $0A, $0A, $09, $08, $07, $06, $05
+                 .byte $01, $03, $02, $01, $00, $01, $02, $03
+                 .byte $04, $05, $06, $07, $08, $09, $0A, $0B
+L_1765           .byte $0C, $0D, $0E, $0F, $81, $00, $00, $7F
+L_176D           .byte $00, $00, $01, $00, $00, $81, $00, $00
+L_1775           .byte $3E, $00, $00, $01, $00, $00, $15, $00
+L_177D           .byte $00, $05, $00, $00, $01, $02
+L_1783           ldx L_177D+4
                  lda #$01
                  sta GPRIOR
-L_178B           lda L_176F,x
+                 lda L_176D+2,x
                  beq L_17A1
                  cmp #$02
                  beq L_1797
                  jmp L_18C8
 L_1797           ldy #$00
 L_1799           iny
-L_179A           cpy #$1E
+                 cpy #$1E
                  bne L_1799
-L_179E           jmp L_1992
-L_17A1           lda L_1702
+                 jmp L_1992
+L_17A1           lda L_16FD+5
                  cmp #$58
                  beq L_17F4
-L_17A8           lda L_1700
+                 lda L_16FD+3
                  beq L_17B3
-                 dec L_1700
+                 dec L_16FD+3
                  jmp L_1992
-L_17B3           lda L_176F
-L_17B6           bne L_17F4
-                 inc L_1701
-                 lda L_1701
+L_17B3           lda L_176D+2
+                 bne L_17F4
+                 inc L_16FD+4
+                 lda L_16FD+4
                  cmp #$14
                  bcs L_17C8
-                 inc L_1701
+                 inc L_16FD+4
                  jmp L_1992
 L_17C8           lda #$00
-                 sta L_1701
-                 lda L_1702
+                 sta L_16FD+4
+                 lda L_16FD+5
                  sta FRE+2
-                 lda L_1703
+                 lda L_16FD+6
                  sta FRE+3
                  ldy #$00
 L_17D9           lda (FRE+2),y
@@ -1098,44 +456,44 @@ L_17D9           lda (FRE+2),y
                  iny
                  cpy #$10
                  bne L_17D9
-                 lda L_1702
+                 lda L_16FD+5
                  clc
                  adc #$10
-                 sta L_1702
+                 sta L_16FD+5
                  bcc L_17F1
-                 inc L_1703
+                 inc L_16FD+6
 L_17F1           jmp L_1992
 L_17F4           cpx #$00
                  beq L_1809
-                 stx L_1781+1
+                 stx L_177D+5
                  dex
                  lda L_1775,x
-L_17FF           cmp #$41
+                 cmp #$41
                  bcs L_1806
                  jmp L_1797
-L_1806           ldx L_1781+1
-L_1809           lda L_4409
+L_1806           ldx L_177D+5
+L_1809           lda L_4405+4
                  lsr
                  lsr
-                 stx L_1781+1
+                 stx L_177D+5
                  tax
-                 lda L_1747,x
+                 lda L_1745+2,x
                  sta FRE+4
                  sta FRE+2
                  stx FRE+3
-                 ldx L_1781+1
+                 ldx L_177D+5
                  lda #$0B
                  sta FRE+5
                  lda #$01
-                 sta L_1769,x
-                 sta L_176C,x
-                 sta L_176F,x
+                 sta L_1765+4,x
+                 sta L_1765+7,x
+                 sta L_176D+2,x
                  lda FRE+4
                  bne L_183E
                  lda #$7F
-                 sta L_176C,x
+                 sta L_1765+7,x
                  lda #$01
-                 sta L_1769,x
+                 sta L_1765+4,x
                  jmp L_1877
 L_183E           cmp FRE+5
                  bpl L_185A
@@ -1143,31 +501,31 @@ L_1842           lda FRE+5
                  sec
                  sbc FRE+4
                  sta FRE+5
-                 inc L_176C,x
+                 inc L_1765+7,x
                  lda FRE+5
                  cmp FRE+4
                  bpl L_1842
                  lda #$01
-                 sta L_1769,x
+                 sta L_1765+4,x
                  jmp L_1877
 L_185A           lda FRE+5
-                 sta L_1781+1
-L_185F           lda L_1781+1
+                 sta L_177D+5
+L_185F           lda L_177D+5
                  clc
                  adc FRE+5
-                 sta L_1781+1
-                 inc L_1769,x
+                 sta L_177D+5
+                 inc L_1765+4,x
                  lda FRE+4
-                 cmp L_1781+1
+                 cmp L_177D+5
                  bpl L_185F
                  lda #$01
-                 sta L_176C,x
+                 sta L_1765+7,x
 L_1877           lda FRE+3
                  cmp #$12
                  bmi L_1885
-                 lda L_1769,x
+                 lda L_1765+4,x
                  ora #$80
-                 sta L_1769,x
+                 sta L_1765+4,x
 L_1885           lda #$80
                  ldy #$6E
                  sta FRE+2
@@ -1186,20 +544,20 @@ L_189E           dey
                  jmp L_188F
 L_18A2           lda #$81
                  sta HPOSP1,x
-                 sta L_1772,x
+                 sta L_176D+5,x
                  lda #$0F
                  sta PCOLR1,x
                  ldy #$34
                  tya
                  sta L_1775,x
                  ldx #$00
-L_18B7           lda L_1707,x
+L_18B7           lda L_1705+2,x
                  sta (FRE+2),y
                  iny
                  inx
                  cpx #$08
                  bne L_18B7
-                 ldx L_1781+1
+                 ldx L_177D+5
                  jmp L_1992
 L_18C8           lda #$80
                  ldy #$6E
@@ -1221,12 +579,12 @@ L_18E5           lda L_1775,x
                  cmp #$6A
                  bcc L_1916
                  lda #$00
-                 sta L_1772,x
+                 sta L_176D+5,x
                  sta HPOSP1,x
-                 inc L_176F,x
+                 inc L_176D+2,x
                  lda L_1775,x
                  tay
-                 stx L_1781+1
+                 stx L_177D+5
                  ldx #$00
                  txa
 L_1901           sta (FRE+2),y
@@ -1234,37 +592,37 @@ L_1901           sta (FRE+2),y
                  inx
                  cpx #$08
                  bne L_1901
-                 ldx L_1781+1
+                 ldx L_177D+5
                  cpx #$02
                  beq L_1913
                  jmp L_1992
 L_1913           jmp L_19E8
-L_1916           lda L_176C,x
-                 cmp L_177B,x
+L_1916           lda L_1765+7,x
+                 cmp L_1775+6,x
                  beq L_1926
-L_191E           bmi L_1926
-                 inc L_177B,x
+                 bmi L_1926
+                 inc L_1775+6,x
                  jmp L_193B
 L_1926           lda #$00
-                 sta L_177B,x
-                 lda L_1769,x
+                 sta L_1775+6,x
+                 lda L_1765+4,x
                  and #$80
                  bne L_1938
-                 dec L_1772,x
+                 dec L_176D+5,x
                  jmp L_193B
-L_1938           inc L_1772,x
-L_193B           lda L_1772,x
+L_1938           inc L_176D+5,x
+L_193B           lda L_176D+5,x
                  sta HPOSP1,x
-                 lda L_1769,x
+                 lda L_1765+4,x
                  and #$7F
                  beq L_1955
-                 cmp L_1778,x
+                 cmp L_1775+3,x
                  beq L_1955
                  bmi L_1955
-                 inc L_1778,x
+                 inc L_1775+3,x
                  jmp L_1992
 L_1955           lda #$00
-                 sta L_1778,x
+                 sta L_1775+3,x
                  lda L_1775,x
                  tay
                  lda #$00
@@ -1272,12 +630,12 @@ L_1955           lda #$00
                  iny
                  tya
                  sta L_1775,x
-                 stx L_1781+1
+                 stx L_177D+5
                  lda #$07
                  sta L_1987+1
                  lda #$17
                  sta L_1987+2
-                 lda L_177E,x
+                 lda L_177D+1,x
                  clc
                  asl
                  asl
@@ -1287,43 +645,43 @@ L_1955           lda #$00
                  sta L_1987+1
                  jsr L_1A13
                  ldx #$00
-L_1987           lda L_172F,x
+L_1987           lda L_172D+2,x
                  sta (FRE+2),y
                  iny
                  inx
                  cpx #$08
                  bne L_1987
-L_1992           ldx L_1781
+L_1992           ldx L_177D+4
                  cpx #$02
                  bne L_199B
                  ldx #$FF
 L_199B           inx
-                 stx L_1781
-                 lda L_1771
+                 stx L_177D+4
+                 lda L_176D+4
                  bne L_19A5
 L_19A4           rts
 L_19A5           lda L_1775+2
                  cmp #$3A
                  bcc L_19A4
-                 lda L_1702
+                 lda L_16FD+5
                  cmp #$08
                  beq L_19A4
-                 lda L_1701
+                 lda L_16FD+4
                  cmp #$0F
                  bcs L_19BE
-                 inc L_1701
+                 inc L_16FD+4
                  rts
 L_19BE           lda #$00
-                 sta L_1701
-                 lda L_1702
+                 sta L_16FD+4
+                 lda L_16FD+5
                  sec
                  sbc #$10
-                 sta L_1702
+                 sta L_16FD+5
                  bcs L_19D1
-                 dec L_1703
-L_19D1           lda L_1702
+                 dec L_16FD+6
+L_19D1           lda L_16FD+5
                  sta FRE+2
-                 lda L_1703
+                 lda L_16FD+6
                  sta FRE+3
                  ldy #$00
 L_19DD           lda (FRE+2),y
@@ -1333,21 +691,21 @@ L_19DD           lda (FRE+2),y
                  bne L_19DD
                  rts
 L_19E8           lda #$00
-                 sta L_1701
+                 sta L_16FD+4
                  ldy #$00
-L_19EF           sta L_176F,y
-                 sta L_1703+1,y
-                 sta L_177B,y
-                 sta L_1778,y
-                 sta L_1772,y
+L_19EF           sta L_176D+2,y
+                 sta L_16FD+7,y
+                 sta L_1775+6,y
+                 sta L_1775+3,y
+                 sta L_176D+5,y
                  sta L_1775,y
                  iny
                  cpy #$03
                  bne L_19EF
                  lda #$08
-                 sta L_1702
+                 sta L_16FD+5
                  lda #$14
-                 sta L_1703
+                 sta L_16FD+6
                  jmp L_1992
 L_1A13           lda L_1A34,x
                  cmp #$01
@@ -1356,56 +714,20 @@ L_1A13           lda L_1A34,x
                  rts
 L_1A1E           lda #$00
                  sta L_1A34,x
-                 lda L_177E,x
+                 lda L_177D+1,x
                  cmp #$07
                  beq L_1A2E
-                 inc L_177E,x
+                 inc L_177D+1,x
                  rts
 L_1A2E           lda #$00
-                 sta L_177E,x
+                 sta L_177D+1,x
                  rts
-L_1A34           ora (NGFLAG,x)
-                 ora (LNFLG,x)
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_1A56           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
+L_1A34           .byte $01, $01, $01, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00
 L_1A60           jmp L_1AB7
 L_1A63           jmp L_1ADA
 L_1A66           brk
@@ -1443,13 +765,13 @@ L_1A9A           ldy L_1A69
                  lda #$03
                  jsr L_2500
                  ldx #$03
-                 jsr L_3BB3+1
+                 jsr L_3BB0+4
                  inc L_1A67
                  inc L_1A66
                  jmp L_1A94
 L_1AB6           rts
 L_1AB7           stx L_1A6A
-                 lda L_4000
+                 lda L_3FFD+3
                  cmp #$20
                  bne L_1AD1
                  jsr L_1A6B
@@ -1462,7 +784,7 @@ L_1AD1           jsr L_4A8D
                  ldx L_1A6A
                  jmp L_4920
 L_1ADA           stx L_1A6A
-                 lda L_4000
+                 lda L_3FFD+3
                  cmp #$20
                  bne L_1AF1
                  jsr L_1A6B
@@ -1487,17 +809,17 @@ L_1B0F           inc L_1B00
                  lda L_1B00
                  cmp #$03
                  bmi L_1B0E
-L_1B19           lda #$00
-L_1B1B           sta L_1B00
+                 lda #$00
+                 sta L_1B00
                  lda L_1A66
                  cmp #$0F
-                 bpl L_1B58+1
+                 bpl L_1B57+2
                  ldx L_1B00+1
                  cpx #$03
                  beq L_1B3E
                  lda L_1B47,x
 L_1B2F           ldx #$00
-L_1B31           sta L_14D7+1,x
+L_1B31           sta L_14D8,x
                  inx
                  inx
 L_1B36           cpx #$24
@@ -1508,19 +830,12 @@ L_1B3E           lda #$00
                  sta L_1A67
                  sta L_1B00+1
                  rts
-L_1B47           rol $0C3A,x
-L_1B4A           beq L_1B3E
-                 nop ZTEMP1+1,x
-                 sed
-                 nop !
-                 nop $FEFE,x
-                 nop $F8FA,x
-                 inc INBUFF+1,x
-L_1B58           escape #$AE
-                 ora (DSKUTL+1,x)
+L_1B47           .byte $3E, $3A, $0C, $F0, $F2, $F4, $F6, $F8
+                 .byte $FA, $FC, $FE, $FE, $FC, $FA, $F8, $F6
+L_1B57           .byte $F4, $F2, $AE, $01, $1B
                  cpx #$0F
                  bpl L_1B66
-                 lda L_1B4A,x
+                 lda L_1B47+3,x
                  jmp L_1B2F
 L_1B66           lda #$1D
                  sta L_1B00
@@ -1528,48 +843,12 @@ L_1B66           lda #$1D
                  lda #$1D
                  sta L_1B00
                  jmp L_1B36+1
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00
 L_1BA0           ldx #$00
                  stx PCOLR0
                  stx PCOLR1
@@ -1582,7 +861,7 @@ L_1BA0           ldx #$00
                  ldx #$00
                  txa
 L_1BBD           sta $6E00,x
-L_1BC0           sta $6F00,x
+                 sta $6F00,x
                  inx
                  bne L_1BBD
                  stx GRACTL
@@ -1591,7 +870,7 @@ L_1BC0           sta $6F00,x
                  lda #$09
                  jsr L_2500
                  lda #$0C
-L_1BD5           sta L_14D7+1,x
+L_1BD5           sta L_14D8,x
                  inx
                  cpx #$24
                  bne L_1BD5
@@ -1605,9 +884,9 @@ L_1BE7           ldx #$00
 L_1BE9           lda L_14E0+2,x
                  cmp #$06
                  bpl L_1BF8
-                 lda L_14E3+1,x
+                 lda L_14E0+4,x
                  beq L_1BF8
-                 dec L_14E3+1,x
+                 dec L_14E0+4,x
 L_1BF8           lda L_14E0+2
                  beq L_1C00
                  dec L_14E0+2
@@ -1627,7 +906,7 @@ L_1C0E           iny
                  ldx FRE+2
                  ldy FRE+3
                  lda L_14F8+2
-L_1C1D           bne L_1BE7
+                 bne L_1BE7
                  lda #$03
                  sta GRACTL
                  ldy #$20
@@ -1670,93 +949,17 @@ L_1C62           inx
                  lda #$88
                  sta L_4452+1
                  jmp L_3353
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00
 L_1CD0           jsr L_1B02
                  ldy #$00
 L_1CD5           ldx #$00
@@ -1772,537 +975,73 @@ L_1CE4           jsr $5113
                  lda #$0C
                  sta $5074
                  rts
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_1D1F           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_1E1E           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_1EF5           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+L_1EF5           .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00
 L_1F00           asl
                  sta INTEMP
 L_1F04           txa
@@ -2316,907 +1055,223 @@ L_1F0B           dex
                  tya
                  sta VIMIRQ,x
                  rts
-                 rti
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 ora LNFLG
-                 eor COLCRS+1,x
-                 lse ROWCRS,x
-                 eor COLCRS+1,x
-                 lse ROWCRS,x
-                 eor COLCRS+1,x
-                 lse ROWCRS,x
-                 eor COLCRS+1,x
-                 lse ROWCRS,x
-                 eor COLCRS+1,x
-                 lse ROWCRS,x
-L_2014           eor COLCRS+1,x
-                 lse ROWCRS,x
-                 eor COLCRS+1,x
-                 cim
-                 aso ICPTLZ
-                 ora TSLNUM
-L_201F           sax COLDST
-                 aso ICBALZ
-                 ora LNFLG
-                 and $594E,y
-                 cim
-                 lse (FREQ,x)
-                 eor (CRITIC,x)
-                 lse (FREQ,x)
-                 eor (CRITIC,x)
-L_2032           lse (FREQ,x)
-                 eor (CRITIC,x)
-                 lse (FREQ,x)
-                 eor (CRITIC,x)
-                 lse (FREQ,x)
-                 eor (CRITIC,x)
-                 lse (FREQ,x)
-                 eor (CRITIC,x)
-                 brk
-                 ror CASINI,x
-                 aso ICBAHZ
-                 rol $6D06,x
-                 nop #$02
-                 asl ICPTLZ
-                 asl FRE+2
-                 eor L_4745+1,x
-                 nop FMSZPG+2
-                 lsr FMSZPG+4
-                 nop FMSZPG+2
-                 lsr FMSZPG+4
-                 nop FMSZPG+2
-                 lsr FMSZPG+4
-L_205F           nop FMSZPG+2
-                 lsr FMSZPG+4
-                 nop FMSZPG+2
-                 lsr FMSZPG+4
-                 nop FMSZPG+2
-                 lsr SVDISP
-                 cim
-                 asl ICPTHZ
-                 asl FRE+5
-                 ldy $0702,x
-                 bit FTYPE
-                 php
-                 brk
-                 dec HOLD1
-                 nop !
-                 rla L_3937+1,y
-                 nop !
-                 rla L_3937+1,y
-                 nop !
-                 rla L_3937+1,y
-                 nop !
-                 rla L_3937+1,y
-                 nop !
-                 rla L_3937+1,y
-                 nop !
-                 rla L_3937+1,y
-                 nop !
-                 rti
-                 asl FRE+4
-                 rla FR1+4,x
-                 cim
-                 nop BUFRHI
-                 inc $0702
-                 and #$3E
-                 php
-                 ora (CASINI,x)
-                 ora (CASINI,x)
-                 ora (CASINI,x)
-                 ora (CASINI,x)
-                 ora (CASINI,x)
-                 ora (CASINI,x)
-                 ora (CASINI,x)
-                 ora (CASINI,x)
-                 ora (CASINI,x)
-                 ora (CASINI,x)
-                 ora (CASINI,x)
-                 ora (CASINI,x)
-                 ora (CASINI,x)
-                 jsr $0603
-                 bvc L_20C4+1
-                 nop $032A,x
-                 aso FMSZPG+1
-L_20C4           nop #$4D
-                 and (BFENLO),y
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (TRAMSZ,x)
-                 bvc L_20EB+1
-                 dec B2_ICPTL,x
-                 aso FMSZPG+1
-L_20EB           nop #$4D
-                 cim
-                 bvs L_20F2+1
-                 aso (RAMLO,x)
-L_20F2           aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 tya
-                 aso (WARMST,x)
-L_210D           sta (DSTAT,x)
-                 and (LOMEM+1,x)
-                 jmp B6_ICCOM
-                 nop L_4683
-                 eor #$03
-                 nop CASINI+1
-                 nop CASINI+1
-                 nop CASINI+1
-L_211F           nop CASINI+1
-                 nop CASINI+1
-                 nop CASINI+1
-                 nop CASINI+1
-                 nop CASINI+1
-                 nop CASINI+1
-                 nop CASINI+1
-                 nop CASINI+1
-                 nop CASINI+1
-                 nop ICHIDZ
-                 jsr L_201F+1
-                 lse (COLRSH,x)
-                 nop FMSZPG+2
-                 nop ICHIDZ
-                 cim
-                 eor L_4D20,y
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 bvc L_2165+2
-                 php
-                 brk
-                 asl $0D01
-                 stx FMSZPG+1
-                 eor COLCRS+1
-L_2165           lsr L_4D54+1
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-L_217C           aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (RAMLO,x)
-                 aso (LTEMP,x)
-                 ora (DOSVEC+1,x)
-                 bvc L_210D+1
-                 nop FMSZPG+2
-                 lsr ROWCRS,x
-                 eor L_404F+1,y
-                 ora (OLDCHR,x)
-                 lsr $5C5F,x
-                 eor $5F5E,x
-                 nop $5E5D,x
-                 lse $5D5C,x
-                 lsr $5C5F,x
-                 eor $5F5E,x
-                 nop $5E5D,x
-                 lse $5D5C,x
-                 lsr $0727,x
-                 and (CASINI),y
-                 pla
-                 ora (CMCMD,x)
-                 bit FTYPE
-                 asl $CE
-                 cim
-                 ora (CMCMD,x)
-                 eor (XMTDON),y
-                 rla L_3937+1,y
-                 nop !
-                 rla L_3937+1,y
-                 nop !
-                 rla L_3937+1,y
-                 nop !
-                 rla L_3937+1,y
-                 nop !
-                 rla L_3937+1,y
-                 nop !
-                 rla L_3937+1,y
-                 nop !
-                 ora (CMCMD,x)
-                 bvc L_21DB
-                 brk
-                 bne L_217C+1
-                 ora (CMCMD,x)
-L_21DB           bvc L_21E2
-                 ora ($D0,x)
-                 ldx L_3E54+1
-L_21E2           rla L_3D3C,x
-                 rol L_3C3E+1,x
-                 and L_3F3D+1,x
-                 nop L_3E3D,x
-                 rla L_3D3C,x
-                 rol L_3C3E+1,x
-                 and L_3F3D+1,x
-                 nop L_3E3D,x
-                 cim
-                 dec NGFLAG,x
-                 aso HOLD1
-L_21FF           rol $0F08,x
-                 cpx #$01
-                 aso TMPCHR
-                 aso TEMPA
-                 eor L_4341+1,y
-                 rti
-L_220C           eor (CRITIC,x)
-                 lse (FREQ,x)
-                 eor (CRITIC,x)
-                 lse (FREQ,x)
-                 eor (CRITIC,x)
-                 lse (FREQ,x)
-                 eor (CRITIC,x)
-                 lse (FREQ,x)
-                 eor (CRITIC,x)
-                 lse (FREQ,x)
-                 eor (CRITIC,x)
-                 aso ICBALZ
-                 rol WARMST,x
-                 cim
-                 cim
-                 asl
-                 nop #$50
-                 nop HOLD1,x
-                 rol $5D08,x
-                 lsr FMSZPG+4
-                 nop FMSZPG+2
-                 lsr FMSZPG+4
-                 nop FMSZPG+2
-                 lsr FMSZPG+4
-                 nop FMSZPG+2
-                 lsr FMSZPG+4
-                 nop FMSZPG+2
-                 lsr FMSZPG+4
-                 nop FMSZPG+2
-                 lsr FMSZPG+4
-                 nop FMSZPG+2
-                 lsr CASINI
-                 php
-                 bvc L_2253
-                 rti
-                 sha L_4439,y
-                 cim
-L_2253           nop BUFRLO
-                 lsr $0702
-                 eor (XMTDON),y
-                 rla L_3937+1,y
-                 nop !
-                 rla L_3937+1,y
-                 nop !
-                 rla L_3937+1,y
-                 nop !
-                 rla L_3937+1,y
-                 nop !
-                 rla L_3937+1,y
-                 nop !
-                 rla L_3937+1,y
-                 nop !
-                 eor SAVMSC
-                 nop DELTAR,x
-                 cim
-                 anc #$25
-                 rol $8435,x
-                 nop FMSZPG+2,x
-                 cli
-L_227F           nop COLCRS,x
-                 rol L_3C3E+1,x
-                 and L_3F3D+1,x
-                 nop L_3E3D,x
-                 rla L_3D3C,x
-                 rol L_3C3E+1,x
-                 and L_3F3D+1,x
-                 nop L_3E3D,x
-                 rla L_3D3C,x
-                 rol TABMAP+5,x
-                 asl ICPTLZ
-                 asl FRE+4
-                 cim
-                 cim
-                 asl ICPTHZ
-                 asl FRE+5
-                 ldy $5902,x
-                 cim
-                 lse (FREQ,x)
-                 eor (CRITIC,x)
-                 lse (FREQ,x)
-                 eor (CRITIC,x)
-                 lse (FREQ,x)
-                 eor (CRITIC,x)
-                 lse (FREQ,x)
-                 eor (CRITIC,x)
-                 lse (FREQ,x)
-                 eor (CRITIC,x)
-                 lse (FREQ,x)
-                 eor (CRITIC,x)
-                 cim
-                 aso ICHIDZ
-                 ora OLDCOL+1
-                 cpx FR1+4
-                 cim
-                 anc #$83
-                 bvc L_2321+1
-                 cim
-                 and OLDCHR
-                 lsr FMSZPG+4
-                 nop FMSZPG+2
-                 lsr FMSZPG+4
-                 nop FMSZPG+2
-                 lsr FMSZPG+4
-                 nop FMSZPG+2
-                 lsr FMSZPG+4
-                 nop FMSZPG+2
-                 lsr FMSZPG+4
-                 nop FMSZPG+2
-                 lsr FMSZPG+4
-                 nop FMSZPG+2
-                 lsr VNTD
-                 lsr $5745
-                 nop DOSINI,x
-                 aso (CMCMD,x)
-                 cim
-                 rol $0B08,x
-                 asl CASINI+1,x
-                 ora #$46
-                 sty FMSZPG
-                 lse $544E
-                 jsr $0803
-                 bvc L_2343+1
-                 asl FRE+4
-                 rla ICAX1Z,x
-                 aso (RAMLO,x)
-                 rla (BFENLO),y
-                 aso (WARMST,x)
-                 and (VNTP+1,x)
-                 jmp $5345
-                 rol $0903,x
-                 sty DRKMSK
-                 eor DINDEX
-                 nop BUFRHI,x
-                 pha
-                 aso (RAMLO,x)
-                 lse (LMARGN,x)
-L_2321           aso (RAMLO,x)
-L_2323           bit B1_ICAX3
-                 asl COLRSH
-                 asl FRE+2
-                 ror CASINI+1
-                 asl TMPCHR
-                 asl FRE+2
-                 bvs L_2334+1
-                 aso FMSZPG+1
-L_2334           nop #$50
-                 lse (KEYDEF+1),y
-                 aso (TRAMSZ,x)
-                 rla (TRAMSZ,x)
-                 cmp B4_ICBAL,x
-                 ora #$82
-                 bvc L_2395+1
-L_2343           eor (TRAMSZ),y
-                 dec B4_ICAX5,x
-                 nop ICSPRZ
-                 tya
-                 aso (CMCMD,x)
-                 lse $083E
-                 plp
-                 ldx #$03
-                 asl TMPCHR
-                 asl FRE+4
-                 ldy $0703
-                 nop VNTP
-                 eor #$4D
-                 ldx CASINI+1,y
-                 asl ICSTAZ
-                 asl FRE+5
-                 cpy #$03
-                 anc #$82
-                 eor #$4D
-                 and (VNTP+1,x)
-                 bvc L_23C1+1
-                 cim
-                 dex
-                 aso (DOSINI,x)
-                 sty FMSZPG
-                 lse $544E
-                 eor (FTYPE),y
-                 php
-                 nop FR0
-                 aso (CMCMD,x)
-                 bvc L_2385
-                 nop CPC,x
-                 dec $0703,x
-L_2385           eor (FTYPE),y
-                 php
-                 rol SUPERF
-                 aso TMPCHR
-                 aso CIOCHR
-L_238F           cim
-                 escape #$03
-                 nop L_4C84
-L_2395           lse $504F
-                 eor (RAMLO+1),y
-                 anc #$D4
-                 nop $0703,x
-                 eor $083E
-                 aso (TRAMSZ,x)
-                 nop RAMLO
-                 rol $0410,x
-                 ora #$51
-                 sax (FMSZPG,x)
-                 lse L_394B+1
-                 nop !
-                 nop CMCMD
-                 bvc L_23BA
-                 asl
-                 nop ICBALZ,x
-                 nop CMCMD
-L_23BA           bvc L_23C3
-                 cmp CASINI
-                 rol $0704
-L_23C1           bvc L_23C8
-L_23C3           aso $D0,x
-                 sec
-                 nop CMCMD
-L_23C8           eor (CMCMD),y
-                 aso L_42D0,x
-                 nop CMCMD
-                 cim
-                 rol $0608,x
-                 jmp $0804
-                 pha
-                 sax (DRKMSK,x)
-                 lse (CHKSUM),y
-                 lsr RAMLO,x
-                 asl
-                 and (VNTD+1,x)
-                 lse (ROWCRS),y
-                 eor (LMARGN,x)
-                 nop FKDEF,x
-                 nop DOSVEC+1
-                 sax (DRKMSK,x)
-                 lse (CHKSUM),y
-                 eor (CMCMD),y
-                 sty CASINI
-L_23F0           nop LNFLG
-L_23F2           brk
-L_23F3           brk
-                 sty DSTAT
-L_23F6           lse L_104E+1
-                 bpl L_240A+1
-                 bpl L_240C+1
-                 bpl L_2452
-                 nop SOUNDR,x
-                 cim
-                 nop COUNTR,x
-                 nop WARMST
-                 sax (LMARGN,x)
-                 eor (RMARGN,x)
-L_240A           and STMTAB,x
-L_240C           nop RAMLO
-                 eor (MEOLFLG,x)
-                 nop RAMLO
-                 and MVTA+1,x
-                 nop RAMLO
-                 lse (DIRFLG,x)
-                 nop RAMLO
-                 and COMCNT,x
-                 nop DOSVEC+1
-                 sax (ZCHAIN+1,x)
-                 eor SAVMSC+1
-                 bit FTYPE
-                 php
-                 brk
-                 tsx
-                 nop CMCMD
-                 and FTYPE
-                 php
-                 brk
-                 cpy RAMLO
-L_242F           aso HOLD1
-                 aso FLPTR
-                 cim
-                 dec $0604
-                 bvc L_243F
-                 ins $04D8,x
-                 aso L_4B81+1
-L_243F           cim
-                 eor (VVTP),y
-                 alr #$45
-                 eor L_4143+1,y
-                 nop BUFRFL,x
-                 nop #$04
-                 asl LMARGN
-L_244D           asl FPTR2+1
-                 cpx $0804
-L_2452           lsr VNTP+1
-                 eor (LMARGN,x)
-                 bvc L_244D+1
-                 nop RAMLO
-                 rla (LNFLG),y
-                 ora RAMLO
-                 rla (DOSVEC),y
-                 ora RAMLO
-                 rla (RTCLOK+2),y
-                 ora RAMLO
-                 cim
-                 asl $0705,x
-                 plp
-                 rol $0508,x
-                 plp
-                 ora CMCMD
-                 pha
-                 nop #$4B
-                 cim
-                 cim
-                 ora DOSVEC+1
-                 sax (COLRSH,x)
-                 eor ROWCRS,x
-                 eor (FTYPE),y
-                 php
-                 ins $053C,x
-                 aso TMPCHR
-                 aso FLPTR
-                 cim
-                 lsr RAMLO+1
-                 nop LTEMP+1
-                 bvc L_2492
-                 nop FEOF
-                 nop !
-                 ora RAMLO
-L_2492           rla ADRESS,x
-                 ora RAMLO
-                 rol $056E,x
-                 nop LTEMP+1
-                 sei
-                 ora CMCMD
-                 and (RAMLO+1,x)
-                 cim
-                 cpx VNTP
-                 ora RTCLOK+1
-                 sax (SOUNDR,x)
-                 cim
-                 bvc L_24FB
-                 stx ZCHAIN+1
-                 eor SAVMSC+1
-                 nop SOUNDR
-                 nop RTCLOK,x
-                 php
-                 ora (BUFRFL,x)
-                 sty $0605
-                 bvc L_24C0
-                 cpx $0596
-                 aso $8651
-L_24C0           alr #$45
-                 eor L_4143+1,y
-                 nop RTCLOK,x
-                 php
-                 cim
-                 sec
-                 ldy #$05
-                 asl TMPCHR
-                 asl EEXP
-                 tax
-                 ora TRAMSZ
-                 rla TRAMSZ
-                 inc $05B4
-                 ora #$25
-                 sty DSTAT
-                 eor (RMARGN,x)
-                 nop SAVCUR,x
-                 ora APPMHI+1
-                 eor (VVTP),y
-                 alr #$45
-                 eor L_4143+1,y
-                 nop RTCLOK,x
-                 php
-                 ora (BUFRFL,x)
-                 iny
-                 ora TRAMSZ
-                 bvc L_24F9
-                 nop
-                 escrts #$05
-                 aso $8651
-L_24F9           alr #$45
-L_24FB           eor L_4143+1,y
-                 nop RTCLOK,x
-L_2500           stx L_254F+1
-                 sty L_2551
+                 .byte $40, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $05, $00, $55
+                 .byte $56, $57, $54, $55, $56, $57, $54, $55
+                 .byte $56, $57, $54, $55, $56, $57, $54, $55
+                 .byte $56, $57, $54, $55, $56, $57, $54, $55
+                 .byte $56, $02, $07, $26, $05, $A0, $8F, $44
+                 .byte $02, $07, $24, $05, $00, $39, $4E, $59
+                 .byte $42, $43, $40, $41, $42, $43, $40, $41
+                 .byte $42, $43, $40, $41, $42, $43, $40, $41
+                 .byte $42, $43, $40, $41, $42, $43, $40, $41
+                 .byte $42, $00, $76, $02, $07, $25, $3E, $06
+                 .byte $6D, $80, $02, $06, $26, $06, $DC, $5D
+                 .byte $46, $47, $44, $45, $46, $47, $44, $45
+                 .byte $46, $47, $44, $45, $46, $47, $44, $45
+                 .byte $46, $47, $44, $45, $46, $47, $44, $45
+                 .byte $46, $B2, $02, $06, $27, $06, $DF, $BC
+                 .byte $02, $07, $24, $3E, $08, $00, $C6, $51
+                 .byte $3A, $3B, $38, $39, $3A, $3B, $38, $39
+                 .byte $3A, $3B, $38, $39, $3A, $3B, $38, $39
+                 .byte $3A, $3B, $38, $39, $3A, $3B, $38, $39
+                 .byte $3A, $40, $06, $DE, $37, $E4, $02, $04
+                 .byte $33, $EE, $02, $07, $29, $3E, $08, $01
+                 .byte $02, $01, $02, $01, $02, $01, $02, $01
+                 .byte $02, $01, $02, $01, $02, $01, $02, $01
+                 .byte $02, $01, $02, $01, $02, $01, $02, $01
+                 .byte $02, $20, $03, $06, $50, $06, $DC, $2A
+                 .byte $03, $07, $44, $82, $4D, $31, $34, $03
+                 .byte $04, $03, $04, $03, $04, $03, $04, $03
+                 .byte $04, $03, $04, $03, $04, $03, $04, $03
+                 .byte $04, $03, $04, $03, $04, $03, $04, $03
+                 .byte $04, $03, $06, $50, $06, $DE, $66, $03
+                 .byte $07, $44, $82, $4D, $32, $70, $03, $03
+                 .byte $04, $03, $04, $03, $04, $03, $04, $03
+                 .byte $04, $03, $04, $03, $04, $03, $04, $03
+                 .byte $04, $03, $04, $03, $04, $03, $04, $03
+                 .byte $04, $98, $03, $08, $81, $4C, $21, $81
+                 .byte $4C, $A2, $03, $0C, $83, $46, $49, $03
+                 .byte $04, $03, $04, $03, $04, $03, $04, $03
+                 .byte $04, $03, $04, $03, $04, $03, $04, $03
+                 .byte $04, $03, $04, $03, $04, $03, $04, $03
+                 .byte $04, $20, $20, $20, $20, $43, $4F, $44
+                 .byte $45, $44, $20, $42, $59, $20, $4D, $03
+                 .byte $04, $03, $04, $03, $04, $03, $04, $03
+                 .byte $04, $03, $04, $03, $04, $03, $04, $03
+                 .byte $04, $03, $04, $03, $04, $03, $04, $03
+                 .byte $04, $50, $0B, $08, $00, $0E, $01, $0D
+                 .byte $86, $44, $45, $56, $4E, $55, $4D, $03
+                 .byte $04, $03, $04, $03, $04, $03, $04, $03
+                 .byte $04, $03, $04, $03, $04, $03, $04, $03
+                 .byte $04, $03, $04, $03, $04, $03, $04, $03
+                 .byte $04, $03, $36, $01, $0B, $50, $86, $44
+                 .byte $45, $56, $54, $59, $50, $40, $01, $5D
+                 .byte $5E, $5F, $5C, $5D, $5E, $5F, $5C, $5D
+                 .byte $5E, $5F, $5C, $5D, $5E, $5F, $5C, $5D
+                 .byte $5E, $5F, $5C, $5D, $5E, $5F, $5C, $5D
+                 .byte $5E, $27, $07, $31, $02, $68, $01, $07
+                 .byte $24, $3E, $06, $CE, $72, $01, $07, $51
+                 .byte $3A, $3B, $38, $39, $3A, $3B, $38, $39
+                 .byte $3A, $3B, $38, $39, $3A, $3B, $38, $39
+                 .byte $3A, $3B, $38, $39, $3A, $3B, $38, $39
+                 .byte $3A, $01, $07, $50, $05, $00, $D0, $A4
+                 .byte $01, $07, $50, $05, $01, $D0, $AE, $55
+                 .byte $3E, $3F, $3C, $3D, $3E, $3F, $3C, $3D
+                 .byte $3E, $3F, $3C, $3D, $3E, $3F, $3C, $3D
+                 .byte $3E, $3F, $3C, $3D, $3E, $3F, $3C, $3D
+                 .byte $3E, $02, $D6, $01, $07, $51, $3E, $08
+                 .byte $0F, $E0, $01, $07, $50, $07, $C4, $59
+                 .byte $42, $43, $40, $41, $42, $43, $40, $41
+                 .byte $42, $43, $40, $41, $42, $43, $40, $41
+                 .byte $42, $43, $40, $41, $42, $43, $40, $41
+                 .byte $42, $07, $24, $3E, $08, $00, $12, $02
+                 .byte $0A, $82, $50, $54, $51, $3E, $08, $5D
+                 .byte $46, $47, $44, $45, $46, $47, $44, $45
+                 .byte $46, $47, $44, $45, $46, $47, $44, $45
+                 .byte $46, $47, $44, $45, $46, $47, $44, $45
+                 .byte $46, $02, $08, $50, $05, $40, $9F, $39
+                 .byte $44, $02, $04, $32, $4E, $02, $07, $51
+                 .byte $3A, $3B, $38, $39, $3A, $3B, $38, $39
+                 .byte $3A, $3B, $38, $39, $3A, $3B, $38, $39
+                 .byte $3A, $3B, $38, $39, $3A, $3B, $38, $39
+                 .byte $3A, $45, $58, $54, $76, $02, $0B, $25
+                 .byte $3E, $35, $84, $54, $45, $58, $54, $55
+                 .byte $3E, $3F, $3C, $3D, $3E, $3F, $3C, $3D
+                 .byte $3E, $3F, $3C, $3D, $3E, $3F, $3C, $3D
+                 .byte $3E, $3F, $3C, $3D, $3E, $3F, $3C, $3D
+                 .byte $3E, $A8, $02, $06, $26, $06, $DE, $B2
+                 .byte $02, $06, $27, $06, $DF, $BC, $02, $59
+                 .byte $42, $43, $40, $41, $42, $43, $40, $41
+                 .byte $42, $43, $40, $41, $42, $43, $40, $41
+                 .byte $42, $43, $40, $41, $42, $43, $40, $41
+                 .byte $42, $02, $07, $20, $05, $5C, $E4, $E4
+                 .byte $02, $0B, $83, $50, $54, $32, $25, $5D
+                 .byte $46, $47, $44, $45, $46, $47, $44, $45
+                 .byte $46, $47, $44, $45, $46, $47, $44, $45
+                 .byte $46, $47, $44, $45, $46, $47, $44, $45
+                 .byte $46, $84, $4E, $45, $57, $54, $0C, $03
+                 .byte $07, $52, $3E, $08, $0B, $16, $03, $09
+                 .byte $46, $84, $43, $4F, $4E, $54, $20, $03
+                 .byte $08, $50, $40, $06, $DE, $37, $2A, $03
+                 .byte $04, $33, $34, $03, $08, $21, $83, $4C
+                 .byte $45, $53, $3E, $03, $09, $84, $4E, $45
+                 .byte $57, $54, $33, $48, $03, $04, $43, $52
+                 .byte $03, $04, $2C, $5C, $03, $06, $4F, $06
+                 .byte $DC, $66, $03, $06, $50, $06, $DC, $70
+                 .byte $03, $07, $44, $82, $50, $53, $7A, $03
+                 .byte $06, $23, $06, $DD, $84, $03, $09, $82
+                 .byte $50, $53, $51, $06, $DE, $8E, $03, $04
+                 .byte $2C, $98, $03, $07, $4F, $3E, $08, $28
+                 .byte $A2, $03, $06, $50, $06, $DE, $AC, $03
+                 .byte $07, $44, $82, $49, $4D, $B6, $03, $06
+                 .byte $23, $06, $DF, $C0, $03, $0B, $82, $49
+                 .byte $4D, $21, $83, $50, $54, $32, $CA, $03
+                 .byte $0C, $84, $43, $4F, $4E, $54, $51, $3E
+                 .byte $08, $04, $D4, $03, $07, $50, $05, $14
+                 .byte $9D, $DE, $03, $07, $51, $3E, $08, $2E
+L_2389           .byte $E8, $03, $07, $50, $07, $2F, $02, $F2
+                 .byte $03, $0C, $84, $4C, $4F, $4F, $50, $51
+                 .byte $05, $0B, $D4, $FC, $03, $07, $4D, $3E
+                 .byte $08, $03, $06, $04, $04, $3E, $10, $04
+                 .byte $09, $51, $83, $43, $4F, $4C, $39, $1A
+                 .byte $04, $07, $50, $05, $0A, $D4, $24, $04
+                 .byte $07, $50, $07, $C5, $02, $2E, $04, $07
+                 .byte $50, $05, $17, $D0, $38, $04, $07, $51
+                 .byte $07, $1F, $D0, $42, $04, $07, $52, $3E
+                 .byte $08, $06, $4C, $04, $08, $48, $83, $4E
+                 .byte $53, $31, $56, $04, $0A, $21, $85, $53
+                 .byte $54, $41, $52, $54, $60, $04, $0B, $83
+L_23E9           .byte $4E, $53, $31, $51, $07, $84, $02, $04
+L_23F1           .byte $00, $00, $00, $84, $4C, $4F, $4F, $10
+                 .byte $10, $10, $10, $10, $10, $53, $54, $41
+                 .byte $52, $54, $7E, $04, $08, $83, $52, $41
+                 .byte $53, $35, $88, $04, $04, $41, $92, $04
+                 .byte $04, $35, $9C, $04, $04, $43, $A6, $04
+                 .byte $04, $35, $B0, $04, $0B, $83, $4B, $45
+                 .byte $59, $24, $3E, $08, $00, $BA, $04, $07
+                 .byte $25, $3E, $08, $00, $C4, $04, $07, $51
+                 .byte $07, $FC, $02, $CE, $04, $06, $50, $06
+                 .byte $FF, $D8, $04, $0F, $82, $4B, $32, $51
+                 .byte $86, $4B, $45, $59, $44, $41, $54, $38
+                 .byte $E2, $04, $06, $52, $06, $FF, $EC, $04
+                 .byte $08, $46, $83, $41, $52, $50, $F6, $04
+                 .byte $04, $33, $00, $05, $04, $33, $0A, $05
+                 .byte $04, $33, $14, $05, $04, $32, $1E, $05
+                 .byte $07, $28, $3E, $08, $05, $28, $05, $07
+                 .byte $48, $82, $4B, $32, $32, $05, $0B, $83
+                 .byte $4F, $55, $54, $51, $3E, $08, $FF, $3C
+                 .byte $05, $07, $50, $07, $FC, $02, $46, $05
+                 .byte $04, $37, $50, $05, $04, $3F, $5A, $05
+                 .byte $04, $37, $64, $05, $04, $3E, $6E, $05
+                 .byte $04, $37, $78, $05, $07, $21, $05, $62
+                 .byte $E4, $82, $05, $13, $83, $41, $52, $50
+                 .byte $51, $86, $4B, $45, $59, $44, $41, $54
+                 .byte $12, $08, $01, $38, $8C, $05, $06, $50
+                 .byte $06, $EC, $96, $05, $0F, $51, $86, $4B
+                 .byte $45, $59, $44, $41, $54, $12, $08, $02
+                 .byte $38, $A0, $05, $06, $50, $06, $ED, $AA
+                 .byte $05, $06, $27, $06, $EE, $B4, $05, $09
+                 .byte $25, $84, $4C, $41, $53, $54, $BE, $05
+                 .byte $0F, $51, $86, $4B, $45, $59, $44, $41
+                 .byte $54, $12, $08, $01, $38, $C8, $05, $06
+                 .byte $50, $06, $EA, $D2, $05, $0F, $51, $86
+                 .byte $4B, $45, $59, $44, $41, $54, $12
+L_2500           stx L_254A+6
+                 sty L_254A+7
                  clc
                  asl
                  tax
                  lda L_253A,x
-                 sta L_2553+1
+                 sta L_2552+2
                  lda L_253A+1,x
-                 sta L_2553+2
+                 sta L_2552+3
                  lda #$06
                  ldy #$56
                  ldx #$25
                  jsr L_1F00
                  lda #$00
-                 sta L_2553
+                 sta L_2552+1
                  lda #$00
                  sta AUDCTL
                  lda #$03
                  sta L_2552
                  sta SKCTL
                  sta SSKCTL
-                 ldx L_254F+1
-L_2536           ldy L_2551
+                 ldx L_254A+6
+                 ldy L_254A+7
                  rts
-L_253A           ldx $E225,y
-                 and TRAMSZ
-                 rol ICAX1Z
-                 rol DRKMSK
-                 rol LOGCOL
-                 rol ENDPT+1
-                 rol ECSIZE+1
-                 rol DATALN
-                 rol PTABW
-                 rol BUFCNT
-L_254F           rla LNFLG
-L_2551           brk
-L_2552           brk
-L_2553           ins L_25DF,x
+L_253A           .byte $BE, $25, $E2, $25, $06, $26, $2A, $26
+                 .byte $4E, $26, $63, $26, $75, $26, $A5, $26
+L_254A           .byte $B7, $26, $C9, $26, $6B, $27, $00, $00
+L_2552           .byte $00, $FF, $DF, $25
                  pha
                  txa
                  pha
@@ -3225,347 +1280,120 @@ L_2553           ins L_25DF,x
                  lda L_2552
                  bne L_2563
                  jmp L_2586
-L_2563           ldx L_2553+1
-                 ldy L_2553+2
+L_2563           ldx L_2552+2
+                 ldy L_2552+3
                  stx FKDEF
                  sty FKDEF+1
                  ldy #$01
                  lda (FKDEF),y
                  cmp #$FF
-L_2573           beq L_25B0
+                 beq L_25B0
                  sta AUDF1,y
                  dey
                  lda (FKDEF),y
                  sta AUDF1,y
-                 lda L_2553
+                 lda L_2552+1
                  beq L_258E
-                 dec L_2553
+                 dec L_2552+1
 L_2586           pla
                  tay
                  pla
                  tax
                  pla
                  jmp SYSVBV
-L_258E           lda L_2553+1
+L_258E           lda L_2552+2
                  clc
                  adc #$03
-                 sta L_2553+1
+                 sta L_2552+2
                  bcc L_259C
-                 inc L_2553+2
-L_259C           ldx L_2553+1
-                 ldy L_2553+2
+                 inc L_2552+3
+L_259C           ldx L_2552+2
+                 ldy L_2552+3
                  stx FKDEF
                  sty FKDEF+1
                  ldy #$02
                  lda (FKDEF),y
-                 sta L_2553
+                 sta L_2552+1
                  jmp L_2586
 L_25B0           lda #$00
                  sta L_2552
                  sta AUDF1
                  sta AUDC1
                  jmp L_2586
-                 brk
-                 brk
-                 brk
-                 nop STENUM,x
-                 rla LELNUM,y
-                 rla STMLBD,y
-                 nop ECSIZE+1,x
-                 rla ECSIZE+1,y
-                 nop ECSIZE,x
-                 nop MVLNG+1,x
-                 nop TSLNUM+1,x
-                 nop TSLNUM,x
-                 nop TSLNUM+1,x
-L_25DF           ins $FFFF,x
-                 brk
-                 brk
-                 brk
-                 cim
-                 lax L_3100
-                 lda L_3100
-                 lax LNFLG
-                 cim
-                 lda LNFLG
-                 and (ECSIZE+1),y
-                 brk
-                 cim
-                 ldy LNFLG
-                 cim
-                 lax (LNFLG,x)
-                 cim
-                 lda (LNFLG,x)
-                 cim
-                 ldy #$00
-                 cim
-                 lda (LNFLG,x)
-                 ins $FFFF,x
-                 brk
-                 brk
-                 brk
-L_2609           ora STENUM,y
-                 clc
-                 lda L_17FF+1
-                 lax LNFLG
-                 ora ECSIZE+1,y
-                 clc
-                 lda LNFLG
-                 ora ECSIZE,y
-                 ora MVLNG+1,y
-                 ora TSLNUM+1,y
-                 ora TSLNUM,y
-                 ora TSLNUM+1,y
-                 ins $FFFF,x
-                 brk
-                 brk
-                 brk
-                 aso (STENUM),y
-                 brk
-                 cim
-                 lda L_1200
-                 lax LNFLG
-                 aso (ECSIZE+1),y
-                 brk
-                 cim
-                 lda LNFLG
-                 cim
-                 ldy LNFLG
-                 cim
-                 lax (LNFLG,x)
-                 cim
-                 lda (LNFLG,x)
-                 cim
-                 ldy #$00
-                 cim
-                 lda (LNFLG,x)
-                 ins $FFFF,x
-                 brk
-                 brk
-                 brk
-                 ora (ICPTHZ,x)
-                 brk
-                 cim
-                 and #$00
-                 nop ICAX1Z
-                 brk
-                 ora ICBLLZ
-                 brk
-                 nop ICBAHZ
-                 brk
-                 ins $FFFF,x
-                 brk
-                 brk
-                 brk
-                 asl $048A,x
-                 jsr $0188
-                 bit VNTD+1
-                 ora (ICSPRZ,x)
-                 sty NGFLAG
-                 ins $FFFF,x
-                 nop ICBLHZ,x
-                 aso (POKMSK,x)
-                 bit L_1204
-                 anc #$02
-                 nop ICPTHZ,x
-                 aso (POKMSK,x)
-                 rol
-                 nop RTCLOK
-                 and #$02
-                 nop ICBAHZ,x
-                 aso (POKMSK,x)
-                 plp
-                 nop RTCLOK
-                 rla CASINI
-                 nop ICSTAZ,x
-                 aso (POKMSK,x)
-                 rol RAMLO
-                 cim
-                 and CASINI
-                 nop ICCOMZ,x
-                 aso (POKMSK,x)
-                 and RAMLO
-                 cim
-                 bit CASINI
-                 ins $FFFF,x
-                 brk
-                 brk
-                 brk
-                 ins B6_ICAX3,x
-                 sbc LELNUM,x
-                 aso (FR2+5,x)
-                 ldx $E102
-                 lax $FF02
-                 ins FPTR2+1,x
-                 brk
-                 brk
-                 rla TABMAP+9
-                 rla (EXSVPR),y
-                 cim
-                 rla B6_ICAX5
-                 rla (LELNUM+1),y
-                 aso (FPTR2+1,x)
-                 ins FPTR2+1,x
-                 brk
-                 brk
-                 aso (ICCOMZ,x)
-                 aso (RAMLO+1,x)
-                 cim
-                 aso (RAMLO,x)
-                 cim
-                 aso (CASINI+1,x)
-                 cim
-                 aso (CASINI+1,x)
-                 bit CASINI+1
-                 ora ICBALZ
-                 aso (RAMLO,x)
-                 bit CASINI+1
-                 aso (ICBALZ,x)
-                 aso (CASINI+1,x)
-                 rol CASINI+1
-                 ora ICPTLZ
-                 aso (RAMLO,x)
-                 rol CASINI+1
-                 aso (ICPTLZ,x)
-                 aso (CASINI+1,x)
-                 plp
-                 aso (RAMLO+1,x)
-                 plp
-                 aso (RAMLO,x)
-                 plp
-                 aso (CASINI+1,x)
-                 plp
-                 aso (CASINI+1,x)
-                 rol
-                 aso (RAMLO+1,x)
-                 rol
-                 aso (RAMLO,x)
-                 rol
-                 aso (CASINI+1,x)
-                 rol
-                 aso (CASINI+1,x)
-                 bit $0503
-L_270C           bit $0403
-                 bit DSTATS
-                 bit DSTATS
-                 rol $0503
-                 rol $0403
-                 rol DSTATS
-                 rol DSTATS
-                 bit $0503
-                 bit $0403
-                 bit DSTATS
-                 bit DSTATS
-                 rol
-                 aso (RAMLO+1,x)
-                 rol
-                 aso (RAMLO,x)
-                 rol
-                 aso (CASINI+1,x)
-                 rol
-                 aso (CASINI+1,x)
-                 plp
-                 aso (RAMLO+1,x)
-                 plp
-                 aso (RAMLO,x)
-                 plp
-                 aso (CASINI+1,x)
-                 plp
-                 aso (CASINI+1,x)
-                 rol CASINI+1
-                 ora ICPTLZ
-                 aso (RAMLO,x)
-                 rol CASINI+1
-                 aso (ICPTLZ,x)
-                 aso (CASINI+1,x)
-                 bit CASINI+1
-                 ora ICBALZ
-                 aso (RAMLO,x)
-                 bit CASINI+1
-                 aso (ICBALZ,x)
-                 aso (CASINI+1,x)
-                 cim
-                 aso (RAMLO+1,x)
-                 cim
-                 aso (RAMLO,x)
-                 cim
-                 aso (CASINI+1,x)
-                 cim
-                 aso (FPTR2+1,x)
-                 ins FPTR2+1,x
-                 brk
-                 brk
-                 aso $072F,x
-                 and (ICSPRZ+1,x)
-                 aso ICSTAZ
-                 anc #$07
-                 and ICBLHZ
-                 aso ICPTHZ
-                 rla TRAMSZ
-                 and #$25
-                 asl ICAX2Z
-                 rla (TRAMSZ,x)
-                 ins $FFFF,x
-                 ins $65FF,x
-                 cmp (NGFLAG,x)
-                 cmp (NGFLAG,x)
-                 ora (IODVC,x)
-                 ora #$C1
-                 ora (NGFLAG,x)
-                 cmp (BOOT,x)
-                 cmp (NGFLAG,x)
-                 ora ($CB,x)
-                 ora (DOSINI+1,x)
-                 ora $0DFF
-                 ora $0D0D
-                 adc $0D6D
-                 cim
-                 cmp (NGFLAG,x)
-                 cmp (LOGCOL,x)
-                 cmp (NGFLAG,x)
-                 cmp (PALNTS,x)
-                 cim
-                 cmp (NGFLAG,x)
-                 cmp (LOGCOL,x)
-                 cmp (NGFLAG,x)
-                 cmp (PALNTS,x)
-                 cim
-                 cmp (NGFLAG,x)
-                 cmp (LOGCOL,x)
-                 cmp (NGFLAG,x)
-                 lda (PALNTS,x)
-                 cim
-                 cmp (NGFLAG,x)
-                 cmp (LOGCOL,x)
-                 cmp (NGFLAG,x)
-                 cmp (PALNTS,x)
-                 ora $6D6D
-                 ora $0D0D
-                 ora $FF0D
-                 ora $0D0D
-                 ora $0D6D
-                 cim
-                 ins (NGFLAG,x)
-                 ins (NGFLAG,x)
-                 ins (CASINI,x)
-                 sbc (TSLNUM+1,x)
-                 sbc (NGFLAG,x)
-                 sbc (TSLNUM+1,x)
-                 sbc (NGFLAG,x)
-                 sbc (TSLNUM+1,x)
-                 sbc (CASINI,x)
-                 ins (NGFLAG,x)
-                 ins (NGFLAG,x)
-                 ins (DOSINI+1,x)
-                 ora (FR1+3,x)
-                 ora (FR1+3,x)
-                 ora (FR1+3,x)
-                 ora (NGFLAG,x)
-                 sbc (TSLNUM+1,x)
-                 sbc (NGFLAG,x)
-                 sbc (TSLNUM+1,x)
-                 sbc (NGFLAG,x)
-L_2800           sta L_46C6,x
+                 .byte $00, $00, $00, $3C, $AF, $00, $3B, $AD
+                 .byte $00, $3B, $A7, $00, $3C, $A5, $00, $3B
+                 .byte $A5, $00, $3C, $A4, $00, $3C, $A3, $00
+                 .byte $3C, $A1, $00, $3C, $A0, $00, $3C, $A1
+                 .byte $00, $FF, $FF, $FF, $00, $00, $00, $32
+                 .byte $AF, $00, $31, $AD, $00, $31, $A7, $00
+                 .byte $32, $A5, $00, $31, $A5, $00, $32, $A4
+                 .byte $00, $32, $A3, $00, $32, $A1, $00, $32
+                 .byte $A0, $00, $32, $A1, $00, $FF, $FF, $FF
+                 .byte $00, $00, $00, $19, $AF, $00, $18, $AD
+                 .byte $00, $18, $A7, $00, $19, $A5, $00, $18
+                 .byte $A5, $00, $19, $A4, $00, $19, $A3, $00
+                 .byte $19, $A1, $00, $19, $A0, $00, $19, $A1
+                 .byte $00, $FF, $FF, $FF, $00, $00, $00, $13
+                 .byte $AF, $00, $12, $AD, $00, $12, $A7, $00
+                 .byte $13, $A5, $00, $12, $A5, $00, $12, $A4
+                 .byte $00, $12, $A3, $00, $12, $A1, $00, $12
+                 .byte $A0, $00, $12, $A1, $00, $FF, $FF, $FF
+                 .byte $00, $00, $00, $01, $27, $00, $02, $29
+                 .byte $00, $04, $2A, $00, $05, $28, $00, $04
+                 .byte $25, $00, $FF, $FF, $FF, $00, $00, $00
+                 .byte $1E, $8A, $04, $20, $88, $01, $24, $85
+                 .byte $01, $2C, $84, $01, $FF, $FF, $FF, $14
+                 .byte $29, $03, $10, $2C, $04, $12, $2B, $02
+                 .byte $14, $27, $03, $10, $2A, $04, $12, $29
+                 .byte $02, $14, $25, $03, $10, $28, $04, $12
+                 .byte $27, $02, $14, $23, $03, $10, $26, $04
+                 .byte $12, $25, $02, $14, $22, $03, $10, $25
+                 .byte $04, $12, $24, $02, $FF, $FF, $FF, $00
+                 .byte $00, $00, $FF, $AC, $03, $F5, $AD, $03
+                 .byte $EB, $AE, $02, $E1, $AF, $02, $FF, $FF
+                 .byte $FF, $00, $00, $00, $2F, $AC, $02, $33
+                 .byte $AC, $02, $2F, $AE, $03, $33, $AE, $03
+                 .byte $FF, $FF, $FF, $00, $00, $00, $03, $22
+                 .byte $03, $05, $22, $03, $04, $22, $03, $03
+                 .byte $22, $03, $03, $24, $03, $05, $24, $03
+                 .byte $04, $24, $03, $03, $24, $03, $03, $26
+                 .byte $03, $05, $26, $03, $04, $26, $03, $03
+                 .byte $26, $03, $03, $28, $03, $05, $28, $03
+                 .byte $04, $28, $03, $03, $28, $03, $03, $2A
+                 .byte $03, $05, $2A, $03, $04, $2A, $03, $03
+                 .byte $2A, $03, $03, $2C, $03, $05, $2C, $03
+                 .byte $04, $2C, $03, $03, $2C, $03, $03, $2E
+                 .byte $03, $05, $2E, $03, $04, $2E, $03, $03
+                 .byte $2E, $03, $03, $2C, $03, $05, $2C, $03
+                 .byte $04, $2C, $03, $03, $2C, $03, $03, $2A
+                 .byte $03, $05, $2A, $03, $04, $2A, $03, $03
+                 .byte $2A, $03, $03, $28, $03, $05, $28, $03
+                 .byte $04, $28, $03, $03, $28, $03, $03, $26
+                 .byte $03, $05, $26, $03, $04, $26, $03, $03
+                 .byte $26, $03, $03, $24, $03, $05, $24, $03
+                 .byte $04, $24, $03, $03, $24, $03, $03, $22
+                 .byte $03, $05, $22, $03, $04, $22, $03, $03
+                 .byte $22, $03, $FF, $FF, $FF, $00, $00, $00
+                 .byte $1F, $2F, $07, $21, $2D, $07, $23, $2B
+                 .byte $07, $25, $29, $07, $27, $27, $06, $29
+                 .byte $25, $06, $2B, $23, $06, $FF, $FF, $FF
+                 .byte $FF, $FF, $65, $C1, $01, $C1, $01, $01
+                 .byte $C1, $09, $C1, $01, $01, $C1, $09, $C1
+                 .byte $01, $01, $CB, $01, $0D, $0D, $FF, $0D
+                 .byte $0D, $0D, $0D, $6D, $6D, $0D, $62, $C1
+                 .byte $01, $C1, $63, $C1, $01, $C1, $62, $62
+                 .byte $C1, $01, $C1, $63, $C1, $01, $C1, $62
+                 .byte $62, $C1, $01, $C1, $63, $C1, $01, $A1
+                 .byte $62, $62, $C1, $01, $C1, $63, $C1, $01
+                 .byte $C1, $62, $0D, $6D, $6D, $0D, $0D, $0D
+                 .byte $0D, $0D, $FF, $0D, $0D, $0D, $0D, $6D
+                 .byte $0D, $02, $E3, $01, $E3, $01, $E3, $02
+                 .byte $E1, $A1, $E1, $01, $E1, $A1, $E1, $01
+                 .byte $E1, $A1, $E1, $02, $E3, $01, $E3, $01
+                 .byte $E3, $0D, $01, $E3, $01, $E3, $01, $E3
+                 .byte $01, $01, $E1, $A1, $E1, $01, $E1, $A1
+                 .byte $E1, $01
+L_2800           sta L_46C0+6,x
                  lda #$00
                  jsr L_2500
                  rts
@@ -3573,7 +1401,7 @@ L_2809           jsr L_2900
                  lda #$01
                  jsr L_2500
                  rts
-L_2812           sta L_4C43,y
+L_2812           sta L_4C3F+4,y
                  lda #$02
                  jsr L_2500
                  rts
@@ -3581,7 +1409,7 @@ L_2812           sta L_4C43,y
                  lda #$04
                  jsr L_2500
                  rts
-L_2824           jsr L_3BB3+1
+L_2824           jsr L_3BB0+4
                  lda #$05
                  jsr L_2500
                  rts
@@ -3595,15 +1423,15 @@ L_282D           lda #$06
                  bne L_2847
                  lda #$0A
                  jsr L_2500
-L_2847           lda L_4409
+L_2847           lda L_4405+4
                  rts
                  sta $507D
                  lda #$07
-                 jsr L_2A0F+1
+                 jsr L_2A0D+3
                  rts
 L_2854           bvs L_2856+1
 L_2856           sta L_2854
-                 jsr L_3D02+1
+                 jsr L_3CFC+7
                  lda L_2854+1
                  cmp #$03
                  bcs L_2869
@@ -3614,7 +1442,7 @@ L_2869           lda #$00
                  jmp L_2A8C
                  brk
                  brk
-                 sta L_46F3
+                 sta L_46F0+3
 L_2876           lda L_2854
                  rts
 L_287A           jsr L_44CB
@@ -3637,9 +1465,9 @@ L_2898           sta $9F60,x
                  jmp L_3A3C
 L_28A3           brk
 L_28A4           lda L_28A3
-                 sta L_2DFE+2
+                 sta L_2DFB+5
                  lda #$00
-                 sta L_2E01
+                 sta L_2DFB+6
                  jmp L_2D00
 L_28B2           lda #$00
                  sta $5070
@@ -3655,7 +1483,7 @@ L_28CC           lda L_46D8
                  cmp #$01
                  beq L_28D6
                  jmp L_4911
-L_28D6           lda L_4608,x
+L_28D6           lda L_4607+1,x
                  and #$03
                  cmp #$03
                  beq L_28E2
@@ -3665,7 +1493,7 @@ L_28E5           lda L_46D8
                  cmp #$08
                  beq L_28EF
                  jmp L_493C
-L_28EF           lda L_460B,x
+L_28EF           lda L_4607+4,x
                  and #$03
                  beq L_28F9
                  jmp L_4945
@@ -3696,7 +1524,7 @@ L_2917           lda FRE+5
                  dec FPTR2+1
 L_2926           sty L_29D8
                  stx L_29D7
-L_292C           ldx #$00
+                 ldx #$00
                  tya
                  clc
                  adc #$28
@@ -3752,7 +1580,7 @@ L_2986           ldx #$00
                  bne L_2952
                  ldy L_29D8
                  ldx L_29D7
-                 lda L_4A00
+                 lda L_49F9+7
                  rts
 L_299A           lda (FLPTR),y
                  cmp #$22
@@ -3816,28 +1644,19 @@ L_29FB           jsr L_2926
                  nop COLRSH,x
                  jsr L_4E55
                  jmp L_434E+1
-                 alr #$3F
-L_2A0F           shs $52AD,y
-                 and $D0
-                 ora OPSTKX
-                 aso ICHIDZ
-                 brk
-                 and FKDEF
-                 brk
-                 brk
-                 brk
-                 brk
-L_2A1F           brk
+L_2A0D           .byte $4B, $3F, $9B, $AD, $52, $25, $D0, $05
+                 .byte $A9, $07, $20, $00, $25, $60, $00, $00
+L_2A1D           .byte $00, $00, $00
 L_2A20           ldy #$00
                  ldx #$00
-L_2A24           lda L_4C41,y
-L_2A27           beq L_2A47
+L_2A24           lda L_4C3F+2,y
+                 beq L_2A47
                  sta FRE+5
-                 lda L_4C40,y
+                 lda L_4C3F+1,y
                  sta FRE+4
-                 lda L_4C43,y
+                 lda L_4C3F+4,y
                  sta FRE+2
-                 sty L_2A1F
+                 sty L_2A1D+2
                  ldy #$00
                  lda FRE+2
                  sta (FRE+4),y
@@ -3845,7 +1664,7 @@ L_2A27           beq L_2A47
                  clc
                  adc #$01
                  sta (FRE+4),y
-                 ldy L_2A1F
+                 ldy L_2A1D+2
 L_2A47           inx
                  iny
                  iny
@@ -3856,13 +1675,7 @@ L_2A47           inx
                  jmp L_282D
 L_2A53           jsr L_2812
                  jmp L_2C65
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
+                 .byte $00, $00, $00, $00, $00, $00, $00
 L_2A60           lda CONSOL
                  cmp #$06
                  beq L_2A89
@@ -3885,12 +1698,12 @@ L_2A8C           lda $5076
                  clc
                  adc $5077
                  bne L_2A9A
-                 lda L_46F3
+                 lda L_46F0+3
                  cmp #$02
 L_2A9A           bcc L_2A9F
-                 dec L_46F3
+                 dec L_46F0+3
 L_2A9F           rts
-L_2AA0           lda #$40
+                 lda #$40
                  sta POKMSK
                  sta IRQEN
                  jsr L_43D5
@@ -3900,17 +1713,17 @@ L_2AA0           lda #$40
                  brk
 L_2AB0           cmp #$18
                  bpl L_2AB8
-                 lda L_4608
+                 lda L_4607+1
                  rts
 L_2AB8           sec
                  sbc #$17
                  sta FR2+4
-                 lda L_4608
+                 lda L_4607+1
                  sec
                  sbc FR2+4
-                 sta L_4608
+                 sta L_4607+1
                  rts
-L_2AC7           jsr L_3BB3+1
+L_2AC7           jsr L_3BB0+4
                  lda #$05
                  jmp L_2500
                  brk
@@ -3919,23 +1732,15 @@ L_2AD0           sta COLOR4
                  sta POKMSK
                  sta IRQEN
                  rts
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_2AE2           brk
-                 brk
-                 brk
-                 lda L_2AE2,x
+L_2ADB           .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00
+                 lda L_2ADB+7,x
                  cmp #$14
                  bpl L_2AEF
-                 inc L_2AE2,x
+                 inc L_2ADB+7,x
 L_2AEF           rts
                  lda #$00
-                 sta L_2AE2,x
+                 sta L_2ADB+7,x
                  brk
                  brk
                  brk
@@ -4073,60 +1878,37 @@ L_2BE5           inx
                  cpx #$19
                  bne L_2BCB
                  rts
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_2C00           bpl L_2C13
-                 cim
-                 aso RTCLOK,x
-                 bpl L_2C17
-L_2C07           bpl L_2C29
-                 adc (OLDCOL+1),y
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+L_2BFB           .byte $00, $00, $00, $00, $00, $10, $11, $12
+L_2C03           .byte $17, $12, $10, $10, $10, $20, $71, $5C
                  ldx #$00
 L_2C0D           lda $9F67,x
-                 cmp L_2C00,x
-L_2C13           beq L_2C19
+                 cmp L_2BFB+5,x
+                 beq L_2C19
                  bmi L_2C2E
-L_2C17           bcs L_2C1E
+                 bcs L_2C1E
 L_2C19           inx
                  cpx #$06
                  bne L_2C0D
 L_2C1E           ldx #$00
 L_2C20           lda $9F67,x
                  sta $9F71,x
-                 sta L_2C00,x
-L_2C29           inx
+                 sta L_2BFB+5,x
+                 inx
                  cpx #$06
-L_2C2C           bne L_2C20
+                 bne L_2C20
 L_2C2E           rts
-L_2C2F           ldx L_367F
-                 stx L_3535+1
-                 lda L_3527+1,x
+L_2C2F           ldx L_367C+3
+                 stx L_3534+2
+                 lda L_3524+4,x
                  sta FRE+2
-                 lda L_3527+2,x
+                 lda L_3524+5,x
                  sta FRE+3
                  ldy #$00
                  lda #$04
                  sta (FRE+2),y
-                 lda L_367F+1
+                 lda L_367C+4
                  clc
                  adc #$11
                  sta $9DB6
@@ -4135,19 +1917,8 @@ L_2C2F           ldx L_367F
                  adc #$11
                  sta $9E06
                  rts
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_2C60           brk
-L_2C61           brk
-L_2C62           brk
-                 brk
-                 brk
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+L_2C60           .byte $00, $00, $00, $00, $00
 L_2C65           lda L_2C60,x
                  cmp #$14
                  bpl L_2C70
@@ -4171,72 +1942,52 @@ L_2C83           sta $6D00,x
                  cpx #$80
                  bne L_2C83
                  rts
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
 L_2CAB           lda FR2+4
                  jmp L_2856
-                 lda L_4E03
+                 lda L_4DFE+5
                  cmp #$01
                  bne L_2CC2
                  lda #$04
-                 sta L_46F3
-                 sta L_46F3+1
-                 sta L_46F5
+                 sta L_46F0+3
+                 sta L_46F0+4
+                 sta L_46F0+5
 L_2CC2           lda $7FFE
-                 sta L_4E03
+                 sta L_4DFE+5
                  rts
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
+                 .byte $00, $00, $00, $00, $00, $00, $00
 L_2CD0           jsr L_2CF6
                  cmp #$20
                  beq L_2CE0
                  jsr L_2CAB
-                 ldx L_46D4
+                 ldx L_46D0+4
                  jmp L_494D
 L_2CE0           jmp L_4930
 L_2CE3           jsr L_2CF6
                  cmp #$20
                  beq L_2CF3
                  jsr L_2CAB
-                 ldx L_46D4
+                 ldx L_46D0+4
                  jmp L_4920
 L_2CF3           jmp L_4905
 L_2CF6           sta FR2+4
-                 lda L_4000
+                 lda L_3FFD+3
                  rts
                  brk
                  brk
                  brk
                  brk
 L_2D00           lda #$04
-                 sta L_23F0
+                 sta L_23E9+7
                  lda #$00
-                 sta L_2E04
-                 sta L_23F0+1
-                 sta L_23F2
-                 sta L_23F3
-                 sta L_2E02
+                 sta L_2E03+1
+                 sta L_23F1
+                 sta L_23F1+1
+                 sta L_23F1+2
+                 sta L_2DFB+7
                  sta L_2E03
-                 lda L_4000
+                 lda L_3FFD+3
                  cmp #$20
                  beq L_2D26
                  jsr L_288F
@@ -4273,7 +2024,7 @@ L_2D59           inx
                  bne L_2D38
                  ldx #$00
                  lda #$10
-L_2D62           sta L_23F6+2,x
+L_2D62           sta L_23F1+7,x
                  inx
                  cpx #$06
                  bne L_2D62
@@ -4288,12 +2039,12 @@ L_2D62           sta L_23F6+2,x
                  bpl L_2D8D
                  cpy #$88
                  beq L_2D8A
-                 jmp L_31EF+1
+                 jmp L_31EB+5
 L_2D8A           dec L_1F0A
 L_2D8D           ldx #$2C
                  lda #$7D
-                 jsr L_31AF+1
-                 jsr L_3037
+                 jsr L_31AB+5
+                 jsr L_3033+4
                  bit L_1EF5
                  bpl L_2D9F
                  jmp L_2E1A
@@ -4309,14 +2060,14 @@ L_2DAD           tya
                  sta B0_ICCOM,x
                  lda #$7C
                  ldy #$1D
-                 bit L_238F
+                 bit L_2389+6
                  bvc L_2DC3
                  lda #$B2
                  ldy #$23
 L_2DC3           sta B0_ICBAL,x
                  tya
                  sta B0_ICBAH,x
-                 jsr L_31E8+1
+                 jsr L_31E3+6
                  ldy #$10
                  ldx #$20
                  lda #$00
@@ -4327,43 +2078,33 @@ L_2DC3           sta B0_ICBAL,x
 L_2DDD           lda #$0B
 L_2DDF           sta $04AE,x
                  rol $01A9
-                 sta L_2E02,x
+                 sta L_2DFB+7,x
                  jmp L_2E05
-                 aso (ERRNUM,x)
-                 pha
-                 aso (CPC,x)
-                 pha
-                 aso (ERRNUM,x)
-                 eor #$03
-                 sta B0_ICBLH,x
-                 jsr L_2609+1
-L_2DFB           and IOCMD
-L_2DFE           ins FMSZPG+4,x
-L_2E01           brk
-L_2E02           brk
-L_2E03           brk
-L_2E04           brk
-L_2E05           lda L_2E02
+                 .byte $03, $B9, $48, $03, $9D, $48, $03, $B9
+                 .byte $49, $03, $9D, $49, $03, $20, $0A, $26
+L_2DFB           .byte $2D, $C0, $00, $FF, $47, $00, $00, $00
+L_2E03           .byte $00, $00
+L_2E05           lda L_2DFB+7
                  clc
                  adc L_2E03
                  beq L_2E13
                  lda #$00
-                 sta L_2DFE+2
+                 sta L_2DFB+5
 L_2E13           cmp #$02
                  bne L_2E1A
                  jmp L_2FFD
-L_2E1A           lda L_2E04
+L_2E1A           lda L_2E03+1
                  eor #$01
                  tax
-                 stx L_2E04
-                 lda L_367F+1
+                 stx L_2E03+1
+                 lda L_367C+4
                  beq L_2E30
-                 lda L_2E01
+                 lda L_2DFB+6
                  eor #$01
-                 sta L_2E01
+                 sta L_2DFB+6
 L_2E30           ldx #$00
                  ldy #$20
-L_2E34           stx FRE+2
+                 stx FRE+2
                  sty FRE+3
                  ldx #$00
                  ldy #$6D
@@ -4402,22 +2143,22 @@ L_2E77           inx
                  cpx #$13
                  bne L_2E4A
                  ldx L_31F3+1
-                 ldy L_23F0
+                 ldy L_23E9+7
                  sty L_31F3+1
-                 stx L_23F0
-                 ldx L_4000
-                 ldy L_23F0+1
-                 sty L_4000
-                 stx L_23F0+1
-                 ldx L_3900
-                 ldy L_23F2
-                 sty L_3900
-                 stx L_23F2
+                 stx L_23E9+7
+                 ldx L_3FFD+3
+                 ldy L_23F1
+                 sty L_3FFD+3
+                 stx L_23F1
+                 ldx L_38FE+2
+                 ldy L_23F1+1
+                 sty L_38FE+2
+                 stx L_23F1+1
                  ldx #$00
-L_2EA2           lda L_23F6+2,x
+L_2EA2           lda L_23F1+7,x
                  sta FPTR2+1
                  lda $9F67,x
-                 sta L_23F6+2,x
+                 sta L_23F1+7,x
                  lda FPTR2+1
                  sta $8F00,x
                  inx
@@ -4432,7 +2173,7 @@ L_2EB9           lda #$00
                  ldx #$00
                  ldy #$00
                  jsr L_2881
-                 lda L_4000
+                 lda L_3FFD+3
                  cmp #$20
                  bne L_2ED7
                  jsr L_1503
@@ -4469,80 +2210,38 @@ L_2F05           lda FRE+4
 L_2F10           inx
                  cpx #$13
                  bne L_2EEF
-                 lda L_4000
+                 lda L_3FFD+3
                  cmp #$20
                  bne L_2F24
                  ldx #$00
                  jsr L_401A
-L_2F21           jsr L_1503
+                 jsr L_1503
 L_2F24           jsr L_43D5
                  lda #$03
                  sta GRACTL
                  lda #$2E
                  sta SDMCTL
-L_2F31           jsr L_2B03
+                 jsr L_2B03
                  jmp L_3A4C
 L_2F37           jsr L_2C65
                  jmp L_2809
-                 brk
-                 brk
-                 brk
-                 brk
-                 cpy #$30
-                 ins L_4945+1,x
-                 lsr L_220C
-                 rol L_39BF+1
-                 ins L_4E4F,x
-                 eor FMSZPG+1
-                 eor COLCRS+1
-                 ora #$34
-                 rol L_4EBE+2
-                 brk
-                 cim
-                 cim
-                 cim
-                 php
-                 rol ICIDNO,x
-                 cpy #$00
-                 ins $5242,x
-                 php
-                 lsr ICIDNO,x
-                 cpy #$56
-                 ins $5753,x
-                 ora #$94
-                 rol $67C0
-                 brk
-                 eor (FMSZPG+5,x)
-                 and (BOOT),y
-                 stx ICIDNO,y
-                 cpy #$00
-                 ins L_4840+1,x
-                 cim
-                 php
-                 tax
-                 rol $78C0
-                 brk
-                 eor $0831
-                 lda ICIDNO,x
-                 cpy #$00
-                 ins L_324D,x
-                 aso STOPLN
-                 rol $80C0
-                 ins DSTAT,x
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
+                 .byte $00, $00, $00, $00, $C0, $30, $FF, $46
+                 .byte $49, $4E, $0C, $22, $2E, $C0, $39, $FF
+                 .byte $4F, $4E, $45, $44, $45, $56, $09, $34
+                 .byte $2E, $C0, $4E, $00, $42, $52, $32, $08
+                 .byte $36, $2E, $C0, $00, $FF, $42, $52, $08
+                 .byte $56, $2E, $C0, $56, $FF, $53, $57, $09
+                 .byte $94, $2E, $C0, $67, $00, $41, $48, $31
+                 .byte $09, $96, $2E, $C0, $00, $FF, $41, $48
+                 .byte $32, $08, $AA, $2E, $C0, $78, $00, $4D
+                 .byte $31, $08, $B5, $2E, $C0, $00, $FF, $4D
+                 .byte $32, $07, $BA, $2E, $C0, $80, $FF, $4C
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00
 L_2FA0           sta SIZEP0
                  sta L_2C60
-                 sta L_2C61
-                 sta L_2C62
+                 sta L_2C60+1
+                 sta L_2C60+2
                  rts
                  brk
                  brk
@@ -4562,394 +2261,87 @@ L_2FB9           ldx #$CC
                  jmp L_2FD2
                  ldx #$FF
                  txs
-                 jmp L_3500
+                 jmp L_34FC+4
 L_2FD2           lda #$8A
                  sta L_443F+1
                  lda #$88
                  sta L_4452+1
                  jmp L_3681
                  brk
-L_2FE0           lda L_4000
+L_2FE0           lda L_3FFD+3
                  cmp #$20
                  bne L_2FE8
                  rts
 L_2FE8           ldx #$C0
                  ldy #$89
                  jmp L_2B07
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00
 L_2FFD           jmp L_33C7
 L_3000           jmp L_2A20
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_3008           brk
-                 brk
-                 bvc L_3070
-L_300C           nop #$7F
-                 sbc FR1+4
-L_3010           rts
-                 rol LNFLG
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 dey
-                 cpy $FC82
-                 rol L_4C2E
-                 dey
-                 brk
-                 brk
-                 brk
-                 brk
-L_3025           brk
-                 brk
-                 brk
-                 aso DSKUTL+1,x
-                 ora LNFLG,x
-                 nop !
-                 aso L_1D1F,y
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_3037           bvs L_3069
-                 bvs L_303B
-L_303B           bne L_300C+1
-                 bcs L_30AE+1
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 jsr $8060
-L_3049           cpx #$E1
-                 nop ICHIDZ
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 php
-                 nop VSEROC
-                 asl L_4C2E
-                 dey
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 ora (ICCOMT,x)
-                 aso DSKUTL+1,x
-                 adc L_1C1D,x
-L_3069           aso L_191E+1,y
-                 brk
-                 brk
-                 brk
-                 brk
-L_3070           brk
-                 brk
-                 rts
-L_3073           bvs L_3025
-                 beq L_3073
-                 bne L_3049
-                 bcs L_30EA+1
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 cim
-                 rts
-                 nop #$E0
-                 cpx #$64
-                 nop ICPTLZ
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 php
-                 nop $060E
-                 asl
-                 rol $8C4E
-                 php
-                 brk
-                 brk
-                 brk
-                 ora (CASINI+1,x)
-                 aso BUFADR+1,x
-                 bpl L_30BE+1
-                 adc L_1B1B+2,x
-                 aso L_1B19,y
-                 brk
-                 brk
-                 brk
-                 jsr $7060
-L_30AE           jsr $7030
-                 sei
-                 eor $D0,x
-                 bcc L_30E6
-                 bvs L_30B8
-L_30B8           brk
-                 cpy #$C0
-                 nop #$00
-                 rti
-L_30BE           cpy #$80
-                 rti
-                 cmp (IODVC,x)
-                 bcc L_30C5
-L_30C5           brk
-                 brk
-                 brk
-                 php
-                 nop RAMLO
-                 php
-                 nop RAMLO
-                 php
-                 bit $040C
-                 brk
-                 aso $080F
-                 brk
-                 brk
-                 and (ICDNOZ,x)
-                 ora (DSKFMS),y
-                 asl L_1C1D+1,x
-                 brk
-                 brk
-                 brk
-                 brk
-                 rts
-L_30E6           bvs L_3118
-                 bmi L_30F8+2
-L_30EA           nop #$B0
-                 cim
-                 escape #$92
-                 cim
-                 cim
-                 brk
-                 brk
-                 bmi L_3125
-                 jsr L_3010
-L_30F8           jsr L_403F+1
-                 jsr L_405E+2
-                 brk
-                 brk
-L_3100           brk
-                 brk
-                 brk
-                 brk
-                 php
-                 nop RAMLO
-                 sty $6428
-                 cpy #$08
-                 plp
-                 php
-                 nop RAMLO
-                 brk
-                 asl CMCMD
-                 brk
-                 rti
-                 eor (LNFLG,x)
-L_3118           nop TRAMSZ
-                 aso CMCMD
-                 cim
-                 brk
-                 brk
-                 brk
-                 brk
-                 rti
-                 ldy L_1070
-L_3125           brk
-                 brk
-                 nop LNFLG
-                 brk
-                 brk
-                 brk
-                 nop RTCLOK+2
-                 jsr $0800
-                 bpl L_3133
-L_3133           bpl L_313D
-                 bpl L_3137
-L_3137           rti
-                 jsr L_403F+1
-                 brk
-                 brk
-L_313D           brk
-                 brk
-                 nop RAMLO
-                 cim
-                 brk
-                 nop LNFLG
-                 cim
-                 brk
-                 nop TRAMSZ
-                 brk
-                 cim
-                 brk
-                 brk
-                 nop LNFLG
-                 brk
-                 brk
-                 nop TRAMSZ
-                 brk
-                 cim
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 ldy #$80
-                 plp
-                 dey
-                 nop #$40
-                 bpl L_3194
-                 brk
-                 nop #$80
-                 bpl L_3169
-L_3169           brk
-                 brk
-                 brk
-                 brk
-                 jsr FREQ
-                 bpl L_3191+1
-                 brk
-                 rti
-                 rti
-L_3175           nop #$00
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 php
-                 brk
-                 php
-                 brk
-                 bpl L_3184
-L_3184           brk
-                 php
-                 brk
-                 nop LNFLG
-                 asl
-                 brk
-                 brk
-                 cim
-                 php
-                 nop LNFLG
-                 brk
-L_3191           nop LNFLG
-                 brk
-L_3194           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 bvc L_319E
-L_319E           brk
-                 brk
-                 jsr LNFLG
-                 bpl L_31A5
-L_31A5           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 php
-                 brk
-                 brk
-L_31AF           nop LNFLG
-                 brk
-                 bpl L_31B4
-L_31B4           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 php
-                 brk
-                 brk
-                 bpl L_31C2
-L_31C2           brk
-                 php
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 ora (LNFLG,x)
-                 brk
-                 ora (LNFLG,x)
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 bpl L_321C
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_31E2           bpl L_320A+1
-                 and (ICSPRZ+1,x)
-                 and LNFLG
-L_31E8           rla L_2536
-                 cim
-                 brk
-                 bmi L_3219+2
-L_31EF           and (RECVDN,x)
-                 and BUFRLO
-L_31F3           ora (RAMLO,x)
-                 brk
+                 .byte $00, $00, $00, $00, $00, $00, $00, $50
+                 .byte $64, $82, $7F, $E5, $E4, $60, $26, $00
+                 .byte $00, $00, $00, $00, $00, $00, $88, $CC
+                 .byte $82, $FC, $2E, $2E, $4C, $88, $00, $00
+                 .byte $00, $00, $00, $00, $00, $17, $1B, $15
+                 .byte $00, $1A, $1B, $1F, $1D, $00, $00, $00
+L_3033           .byte $00, $00, $00, $00, $70, $30, $70, $00
+                 .byte $D0, $D0, $B0, $70, $00, $00, $00, $00
+                 .byte $00, $00, $00, $20, $60, $80, $E0, $E1
+                 .byte $64, $20, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $08, $0C, $0E, $02, $0E, $2E
+                 .byte $4C, $88, $00, $00, $00, $00, $00, $01
+                 .byte $17, $17, $1B, $7D, $1D, $1C, $1B, $1F
+                 .byte $19, $00, $00, $00, $00, $00, $00, $60
+                 .byte $70, $B0, $F0, $FC, $D0, $D0, $B0, $70
+                 .byte $00, $00, $00, $00, $00, $00, $00, $22
+                 .byte $60, $80, $E0, $E0, $64, $64, $26, $00
+                 .byte $00, $00, $00, $00, $00, $08, $0C, $0E
+                 .byte $06, $0A, $2E, $4E, $8C, $08, $00, $00
+                 .byte $00, $01, $03, $17, $16, $10, $1D, $7D
+                 .byte $1D, $1B, $1B, $19, $1B, $00, $00, $00
+                 .byte $20, $60, $70, $20, $30, $70, $78, $55
+                 .byte $D0, $90, $30, $70, $00, $00, $C0, $C0
+                 .byte $80, $00, $40, $C0, $80, $40, $C1, $C1
+                 .byte $90, $00, $00, $00, $00, $08, $0C, $04
+                 .byte $00, $08, $0C, $04, $00, $08, $2C, $0C
+                 .byte $04, $00, $0F, $0F, $08, $00, $00, $21
+                 .byte $21, $11, $18, $1E, $1E, $1C, $00, $00
+                 .byte $00, $00, $60, $70, $30, $30, $10, $80
+                 .byte $B0, $72, $F2, $92, $12, $22, $00, $00
+                 .byte $30, $30, $20, $10, $30, $20, $40, $40
+                 .byte $20, $60, $40, $00, $00, $00, $00, $00
+                 .byte $00, $08, $0C, $04, $00, $8C, $28, $64
+                 .byte $C0, $08, $28, $08, $04, $04, $00, $06
+                 .byte $07, $00, $40, $41, $00, $04, $06, $07
+                 .byte $07, $02, $00, $00, $00, $00, $40, $AC
+                 .byte $70, $10, $00, $00, $04, $00, $00, $00
+                 .byte $00, $04, $14, $20, $00, $08, $10, $00
+                 .byte $10, $08, $10, $00, $40, $20, $40, $40
+                 .byte $00, $00, $00, $00, $04, $04, $02, $00
+                 .byte $04, $00, $02, $00, $04, $06, $00, $02
+                 .byte $00, $00, $04, $00, $00, $00, $04, $06
+                 .byte $00, $02, $00, $00, $00, $00, $00, $00
+                 .byte $00, $A0, $80, $28, $88, $80, $40, $10
+                 .byte $30, $00, $80, $80, $10, $00, $00, $00
+                 .byte $00, $00, $20, $40, $00, $10, $20, $00
+                 .byte $40, $40, $80, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $08, $00, $08, $00, $10
+                 .byte $00, $00, $08, $00, $04, $00, $0A, $00
+                 .byte $00, $02, $08, $04, $00, $00, $04, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $50, $00, $00, $00, $20, $00, $00
+                 .byte $10, $00, $00, $00, $00, $00, $00, $00
+L_31AB           .byte $00, $08, $00, $00, $04, $00, $00, $10
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $08, $00, $00, $10, $00, $00
+                 .byte $08, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $01, $00, $00, $01, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $10
+                 .byte $40, $00, $00, $00, $00, $00, $00, $10
+L_31E3           .byte $27, $21, $2D, $25, $00, $2F, $36, $25
+L_31EB           .byte $32, $00, $30, $2C, $21, $39, $25, $32
+L_31F3           .byte $01, $04, $00
                  pha
                  lda #$01
                  sta L_31F3
@@ -4959,13 +2351,13 @@ L_3200           lda #$0F
                  sta GRACTL
                  ldx #$00
                  stx L_31F3
-L_320A           stx HPOSP0
+                 stx HPOSP0
                  stx HPOSP1
                  stx HPOSP2
                  stx HPOSP3
                  stx HPOSM0
-L_3219           stx HPOSM1
-L_321C           stx HPOSM2
+                 stx HPOSM1
+                 stx HPOSM2
                  stx HPOSM3
                  txa
 L_3223           sta $6C00,x
@@ -4975,7 +2367,7 @@ L_3223           sta $6C00,x
                  inx
                  bne L_3223
                  lda #$01
-L_3234           sta GPRIOR
+                 sta GPRIOR
                  ldx #$3E
                  ldy #$03
                  lda #$68
@@ -4984,14 +2376,14 @@ L_3234           sta GPRIOR
                  sty GRACTL
                  lda #$00
                  sta FPTR2+1
-L_324A           sta L_31F3
-L_324D           lda #$07
+                 sta L_31F3
+                 lda #$07
                  ldy #$F6
-L_3251           ldx #$31
+                 ldx #$31
                  jsr L_1F00
 L_3256           lda L_31F3
                  beq L_3256
-                 lda L_4409
+                 lda L_4405+4
                  clc
                  adc #$36
                  sta HPOSP0
@@ -5007,7 +2399,7 @@ L_3256           lda L_31F3
                  sta PCOLR2
                  sta PCOLR3
                  lda #$00
-                 sta L_4409
+                 sta L_4405+4
                  jsr L_44CB
                  jsr L_44F1
                  ldx #$03
@@ -5064,7 +2456,7 @@ L_32C2           iny
                  sta GRACTL
                  sta $57B0
                  sta $57B1
-L_3303           sta $57B2
+                 sta $57B2
                  sta $57B3
                  sta $57B4
                  sta $57B5
@@ -5077,7 +2469,7 @@ L_331B           ldx #$00
                  stx FRE+2
                  sty FRE+3
                  ldx #$30
-L_3325           ldy #$9B
+                 ldy #$9B
                  stx FRE+4
                  sty FRE+5
                  ldx #$00
@@ -5087,7 +2479,7 @@ L_3331           sta (FRE+4),y
                  iny
                  cpy #$1A
                  bne L_332F
-L_3338           lda FRE+4
+                 lda FRE+4
                  clc
                  adc #$28
                  sta FRE+4
@@ -5113,7 +2505,7 @@ L_3353           lda L_31F3+1
                  lda #$DC
                  sta L_3331+1
                  jsr L_331B
-                 lda L_2DFE+2
+                 lda L_2DFB+5
                  beq L_3375
                  jmp L_2E05
 L_3375           ldx #$00
@@ -5136,7 +2528,7 @@ L_3385           sta $9F60,x
                  lda #$DC
                  sta L_332F+1
                  jsr L_331B
-                 lda L_4000
+                 lda L_3FFD+3
                  cmp #$20
                  bne L_33AE
                  jsr L_1503
@@ -5159,12 +2551,12 @@ L_33CA           sta $9F60,x
                  bne L_33CA
                  ldx #$00
                  stx FRE+3
-L_33D6           lda L_31E2+1,x
+L_33D6           lda L_31E3,x
                  sta $9F6C,x
                  inx
                  cpx #$10
                  bne L_33D6
-                 lda L_2E04
+                 lda L_2E03+1
                  clc
                  adc #$11
                  sta $9F6D,x
@@ -5180,378 +2572,89 @@ L_33F3           iny
                  lda FRE+3
                  cmp #$06
                  bne L_33EF
-                 lda L_2DFE+2
+                 lda L_2DFB+5
                  bne L_3409
-                 jmp L_3500
+                 jmp L_34FC+4
 L_3409           jmp L_2DDF+1
-                 brk
-                 brk
-                 brk
-                 brk
-                 nop L_1BC0,x
-                 ora (BOOT,x)
-                 ora #$44
-                 nop #$00
-                 ins L_4358,x
-                 lse $8108
-                 rol IOCMD,x
-                 ora #$FF
-                 eor TMPCHR
-L_3425           php
-                 aso (BFENHI,x)
-                 cpy #$42
-                 brk
-L_342B           nop DSTAT
-                 ora #$23
-L_342F           and IOCMD,x
-                 sax LNFLG
-                 lse (COLRSH,x)
-                 jmp L_270C
-                 and IOCMD,x
-                 ldx LNFLG,y
-                 alr #$45
-                 eor L_4143+1,y
-                 nop DOSVEC,x
-                 rol BFENHI,x
-                 cpy #$74
-                 brk
-                 jmp $5341
-                 nop DOSVEC,x
-                 rla BFENHI,x
-                 cpy #$38
-                 ins L_4552+2,x
-                 cli
-                 nop DOSINI,x
-                 rra $C036,x
-                 lsr L_4400
-                 eor COLCRS+1
-                 nop SAVMSC+1,x
-                 bvc L_346F
-                 nop #$36
-                 cpy #$D9
-                 brk
-                 nop FMSZPG+2
-                 lsr DRKMSK,x
-                 eor ATRACT,x
-                 php
-L_346F           nop #$36
-                 cpy #$6B
-                 brk
-                 bvc L_34C9+1
-                 ora #$47
-                 rla IOCMD,x
-                 cim
-                 ins L_4151+1,x
-                 lse (BOOT),y
-                 sbc (LTEMP),y
-                 cpy #$91
-                 brk
-                 bvc L_34DB
-                 cim
-                 ora #$F3
-                 rol IOCMD,x
-                 lda (LNFLG,x)
-                 jmp $5345
-                 asl
-                 aso (LTEMP+1,x)
-                 cpy #$7D
-                 ins L_454C+2,x
-                 lse ROWCRS,x
-                 asl
-                 nop $C037,x
-                 lsr L_43FF
-                 lse $544E
-                 php
-                 asl $C037
-                 nop #$00
-                 bvc L_3500
-                 php
-                 ora $C037,y
-                 sta L_49FF,y
-                 eor L_2609+1
-                 rla IOCMD,x
-                 inc FPTR2+1,x
-                 jmp L_4F4E+1
-                 bvc L_34CB
-                 ldx LTEMP+1,y
-                 cpy #$AB
-                 ins $5453,x
-                 eor (LMARGN,x)
-L_34C9           nop BOOT,x
-L_34CB           jmp $C037
-                 lax L_4AFF+1,y
-                 eor SAVMSC+1
-                 php
-                 eor LTEMP+1,x
-                 cpy #$45
-                 ins L_324A+1,x
-L_34DB           ora #$71
-                 rla IOCMD,x
-                 dcm FPTR2+1
-                 eor (LMARGN,x)
-                 bvc L_34EE
-                 nop LTEMP+1
-                 cpy #$D0
-                 ins $554F,x
-                 nop BOOT,x
-L_34EE           anx #$37
-                 cpy #$0A
-                 ins L_4544,x
-                 lsr WARMST,x
-                 dcm (LTEMP+1),y
-                 cpy #$4E
-                 ins $5050,x
-                 nop #$DA
-L_3500           jmp L_2AA0
-                 bvs L_3573+2
-                 bvs L_3549
-                 rti
-                 shy VPRCED,x
-                 cim
-                 cim
-                 cim
-                 cim
-                 cim
-                 cim
-L_3511           cim
-                 cim
-                 cim
-                 cim
-                 cim
-                 cim
-                 cim
-                 cim
-                 cim
-                 cim
-                 cim
-                 cim
-                 cim
-                 cim
-                 cim
-                 eor (CASINI+1,x)
-L_3522           and TRAMSZ,x
-                 nop $080A
-L_3527           rla $9CC4,x
-                 ora (RTCLOK+2,x)
-                 sta $6405,x
-L_352F           sta $B412,x
-                 sta $040A,x
-L_3535           shx CASINI+1,y
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 rla (ICBAHZ),y
-                 bit L_2323+2
-                 nop LNFLG,x
-                 and L_352F,y
-L_3549           cim
-                 brk
-                 and #$2E
-                 bmi L_3584
-                 nop LNFLG,x
-                 bit ICBAHZ
-                 rol ICBLHZ,x
-                 rla (ICBAHZ,x)
-                 rla $0A0A,y
-                 asl
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 and (BFENLO,x)
-                 and (BUFRLO,x)
-                 and #$00
-                 bmi L_3592
-                 bit ICBALZ
-L_3573           bit L_3325
-                 rla $0A0A,y
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_3584           brk
-                 brk
-                 brk
-                 rol
-                 rla L_3338+1
-                 nop ICBLHZ,x
-                 rla (ICAX2Z,x)
-                 rla $0A0A,y
-L_3592           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 anc #$25
-                 and L_2F21+1,y
-                 and (BUFRLO,x)
-                 bit CHKSNT
-                 asl
-                 asl
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 ora (LNFLG),y
-                 rla (CIOCHR,x)
-                 rol L_3234
-                 rla L_2C2C
-                 and BUFRLO
-                 rla $0A0A,y
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 ora (LNFLG),y
-                 bmi L_3605+1
-                 and (RECVDN,x)
-                 and BUFRLO
-                 brk
-                 and L_242F
-                 and CHKSNT
-                 asl
-                 asl
-                 asl
-                 brk
-                 brk
-                 brk
-                 brk
-                 rla (ICBAHZ),y
-                 bit L_2323+2
-                 nop LNFLG,x
-                 rla L_342F+1
-                 and #$2F
-                 rol L_3500
-                 rla (ICBLHZ),y
-                 rol ICPTHZ
-                 rol ICBLHZ
-                 cim
-                 rla (BFENLO),y
-                 brk
-L_3605           bit L_3425
-                 nop ICBAHZ,x
-                 cim
-                 rla $0A0A,y
-                 brk
-                 brk
-                 brk
-                 brk
-                 rol ICBLHZ
-                 cim
-                 and LNFLG
-                 cim
-                 and BFENLO,x
-                 nop CIOCHR,x
-                 rol L_3303
-                 nop ICDNOZ,x
-                 cim
-                 nop LNFLG,x
-                 anc #$25
-                 and L_21FF+1,y
-                 and ICPTHZ
-                 and #$2E
-                 rla (LNFLG),y
-                 rla ICDNOZ
-                 and L_3B23+2
-                 asl
-                 asl
-                 asl
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 ora (LNFLG,x)
-                 nop ICDNOZ,x
-                 and #$34
-                 rla L_1100
-                 ora L_1718,y
-                 brk
-                 ora (LNFLG,x)
-                 and #$2D
-                 and (ICPTHZ,x)
-                 and #$2E
-                 and LNFLG
-                 ora (DSKFMS+1),y
-                 clc
-                 aso CHKSNT,x
-                 asl
-                 asl
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 rla (CIOCHR,x)
-                 bit ICBAHZ
-                 bit LNFLG
-                 cim
-                 and L_2D00,y
-                 and #$2B
-                 and LNFLG
-                 plp
-                 and BFENLO,x
-                 rla (ICBLLZ,x)
-                 and #$2E
-                 rla (CIOCHR),y
-                 rol $0B3B
-L_367F           aso (LNFLG,x)
+                 .byte $00, $00, $00, $00, $5C, $C0, $1B, $01
+                 .byte $09, $09, $44, $C2, $00, $FF, $58, $43
+                 .byte $4F, $08, $81, $36, $C0, $09, $FF, $45
+                 .byte $50, $08, $03, $35, $C0, $42, $00, $44
+                 .byte $4C, $09, $23, $35, $C0, $87, $00, $43
+                 .byte $4F, $4C, $0C, $27, $35, $C0, $B6, $00
+                 .byte $4B, $45, $59, $44, $41, $54, $0A, $36
+                 .byte $35, $C0, $74, $00, $4C, $41, $53, $54
+                 .byte $0A, $37, $35, $C0, $38, $FF, $54, $45
+                 .byte $58, $54, $0C, $7F, $36, $C0, $4E, $00
+                 .byte $44, $45, $56, $54, $59, $50, $0C, $80
+                 .byte $36, $C0, $D9, $00, $44, $45, $56, $4E
+                 .byte $55, $4D, $08, $C2, $36, $C0, $6B, $00
+                 .byte $50, $54, $09, $47, $37, $C0, $62, $FF
+                 .byte $52, $41, $53, $09, $F1, $36, $C0, $91
+                 .byte $00, $50, $54, $32, $09, $F3, $36, $C0
+                 .byte $A1, $00, $4C, $45, $53, $0A, $03, $37
+                 .byte $C0, $7D, $FF, $4E, $45, $57, $54, $0A
+                 .byte $1C, $37, $C0, $4E, $FF, $43, $4F, $4E
+                 .byte $54, $08, $0E, $37, $C0, $E2, $00, $50
+                 .byte $53, $08, $19, $37, $C0, $99, $FF, $49
+                 .byte $4D, $0A, $26, $37, $C0, $F6, $FF, $4C
+                 .byte $4F, $4F, $50, $0B, $B6, $37, $C0, $AB
+                 .byte $FF, $53, $54, $41, $52, $54, $09, $4C
+                 .byte $37, $C0, $BF, $00, $4B, $45, $59, $08
+                 .byte $55, $37, $C0, $45, $FF, $4B, $32, $09
+                 .byte $71, $37, $C0, $C7, $FF, $41, $52, $50
+                 .byte $09, $64, $37, $C0, $D0, $FF, $4F, $55
+                 .byte $54, $09, $AB, $37, $C0, $0A, $FF, $44
+                 .byte $45, $56, $08, $D3, $37, $C0, $4E, $FF
+L_34FC           .byte $50, $50, $C2, $DA, $4C, $A0, $2A, $70
+                 .byte $70, $70, $42, $40, $9C, $02, $02, $02
+                 .byte $02, $02, $02, $02, $02, $02, $02, $02
+                 .byte $02, $02, $02, $02, $02, $02, $02, $02
+L_351C           .byte $02, $02, $02, $02, $41, $03, $35, $06
+L_3524           .byte $0C, $0A, $08, $3F, $C4, $9C, $01, $14
+                 .byte $9D, $05, $64, $9D, $12, $B4, $9D, $0A
+L_3534           .byte $04, $9E, $03, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $33, $25, $2C, $25, $23
+                 .byte $34, $00, $39, $2F, $35, $32, $00, $29
+                 .byte $2E, $30, $35, $34, $00, $24, $25, $36
+                 .byte $29, $23, $25, $3B, $0A, $0A, $0A, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $21, $34, $21
+                 .byte $32, $29, $00, $30, $21, $24, $24, $2C
+                 .byte $25, $33, $3B, $0A, $0A, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $2A, $2F, $39, $33, $34
+                 .byte $29, $23, $2B, $3B, $0A, $0A, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $2B, $25, $39, $22
+                 .byte $2F, $21, $32, $24, $3B, $0A, $0A, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $11, $00, $23
+                 .byte $2F, $2E, $34, $32, $2F, $2C, $2C, $25
+                 .byte $32, $3B, $0A, $0A, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $11, $00, $30, $2C, $21, $39
+                 .byte $25, $32, $00, $2D, $2F, $24, $25, $3B
+                 .byte $0A, $0A, $0A, $00, $00, $00, $00, $33
+                 .byte $25, $2C, $25, $23, $34, $00, $2F, $30
+                 .byte $34, $29, $2F, $2E, $00, $35, $33, $29
+                 .byte $2E, $27, $00, $26, $29, $32, $33, $34
+                 .byte $00, $2C, $25, $34, $34, $25, $32, $3B
+                 .byte $0A, $0A, $00, $00, $00, $00, $26, $29
+                 .byte $32, $25, $00, $22, $35, $34, $34, $2F
+                 .byte $2E, $03, $33, $34, $21, $32, $34, $00
+                 .byte $2B, $25, $39, $00, $22, $25, $27, $29
+                 .byte $2E, $33, $00, $27, $21, $2D, $25, $3B
+                 .byte $0A, $0A, $0A, $00, $00, $00, $00, $00
+                 .byte $00, $00, $01, $00, $34, $21, $29, $34
+                 .byte $2F, $00, $11, $19, $18, $17, $00, $01
+                 .byte $00, $29, $2D, $21, $27, $29, $2E, $25
+                 .byte $00, $11, $19, $18, $17, $3B, $0A, $0A
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $23, $2F, $24, $25, $24, $00, $22
+                 .byte $39, $00, $2D, $29, $2B, $25, $00, $28
+                 .byte $35, $34, $23, $28, $29, $2E, $33, $2F
+L_367C           .byte $2E, $3B, $0B, $03, $00
 L_3681           lda #$00
                  sta SDMCTL
                  lda #$00
@@ -5576,7 +2679,7 @@ L_3681           lda #$00
                  sta COLOR0
                  sta COLOR0
                  lda #$03
-                 sta L_3535+1
+                 sta L_3534+2
                  ldx #$00
 L_36C2           lda #$00
                  sta $9C40,x
@@ -5629,26 +2732,13 @@ L_371C           lda #$04
 L_3726           lda VCOUNT
                  and #$03
                  tax
-                 lda L_3522+1,x
+                 lda L_351C+7,x
                  sta WSYNC
                  sta COLOR1
                  sta COLPF1
                  jmp L_2A60
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00
                  pha
                  txa
                  pha
@@ -5658,7 +2748,7 @@ L_3726           lda VCOUNT
                  ldy #$00
                  lda CH
                  sta FPTR2+1
-L_3758           lda L_3527,y
+L_3758           lda L_3524+3,y
                  cmp FPTR2+1
                  beq L_3774
                  iny
@@ -5675,18 +2765,18 @@ L_3767           lda #$FF
                  tax
                  pla
                  jmp XITVBV
-L_3774           lda L_3527+1,y
+L_3774           lda L_3524+4,y
                  sta FRX
-                 lda L_3527+2,y
+                 lda L_3524+5,y
                  sta EEXP
                  sty NSIGN
-                 ldy L_3535+1
-                 lda L_3527+1,y
+                 ldy L_3534+2
+                 lda L_3524+4,y
                  sta FR2+4
-                 lda L_3527+2,y
+                 lda L_3524+5,y
                  sta FR2+5
                  lda NSIGN
-                 sta L_3535+1
+                 sta L_3534+2
                  ldy #$00
                  lda #$00
                  sta (FR2+4),y
@@ -5698,7 +2788,7 @@ L_3774           lda L_3527+1,y
                  cmp #$12
                  beq L_37AE
                  ldy NSIGN
-                 sty L_367F
+                 sty L_367C+3
                  jmp L_3767
 L_37AE           cmp #$0A
                  bne L_37BD
@@ -5706,9 +2796,9 @@ L_37AE           cmp #$0A
                  eor #$01
                  sta L_28A3
                  jmp L_37C5
-L_37BD           lda L_367F+1
+L_37BD           lda L_367C+4
                  eor #$01
-                 sta L_367F+1
+                 sta L_367C+4
 L_37C5           ldy #$02
                  lda (FRX),y
                  eor #$03
@@ -5723,8 +2813,8 @@ L_37D0           lda #$00
                  lda #$2E
                  sta SDMCTL
                  ldx #$00
-                 stx L_3900
-                 stx L_4000
+                 stx L_38FE+2
+                 stx L_3FFD+3
                  lda #$10
 L_37ED           sta $8F00,x
                  inx
@@ -5739,18 +2829,18 @@ L_37ED           sta $8F00,x
                  bne L_3814
                  lda $5077
                  bne L_3814
-                 lda L_460B
+                 lda L_4607+4
                  cmp #$6A
                  bcc L_3814
                  jmp L_3000
-L_3814           ldx L_4000
-                 lda L_3900
+L_3814           ldx L_3FFD+3
+                 lda L_38FE+2
                  cmp $8FC0,x
                  beq L_3822
                  jmp L_4519+2
-L_3822           inc L_4000
+L_3822           inc L_3FFD+3
                  lda #$00
-                 sta L_3900
+                 sta L_38FE+2
                  sta FRE+3
 L_382C           ldx #$00
 L_382E           ldy #$00
@@ -5759,7 +2849,7 @@ L_3830           iny
                  inx
                  bne L_382E
                  inc FRE+3
-L_3838           lda FRE+3
+                 lda FRE+3
                  cmp #$02
                  bne L_382C
                  ldx #$00
@@ -5769,121 +2859,36 @@ L_3840           lda $9F67,x
                  cpx #$06
                  bne L_3840
                  jmp L_2894
-                 eor L_424E+1,y
-                 php
-                 nop !
-                 lse (IOCMD),y
-                 nop $5301
-                 pha
-                 php
-                 sha (ROWCRS),y
-                 cpy #$14
-                 ora (RMARGN,x)
-                 nop BOOT,x
-                 and $C053
-                 rol $5301
-                 lse $094E
-                 cim
-                 lse (IOCMD),y
-                 rol NGFLAG
-                 lse (FMSZPG+5,x)
-                 alr #$08
-                 rla $C053,x
-                 lse (NGFLAG),y
-                 lse (DSTAT,x)
-                 asl
-                 ror $C053
-                 lse $5301,y
-                 eor FMSZPG+2
-                 lsr $7308
-                 lse (IOCMD),y
-                 sec
-                 ins L_4748+1,x
-                 ora #$9F
-                 lse (IOCMD),y
-                 adc NGFLAG
-                 cim
-                 eor ATRACT
-                 asl
-                 adc $C053,y
-                 adc L_4200+1
-                 eor (FMSZPG,x)
-                 alr #$08
-                 sty RMARGN,x
-                 cpy #$25
-                 cim
-                 lse (FMSZPG+5,x)
-                 asl
-                 sta RMARGN,x
-                 cpy #$BD
-                 ora (RMARGN,x)
-                 nop COLRSH,x
-                 bvc L_38BB
-                 tax
-                 lse (IOCMD),y
-                 pha
-                 ins L_3251+1,x
-                 php
-L_38BB           lda (RMARGN),y
-                 cpy #$7F
-                 ora (CRITIC,x)
-                 and (DOSVEC),y
-                 lax ROWCRS,x
-                 cpy #$75
-                 ins L_4C47,x
-                 eor #$53
-                 php
-                 clv
-                 lse (IOCMD),y
-                 sax NGFLAG
-                 cim
-                 cim
-                 php
-                 lax $C053,y
-                 sax L_4200+1
-                 rla (WARMST),y
-                 dec RMARGN
-                 cpy #$97
-                 ora (CRITIC,x)
-                 nop DOSVEC,x
-                 asl ROWCRS
-                 cpy #$13
-                 cim
-                 cim
-                 lse L_4D4E+1
-                 anc #$DB
-                 lse (IOCMD),y
-                 nop CASINI,x
-                 brk
-                 eor (ROWCRS,x)
-                 pha
-                 php
-                 cld
-                 lse (IOCMD),y
-                 ldy $55FF
-L_3900           brk
-L_3901           brk
-L_3902           plp
-L_3903           ldy #$0B
-                 bcs L_3912
-                 cpy #$0B
-                 bne L_3916
-                 bvc L_3912
-                 rts
-                 aso ROWAC
-                 aso LOMEM
-L_3912           aso FR1
-                 ora #$F0
-L_3916           ora #$10
-                 php
-                 jsr L_3008
-                 php
-                 rti
-                 ora TOPSTK
-                 nop $0A00
+                 .byte $59, $4F, $42, $08, $1A, $53, $C0, $0C
+                 .byte $01, $53, $48, $08, $93, $54, $C0, $14
+                 .byte $01, $53, $54, $09, $2D, $53, $C0, $2E
+                 .byte $01, $53, $4F, $4E, $09, $52, $53, $C0
+                 .byte $26, $01, $43, $48, $4B, $08, $3F, $53
+                 .byte $C0, $53, $01, $43, $4C, $0A, $6E, $53
+                 .byte $C0, $5B, $01, $53, $45, $45, $4E, $08
+                 .byte $73, $53, $C0, $38, $FF, $49, $47, $09
+                 .byte $9F, $53, $C0, $65, $01, $52, $45, $4D
+                 .byte $0A, $79, $53, $C0, $6D, $01, $42, $41
+                 .byte $43, $4B, $08, $94, $53, $C0, $25, $02
+                 .byte $43, $48, $0A, $95, $53, $C0, $BD, $01
+                 .byte $53, $54, $4F, $50, $08, $AA, $53, $C0
+                 .byte $48, $FF, $52, $32, $08, $B1, $53, $C0
+                 .byte $7F, $01, $42, $31, $0A, $B7, $54, $C0
+                 .byte $75, $FF, $47, $4C, $49, $53, $08, $B8
+                 .byte $53, $C0, $87, $01, $42, $32, $08, $BF
+                 .byte $53, $C0, $8F, $01, $42, $33, $08, $C6
+                 .byte $53, $C0, $97, $01, $42, $34, $0A, $06
+                 .byte $54, $C0, $13, $02, $42, $4F, $4F, $4D
+                 .byte $0B, $DB, $53, $C0, $1C, $02, $00, $00
+                 .byte $41, $54, $48, $08, $D8, $53, $C0, $AC
+L_38FE           .byte $FF, $55, $00, $00, $28, $A0, $0B, $B0
+                 .byte $0B, $C0, $0B, $D0, $0B, $50, $05, $60
+                 .byte $07, $70, $07, $80, $07, $E0, $09, $F0
+                 .byte $09, $10, $08, $20, $08, $30, $08, $40
+                 .byte $05, $90, $0C, $00, $0A
 L_3923           sta L_39B0
-                 stx L_3901
-                 sty L_3902
+                 stx L_38FE+3
+                 sty L_38FE+4
                  lda CASINI+1
                  clc
                  asl
@@ -5891,7 +2896,7 @@ L_3930           tax
                  lda (FRE+4),y
                  cmp #$05
                  beq L_3985
-L_3937           cmp #$06
+                 cmp #$06
                  beq L_3985
                  cmp #$07
                  beq L_398B
@@ -5900,14 +2905,14 @@ L_3937           cmp #$06
                  and #$80
                  beq L_3948
                  inx
-L_3948           lda L_3C22
-L_394B           sta L_3954+1
+L_3948           lda L_3C1B+7
+                 sta L_3954+1
                  lda L_3C23
                  sta L_3954+2
 L_3954           lda $7B4C,x
 L_3957           and #$F0
                  ldx #$00
-L_395B           cmp L_3903,x
+L_395B           cmp L_38FE+5,x
                  beq L_3969
                  inx
                  inx
@@ -5915,16 +2920,16 @@ L_395B           cmp L_3903,x
                  bne L_395B
                  jmp L_397B
 L_3969           inx
-                 lda L_3903,x
+                 lda L_38FE+5,x
                  tay
 L_396E           cpy #$00
                  beq L_397B
                  ldx #$01
-                 jsr L_3BB3+1
+                 jsr L_3BB0+4
                  dey
                  jmp L_396E
 L_397B           lda L_39B0
-                 ldx L_3901
+                 ldx L_38FE+3
                  jsr L_39A9
                  rts
 L_3985           lda COLOR0
@@ -5932,8 +2937,8 @@ L_3985           lda COLOR0
 L_398B           lda COLOR1
                  jmp L_3957
                  sta L_39B0
-                 stx L_3901
-                 sty L_3902
+                 stx L_38FE+3
+                 sty L_38FE+4
                  lda $507B,x
                  and #$FC
                  lsr
@@ -5943,78 +2948,27 @@ L_398B           lda COLOR1
                  sec
                  sbc #$06
                  jmp L_3930
-L_39A9           ldy L_3902
-                 inc L_3900
+L_39A9           ldy L_38FE+4
+                 inc L_38FE+2
                  rts
-L_39B0           nop CASINI
-                 ins $504C,x
-                 nop WARMST,x
-                 lse (BUFRHI),y
-                 cpy #$39
-                 ins $5243,x
-                 asl
-L_39BF           aso $C033,y
-L_39C2           bvc L_39C2+1
-                 cim
-                 cim
-                 eor #$4B
-                 ora #$2D
-                 rla (IOCMD),y
-                 cpy #$FF
-                 cim
-                 eor BUFRLO
-                 ora #$2F
-                 rla (IOCMD),y
-                 lda $5300,x
-                 nop CHKSUM,x
-                 ora #$31
-                 rla (IOCMD),y
-                 cpy #$FF
-                 lse (ROWCRS),y
-                 cim
-                 php
-                 lse (BUFRHI,x)
-                 cpy #$E0
-                 brk
-                 eor (CRITIC,x)
-                 ora #$4D
-                 rla (IOCMD),y
-                 sbc (LNFLG),y
-                 lse (SOUNDR,x)
-                 cim
-                 ora #$B2
-                 rla (IOCMD),y
-                 brk
-                 brk
-                 eor DRKMSK
-                 nop BOOT
-L_39FE           rra L_2032+1
-                 jsr L_201F+1
-                 jsr L_2F31+1
-                 and ICIDNO,x
-                 bit ICHIDZ
-                 jsr L_201F+1
-                 cim
-                 and ICDNOZ
-                 bit RECVDN
-L_3A13           rla L_3511,y
-                 bmi L_3A38
-                 bpl L_3A28+2
-                 bpl L_3A2B+1
-                 bpl L_3A2D+1
-                 jsr L_2926+2
-                 jsr L_1010
-                 bpl L_3A36
-                 bpl L_3A38
-L_3A28           jsr L_292C
-L_3A2B           rol ICBAHZ
-L_3A2D           jsr L_2014
-                 cim
-                 rla L_2E34+1
-                 bit ICHIDZ
-L_3A36           ora (ICHIDZ),y
-L_3A38           jsr $0411
-L_3A3B           brk
+L_39B0           .byte $04, $02, $FF, $4C, $50, $34, $08, $53
+                 .byte $33, $C0, $39, $FF, $43, $52, $0A, $1B
+                 .byte $33, $C0, $50, $FF, $42, $52, $49, $4B
+                 .byte $09, $2D, $33, $C0, $C0, $FF, $52, $45
+                 .byte $32, $09, $2F, $33, $C0, $BD, $00, $53
+                 .byte $54, $31, $09, $31, $33, $C0, $C0, $FF
+                 .byte $53, $54, $32, $08, $43, $33, $C0, $E0
+                 .byte $00, $41, $42, $09, $4D, $33, $C0, $F1
+                 .byte $00, $43, $41, $52, $09, $B2, $33, $C0
+                 .byte $00, $00, $45, $4E, $44, $09, $6F, $33
+L_3A00           .byte $20, $20, $20, $20, $20, $32, $2F, $35
+                 .byte $2E, $24, $20, $20, $20, $20, $32, $25
+L_3A10           .byte $21, $24, $39, $3B, $11, $35, $30, $20
+                 .byte $10, $10, $10, $10, $10, $10, $20, $28
+                 .byte $29, $20, $10, $10, $10, $10, $10, $10
+                 .byte $20, $2C, $29, $26, $25, $20, $14, $20
+                 .byte $32, $2F, $35, $2E, $24, $20, $11, $20
+L_3A38           .byte $20, $11, $04, $00
 L_3A3C           jsr L_3B67
                  cmp #$20
                  bne L_3A49
@@ -6022,12 +2976,12 @@ L_3A3C           jsr L_3B67
                  jmp L_3A4C
 L_3A49           jsr L_400F
 L_3A4C           ldx #$00
-L_3A4E           lda L_39FE+2,x
+L_3A4E           lda L_3A00,x
                  sta $9F6A,x
                  inx
                  cpx #$0E
                  bne L_3A4E
-                 lda L_4000
+                 lda L_3FFD+3
                  sta FRE+4
                  inc FRE+4
                  lda #$20
@@ -6080,7 +3034,7 @@ L_3AAD           iny
                  adc #$06
                  sta FRE+2
                  ldy #$0E
-L_3AC2           lda L_39FE+2,y
+L_3AC2           lda L_3A00,y
                  sta $9F6A,x
                  inx
                  iny
@@ -6099,7 +3053,7 @@ L_3AD6           iny
                  cmp #$03
                  bne L_3AD2
                  ldx #$00
-L_3AE6           lda L_3A13+1,x
+L_3AE6           lda L_3A10+4,x
                  sta $9F63,x
                  inx
                  cpx #$23
@@ -6124,14 +3078,14 @@ L_3AFE           lda L_3A38+1
                  jsr L_460E
                  lda #$01
                  sta $5002
-                 sta L_4A02
-L_3B23           sta L_3A3B
+                 sta L_4A01+1
+                 sta L_3A38+3
                  lda #$02
-                 sta L_4E03
+                 sta L_4DFE+5
                  ldx #$00
 L_3B2D           lda $8F00,x
                  sta $9F67,x
-                 lda L_2C00,x
+                 lda L_2BFB+5,x
                  sta $9F71,x
                  inx
                  cpx #$06
@@ -6140,11 +3094,11 @@ L_3B2D           lda $8F00,x
                  clc
                  adc #$10
                  sta $9F7D
-                 lda L_2E04
+                 lda L_2E03+1
                  clc
                  adc #$11
                  sta $9F63
-                 lda L_4000
+                 lda L_3FFD+3
                  cmp #$20
                  bne L_3B5A
                  jmp L_1690
@@ -6156,51 +3110,24 @@ L_3B5A           jmp L_28B2
                  rts
 L_3B67           ldx #$00
                  jsr L_401A
-                 lda L_4000
+                 lda L_3FFD+3
                  rts
-                 eor DINDEX
-                 nop FMSZPG+2
-                 lsr DOSVEC
-                 bpl L_3BC8+2
-                 cpy #$41
-                 ins L_454C+2,x
-                 lse FMSZPG+3,x
-                 asl
-                 nop !
-                 cim
-                 cpy #$04
-                 aso (FMSZPG+3,x)
-                 cim
-                 eor FMSZPG+1
-                 php
-                 brk
-                 lse IOCMD,x
-                 ror FPTR2+1,x
-                 lsr LMARGN
-                 php
-                 nop DINDEX,x
-                 cpy #$09
-                 ins $5442,x
-                 ora #$19
-                 lse IOCMD,x
-                 nop FPTR2+1,x
-                 lse FMSZPG+2
-                 lse $6508
-                 lse IOCMD,x
-                 dcm $53FF,x
-                 eor $8109
-                 lse IOCMD,x
-L_3BAE           rol $0503
-L_3BB1           ora (NGFLAG,x)
-L_3BB3           ora (STARP+1,x)
-                 bcs L_3BF2
-                 stx L_3BB1
-                 sty L_3BB1+1
+                 .byte $45, $57, $44, $45, $46, $0A, $10, $52
+                 .byte $C0, $41, $FF, $4E, $45, $57, $46, $0A
+                 .byte $3A, $52, $C0, $04, $03, $46, $52, $45
+                 .byte $44, $08, $00, $57, $C0, $76, $FF, $46
+                 .byte $52, $08, $74, $57, $C0, $09, $FF, $42
+                 .byte $54, $09, $19, $57, $C0, $F4, $FF, $47
+                 .byte $45, $4F, $08, $65, $57, $C0, $DF, $FF
+                 .byte $53, $4D, $09, $81, $57, $C0, $2E, $03
+L_3BB0           .byte $05, $01, $01, $01, $8D, $B0, $3B
+                 stx L_3BB0+1
+                 sty L_3BB0+2
                  txa
-                 sta L_3BB3
+                 sta L_3BB0+3
                  lda #$06
                  sec
-                 sbc L_3BB3
+                 sbc L_3BB0+3
                  tax
 L_3BC8           lda $9F66,x
                  cmp #$19
@@ -6217,37 +3144,17 @@ L_3BDF           lda #$10
                  inx
                  cpx #$06
                  bne L_3BDF
-L_3BE9           ldx L_3BB1
-                 ldy L_3BB1+1
-                 lda L_3BAE+2
-L_3BF2           rts
-                 rla (DOSVEC),y
-                 asl $C03E
-                 arr #$02
-                 eor TMPCHR,x
-                 lse (FMSZPG+5,x)
-                 nop $C44F
-                 brk
-                 shs $8484,y
-                 sty VNTD
-                 sty VNTD
-                 sty VNTD
-                 sty VNTD
-                 sty VNTD
-                 sty VNTD
-                 sty VNTD
-                 sty VNTD
-                 sty VNTD
-                 sty VNTD
-                 sty VNTD
-                 sty RAMLO
-                 sty CASINI
-                 eor (LNFLG,x)
-                 cim
-L_3C22           brk
-L_3C23           brk
-L_3C24           brk
-L_3C25           brk
+L_3BE9           ldx L_3BB0+1
+                 ldy L_3BB0+2
+                 lda L_3BB0
+                 rts
+                 .byte $33, $0A, $0E, $3E, $C0, $6B, $02, $55
+                 .byte $50, $43, $48, $0C, $4F, $C4, $00, $9B
+                 .byte $84, $84, $84, $84, $84, $84, $84, $84
+                 .byte $84, $84, $84, $84, $84, $84, $84, $84
+                 .byte $84, $84, $84, $84, $84, $84, $84, $84
+L_3C1B           .byte $84, $04, $84, $02, $41, $00, $92, $00
+L_3C23           .byte $00, $00, $00
 L_3C26           lda SDLSTH
                  cmp #$3C
                  beq L_3C66
@@ -6257,9 +3164,9 @@ L_3C26           lda SDLSTH
                  sty SDLSTH
                  ldx #$00
                  ldy #$7B
-                 stx L_3C22
-L_3C3E           sty L_3C23
-                 stx L_3C24
+                 stx L_3C1B+7
+                 sty L_3C23
+                 stx L_3C23+1
                  txa
 L_3C45           sta $9B00,x
                  sta $9C00,x
@@ -6285,19 +3192,19 @@ L_3C66           rts
                  bpl L_3C78
                  lda #$8C
                  sta CHBASE
-L_3C78           lda L_3C24
+L_3C78           lda L_3C23+1
                  tay
                  clc
                  adc #$02
-                 sta L_3C24
-                 ldx L_3C22
+                 sta L_3C23+1
+                 ldx L_3C1B+7
                  lda L_3C23
                  stx FRE
                  sta FRE+1
                  cpy #$30
                  beq L_3CC5
                  cpy #$34
-L_3C92           beq L_3CD8
+                 beq L_3CD8
                  lda (FRE),y
                  sta COLPF2
                  iny
@@ -6306,7 +3213,7 @@ L_3C92           beq L_3CD8
                  dey
                  cpy #$00
                  bne L_3CA7
-                 sty L_3C25
+                 sty L_3C23+2
 L_3CA7           cpy #$32
                  beq L_3CD0
 L_3CAB           jsr L_3CF3
@@ -6325,7 +3232,7 @@ L_3CB8           lda #$00
                  rti
 L_3CC5           lda #$1F
                  sta COLPF2
-                 inc L_3C25
+                 inc L_3C23+2
                  jmp L_3CAB
 L_3CD0           lda #$00
                  sta COLPF2
@@ -6334,7 +3241,7 @@ L_3CD8           lda #$0F
                  sta COLPF0
                  sta COLPF1
                  lda #$00
-                 sta L_3C24
+                 sta L_3C23+1
                  lda #$8C
                  sta CHBASE
                  jmp L_3CAB
@@ -6344,16 +3251,9 @@ L_3CF3           lda #$00
                  sta SHFLOK
                  lda SKSTAT
                  rts
-                 brk
-                 brk
-                 brk
-                 brk
-L_3D00           nop ICBLLZ
-L_3D02           bvs L_3C92
-                 brk
-                 and $018C,x
-                 and JVECK+1,x
-                 and $69C9,x
+L_3CFC           .byte $00, $00, $00, $00, $04, $28, $70, $8E
+                 .byte $00, $3D, $8C, $01, $3D, $8D, $02, $3D
+                 cmp #$69
                  bpl L_3D15
                  ldx #$00
                  jmp L_3D20
@@ -6364,9 +3264,9 @@ L_3D15           cmp #$72
 L_3D1E           ldx #$02
 L_3D20           lda #$06
                  jmp L_45E0
-L_3D25           ldx L_3D00
-                 ldy L_3D00+1
-                 lda L_3D02
+L_3D25           ldx L_3CFC+4
+                 ldy L_3CFC+5
+                 lda L_3CFC+6
                  rts
                  lda $57B0,x
                  and #$02
@@ -6374,7 +3274,7 @@ L_3D25           ldx L_3D00
                  sta $57E4
                  lda $57B0,x
                  clc
-L_3D3C           asl
+                 asl
                  asl
                  asl
                  asl
@@ -6395,7 +3295,7 @@ L_3D3C           asl
                  adc $57E3
                  sta $57E3
                  bcc L_3D5E
-L_3D5B           inc $57E4
+                 inc $57E4
 L_3D5E           lda L_3DAB,x
                  and #$F8
                  lsr
@@ -6439,12 +3339,7 @@ L_3D84           lda L_3DAB,x
                  bcc L_3DAA
                  inc $57E4
 L_3DAA           rts
-L_3DAB           brk
-                 brk
-                 brk
-L_3DAE           brk
-                 brk
-                 brk
+L_3DAB           .byte $00, $00, $00, $00, $00, $00
                  lda #$04
                  sta $57BC,x
                  lda L_3DAB,x
@@ -6456,40 +3351,21 @@ L_3DC1           lda #$00
                  sta $57B0,x
                  sta $57B3,x
                  sta L_3DAB,x
-                 sta L_3DAE,x
+                 sta L_3DAB+3,x
                  lda $5C6F
                  sta FRE+4
                  jsr L_3F93
                  lda FRE+4
                  sta $5C6F
-                 lda L_4000
+                 lda L_3FFD+3
                  and #$03
                  tay
                  lda L_3DE9,y
                  sta $57BC,x
                  rts
-L_3DE9           cim
-                 aso (NGFLAG,x)
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
+L_3DE9           .byte $02, $03, $01, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00
 L_3E00           ldx $57E8
                  lda $5DD4,x
                  and #$06
@@ -6520,7 +3396,7 @@ L_3E1E           lda (FRE+4),y
 L_3E37           ldx #$00
                  ldy #$04
                  inc FRE+3
-L_3E3D           lda FRE+3
+                 lda FRE+3
                  cmp #$02
                  bne L_3E1E
                  lda $5DD3
@@ -6640,7 +3516,7 @@ L_3F1F           ldx $57E8
                  sta $5DDC,x
 L_3F38           ldy #$04
                  lda VCOUNT
-L_3F3D           and #$03
+                 and #$03
                  beq L_3F38
                  cmp #$03
                  beq L_3F38
@@ -6704,58 +3580,14 @@ L_3FC9           cmp #$5F
                  bpl L_3FD2
 L_3FCF           jmp L_3E62
 L_3FD2           jmp L_3E5C
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_4000           brk
-L_4001           ora LNFLG
-L_4004           brk
-                 aso RAMLO+1
-                 aso (LNFLG,x)
-                 sax (CPC,x)
-                 ora (ICHIDZ,x)
-                 clc
-                 rti
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+L_3FFD           .byte $00, $00, $00, $00, $0D, $00, $00, $00
+                 .byte $07, $05, $03, $00, $83, $9D, $01
+                 jsr L_4018
 L_400F           jsr L_42F9
 L_4012           jsr L_2B00
                  jmp L_4D4A
@@ -6770,29 +3602,29 @@ L_401C           lda #$6C
                  sta PCOLR1
                  sta PCOLR2
                  lda #$04
-                 sta L_46F3
-                 sta L_46F3+1
-                 sta L_46F5
+                 sta L_46F0+3
+                 sta L_46F0+4
+                 sta L_46F0+5
                  lda #$1A
-L_403F           sta L_4A03
+                 sta L_4A01+2
                  ldx #$40
                  lda #$00
                  jsr L_4697
                  sta $5C70
-                 sta L_4E04
-L_404F           sta $5002
+                 sta L_4DFE+6
+                 sta $5002
                  sta $5072
                  sta $5073
                  sta $5074
-                 sta L_440B
-L_405E           sta $5277
+                 sta L_4405+6
+                 sta $5277
                  sta $5278
                  sta $5279
                  sta $5079
                  sta $507A
                  sta $507B
                  sta $507C
-L_4073           sta L_4C00,x
+L_4073           sta L_4BFF+1,x
                  inx
                  cpx #$D5
                  bne L_4073
@@ -6807,47 +3639,47 @@ L_407D           lda $5C00,x
                  ldy #$9E
                  stx L_46C0
                  stx L_46C0+2
-                 stx L_46C3+1
+                 stx L_46C0+4
                  sty L_46C0+1
-                 sty L_46C3
-                 sty L_46C3+2
+                 sty L_46C0+3
+                 sty L_46C0+5
                  ldx #$09
-                 stx L_46C6
-                 stx L_46C6+1
+                 stx L_46C0+6
+                 stx L_46C0+7
                  stx L_46C8
                  ldx #$0E
                  ldy #$17
-                 stx L_46F5+1
-                 stx L_46F7
-                 stx L_46F7+1
-                 sty L_46F7+2
-                 sty L_46FA
-                 sty L_46FA+1
+                 stx L_46F0+6
+                 stx L_46F0+7
+                 stx L_46F8
+                 sty L_46F8+1
+                 sty L_46F8+2
+                 sty L_46F8+3
                  ldx #$01
                  stx L_46C8+1
-                 stx L_46CA
-                 stx L_46CA+1
+                 stx L_46C8+2
+                 stx L_46C8+3
                  stx $5075
                  dex
                  stx $5076
                  stx $5077
-                 stx L_4608+1
-                 stx L_460A
-                 stx L_460B+1
-                 stx L_460D
+                 stx L_4607+2
+                 stx L_4607+3
+                 stx L_4607+5
+                 stx L_4607+6
                  stx L_46D8+1
-                 stx L_46DA
-                 stx L_46DB
-                 stx L_46DC
-                 stx L_46DD
-                 stx L_46DE
-                 stx L_46DF
+                 stx L_46D8+2
+                 stx L_46D8+3
+                 stx L_46D8+4
+                 stx L_46D8+5
+                 stx L_46D8+6
+                 stx L_46D8+7
                  lda #$04
                  sta STICK0
                  ldx #$83
                  ldy #$62
-                 stx L_4608
-                 sty L_460B
+                 stx L_4607+1
+                 sty L_4607+4
                  ldx #$00
                  ldy #$03
                  jsr L_460E
@@ -6857,14 +3689,14 @@ L_407D           lda $5C00,x
                  lda #$88
                  sta CHBAS
                  jsr L_3C26
-                 lda L_4000
+                 lda L_3FFD+3
                  and #$03
-                 sta L_4001
+                 sta L_3FFD+4
                  ldx #$00
                  ldy #$90
                  stx FRE+2
                  sty FRE+3
-L_412D           cpx L_4001
+L_412D           cpx L_3FFD+4
                  beq L_4141
                  lda FRE+2
                  clc
@@ -6882,14 +3714,14 @@ L_4143           lda (FRE+2),y
                  bne L_4143
                  ldx #$07
                  ldy #$9B
-L_4151           stx FRE+2
+                 stx FRE+2
                  sty FRE+3
                  lda #$38
                  sta FRE+4
                  ldx #$00
 L_415B           ldy #$00
-L_415D           stx L_4001
-                 sty L_4001+1
+L_415D           stx L_3FFD+4
+                 sty L_3FFD+5
                  ldx #$00
                  ldy #$00
 L_4167           tya
@@ -6913,8 +3745,8 @@ L_416D           lda FRE+4
                  inx
                  cpx #$04
                  bne L_4167
-                 ldx L_4001
-                 ldy L_4001+1
+                 ldx L_3FFD+4
+                 ldy L_3FFD+5
                  lda #$38
                  sta FRE+4
                  lda FRE+2
@@ -6937,7 +3769,7 @@ L_41AB           inx
                  bne L_415B
                  ldx #$88
                  ldy #$82
-                 lda L_4000
+                 lda L_3FFD+3
                  and #$01
                  beq L_41BF
                  ldx #$BA
@@ -6973,7 +3805,7 @@ L_41F1           ldy #$00
                  sta (FRE+2),y
                  ldy #$28
                  lda #$24
-L_4200           sta (FRE+2),y
+                 sta (FRE+2),y
                  iny
                  lda #$25
                  sta (FRE+2),y
@@ -7016,7 +3848,7 @@ L_4200           sta (FRE+2),y
                  lda FRE+2
                  clc
                  adc #$A0
-L_424E           sta FRE+2
+                 sta FRE+2
                  bcc L_4254
                  inc FRE+3
 L_4254           inx
@@ -7060,7 +3892,7 @@ L_426C           txa
                  bne L_426C
                  ldx #$00
 L_42AF           lda $9EFA,x
-                 sta L_4400,x
+                 sta L_43FD+3,x
                  txa
                  clc
                  adc #$48
@@ -7075,16 +3907,16 @@ L_42C3           lda #$00
                  inx
                  cpx #$1B
                  bne L_42C3
-L_42D0           lda #$48
-                 sta L_4406+2
-                 sta L_4409
+                 lda #$48
+                 sta L_4405+3
+                 sta L_4405+4
                  jsr L_287A
                  lda VCOUNT
                  and #$07
                  clc
                  adc #$03
-                 sta L_4E00
-                 lda L_4000
+                 sta L_4DFE+2
+                 lda L_3FFD+3
                  and #$03
                  tax
                  lda L_43E5,x
@@ -7100,7 +3932,7 @@ L_42F9           ldx #$00
                  stx FRE+4
                  sty FRE+5
                  ldx #$00
-L_4309           cpx L_4000
+L_4309           cpx L_3FFD+3
                  beq L_431D
                  lda FRE+2
                  clc
@@ -7111,7 +3943,7 @@ L_4309           cpx L_4000
 L_4319           inx
                  jmp L_4309
 L_431D           ldx #$00
-L_431F           cpx L_4000
+L_431F           cpx L_3FFD+3
                  beq L_4344
                  ldy #$00
 L_4326           lda (FRE+4),y
@@ -7120,34 +3952,34 @@ L_4326           lda (FRE+4),y
                  iny
                  jmp L_4326
 L_4330           iny
-                 sty L_4001
+                 sty L_3FFD+4
                  lda FRE+4
                  clc
-                 adc L_4001
+                 adc L_3FFD+4
                  sta FRE+4
                  bcc L_4340
                  inc FRE+5
 L_4340           inx
-L_4341           jmp L_431F
+                 jmp L_431F
 L_4344           ldx FRE+2
                  ldy FRE+3
-                 stx L_3C22
+                 stx L_3C1B+7
                  sty L_3C23
 L_434E           ldx #$30
                  ldy #$9B
                  stx FRE+2
                  sty FRE+3
                  ldx #$00
-L_4358           stx L_4001+2
+                 stx L_3FFD+6
 L_435B           ldy #$00
                  lda (FRE+4),y
                  cmp #$FF
                  beq L_43D4
-                 sta L_4001
+                 sta L_3FFD+4
                  and #$1F
-                 sta L_4001+1
+                 sta L_3FFD+5
                  tax
-                 lda L_4001
+                 lda L_3FFD+4
                  and #$E0
                  lsr
                  lsr
@@ -7155,19 +3987,19 @@ L_435B           ldy #$00
                  lsr
                  lsr
                  tay
-                 lda L_4004,y
-                 sta L_4001+1
+                 lda L_3FFD+7,y
+                 sta L_3FFD+5
 L_437D           ldy #$00
-                 lda L_4001
+                 lda L_3FFD+4
                  and #$E0
                  beq L_4397
-                 lda L_4001+1
+                 lda L_3FFD+5
                  sta (FRE+2),y
-                 inc L_4001+1
+                 inc L_3FFD+5
                  iny
-                 lda L_4001+1
+                 lda L_3FFD+5
                  sta (FRE+2),y
-                 dec L_4001+1
+                 dec L_3FFD+5
 L_4397           lda FRE+2
                  clc
                  adc #$02
@@ -7182,15 +4014,15 @@ L_43A2           dex
                  bne L_43AF
                  inc FRE+5
 L_43AF           inc FRE+4
-                 lda L_4001
+                 lda L_3FFD+4
                  and #$1F
                  clc
-                 adc L_4001+2
-                 sta L_4001+2
+                 adc L_3FFD+6
+                 sta L_3FFD+6
                  cmp #$0D
                  bne L_435B
                  lda #$00
-                 sta L_4001+2
+                 sta L_3FFD+6
                  lda FRE+2
                  clc
                  adc #$0E
@@ -7207,48 +4039,20 @@ L_43D8           sta $6D00,x
                  inx
                  bne L_43D8
                  rts
-L_43E5           cim
-                 aso (NGFLAG,x)
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_43FF           brk
-L_4400           rla L_3D3C,x
-L_4403           rol L_3C3E+1,x
-L_4406           and L_483D+1,x
-L_4409           pha
-L_440A           nop !
-L_440B           brk
-                 brk
-                 brk
+L_43E5           .byte $02, $03, $01, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+L_43FD           .byte $00, $00, $00, $3F, $3C, $3D, $3E, $3F
+L_4405           .byte $3C, $3D, $3E, $48, $48, $1A, $00, $00
+                 .byte $00
 L_440E           and #$FC
                  lsr
                  lsr
-                 lda L_440B
+                 lda L_4405+6
                  clc
                  adc #$80
                  sta FRE+3
-                 lda L_440B
+                 lda L_4405+6
                  and #$07
                  clc
                  asl
@@ -7257,7 +4061,7 @@ L_440E           and #$FC
                  asl
                  lda #$00
                  sta FRE+2
-                 lda L_4409
+                 lda L_4405+4
                  and #$03
                  clc
                  asl
@@ -7269,14 +4073,14 @@ L_440E           and #$FC
                  clc
                  adc FRE+2
                  sta FRE+2
-L_4439           bcc L_443D
+                 bcc L_443D
                  inc FRE+3
 L_443D           ldx #$40
 L_443F           ldy #$8A
                  stx LNFLG
                  sty NGFLAG
                  ldx #$00
-L_4447           lda L_4400,x
+L_4447           lda L_43FD+3,x
                  and #$E0
                  lsr
                  lsr
@@ -7286,7 +4090,7 @@ L_4447           lda L_4400,x
                  clc
 L_4452           adc #$88
                  sta CASINI+1
-                 lda L_4400,x
+                 lda L_43FD+3,x
                  and #$1F
                  asl
                  asl
@@ -7318,69 +4122,69 @@ L_4462           lda FRE+2
                  cpx #$08
                  bne L_4447
                  rts
-L_448E           lda L_4409
-                 sta L_4406+2
+L_448E           lda L_4405+4
+                 sta L_4405+3
                  and #$FC
                  lsr
                  lsr
-                 sta L_440A
+                 sta L_4405+5
                  ldx #$E8
                  ldy #$9E
                  stx FRE+4
                  sty FRE+5
                  lda FRE+4
                  clc
-                 adc L_440A
+                 adc L_4405+5
                  sta FRE+4
                  bcc L_44AF
                  inc FRE+5
 L_44AF           rts
 L_44B0           ldy #$00
-L_44B2           lda L_4406+2
+L_44B2           lda L_4405+3
                  cmp #$08
                  bcc L_44C2
                  cmp #$22
                  bcs L_44C2
-                 lda L_4400,y
+                 lda L_43FD+3,y
                  sta (FRE+4),y
-L_44C2           inc L_4406+2
+L_44C2           inc L_4405+3
                  iny
                  cpy #$08
                  bne L_44B2
                  rts
-L_44CB           lda L_4406+2
+L_44CB           lda L_4405+3
                  and #$FC
                  lsr
                  lsr
-                 sta L_4406+2
+                 sta L_4405+3
                  ldx #$E8
                  ldy #$9E
                  stx FRE+4
                  sty FRE+5
                  lda FRE+4
                  clc
-                 adc L_4406+2
+                 adc L_4405+3
                  sta FRE+4
                  bcc L_44E9
                  inc FRE+5
-L_44E9           lda L_3C25
+L_44E9           lda L_3C23+2
                  nop
                  nop
                  jmp L_44B0
 L_44F1           jsr L_448E
                  ldy #$00
-L_44F6           lda L_440A
+L_44F6           lda L_4405+5
                  cmp #$08
                  bcc L_450C
                  cmp #$22
                  bcs L_450C
                  lda (FRE+4),y
-                 sta L_4400,y
+                 sta L_43FD+3,y
                  tya
                  clc
                  adc #$48
                  sta (FRE+4),y
-L_450C           inc L_440A
+L_450C           inc L_4405+5
                  iny
                  cpy #$08
                  bne L_44F6
@@ -7390,8 +4194,8 @@ L_4519           nop $AD40
                  bit NOCKSM
                  cmp #$1C
                  bmi L_4525
-                 jsr L_46FC+1
-L_4525           lda L_3C25
+                 jsr L_46FD
+L_4525           lda L_3C23+2
                  beq L_4519+2
                  jsr L_44CB
                  jsr $59C7
@@ -7399,25 +4203,25 @@ L_4525           lda L_3C25
                  jsr L_4EFA
                  jsr $5DE5
                  lda #$00
-                 jsr L_4CD5+2
+                 jsr L_4CD7
 L_453E           jsr $8E7A
                  jsr $5003
-L_4544           jsr L_2C07+1
+                 jsr L_2C03+5
                  jmp L_28BF
 L_454A           inx
 L_454B           php
-L_454C           lse L_100A
+L_454C           lse L_1008+2
 L_454F           stx L_454A
-L_4552           sty L_454B
+                 sty L_454B
                  sta L_454C
                  ldy #$0F
-                 lda L_4A03
+                 lda L_4A01+2
                  cmp #$1A
                  bne L_4563
                  ldy #$0A
 L_4563           sty L_454C+1
                  ldy #$10
-                 lda L_4A03
+                 lda L_4A01+2
                  cmp #$1A
                  beq L_4571
                  ldy #$14
@@ -7434,17 +4238,17 @@ L_4571           sty L_454C+2
                  lda $57B0,x
                  clc
                  adc L_454C+1
-                 cmp L_4409
+                 cmp L_4405+4
                  bcc L_45AE
                  lda $57B0,x
                  sec
                  sbc L_454C+2
-                 cmp L_4409
+                 cmp L_4405+4
                  bcs L_45AE
                  lda #$06
                  sta $5C69,x
                  ldx #$02
-                 jsr L_3BB3+1
+                 jsr L_3BB0+4
                  jsr L_2AC7
 L_45AE           ldx L_454A
                  ldy L_454B
@@ -7454,42 +4258,32 @@ L_45AE           ldx L_454A
                  sta L_4517
                  cmp #$0B
                  bne L_45D0
-                 dec L_4409
-                 dec L_4409
-                 dec L_4409
+                 dec L_4405+4
+                 dec L_4405+4
+                 dec L_4405+4
                  jmp L_45DD
 L_45D0           cmp #$07
                  bne L_45DD
-                 inc L_4409
-                 inc L_4409
-                 inc L_4409
+                 inc L_4405+4
+                 inc L_4405+4
+                 inc L_4405+4
 L_45DD           rts
                  brk
                  brk
 L_45E0           lda $5C69,x
                  cmp #$05
                  bne L_45FC
-                 lda L_3D02
+                 lda L_3CFC+6
                  lda #$06
                  sta $5C69,x
                  lda #$04
                  sta $57BC,x
                  ldx #$02
                  jsr L_2824
-                 jsr L_3BB3+1
+                 jsr L_3BB0+4
 L_45FC           jmp L_3D25
-                 brk
-L_4600           brk
-                 brk
-                 rti
-                 ldy #$40
-                 brk
-                 brk
-L_4607           brk
-L_4608           sty LNFLG
-L_460A           brk
-L_460B           rra (LNFLG,x)
-L_460D           brk
+L_45FF           .byte $00, $00, $00, $40, $A0, $40, $00, $00
+L_4607           .byte $00, $84, $00, $00, $63, $00, $00
 L_460E           txa
                  sta L_4607
                  sta FRE+4
@@ -7512,7 +4306,7 @@ L_460E           txa
                  beq L_4656
                  cpy #$04
                  beq L_4663
-                 lda L_460B,x
+                 lda L_4607+4,x
                  cpy #$03
                  beq L_463F
                  tay
@@ -7524,9 +4318,9 @@ L_463F           tay
                  tya
 L_4642           and #$7F
                  tay
-                 sta L_460B,x
+                 sta L_4607+4,x
                  ldx #$00
-L_464A           lda L_4600,x
+L_464A           lda L_45FF+1,x
 L_464D           sta (FRE+4),y
                  iny
                  inx
@@ -7536,14 +4330,14 @@ L_464D           sta (FRE+4),y
 L_4656           ldx L_4607
                  jsr L_4670
                  sta HPOSP0,x
-                 inc L_4608,x
+                 inc L_4607+1,x
                  rts
 L_4663           ldx L_4607
                  jsr L_4670
                  sta HPOSP0,x
-                 dec L_4608,x
+                 dec L_4607+1,x
                  rts
-L_4670           lda L_4608,x
+L_4670           lda L_4607+1,x
                  sec
                  sbc #$01
                  rts
@@ -7554,8 +4348,8 @@ L_4677           asl
                  rts
                  jmp L_2AB0
 L_4681           sta FR2+5
-L_4683           nop
-                 lda L_4000
+                 nop
+                 lda L_3FFD+3
                  cmp #$20
                  beq L_4691
                  nop
@@ -7569,80 +4363,47 @@ L_4691           nop
 L_4697           sta $8F10
                  jmp L_2FA0
                  rts
-                 lda L_4608
+                 lda L_4607+1
                  sec
                  sbc #$2C
                  sec
-                 sbc L_4409
+                 sbc L_4405+4
                  cmp #$0A
                  bpl L_46BD
                  sta FR2+4
                  lda #$0A
                  sec
                  sbc FR2+4
-                 adc L_4608
-                 sta L_4608
-                 lda L_4608
+                 adc L_4607+1
+                 sta L_4607+1
+                 lda L_4607+1
                  rts
 L_46BD           jmp L_2AB0
-L_46C0           ldy $AC9E
-L_46C3           shx $9EAC,y
-L_46C6           ora #$09
-L_46C8           ora #$01
-L_46CA           ora (NGFLAG,x)
-                 ora (LNFLG,x)
-                 brk
-                 brk
-                 brk
-                 ora (LNFLG,x)
-                 cim
-L_46D4           brk
-L_46D5           brk
-L_46D6           adc (CPC+1,x)
-L_46D8           ora (LNFLG,x)
-L_46DA           brk
-L_46DB           brk
-L_46DC           brk
-L_46DD           brk
-L_46DE           brk
-L_46DF           brk
-L_46E0           brk
-                 cim
-                 brk
-                 ora (LNFLG,x)
-                 brk
-                 ora (LNFLG,x)
-                 ora (LNFLG,x)
-                 brk
-                 brk
-                 brk
-                 ora (LNFLG,x)
-                 cim
-L_46F0           brk
-                 brk
-                 brk
-L_46F3           asl TRAMSZ
-L_46F5           asl APPMHI
-L_46F7           asl L_170D+1
-L_46FA           aso ICCOMT,x
-L_46FC           ora (LELNUM+1,x)
-                 nop $BD46,x
-                 adc TMPCHR,x
+L_46C0           .byte $AC, $9E, $AC, $9E, $AC, $9E, $09, $09
+L_46C8           .byte $09, $01, $01, $01, $01, $00, $00, $00
+L_46D0           .byte $00, $01, $00, $02, $00, $00, $61, $9E
+L_46D8           .byte $01, $00, $00, $00, $00, $00, $00, $00
+L_46E0           .byte $00, $02, $00, $01, $00, $00, $01, $00
+                 .byte $01, $00, $00, $00, $00, $01, $00, $02
+L_46F0           .byte $00, $00, $00, $06, $06, $06, $0E, $0E
+L_46F8           .byte $0E, $17, $17, $17, $01
+L_46FD           ldx L_46F8+4
+                 lda $5075,x
                  bne L_4708
                  jmp L_48F7
 L_4708           lda L_46F0,x
-                 cmp L_46F3,x
+                 cmp L_46F0+3,x
                  bcs L_4716
                  inc L_46F0,x
                  jmp L_48F7
 L_4716           lda #$00
                  sta L_46F0,x
-                 lda L_3C25
+                 lda L_3C23+2
                  txa
                  clc
                  asl
-                 sta L_46D5
-                 stx L_46D4
+                 sta L_46D0+5
+                 stx L_46D0+4
                  jsr L_4A04
                  jsr L_495D
                  beq L_474B
@@ -7650,26 +4411,26 @@ L_4716           lda #$00
 L_4732           and #$F3
                  ora #$08
                  jsr L_2FB0
-                 lda L_4A02
+                 lda L_4A01+1
                  cmp #$02
                  bne L_474B
-                 lda L_46C6,x
+                 lda L_46C0+6,x
                  and #$FC
-L_4745           ora L_4A00+1
-L_4748           sta L_46C6,x
+                 ora L_4A01
+                 sta L_46C0+6,x
 L_474B           lda L_46C8+1,x
                  clc
                  asl
-                 sta L_46DF
-                 ldy L_46D5
-L_4756           lda L_46C0,y
+                 sta L_46D8+7
+                 ldy L_46D0+5
+                 lda L_46C0,y
                  sta FRE+4
-                 sta L_46D6
+                 sta L_46D0+6
                  iny
                  lda L_46C0,y
                  sta FRE+5
-                 sta L_46D6+1
-                 ldy L_46DF
+                 sta L_46D0+7
+                 ldy L_46D8+7
                  iny
                  lda L_46D8+1,x
                  cmp L_46E0,y
@@ -7678,7 +4439,7 @@ L_4756           lda L_46C0,y
                  jmp L_4824
 L_4779           lda #$00
                  sta L_46D8+1,x
-                 lda L_46C6,x
+                 lda L_46C0+6,x
                  and #$0C
                  sta L_46D8
                  cmp #$08
@@ -7720,55 +4481,55 @@ L_47CB           nop
                  jmp L_4930
 L_47D4           txa
                  tay
-                 ldx L_46D4
+                 ldx L_46D0+4
                  jsr L_460E
-                 ldx L_46D4
-                 ldy L_46D5
+                 ldx L_46D0+4
+                 ldy L_46D0+5
                  lda L_46D8
                  cmp #$08
                  beq L_4807
-                 lda L_460B,x
+                 lda L_4607+4,x
                  and #$03
                  bne L_4824
-                 inc L_46F7+2,x
-                 ldx L_46D5
-                 lda L_46D6
+                 inc L_46F8+1,x
+                 ldx L_46D0+5
+                 lda L_46D0+6
                  clc
                  adc #$28
-                 sta L_46D6
+                 sta L_46D0+6
                  bcc L_4824
-                 inc L_46D6+1
+                 inc L_46D0+7
                  jmp L_4824
-L_4807           lda L_460B,x
+L_4807           lda L_4607+4,x
                  and #$03
                  cmp #$03
                  bne L_4824
-                 dec L_46F7+2,x
-                 ldx L_46D5
-                 lda L_46D6
+                 dec L_46F8+1,x
+                 ldx L_46D0+5
+                 lda L_46D0+6
                  sec
                  sbc #$28
-                 sta L_46D6
+                 sta L_46D0+6
                  bcs L_4824
-                 dec L_46D6+1
-L_4824           ldy L_46DF
-                 ldx L_46D4
-                 lda L_46DC,x
+                 dec L_46D0+7
+L_4824           ldy L_46D8+7
+                 ldx L_46D0+4
+                 lda L_46D8+4,x
                  cmp L_46E0,y
                  bcs L_4838
-                 inc L_46DC,x
+                 inc L_46D8+4,x
                  jmp L_48E4
 L_4838           lda #$00
-                 sta L_46DC,x
-L_483D           ldy L_46D5
-L_4840           ldx L_46D4
-                 lda L_46D6
+                 sta L_46D8+4,x
+                 ldy L_46D0+5
+                 ldx L_46D0+4
+                 lda L_46D0+6
                  sta FRE+4
                  iny
-                 lda L_46D6+1
+                 lda L_46D0+7
                  sta FRE+5
-                 ldx L_46D4
-                 lda L_46C6,x
+                 ldx L_46D0+4
+                 lda L_46C0+6,x
                  and #$03
                  sta L_46D8
                  cmp #$02
@@ -7808,84 +4569,84 @@ L_4875           cmp #$48
                  bpl L_4905
 L_48A1           txa
                  tay
-                 ldx L_46D4
+                 ldx L_46D0+4
                  jsr L_460E
-                 ldx L_46D4
+                 ldx L_46D0+4
                  lda L_46D8
                  cmp #$02
                  beq L_48CD
-                 lda L_4608,x
+                 lda L_4607+1,x
                  and #$03
                  bne L_48E4
-                 inc L_46F5+1,x
-                 lda L_46D6
+                 inc L_46F0+6,x
+                 lda L_46D0+6
                  cmp #$FF
                  bne L_48C7
-                 inc L_46D6+1
-L_48C7           inc L_46D6
+                 inc L_46D0+7
+L_48C7           inc L_46D0+6
                  jmp L_48E4
-L_48CD           lda L_4608,x
+L_48CD           lda L_4607+1,x
                  and #$03
                  cmp #$03
                  bne L_48E4
-                 dec L_46F5+1,x
-                 lda L_46D6
+                 dec L_46F0+6,x
+                 lda L_46D0+6
                  bne L_48E1
-                 dec L_46D6+1
-L_48E1           dec L_46D6
-L_48E4           ldx L_46D4
-                 ldy L_46D5
-                 lda L_46D6
+                 dec L_46D0+7
+L_48E1           dec L_46D0+6
+L_48E4           ldx L_46D0+4
+                 ldy L_46D0+5
+                 lda L_46D0+6
                  sta L_46C0,y
                  iny
-                 lda L_46D6+1
+                 lda L_46D0+7
                  sta L_46C0,y
-L_48F7           ldx L_46FC
+L_48F7           ldx L_46F8+4
                  cpx #$02
                  bne L_4900
                  ldx #$FF
 L_4900           inx
-                 stx L_46FC
+                 stx L_46F8+4
                  rts
 L_4905           stx FRE+2
-                 ldx L_46D4
+                 ldx L_46D0+4
                  jmp L_28CC
                  cmp #$02
                  bne L_491D
-L_4911           lda L_4608,x
+L_4911           lda L_4607+1,x
                  and #$03
                  beq L_491D
 L_4918           ldx FRE+2
                  jmp L_48A1
 L_491D           jmp L_1A60
-L_4920           lda L_46C6,x
+L_4920           lda L_46C0+6,x
                  eor #$03
-                 sta L_46C6,x
+                 sta L_46C0+6,x
                  lda #$00
-                 sta L_46DC,x
+                 sta L_46D8+4,x
                  jmp L_48E4
 L_4930           stx FRE+2
-                 ldx L_46D4
+                 ldx L_46D0+4
                  jmp L_28E5
                  cmp #$04
                  bne L_494A
-L_493C           lda L_460B,x
+L_493C           lda L_4607+4,x
                  and #$03
                  cmp #$03
                  beq L_494A
 L_4945           ldx FRE+2
                  jmp L_47D4
 L_494A           jmp L_1A63
-L_494D           lda L_46C6,x
+L_494D           lda L_46C0+6,x
                  eor #$0C
-                 sta L_46C6,x
+                 sta L_46C0+6,x
                  lda #$00
-                 sta L_46DC,x
+                 sta L_46D8+4,x
                  jmp L_4824
 L_495D           jsr L_49AD
                  sta $5073
                  rts
-L_4964           lda L_4E03
+L_4964           lda L_4DFE+5
                  cmp #$02
                  bne L_4999
                  lda $5002
@@ -7900,147 +4661,83 @@ L_497D           lda #$01
                  lda #$00
                  sta $5072
                  sta $5073
-                 lda L_3A3B
+                 lda L_3A38+3
                  bne L_499F
                  jmp L_4999
-L_4992           ldx L_46D4
-                 ldy L_46D5
+L_4992           ldx L_46D0+4
+                 ldy L_46D0+5
                  rts
-L_4999           lda L_46C6,x
+L_4999           lda L_46C0+6,x
                  jmp L_4732
 L_499F           lda #$00
                  sta $5002
-                 sta L_4E03
-                 sta L_3A3B
+                 sta L_4DFE+5
+                 sta L_3A38+3
                  jmp L_4999
-L_49AD           lda L_3A3B
+L_49AD           lda L_3A38+3
                  bne L_49B6
-                 lda L_4A02
+                 lda L_4A01+1
                  rts
 L_49B6           lda #$01
                  rts
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_49FF           brk
-L_4A00           aso (FMSZPG,x)
-L_4A02           brk
-L_4A03           nop !
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+L_49F9           .byte $00, $00, $00, $00, $00, $00, $00, $03
+L_4A01           .byte $43, $00, $1A
 L_4A04           lda #$00
-                 sta L_4A02
-                 lda L_46C6,x
+                 sta L_4A01+1
+                 lda L_46C0+6,x
                  and #$0C
                  cmp #$08
                  beq L_4A1F
-                 lda L_4608,x
+                 lda L_4607+1,x
                  sec
                  sbc #$2C
-                 cmp L_4409
+                 cmp L_4405+4
                  beq L_4A20
                  bpl L_4A20
 L_4A1F           rts
 L_4A20           sec
-                 sbc L_4409
-                 cmp L_4A03
+                 sbc L_4405+4
+                 cmp L_4A01+2
                  beq L_4A2C
                  bmi L_4A2C
                  rts
-L_4A2C           sta L_4A00
-                 lda L_460B,x
+L_4A2C           sta L_49F9+7
+                 lda L_4607+4,x
                  cmp #$63
                  bmi L_4A1F
                  cmp #$66
                  bpl L_4A1F
-                 lda L_4A03
+                 lda L_4A01+2
                  cmp #$1E
                  beq L_4A4A
-                 lda L_4A00
+                 lda L_49F9+7
                  cmp #$06
                  beq L_4A4A
                  bmi L_4A1F
 L_4A4A           ldy #$02
-                 lda L_4A00
+                 lda L_49F9+7
                  cmp #$11
                  beq L_4A56
                  bmi L_4A56
                  dey
-L_4A56           sty L_4A02
-                 lda L_46C6,x
+L_4A56           sty L_4A01+1
+                 lda L_46C0+6,x
                  and #$03
                  tay
                  lda #$01
-                 cpy L_4A02
+                 cpy L_4A01+1
                  beq L_4A68
                  lda #$02
-L_4A68           sta L_4A02
-                 lda L_4A00
+L_4A68           sta L_4A01+1
+                 lda L_49F9+7
                  and #$FC
                  lsr
                  lsr
@@ -8049,15 +4746,15 @@ L_4A68           sta L_4A02
                  sta L_46D8+1,x
                  sta L_46D8+1,x
                  ldy #$01
-                 lda L_4A00
+                 lda L_49F9+7
                  cmp #$11
                  beq L_4A89
                  bpl L_4A89
                  iny
-L_4A89           sty L_4A00+1
+L_4A89           sty L_4A01
 L_4A8C           rts
-L_4A8D           sta L_4A00
-                 sty L_4A02
+L_4A8D           sta L_49F9+7
+                 sty L_4A01+1
                  lda (FRE+4),y
                  beq L_4A8C
                  cmp #$9D
@@ -8088,17 +4785,17 @@ L_4AB5           jsr L_4AE0
                  and #$01
                  bne L_4ACF
                  dey
-L_4ACF           lda L_4A00+1
+L_4ACF           lda L_4A01
                  sta (FRE+4),y
                  iny
                  lda FPTR2+1
                  sta (FRE+4),y
                  jsr L_2F37
-                 ldy L_4A02
+                 ldy L_4A01+1
                  rts
 L_4AE0           lda #$00
                  sta CASINI+1
-                 sta L_4A00+1
+                 sta L_4A01
                  sta FPTR2+1
                  lda FRE+4
                  sta LNFLG
@@ -8112,7 +4809,7 @@ L_4AE0           lda #$00
                  inc NGFLAG
 L_4AFB           lda NGFLAG
                  cmp #$9B
-L_4AFF           bne L_4B0A
+                 bne L_4B0A
                  lda LNFLG
                  cmp #$4E
                  bcs L_4B0A
@@ -8137,7 +4834,7 @@ L_4B29           lda LNFLG
                  and #$03
                  clc
                  adc #$38
-                 sta L_4A00+1
+                 sta L_4A01
                  cmp #$3B
                  bne L_4B3E
                  lda #$38
@@ -8153,17 +4850,17 @@ L_4B43           lda CASINI+1
                  tay
 L_4B4B           cpy #$00
                  beq L_4B63
-                 lda L_4A00+1
+                 lda L_4A01
                  clc
                  adc #$04
-                 sta L_4A00+1
+                 sta L_4A01
                  lda FPTR2+1
                  clc
                  adc #$04
                  sta FPTR2+1
                  dey
                  jmp L_4B4B
-L_4B63           ldy L_4A02
+L_4B63           ldy L_4A01+1
                  jsr L_4E4C
                  lda (FRE+4),y
                  cmp #$01
@@ -8177,7 +4874,7 @@ L_4B63           ldy L_4A02
                  jsr L_3923
                  rts
 L_4B7F           lda FRE+5
-L_4B81           sta NGFLAG
+                 sta NGFLAG
                  lda FRE+4
                  sta LNFLG
                  tya
@@ -8199,21 +4896,21 @@ L_4B9F           stx FRE+2
                  sta CASINI
                  ldx #$00
                  ldy #$00
-L_4BAB           lda L_4C40,y
+L_4BAB           lda L_4C3F+1,y
                  clc
-                 adc L_4C41,y
+                 adc L_4C3F+2,y
                  bne L_4BD2
                  lda LNFLG
-                 sta L_4C40,y
+                 sta L_4C3F+1,y
                  lda NGFLAG
-                 sta L_4C41,y
-                 lda L_4000
+                 sta L_4C3F+2,y
+                 lda L_3FFD+3
                  lsr
                  lsr
                  lsr
                  clc
                  adc #$02
-                 sta L_4C42,y
+                 sta L_4C3F+3,y
                  lda CASINI
                  jsr L_2A53
                  jmp L_4BDE
@@ -8236,242 +4933,47 @@ L_4BDE           ldy #$00
                  ora #$0A
                  sta (LNFLG),y
 L_4BF1           ldx FRE+2
-                 ldy L_4A02
+                 ldy L_4A01+1
                  rts
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_4C00           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_4C2E           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_4C40           brk
-L_4C41           brk
-L_4C42           brk
-L_4C43           brk
-                 brk
-                 brk
-                 brk
-L_4C47           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_4C5C           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_4C84           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_4C9C           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_4CA5           brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_4CD5           nop $A200,x
-                 brk
-                 ldy L_4CD5
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+L_4BFF           .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+L_4C3F           .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+L_4CCF           .byte $00, $00, $00, $00, $00, $00, $3C, $00
+L_4CD7           ldx #$00
+                 ldy L_4CCF+6
                  cpy #$3C
                  bmi L_4CE2
                  ldy #$00
-L_4CE2           lda L_4C41,y
+L_4CE2           lda L_4C3F+2,y
                  beq L_4D0D
                  sta EEXP
-                 lda L_4C40,y
+                 lda L_4C3F+1,y
                  sta FRX
-                 sty L_4CD5+1
+                 sty L_4CCF+7
                  ldy #$00
                  lda (FRX),y
                  cmp #$11
@@ -8486,7 +4988,7 @@ L_4CE2           lda L_4C41,y
                  clc
                  adc #$02
                  sta (FRX),y
-                 ldy L_4CD5+1
+                 ldy L_4CCF+7
 L_4D0D           iny
                  iny
                  iny
@@ -8494,23 +4996,23 @@ L_4D0D           iny
                  inx
                  cpx #$05
                  bne L_4CE2
-                 sty L_4CD5
+                 sty L_4CCF+6
                  rts
-L_4D1A           ldy L_4CD5+1
-                 lda L_4C43,y
-L_4D20           sta FR1
+L_4D1A           ldy L_4CCF+7
+                 lda L_4C3F+4,y
+                 sta FR1
                  ldy #$00
                  sta (FRX),y
                  iny
                  clc
                  adc #$01
                  sta (FRX),y
-                 ldy L_4CD5+1
+                 ldy L_4CCF+7
                  lda #$00
-                 sta L_4C40,y
-                 sta L_4C41,y
-                 sta L_4C42,y
-                 sta L_4C43,y
+                 sta L_4C3F+1,y
+                 sta L_4C3F+2,y
+                 sta L_4C3F+3,y
+                 sta L_4C3F+4,y
                  lda FR1
                  cmp #$9D
                  beq L_4D0D
@@ -8519,10 +5021,10 @@ L_4D20           sta FR1
                  jmp L_4D91
 L_4D4A           ldx #$30
                  ldy #$9B
-L_4D4E           stx FRX
+                 stx FRX
                  sty EEXP
                  ldy #$6A
-L_4D54           stx NSIGN
+                 stx NSIGN
                  sty ESIGN
                  ldx #$00
 L_4D5A           ldy #$00
@@ -8533,7 +5035,7 @@ L_4D5C           lda (FRX),y
                  beq L_4D6B
                  lda #$00
                  jmp L_4D74
-L_4D6B           lda L_4000
+L_4D6B           lda L_3FFD+3
                  lsr
                  lsr
                  lsr
@@ -8569,130 +5071,35 @@ L_4D91           lda EEXP
                  sta (FR1),y
                  cmp #$01
                  beq L_4DAF
-                 ldy L_4CD5+1
+                 ldy L_4CCF+7
                  jmp L_4D0D
 L_4DAF           lda #$03
                  sta (FRX),y
                  iny
                  lda #$04
                  sta (FRX),y
-                 ldy L_4CD5+1
+                 ldy L_4CCF+7
                  jmp L_4D0D
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-L_4E00           aso SAVADR+1
-L_4E02           ror
-L_4E03           brk
-L_4E04           brk
-L_4E05           brk
-                 nop $FEFE,x
-                 inc HOLDCH,x
-                 brk
-L_4E0D           brk
-                 asl RAMLO+1
-                 asl RAMLO+1
-                 asl LNFLG
-                 brk
-                 brk
-                 aso LNFLG
-                 brk
-                 aso RAMLO
-                 aso NGFLAG
-                 brk
-                 aso LNFLG
-                 brk
-                 brk
-                 aso RAMLO
-                 nop LNFLG
-                 aso RAMLO
-                 asl RAMLO
-                 aso LNFLG
-                 brk
-                 brk
-                 brk
-                 asl RAMLO+1
-                 ora RAMLO+1
-                 asl LNFLG
-                 brk
-                 nop RAMLO
-                 nop RAMLO
-                 aso LNFLG
-                 brk
-                 brk
-                 nop RAMLO
-                 brk
-                 brk
-                 aso RAMLO+1
-L_4E44           aso FR2
-                 nop SVDISP,x
-                 ror DELTAR,x
-                 nop WARMST,x
-L_4E4C           lda L_4E04
-L_4E4F           bne L_4E7E
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+L_4DFE           .byte $00, $00, $07, $69, $6A, $00, $00, $00
+L_4E06           .byte $7C, $FE, $FE, $FE, $7C, $00, $00, $00
+                 .byte $06, $05, $06, $05, $06, $00, $00, $00
+                 .byte $07, $00, $00, $07, $04, $07, $01, $00
+                 .byte $07, $00, $00, $00, $07, $04, $04, $00
+                 .byte $07, $04, $06, $04, $07, $00, $00, $00
+                 .byte $00, $06, $05, $05, $05, $06, $00, $00
+                 .byte $04, $04, $04, $04, $07, $00, $00, $00
+L_4E3E           .byte $04, $04, $00, $00, $07, $05, $07, $E6
+                 .byte $F4, $B2, $76, $76, $34, $08
+L_4E4C           lda L_4DFE+6
+                 bne L_4E7E
                  lda (FRE+4),y
                  cmp #$01
 L_4E55           beq L_4E7E
@@ -8712,9 +5119,9 @@ L_4E55           beq L_4E7E
 L_4E72           asl WARMST
 L_4E74           php
 L_4E75           brk
-L_4E76           lda L_4E00
+L_4E76           lda L_4DFE+2
                  beq L_4E7F
-                 dec L_4E00
+                 dec L_4DFE+2
 L_4E7E           rts
 L_4E7F           stx L_4E72+1
                  sty L_4E74
@@ -8735,13 +5142,13 @@ L_4E7F           stx L_4E72+1
                  clc
                  adc #$01
                  sta HPOSM1
-                 sta L_4E00+1
+                 sta L_4DFE+3
                  clc
                  adc #$02
                  sta HPOSM0
-                 sty L_4E02
+                 sty L_4DFE+4
                  ldx #$00
-L_4EAD           lda L_4E05,x
+L_4EAD           lda L_4DFE+7,x
                  sta $6F80,y
                  iny
                  inx
@@ -8762,18 +5169,18 @@ L_4EBE           lda VCOUNT
                  clc
                  adc #$06
                  sta L_4E72
-                 ldy L_4E02
-L_4ED8           lda L_4E0D,x
+                 ldy L_4DFE+4
+L_4ED8           lda L_4E06+7,x
                  sta $6D80,y
                  iny
                  inx
                  cpx L_4E72
                  bne L_4ED8
                  ldx $7FFE
-                 lda L_4E44+1,x
+                 lda L_4E3E+7,x
                  sta PCOLR3
                  lda #$01
-                 sta L_4E04
+                 sta L_4DFE+6
                  ldx L_4E72+1
                  ldy L_4E74
                  rts
@@ -8788,7 +5195,7 @@ L_4EFA           stx L_4E72+1
                  lda $5002
                  nop
                  nop
-                 lda L_4E04
+                 lda L_4DFE+6
                  beq L_4F99
                  inc L_4E75
                  lda L_4E75
@@ -8809,16 +5216,16 @@ L_4EFA           stx L_4E72+1
                  sta L_4F83+1
                  sta L_4F91+1
                  ldx #$00
-                 ldy L_4E02
+                 ldy L_4DFE+4
                  cpy #$6A
                  bcs L_4F9A
                  iny
-L_4F4E           sty L_4E02
-L_4F51           lda L_4E05,x
+                 sty L_4DFE+4
+L_4F51           lda L_4DFE+7,x
                  sta $6F80,y
                  cpx #$06
                  bcs L_4F61
-L_4F5B           lda L_4E0D,x
+L_4F5B           lda L_4E06+7,x
                  sta $6D80,y
 L_4F61           iny
                  inx
@@ -8831,25 +5238,25 @@ L_4F61           iny
                  lda #$00
                  sta L_4FBE
                  ldy #$07
-L_4F78           lda L_4E0D,y
-                 sta L_4E04
+L_4F78           lda L_4E06+7,y
+                 sta L_4DFE+6
                  dey
-L_4F7F           lda L_4E0D,y
+L_4F7F           lda L_4E06+7,y
                  iny
-L_4F83           sta L_4E0D,y
+L_4F83           sta L_4E06+7,y
                  dey
                  dey
                  cpy #$00
                  bne L_4F7F
                  ldy #$01
-                 lda L_4E04
-L_4F91           sta L_4E0D,y
+                 lda L_4DFE+6
+L_4F91           sta L_4E06+7,y
                  lda #$01
-                 sta L_4E04
+                 sta L_4DFE+6
 L_4F99           rts
 L_4F9A           ldx #$00
-                 stx L_4E04
-                 ldy L_4E02
+                 stx L_4DFE+6
+                 ldy L_4DFE+4
                  dey
                  dey
 L_4FA4           lda #$00
@@ -8863,70 +5270,14 @@ L_4FA4           lda #$00
                  and #$07
                  clc
                  adc #$03
-                 sta L_4E00
+                 sta L_4DFE+2
                  rts
-L_4FBE           ora (LNFLG,x)
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
-                 brk
+L_4FBE           .byte $01, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00, $00, $00, $00, $00, $00, $00
+                 .byte $00, $00

@@ -1,0 +1,105 @@
+block 1
+byte 1000
+code 1500
+byte 16FD
+code 1783
+byte 1A34
+code 1A60
+byte 1B47
+code 1B5C
+byte 1B76
+code 1BA0
+byte 1C79
+code 1CD0
+byte 1CED
+code 1F00
+byte 1F19
+code 2500
+byte 253A
+code 2556
+byte 25BE
+code 2800
+byte 2A0D
+code 2A20
+byte 2A59
+code 2A60
+byte 2ADB
+code 2AE5
+byte 2BEB
+code 2C0B
+byte 2C58
+code 2C65
+byte 2C9B
+code 2CAB
+byte 2CC9
+code 2CD0
+byte 2DEB
+code 2E05
+byte 2F3D
+code 2FA0
+byte 2FEF
+code 2FFD
+byte 3003
+code 31F6
+byte 340C
+code 3681
+byte 373B
+code 374A
+byte 384E
+code 3923
+byte 39B0
+code 3A3C
+byte 3B70
+code 3BB7
+byte 3BF3
+code 3C26
+byte 3CFC
+code 3D0C
+byte 3DAB
+code 3DB1
+byte 3DE9
+code 3E00
+byte 3FD5
+code 400C
+byte 43E5
+code 440E
+byte 45FF
+code 460E
+byte 46C0
+code 46FD
+byte 49B9
+code 4A04
+byte 4BF7
+code 4CD7
+byte 4DBE
+code 4E4C
+byte 4FBE
+
+block 2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
