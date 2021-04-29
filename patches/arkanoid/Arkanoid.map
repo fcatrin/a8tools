@@ -42,6 +42,9 @@ code 2FFD
 byte 3003
 code 31F6
 byte 340C
+code 3500
+dlst 3503
+byte 3523
 code 3681
 byte 373B
 code 374A
@@ -76,6 +79,57 @@ code 4E4C
 byte 4FBE
 
 block 2
+byte 4B00
+code 4B01
+byte 4BF7
+code 4CD7
+byte 4DBE
+code 4E4B
+byte 4FBE
+code 5003
+byte 5070
+code 507F
+byte 5240
+code 5282
+byte 5538
+code 55A7
+byte 56D0
+code 5700
+byte 57A0
+code 57EC
+byte 5B58
+code 5BA0
+byte 5BC4
+code 5C71
+byte 5DBE
+code 5DE5
+byte 5FB7
+code 5FC0
+byte 5FDE
+code 6C4A
+byte 6D72
+code 8E00
+byte 8EEA
+code 8F11
+byte 8FBD
+
+block 3
+word 02E0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

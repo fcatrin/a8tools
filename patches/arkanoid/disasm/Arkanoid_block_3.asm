@@ -3,5 +3,4 @@
 
                  org $02E0
 
-                 brk
-                 and LNFLG,x
+                 .word L_3500
