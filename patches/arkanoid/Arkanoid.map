@@ -1,6 +1,8 @@
 block 1
 byte 1000
 code 1500
+byte 15D1
+code 15D3
 byte 16FD
 code 1783
 byte 1A34
@@ -19,7 +21,7 @@ byte 253A
 code 2556
 byte 25BE
 code 2800
-byte 2A0D
+byte 2A03
 code 2A20
 byte 2A59
 code 2A60
@@ -56,6 +58,8 @@ byte 3B70
 code 3BB7
 byte 3BF3
 code 3C26
+byte 3CF0
+code 3CF3
 byte 3CFC
 code 3D0C
 byte 3DAB
@@ -66,6 +70,8 @@ byte 3FD5
 code 400C
 byte 43E5
 code 440E
+byte 4517
+code 451E
 byte 45FF
 code 460E
 byte 46C0

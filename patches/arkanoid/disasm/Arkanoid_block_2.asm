@@ -297,7 +297,7 @@ L_4E4C           lda L_4DFE+6
                  bne L_4E7E
                  lda (FRE+4),y
                  cmp #$01
-L_4E55           beq L_4E7E
+                 beq L_4E7E
                  cmp #$02
                  beq L_4E7E
                  cmp #$9D

@@ -268,7 +268,7 @@
 15CB: A2 60                      ldx #$60
 15CD: A0 14                      ldy #$14
 15CF: 86 DC                      stx $DC       ; FRE+2
-15D1: 80 DD                      nop #$DD
+15D1: 80                         BYTE $80 $DD
 15D3: A2 00                      ldx #$00
 15D5: A0 00     L_15D5           ldy #$00
 15D7: B1 DC     L_15D7           lda ($DC),y   ; FRE+2
@@ -1426,7 +1426,7 @@
 284A: 60                         rts
 284B: 8D 7D 50                   sta $507D
 284E: A9 07                      lda #$07
-2850: 20 10 2A                   jsr $2A10     ; L_2A0D+3
+2850: 20 10 2A                   jsr $2A10     ; L_2A0B+5
 2853: 60                         rts
 2854: 70 01     L_2854           bvs $2857     ; L_2856+1
 2856: 8D 54 28  L_2856           sta $2854     ; L_2854
@@ -1477,7 +1477,7 @@
 28C1: 85 4D                      sta $4D       ; ATRACT
 28C3: 4C 82 8F                   jmp $8F82
 28C6: 20 13 51  L_28C6           jsr $5113
-28C9: 4C 1B 45                   jmp $451B     ; L_4519+2
+28C9: 4C 1B 45                   jmp $451B     ; L_4517+4
 28CC: AD D8 46  L_28CC           lda $46D8     ; L_46D8
 28CF: C9 01                      cmp #$01
 28D1: F0 03                      beq $28D6     ; L_28D6
@@ -1639,13 +1639,10 @@
 29FE: A6 DC                      ldx $DC       ; FRE+2
 2A00: A4 DD                      ldy $DD       ; FRE+3
 2A02: 60                         rts
-2A03: 45 20                      eor $20       ; ICHIDZ
-2A05: 54 4F                      nop $4F,x     ; COLRSH
-2A07: 20 55 4E                   jsr $4E55     ; L_4E55
-2A0A: 4C 4F 43                   jmp $434F     ; L_434E+1
-2A0D: 4B        L_2A0D           BYTE $4B $3F $9B $AD $52 $25 $D0 $05
-2A15: A9                         BYTE $A9 $07 $20 $00 $25 $60 $00 $00
-2A1D: 00        L_2A1D           BYTE $00 $00 $00
+2A03: 45                         BYTE $45 $20 $54 $4F $20 $55 $4E $4C
+2A0B: 4F        L_2A0B           BYTE $4F $43 $4B $3F $9B $AD $52 $25
+2A13: D0                         BYTE $D0 $05 $A9 $07 $20 $00 $25 $60
+2A1B: 00        L_2A1B           BYTE $00 $00 $00 $00 $00
 2A20: A0 00     L_2A20           ldy #$00
 2A22: A2 00                      ldx #$00
 2A24: B9 41 4C  L_2A24           lda $4C41,y   ; L_4C3F+2
@@ -1655,7 +1652,7 @@
 2A2E: 85 DE                      sta $DE       ; FRE+4
 2A30: B9 43 4C                   lda $4C43,y   ; L_4C3F+4
 2A33: 85 DC                      sta $DC       ; FRE+2
-2A35: 8C 1F 2A                   sty $2A1F     ; L_2A1D+2
+2A35: 8C 1F 2A                   sty $2A1F     ; L_2A1B+4
 2A38: A0 00                      ldy #$00
 2A3A: A5 DC                      lda $DC       ; FRE+2
 2A3C: 91 DE                      sta ($DE),y   ; FRE+4
@@ -1663,7 +1660,7 @@
 2A3F: 18                         clc
 2A40: 69 01                      adc #$01
 2A42: 91 DE                      sta ($DE),y   ; FRE+4
-2A44: AC 1F 2A                   ldy $2A1F     ; L_2A1D+2
+2A44: AC 1F 2A                   ldy $2A1F     ; L_2A1B+4
 2A47: E8        L_2A47           inx
 2A48: C8                         iny
 2A49: C8                         iny
@@ -2863,7 +2860,7 @@
 3817: AD 00 39                   lda $3900     ; L_38FE+2
 381A: DD C0 8F                   cmp $8FC0,x
 381D: F0 03                      beq $3822     ; L_3822
-381F: 4C 1B 45                   jmp $451B     ; L_4519+2
+381F: 4C 1B 45                   jmp $451B     ; L_4517+4
 3822: EE 00 40  L_3822           inc $4000     ; L_3FFD+3
 3825: A9 00                      lda #$00
 3827: 8D 00 39                   sta $3900     ; L_38FE+2
@@ -3272,7 +3269,7 @@
 3CE7: 8D 09 D4                   sta $D409     ; CHBASE
 3CEA: 4C AB 3C                   jmp $3CAB     ; L_3CAB
 3CED: 4C AB 3C                   jmp $3CAB     ; L_3CAB
-3CF0: 3C 00 00                   nop $0000,x   ; LNFLG
+3CF0: 3C                         BYTE $3C $00 $00
 3CF3: A9 00     L_3CF3           lda #$00
 3CF5: 8D BE 02                   sta $02BE     ; SHFLOK
 3CF8: AD 0F D2                   lda $D20F     ; SKSTAT
@@ -3991,7 +3988,7 @@
 4346: A4 DD                      ldy $DD       ; FRE+3
 4348: 8E 22 3C                   stx $3C22     ; L_3C1B+7
 434B: 8C 23 3C                   sty $3C23     ; L_3C23
-434E: A2 30     L_434E           ldx #$30
+434E: A2 30                      ldx #$30
 4350: A0 9B                      ldy #$9B
 4352: 86 DC                      stx $DC       ; FRE+2
 4354: 84 DD                      sty $DD       ; FRE+3
@@ -4215,14 +4212,12 @@
 4510: C0 08                      cpy #$08
 4512: D0 E2                      bne $44F6     ; L_44F6
 4514: 4C 4F 45                   jmp $454F     ; L_454F
-4517: 01 20     L_4517           ora ($20,x)   ; ICHIDZ
-4519: 0C 40 AD  L_4519           nop $AD40
-451C: 24 3C                      bit $3C       ; NOCKSM
+4517: 01        L_4517           BYTE $01 $20 $0C $40 $AD $24 $3C
 451E: C9 1C                      cmp #$1C
 4520: 30 03                      bmi $4525     ; L_4525
 4522: 20 FD 46                   jsr $46FD     ; L_46FD
 4525: AD 25 3C  L_4525           lda $3C25     ; L_3C23+2
-4528: F0 F1                      beq $451B     ; L_4519+2
+4528: F0 F1                      beq $451B     ; L_4517+4
 452A: 20 CB 44                   jsr $44CB     ; L_44CB
 452D: 20 C7 59                   jsr $59C7
 4530: 20 F1 44                   jsr $44F1     ; L_44F1
@@ -5128,7 +5123,7 @@
 4E4F: D0 2D                      bne $4E7E     ; L_4E7E
 4E51: B1 DE                      lda ($DE),y   ; FRE+4
 4E53: C9 01                      cmp #$01
-4E55: F0 27     L_4E55           beq $4E7E     ; L_4E7E
+4E55: F0 27                      beq $4E7E     ; L_4E7E
 4E57: C9 02                      cmp #$02
 4E59: F0 23                      beq $4E7E     ; L_4E7E
 4E5B: C9 9D                      cmp #$9D
@@ -5605,7 +5600,7 @@
 4E4F: D0 2D                      bne $4E7E     ; L_4E7E
 4E51: B1 DE                      lda ($DE),y   ; FRE+4
 4E53: C9 01                      cmp #$01
-4E55: F0 27     L_4E55           beq $4E7E     ; L_4E7E
+4E55: F0 27                      beq $4E7E     ; L_4E7E
 4E57: C9 02                      cmp #$02
 4E59: F0 23                      beq $4E7E     ; L_4E7E
 4E5B: C9 9D                      cmp #$9D

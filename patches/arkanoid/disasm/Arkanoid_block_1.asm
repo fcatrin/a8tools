@@ -269,7 +269,7 @@ L_15BE           inx
                  ldx #$60
                  ldy #$14
                  stx FRE+2
-                 nop #$DD
+                 .byte $80, $DD
                  ldx #$00
 L_15D5           ldy #$00
 L_15D7           lda (FRE+2),y
@@ -1427,7 +1427,7 @@ L_2847           lda L_4405+4
                  rts
                  sta $507D
                  lda #$07
-                 jsr L_2A0D+3
+                 jsr L_2A0B+5
                  rts
 L_2854           bvs L_2856+1
 L_2856           sta L_2854
@@ -1478,7 +1478,7 @@ L_28BF           lda #$00
                  sta ATRACT
                  jmp $8F82
 L_28C6           jsr $5113
-                 jmp L_4519+2
+                 jmp L_4517+4
 L_28CC           lda L_46D8
                  cmp #$01
                  beq L_28D6
@@ -1640,13 +1640,10 @@ L_29FB           jsr L_2926
                  ldx FRE+2
                  ldy FRE+3
                  rts
-                 eor ICHIDZ
-                 nop COLRSH,x
-                 jsr L_4E55
-                 jmp L_434E+1
-L_2A0D           .byte $4B, $3F, $9B, $AD, $52, $25, $D0, $05
-                 .byte $A9, $07, $20, $00, $25, $60, $00, $00
-L_2A1D           .byte $00, $00, $00
+                 .byte $45, $20, $54, $4F, $20, $55, $4E, $4C
+L_2A0B           .byte $4F, $43, $4B, $3F, $9B, $AD, $52, $25
+                 .byte $D0, $05, $A9, $07, $20, $00, $25, $60
+L_2A1B           .byte $00, $00, $00, $00, $00
 L_2A20           ldy #$00
                  ldx #$00
 L_2A24           lda L_4C3F+2,y
@@ -1656,7 +1653,7 @@ L_2A24           lda L_4C3F+2,y
                  sta FRE+4
                  lda L_4C3F+4,y
                  sta FRE+2
-                 sty L_2A1D+2
+                 sty L_2A1B+4
                  ldy #$00
                  lda FRE+2
                  sta (FRE+4),y
@@ -1664,7 +1661,7 @@ L_2A24           lda L_4C3F+2,y
                  clc
                  adc #$01
                  sta (FRE+4),y
-                 ldy L_2A1D+2
+                 ldy L_2A1B+4
 L_2A47           inx
                  iny
                  iny
@@ -2864,7 +2861,7 @@ L_3814           ldx L_3FFD+3
                  lda L_38FE+2
                  cmp $8FC0,x
                  beq L_3822
-                 jmp L_4519+2
+                 jmp L_4517+4
 L_3822           inc L_3FFD+3
                  lda #$00
                  sta L_38FE+2
@@ -3273,7 +3270,7 @@ L_3CD8           lda #$0F
                  sta CHBASE
                  jmp L_3CAB
                  jmp L_3CAB
-                 nop LNFLG,x
+                 .byte $3C, $00, $00
 L_3CF3           lda #$00
                  sta SHFLOK
                  lda SKSTAT
@@ -3992,7 +3989,7 @@ L_4344           ldx FRE+2
                  ldy FRE+3
                  stx L_3C1B+7
                  sty L_3C23
-L_434E           ldx #$30
+                 ldx #$30
                  ldy #$9B
                  stx FRE+2
                  sty FRE+3
@@ -4216,14 +4213,12 @@ L_450C           inc L_4405+5
                  cpy #$08
                  bne L_44F6
                  jmp L_454F
-L_4517           ora (ICHIDZ,x)
-L_4519           nop $AD40
-                 bit NOCKSM
+L_4517           .byte $01, $20, $0C, $40, $AD, $24, $3C
                  cmp #$1C
                  bmi L_4525
                  jsr L_46FD
 L_4525           lda L_3C23+2
-                 beq L_4519+2
+                 beq L_4517+4
                  jsr L_44CB
                  jsr $59C7
                  jsr L_44F1
@@ -5129,7 +5124,7 @@ L_4E4C           lda L_4DFE+6
                  bne L_4E7E
                  lda (FRE+4),y
                  cmp #$01
-L_4E55           beq L_4E7E
+                 beq L_4E7E
                  cmp #$02
                  beq L_4E7E
                  cmp #$9D
