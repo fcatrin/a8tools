@@ -1401,7 +1401,7 @@ L_2809           jsr L_2900
                  lda #$01
                  jsr L_2500
                  rts
-L_2812           sta L_4C3F+4,y
+L_2812           sta L_4C43,y
                  lda #$02
                  jsr L_2500
                  rts
@@ -1646,12 +1646,12 @@ L_2A0B           .byte $4F, $43, $4B, $3F, $9B, $AD, $52, $25
 L_2A1B           .byte $00, $00, $00, $00, $00
 L_2A20           ldy #$00
                  ldx #$00
-L_2A24           lda L_4C3F+2,y
+L_2A24           lda L_4C41,y
                  beq L_2A47
                  sta FRE+5
-                 lda L_4C3F+1,y
+                 lda L_4C40,y
                  sta FRE+4
-                 lda L_4C3F+4,y
+                 lda L_4C43,y
                  sta FRE+2
                  sty L_2A1B+4
                  ldy #$00
@@ -1670,7 +1670,7 @@ L_2A47           inx
                  cpx #$0F
                  bne L_2A24
                  jmp L_282D
-L_2A53           jsr L_2812
+                 jsr L_2812
                  jmp L_2C65
                  .byte $00, $00, $00, $00, $00, $00, $00
 L_2A60           lda CONSOL
@@ -1943,7 +1943,7 @@ L_2C83           sta $6D00,x
                  .byte $00, $00, $00, $00, $00, $00, $00, $00
 L_2CAB           lda FR2+4
                  jmp L_2856
-                 lda L_4DFE+5
+                 lda L_4E03
                  cmp #$01
                  bne L_2CC2
                  lda #$04
@@ -1951,7 +1951,7 @@ L_2CAB           lda FR2+4
                  sta L_46F0+4
                  sta L_46F0+5
 L_2CC2           lda $7FFE
-                 sta L_4DFE+5
+                 sta L_4E03
                  rts
                  .byte $00, $00, $00, $00, $00, $00, $00
 L_2CD0           jsr L_2CF6
@@ -2910,7 +2910,7 @@ L_38FE           .byte $FF, $55, $00, $00, $28, $A0, $0B, $B0
                  .byte $07, $70, $07, $80, $07, $E0, $09, $F0
                  .byte $09, $10, $08, $20, $08, $30, $08, $40
                  .byte $05, $90, $0C, $00, $0A
-L_3923           sta L_39B0
+                 sta L_39B0
                  stx L_38FE+3
                  sty L_38FE+4
                  lda CASINI+1
@@ -3105,7 +3105,7 @@ L_3AFE           lda L_3A38+1
                  sta L_4A01+1
                  sta L_3A38+3
                  lda #$02
-                 sta L_4DFE+5
+                 sta L_4E03
                  ldx #$00
 L_3B2D           lda $8F00,x
                  sta $9F67,x
@@ -3635,7 +3635,7 @@ L_401C           lda #$6C
                  lda #$00
                  jsr L_4697
                  sta $5C70
-                 sta L_4DFE+6
+                 sta L_4E04
                  sta $5002
                  sta $5072
                  sta $5073
@@ -3648,7 +3648,7 @@ L_401C           lda #$6C
                  sta $507A
                  sta $507B
                  sta $507C
-L_4073           sta L_4BFF+1,x
+L_4073           sta L_4C00,x
                  inx
                  cpx #$D5
                  bne L_4073
@@ -3939,7 +3939,7 @@ L_42C3           lda #$00
                  and #$07
                  clc
                  adc #$03
-                 sta L_4DFE+2
+                 sta L_4E00
                  lda L_3FFD+3
                  and #$03
                  tax
@@ -4668,7 +4668,7 @@ L_494D           lda L_46C0+6,x
 L_495D           jsr L_49AD
                  sta $5073
                  rts
-L_4964           lda L_4DFE+5
+L_4964           lda L_4E03
                  cmp #$02
                  bne L_4999
                  lda $5002
@@ -4693,7 +4693,7 @@ L_4999           lda L_46C0+6,x
                  jmp L_4732
 L_499F           lda #$00
                  sta $5002
-                 sta L_4DFE+5
+                 sta L_4E03
                  sta L_3A38+3
                  jmp L_4999
 L_49AD           lda L_3A38+3
@@ -4832,474 +4832,3 @@ L_4AE0           lda #$00
 L_4AFB           lda NGFLAG
                  cmp #$9B
                  bne L_4B0A
-                 lda LNFLG
-                 cmp #$4E
-                 bcs L_4B0A
-                 jmp L_4B1A
-L_4B0A           inc CASINI+1
-                 lda LNFLG
-                 sec
-                 sbc #$28
-                 sta LNFLG
-                 bcs L_4AFB
-                 dec NGFLAG
-                 jmp L_4AFB
-L_4B1A           lda LNFLG
-                 sec
-                 sbc #$2F
-                 sta LNFLG
-                 lda (FRE+4),y
-                 and #$01
-                 bne L_4B29
-                 dec LNFLG
-L_4B29           lda LNFLG
-                 and #$03
-                 clc
-                 adc #$38
-                 sta L_4A01
-                 cmp #$3B
-                 bne L_4B3E
-                 lda #$38
-                 sta FPTR2+1
-                 jmp L_4B43
-L_4B3E           clc
-                 adc #$01
-                 sta FPTR2+1
-L_4B43           lda CASINI+1
-                 clc
-                 adc #$01
-                 and #$03
-                 tay
-L_4B4B           cpy #$00
-                 beq L_4B63
-                 lda L_4A01
-                 clc
-                 adc #$04
-                 sta L_4A01
-                 lda FPTR2+1
-                 clc
-                 adc #$04
-                 sta FPTR2+1
-                 dey
-                 jmp L_4B4B
-L_4B63           ldy L_4A01+1
-                 jsr L_4E4C
-                 lda (FRE+4),y
-                 cmp #$01
-                 beq L_4B7F
-                 cmp #$02
-                 beq L_4B7F
-                 cmp #$9D
-                 beq L_4B7F
-                 cmp #$9E
-                 beq L_4B7F
-                 jsr L_3923
-                 rts
-L_4B7F           lda FRE+5
-                 sta NGFLAG
-                 lda FRE+4
-                 sta LNFLG
-                 tya
-                 clc
-                 adc LNFLG
-                 sta LNFLG
-                 bcc L_4B91
-                 inc NGFLAG
-L_4B91           lda (FRE+4),y
-                 and #$01
-                 bne L_4B9F
-                 lda LNFLG
-                 bne L_4B9D
-                 dec NGFLAG
-L_4B9D           dec LNFLG
-L_4B9F           stx FRE+2
-                 ldy #$00
-                 lda (LNFLG),y
-                 sta CASINI
-                 ldx #$00
-                 ldy #$00
-L_4BAB           lda L_4C3F+1,y
-                 clc
-                 adc L_4C3F+2,y
-                 bne L_4BD2
-                 lda LNFLG
-                 sta L_4C3F+1,y
-                 lda NGFLAG
-                 sta L_4C3F+2,y
-                 lda L_3FFD+3
-                 lsr
-                 lsr
-                 lsr
-                 clc
-                 adc #$02
-                 sta L_4C3F+3,y
-                 lda CASINI
-                 jsr L_2A53
-                 jmp L_4BDE
-L_4BD2           iny
-                 iny
-                 iny
-                 iny
-                 inx
-                 cpx #$1E
-                 bne L_4BAB
-                 jmp L_4BF1
-L_4BDE           ldy #$00
-                 lda (LNFLG),y
-                 and #$80
-                 ora #$09
-                 sta (LNFLG),y
-                 iny
-                 lda (LNFLG),y
-                 and #$80
-                 ora #$0A
-                 sta (LNFLG),y
-L_4BF1           ldx FRE+2
-                 ldy L_4A01+1
-                 rts
-                 .byte $00, $00, $00, $00, $00, $00, $00, $00
-L_4BFF           .byte $00, $00, $00, $00, $00, $00, $00, $00
-                 .byte $00, $00, $00, $00, $00, $00, $00, $00
-                 .byte $00, $00, $00, $00, $00, $00, $00, $00
-                 .byte $00, $00, $00, $00, $00, $00, $00, $00
-                 .byte $00, $00, $00, $00, $00, $00, $00, $00
-                 .byte $00, $00, $00, $00, $00, $00, $00, $00
-                 .byte $00, $00, $00, $00, $00, $00, $00, $00
-                 .byte $00, $00, $00, $00, $00, $00, $00, $00
-L_4C3F           .byte $00, $00, $00, $00, $00, $00, $00, $00
-                 .byte $00, $00, $00, $00, $00, $00, $00, $00
-                 .byte $00, $00, $00, $00, $00, $00, $00, $00
-                 .byte $00, $00, $00, $00, $00, $00, $00, $00
-                 .byte $00, $00, $00, $00, $00, $00, $00, $00
-                 .byte $00, $00, $00, $00, $00, $00, $00, $00
-                 .byte $00, $00, $00, $00, $00, $00, $00, $00
-                 .byte $00, $00, $00, $00, $00, $00, $00, $00
-                 .byte $00, $00, $00, $00, $00, $00, $00, $00
-                 .byte $00, $00, $00, $00, $00, $00, $00, $00
-                 .byte $00, $00, $00, $00, $00, $00, $00, $00
-                 .byte $00, $00, $00, $00, $00, $00, $00, $00
-                 .byte $00, $00, $00, $00, $00, $00, $00, $00
-                 .byte $00, $00, $00, $00, $00, $00, $00, $00
-                 .byte $00, $00, $00, $00, $00, $00, $00, $00
-                 .byte $00, $00, $00, $00, $00, $00, $00, $00
-                 .byte $00, $00, $00, $00, $00, $00, $00, $00
-                 .byte $00, $00, $00, $00, $00, $00, $00, $00
-L_4CCF           .byte $00, $00, $00, $00, $00, $00, $3C, $00
-L_4CD7           ldx #$00
-                 ldy L_4CCF+6
-                 cpy #$3C
-                 bmi L_4CE2
-                 ldy #$00
-L_4CE2           lda L_4C3F+2,y
-                 beq L_4D0D
-                 sta EEXP
-                 lda L_4C3F+1,y
-                 sta FRX
-                 sty L_4CCF+7
-                 ldy #$00
-                 lda (FRX),y
-                 cmp #$11
-                 beq L_4D1A
-                 cmp #$91
-                 beq L_4D1A
-                 clc
-                 adc #$02
-                 sta (FRX),y
-                 iny
-                 lda (FRX),y
-                 clc
-                 adc #$02
-                 sta (FRX),y
-                 ldy L_4CCF+7
-L_4D0D           iny
-                 iny
-                 iny
-                 iny
-                 inx
-                 cpx #$05
-                 bne L_4CE2
-                 sty L_4CCF+6
-                 rts
-L_4D1A           ldy L_4CCF+7
-                 lda L_4C3F+4,y
-                 sta FR1
-                 ldy #$00
-                 sta (FRX),y
-                 iny
-                 clc
-                 adc #$01
-                 sta (FRX),y
-                 ldy L_4CCF+7
-                 lda #$00
-                 sta L_4C3F+1,y
-                 sta L_4C3F+2,y
-                 sta L_4C3F+3,y
-                 sta L_4C3F+4,y
-                 lda FR1
-                 cmp #$9D
-                 beq L_4D0D
-                 cmp #$9E
-                 beq L_4D0D
-                 jmp L_4D91
-L_4D4A           ldx #$30
-                 ldy #$9B
-                 stx FRX
-                 sty EEXP
-                 ldy #$6A
-                 stx NSIGN
-                 sty ESIGN
-                 ldx #$00
-L_4D5A           ldy #$00
-L_4D5C           lda (FRX),y
-                 cmp #$01
-                 beq L_4D6B
-                 cmp #$9D
-                 beq L_4D6B
-                 lda #$00
-                 jmp L_4D74
-L_4D6B           lda L_3FFD+3
-                 lsr
-                 lsr
-                 lsr
-                 clc
-                 adc #$02
-L_4D74           sta (NSIGN),y
-                 iny
-                 iny
-                 cpy #$1A
-                 bne L_4D5C
-                 lda FRX
-                 clc
-                 adc #$28
-                 sta FRX
-                 sta NSIGN
-                 bcc L_4D8B
-                 inc EEXP
-                 inc ESIGN
-L_4D8B           inx
-                 cpx #$12
-                 bne L_4D5A
-                 rts
-L_4D91           lda EEXP
-                 sec
-                 sbc #$31
-                 sta FR1+1
-                 lda FRX
-                 sta FR1
-                 ldy #$00
-                 lda (FR1),y
-                 sec
-                 sbc #$01
-                 sta (FR1),y
-                 cmp #$01
-                 beq L_4DAF
-                 ldy L_4CCF+7
-                 jmp L_4D0D
-L_4DAF           lda #$03
-                 sta (FRX),y
-                 iny
-                 lda #$04
-                 sta (FRX),y
-                 ldy L_4CCF+7
-                 jmp L_4D0D
-                 .byte $00, $00, $00, $00, $00, $00, $00, $00
-                 .byte $00, $00, $00, $00, $00, $00, $00, $00
-                 .byte $00, $00, $00, $00, $00, $00, $00, $00
-                 .byte $00, $00, $00, $00, $00, $00, $00, $00
-                 .byte $00, $00, $00, $00, $00, $00, $00, $00
-                 .byte $00, $00, $00, $00, $00, $00, $00, $00
-                 .byte $00, $00, $00, $00, $00, $00, $00, $00
-                 .byte $00, $00, $00, $00, $00, $00, $00, $00
-L_4DFE           .byte $00, $00, $07, $69, $6A, $00, $00, $00
-L_4E06           .byte $7C, $FE, $FE, $FE, $7C, $00, $00, $00
-                 .byte $06, $05, $06, $05, $06, $00, $00, $00
-                 .byte $07, $00, $00, $07, $04, $07, $01, $00
-                 .byte $07, $00, $00, $00, $07, $04, $04, $00
-                 .byte $07, $04, $06, $04, $07, $00, $00, $00
-                 .byte $00, $06, $05, $05, $05, $06, $00, $00
-                 .byte $04, $04, $04, $04, $07, $00, $00, $00
-L_4E3E           .byte $04, $04, $00, $00, $07, $05, $07, $E6
-                 .byte $F4, $B2, $76, $76, $34, $08
-L_4E4C           lda L_4DFE+6
-                 bne L_4E7E
-                 lda (FRE+4),y
-                 cmp #$01
-                 beq L_4E7E
-                 cmp #$02
-                 beq L_4E7E
-                 cmp #$9D
-                 beq L_4E7E
-                 cmp #$9E
-                 beq L_4E7E
-                 cmp #$09
-                 beq L_4E7E
-                 bmi L_4E76
-                 cmp #$12
-                 beq L_4E7E
-                 bpl L_4E76
-                 jmp L_4E7E
-L_4E72           asl WARMST
-L_4E74           php
-L_4E75           brk
-L_4E76           lda L_4DFE+2
-                 beq L_4E7F
-                 dec L_4DFE+2
-L_4E7E           rts
-L_4E7F           stx L_4E72+1
-                 sty L_4E74
-                 lda CASINI+1
-                 clc
-                 asl
-                 asl
-                 clc
-                 adc #$07
-                 tay
-                 lda LNFLG
-                 clc
-                 asl
-                 asl
-                 clc
-                 adc #$4C
-                 sta HPOSP3
-                 clc
-                 adc #$01
-                 sta HPOSM1
-                 sta L_4DFE+3
-                 clc
-                 adc #$02
-                 sta HPOSM0
-                 sty L_4DFE+4
-                 ldx #$00
-L_4EAD           lda L_4DFE+7,x
-                 sta $6F80,y
-                 iny
-                 inx
-                 cpx #$07
-                 bne L_4EAD
-                 lda #$01
-                 sta GPRIOR
-L_4EBE           lda VCOUNT
-                 and #$07
-                 cmp #$07
-                 beq L_4EBE
-                 sta $7FFE
-                 clc
-                 asl
-                 asl
-                 asl
-                 tax
-                 clc
-                 adc #$06
-                 sta L_4E72
-                 ldy L_4DFE+4
-L_4ED8           lda L_4E06+7,x
-                 sta $6D80,y
-                 iny
-                 inx
-                 cpx L_4E72
-                 bne L_4ED8
-                 ldx $7FFE
-                 lda L_4E3E+7,x
-                 sta PCOLR3
-                 lda #$01
-                 sta L_4DFE+6
-                 ldx L_4E72+1
-                 ldy L_4E74
-                 rts
-L_4EFA           stx L_4E72+1
-                 sty L_4E74
-                 lda #$0D
-                 sta L_4F5B+1
-                 sta L_4F78+1
-                 sta L_4F7F+1
-                 sta L_4F83+1
-                 sta L_4F91+1
-                 lda $5002
-                 nop
-                 nop
-                 lda L_4DFE+6
-                 beq L_4F99
-                 inc L_4E75
-                 lda L_4E75
-                 cmp #$02
-                 bcc L_4F99
-                 lda #$00
-                 sta L_4E75
-                 lda $7FFE
-                 clc
-                 asl
-                 asl
-                 asl
-                 clc
-                 adc L_4F5B+1
-                 sta L_4F5B+1
-                 sta L_4F78+1
-                 sta L_4F7F+1
-                 sta L_4F83+1
-                 sta L_4F91+1
-                 ldx #$00
-                 ldy L_4DFE+4
-                 cpy #$6A
-                 bcs L_4F9A
-                 iny
-                 sty L_4DFE+4
-L_4F51           lda L_4DFE+7,x
-                 sta $6F80,y
-                 cpx #$06
-                 bcs L_4F61
-L_4F5B           lda L_4E06+7,x
-                 sta $6D80,y
-L_4F61           iny
-                 inx
-                 cpx #$09
-                 bne L_4F51
-                 inc L_4FBE
-                 lda L_4FBE
-                 cmp #$03
-                 bcc L_4F99
-                 lda #$00
-                 sta L_4FBE
-                 ldy #$07
-L_4F78           lda L_4E06+7,y
-                 sta L_4DFE+6
-                 dey
-L_4F7F           lda L_4E06+7,y
-                 iny
-L_4F83           sta L_4E06+7,y
-                 dey
-                 dey
-                 cpy #$00
-                 bne L_4F7F
-                 ldy #$01
-                 lda L_4DFE+6
-L_4F91           sta L_4E06+7,y
-                 lda #$01
-                 sta L_4DFE+6
-L_4F99           rts
-L_4F9A           ldx #$00
-                 stx L_4DFE+6
-                 ldy L_4DFE+4
-                 dey
-                 dey
-L_4FA4           lda #$00
-                 sta $6D80,y
-                 sta $6F80,y
-                 iny
-                 inx
-                 cpx #$0C
-                 bne L_4FA4
-                 lda VCOUNT
-                 and #$07
-                 clc
-                 adc #$03
-                 sta L_4DFE+2
-                 rts
-L_4FBE           .byte $01, $00, $00, $00, $00, $00, $00, $00
-                 .byte $00, $00, $00, $00, $00, $00, $00, $00
-                 .byte $00, $00, $00, $00, $00, $00, $00, $00
-                 .byte $00, $00, $00, $00, $00, $00, $00, $00
-                 .byte $00, $00, $00, $00, $00, $00, $00, $00
-                 .byte $00, $00, $00, $00, $00, $00, $00, $00
-                 .byte $00, $00, $00, $00, $00, $00, $00, $00
-                 .byte $00, $00, $00, $00, $00, $00, $00, $00
-                 .byte $00, $00

@@ -68,6 +68,8 @@ public class Disassembler {
 			return getByteInstruction(blockIndex, addr, sectionType, mnemonic);
 		} else if (sectionType == SectionType.Word) {
 			return getWordInstruction(blockIndex, addr);
+		} else if (sectionType == SectionType.Ignore) {
+			return getIgnoreInstruction(addr);
 		} else if (mnemonic.indexOf("0")>0) {
 			return getBranchInstruction(blockIndex, addr, mnemonic);
 		} else if (mnemonic.indexOf("1")>0) {
@@ -256,6 +258,10 @@ public class Disassembler {
 		int size = 1;
 		
 		return buildInstruction(addr, line, asmcode, size, bytecode);
+	}
+	
+	private static Instruction getIgnoreInstruction(int addr) {
+		return new Instruction(addr, null, null, 1);
 	}
 	
 	private static Instruction buildInstruction(int addr, String line, String asmcode, int size, String bytecode) {

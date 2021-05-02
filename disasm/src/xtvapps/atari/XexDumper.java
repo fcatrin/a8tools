@@ -198,6 +198,10 @@ public class XexDumper {
 		while (base < block.length) {
 			int lineAddr = addr + base;
 			Instruction instruction = Disassembler.getInstruction(blockIndex, lineAddr);
+			if (instruction.getCode() == null) {
+				base += instruction.getSize();
+				continue;
+			}
 			
 			List<String> blockComment = blockComments.get(lineAddr);
 			if (blockComment!=null) {
@@ -293,6 +297,9 @@ public class XexDumper {
 			} else if (cmd.equals("dlst")) {
 				int addr = Utils.strHex2i(parts[1], 0);
 				Disassembler.addSection(blockIndex, SectionType.DisplayList, addr);
+			} else if (cmd.equals("stop")) {
+				int addr = Utils.strHex2i(parts[1], 0);
+				Disassembler.addSection(blockIndex, SectionType.Ignore, addr);
 			} else if (cmd.equals("label")) {
 				int size = 1;
 				int addr = Utils.strHex2i(parts[1], 0);
