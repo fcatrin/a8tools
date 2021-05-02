@@ -78,11 +78,7 @@ byte 46C0
 code 46FD
 byte 49B9
 code 4A04
-byte 4BF7
-code 4CD7
-byte 4DBE
-code 4E4C
-byte 4FBE
+stop 4B00
 
 block 2
 byte 4B00

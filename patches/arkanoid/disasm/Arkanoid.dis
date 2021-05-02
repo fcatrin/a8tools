@@ -1400,7 +1400,7 @@
 280C: A9 01                      lda #$01
 280E: 20 00 25                   jsr $2500     ; L_2500
 2811: 60                         rts
-2812: 99 43 4C  L_2812           sta $4C43,y   ; L_4C3F+4
+2812: 99 43 4C  L_2812           sta $4C43,y   ; L_4C43
 2815: A9 02                      lda #$02
 2817: 20 00 25                   jsr $2500     ; L_2500
 281A: 60                         rts
@@ -1645,12 +1645,12 @@
 2A1B: 00        L_2A1B           BYTE $00 $00 $00 $00 $00
 2A20: A0 00     L_2A20           ldy #$00
 2A22: A2 00                      ldx #$00
-2A24: B9 41 4C  L_2A24           lda $4C41,y   ; L_4C3F+2
+2A24: B9 41 4C  L_2A24           lda $4C41,y   ; L_4C41
 2A27: F0 1E                      beq $2A47     ; L_2A47
 2A29: 85 DF                      sta $DF       ; FRE+5
-2A2B: B9 40 4C                   lda $4C40,y   ; L_4C3F+1
+2A2B: B9 40 4C                   lda $4C40,y   ; L_4C40
 2A2E: 85 DE                      sta $DE       ; FRE+4
-2A30: B9 43 4C                   lda $4C43,y   ; L_4C3F+4
+2A30: B9 43 4C                   lda $4C43,y   ; L_4C43
 2A33: 85 DC                      sta $DC       ; FRE+2
 2A35: 8C 1F 2A                   sty $2A1F     ; L_2A1B+4
 2A38: A0 00                      ldy #$00
@@ -1669,7 +1669,7 @@
 2A4C: E0 0F                      cpx #$0F
 2A4E: D0 D4                      bne $2A24     ; L_2A24
 2A50: 4C 2D 28                   jmp $282D     ; L_282D
-2A53: 20 12 28  L_2A53           jsr $2812     ; L_2812
+2A53: 20 12 28                   jsr $2812     ; L_2812
 2A56: 4C 65 2C                   jmp $2C65     ; L_2C65
 2A59: 00                         BYTE $00 $00 $00 $00 $00 $00 $00
 2A60: AD 1F D0  L_2A60           lda $D01F     ; CONSOL
@@ -1942,7 +1942,7 @@
 2CA3: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
 2CAB: A5 EA     L_2CAB           lda $EA       ; FR2+4
 2CAD: 4C 56 28                   jmp $2856     ; L_2856
-2CB0: AD 03 4E                   lda $4E03     ; L_4DFE+5
+2CB0: AD 03 4E                   lda $4E03     ; L_4E03
 2CB3: C9 01                      cmp #$01
 2CB5: D0 0B                      bne $2CC2     ; L_2CC2
 2CB7: A9 04                      lda #$04
@@ -1950,7 +1950,7 @@
 2CBC: 8D F4 46                   sta $46F4     ; L_46F0+4
 2CBF: 8D F5 46                   sta $46F5     ; L_46F0+5
 2CC2: AD FE 7F  L_2CC2           lda $7FFE
-2CC5: 8D 03 4E                   sta $4E03     ; L_4DFE+5
+2CC5: 8D 03 4E                   sta $4E03     ; L_4E03
 2CC8: 60                         rts
 2CC9: 00                         BYTE $00 $00 $00 $00 $00 $00 $00
 2CD0: 20 F6 2C  L_2CD0           jsr $2CF6     ; L_2CF6
@@ -2909,7 +2909,7 @@
 390E: 07                         BYTE $07 $70 $07 $80 $07 $E0 $09 $F0
 3916: 09                         BYTE $09 $10 $08 $20 $08 $30 $08 $40
 391E: 05                         BYTE $05 $90 $0C $00 $0A
-3923: 8D B0 39  L_3923           sta $39B0     ; L_39B0
+3923: 8D B0 39                   sta $39B0     ; L_39B0
 3926: 8E 01 39                   stx $3901     ; L_38FE+3
 3929: 8C 02 39                   sty $3902     ; L_38FE+4
 392C: A5 03                      lda $03       ; CASINI+1
@@ -3104,7 +3104,7 @@
 3B20: 8D 02 4A                   sta $4A02     ; L_4A01+1
 3B23: 8D 3B 3A                   sta $3A3B     ; L_3A38+3
 3B26: A9 02                      lda #$02
-3B28: 8D 03 4E                   sta $4E03     ; L_4DFE+5
+3B28: 8D 03 4E                   sta $4E03     ; L_4E03
 3B2B: A2 00                      ldx #$00
 3B2D: BD 00 8F  L_3B2D           lda $8F00,x
 3B30: 9D 67 9F                   sta $9F67,x
@@ -3634,7 +3634,7 @@
 4044: A9 00                      lda #$00
 4046: 20 97 46                   jsr $4697     ; L_4697
 4049: 8D 70 5C                   sta $5C70
-404C: 8D 04 4E                   sta $4E04     ; L_4DFE+6
+404C: 8D 04 4E                   sta $4E04     ; L_4E04
 404F: 8D 02 50                   sta $5002
 4052: 8D 72 50                   sta $5072
 4055: 8D 73 50                   sta $5073
@@ -3647,7 +3647,7 @@
 406A: 8D 7A 50                   sta $507A
 406D: 8D 7B 50                   sta $507B
 4070: 8D 7C 50                   sta $507C
-4073: 9D 00 4C  L_4073           sta $4C00,x   ; L_4BFF+1
+4073: 9D 00 4C  L_4073           sta $4C00,x   ; L_4C00
 4076: E8                         inx
 4077: E0 D5                      cpx #$D5
 4079: D0 F8                      bne $4073     ; L_4073
@@ -3938,7 +3938,7 @@
 42DE: 29 07                      and #$07
 42E0: 18                         clc
 42E1: 69 03                      adc #$03
-42E3: 8D 00 4E                   sta $4E00     ; L_4DFE+2
+42E3: 8D 00 4E                   sta $4E00     ; L_4E00
 42E6: AD 00 40                   lda $4000     ; L_3FFD+3
 42E9: 29 03                      and #$03
 42EB: AA                         tax
@@ -4667,7 +4667,7 @@
 495D: 20 AD 49  L_495D           jsr $49AD     ; L_49AD
 4960: 8D 73 50                   sta $5073
 4963: 60                         rts
-4964: AD 03 4E  L_4964           lda $4E03     ; L_4DFE+5
+4964: AD 03 4E  L_4964           lda $4E03     ; L_4E03
 4967: C9 02                      cmp #$02
 4969: D0 2E                      bne $4999     ; L_4999
 496B: AD 02 50                   lda $5002
@@ -4692,7 +4692,7 @@
 499C: 4C 32 47                   jmp $4732     ; L_4732
 499F: A9 00     L_499F           lda #$00
 49A1: 8D 02 50                   sta $5002
-49A4: 8D 03 4E                   sta $4E03     ; L_4DFE+5
+49A4: 8D 03 4E                   sta $4E03     ; L_4E03
 49A7: 8D 3B 3A                   sta $3A3B     ; L_3A38+3
 49AA: 4C 99 49                   jmp $4999     ; L_4999
 49AD: AD 3B 3A  L_49AD           lda $3A3B     ; L_3A38+3
@@ -4831,477 +4831,6 @@
 4AFB: A5 01     L_4AFB           lda $01       ; NGFLAG
 4AFD: C9 9B                      cmp #$9B
 4AFF: D0 09                      bne $4B0A     ; L_4B0A
-4B01: A5 00                      lda $00       ; LNFLG
-4B03: C9 4E                      cmp #$4E
-4B05: B0 03                      bcs $4B0A     ; L_4B0A
-4B07: 4C 1A 4B                   jmp $4B1A     ; L_4B1A
-4B0A: E6 03     L_4B0A           inc $03       ; CASINI+1
-4B0C: A5 00                      lda $00       ; LNFLG
-4B0E: 38                         sec
-4B0F: E9 28                      sbc #$28
-4B11: 85 00                      sta $00       ; LNFLG
-4B13: B0 E6                      bcs $4AFB     ; L_4AFB
-4B15: C6 01                      dec $01       ; NGFLAG
-4B17: 4C FB 4A                   jmp $4AFB     ; L_4AFB
-4B1A: A5 00     L_4B1A           lda $00       ; LNFLG
-4B1C: 38                         sec
-4B1D: E9 2F                      sbc #$2F
-4B1F: 85 00                      sta $00       ; LNFLG
-4B21: B1 DE                      lda ($DE),y   ; FRE+4
-4B23: 29 01                      and #$01
-4B25: D0 02                      bne $4B29     ; L_4B29
-4B27: C6 00                      dec $00       ; LNFLG
-4B29: A5 00     L_4B29           lda $00       ; LNFLG
-4B2B: 29 03                      and #$03
-4B2D: 18                         clc
-4B2E: 69 38                      adc #$38
-4B30: 8D 01 4A                   sta $4A01     ; L_4A01
-4B33: C9 3B                      cmp #$3B
-4B35: D0 07                      bne $4B3E     ; L_4B3E
-4B37: A9 38                      lda #$38
-4B39: 85 FF                      sta $FF       ; FPTR2+1
-4B3B: 4C 43 4B                   jmp $4B43     ; L_4B43
-4B3E: 18        L_4B3E           clc
-4B3F: 69 01                      adc #$01
-4B41: 85 FF                      sta $FF       ; FPTR2+1
-4B43: A5 03     L_4B43           lda $03       ; CASINI+1
-4B45: 18                         clc
-4B46: 69 01                      adc #$01
-4B48: 29 03                      and #$03
-4B4A: A8                         tay
-4B4B: C0 00     L_4B4B           cpy #$00
-4B4D: F0 14                      beq $4B63     ; L_4B63
-4B4F: AD 01 4A                   lda $4A01     ; L_4A01
-4B52: 18                         clc
-4B53: 69 04                      adc #$04
-4B55: 8D 01 4A                   sta $4A01     ; L_4A01
-4B58: A5 FF                      lda $FF       ; FPTR2+1
-4B5A: 18                         clc
-4B5B: 69 04                      adc #$04
-4B5D: 85 FF                      sta $FF       ; FPTR2+1
-4B5F: 88                         dey
-4B60: 4C 4B 4B                   jmp $4B4B     ; L_4B4B
-4B63: AC 02 4A  L_4B63           ldy $4A02     ; L_4A01+1
-4B66: 20 4C 4E                   jsr $4E4C     ; L_4E4C
-4B69: B1 DE                      lda ($DE),y   ; FRE+4
-4B6B: C9 01                      cmp #$01
-4B6D: F0 10                      beq $4B7F     ; L_4B7F
-4B6F: C9 02                      cmp #$02
-4B71: F0 0C                      beq $4B7F     ; L_4B7F
-4B73: C9 9D                      cmp #$9D
-4B75: F0 08                      beq $4B7F     ; L_4B7F
-4B77: C9 9E                      cmp #$9E
-4B79: F0 04                      beq $4B7F     ; L_4B7F
-4B7B: 20 23 39                   jsr $3923     ; L_3923
-4B7E: 60                         rts
-4B7F: A5 DF     L_4B7F           lda $DF       ; FRE+5
-4B81: 85 01                      sta $01       ; NGFLAG
-4B83: A5 DE                      lda $DE       ; FRE+4
-4B85: 85 00                      sta $00       ; LNFLG
-4B87: 98                         tya
-4B88: 18                         clc
-4B89: 65 00                      adc $00       ; LNFLG
-4B8B: 85 00                      sta $00       ; LNFLG
-4B8D: 90 02                      bcc $4B91     ; L_4B91
-4B8F: E6 01                      inc $01       ; NGFLAG
-4B91: B1 DE     L_4B91           lda ($DE),y   ; FRE+4
-4B93: 29 01                      and #$01
-4B95: D0 08                      bne $4B9F     ; L_4B9F
-4B97: A5 00                      lda $00       ; LNFLG
-4B99: D0 02                      bne $4B9D     ; L_4B9D
-4B9B: C6 01                      dec $01       ; NGFLAG
-4B9D: C6 00     L_4B9D           dec $00       ; LNFLG
-4B9F: 86 DC     L_4B9F           stx $DC       ; FRE+2
-4BA1: A0 00                      ldy #$00
-4BA3: B1 00                      lda ($00),y   ; LNFLG
-4BA5: 85 02                      sta $02       ; CASINI
-4BA7: A2 00                      ldx #$00
-4BA9: A0 00                      ldy #$00
-4BAB: B9 40 4C  L_4BAB           lda $4C40,y   ; L_4C3F+1
-4BAE: 18                         clc
-4BAF: 79 41 4C                   adc $4C41,y   ; L_4C3F+2
-4BB2: D0 1E                      bne $4BD2     ; L_4BD2
-4BB4: A5 00                      lda $00       ; LNFLG
-4BB6: 99 40 4C                   sta $4C40,y   ; L_4C3F+1
-4BB9: A5 01                      lda $01       ; NGFLAG
-4BBB: 99 41 4C                   sta $4C41,y   ; L_4C3F+2
-4BBE: AD 00 40                   lda $4000     ; L_3FFD+3
-4BC1: 4A                         lsr
-4BC2: 4A                         lsr
-4BC3: 4A                         lsr
-4BC4: 18                         clc
-4BC5: 69 02                      adc #$02
-4BC7: 99 42 4C                   sta $4C42,y   ; L_4C3F+3
-4BCA: A5 02                      lda $02       ; CASINI
-4BCC: 20 53 2A                   jsr $2A53     ; L_2A53
-4BCF: 4C DE 4B                   jmp $4BDE     ; L_4BDE
-4BD2: C8        L_4BD2           iny
-4BD3: C8                         iny
-4BD4: C8                         iny
-4BD5: C8                         iny
-4BD6: E8                         inx
-4BD7: E0 1E                      cpx #$1E
-4BD9: D0 D0                      bne $4BAB     ; L_4BAB
-4BDB: 4C F1 4B                   jmp $4BF1     ; L_4BF1
-4BDE: A0 00     L_4BDE           ldy #$00
-4BE0: B1 00                      lda ($00),y   ; LNFLG
-4BE2: 29 80                      and #$80
-4BE4: 09 09                      ora #$09
-4BE6: 91 00                      sta ($00),y   ; LNFLG
-4BE8: C8                         iny
-4BE9: B1 00                      lda ($00),y   ; LNFLG
-4BEB: 29 80                      and #$80
-4BED: 09 0A                      ora #$0A
-4BEF: 91 00                      sta ($00),y   ; LNFLG
-4BF1: A6 DC     L_4BF1           ldx $DC       ; FRE+2
-4BF3: AC 02 4A                   ldy $4A02     ; L_4A01+1
-4BF6: 60                         rts
-4BF7: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4BFF: 00        L_4BFF           BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4C07: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4C0F: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4C17: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4C1F: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4C27: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4C2F: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4C37: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4C3F: 00        L_4C3F           BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4C47: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4C4F: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4C57: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4C5F: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4C67: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4C6F: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4C77: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4C7F: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4C87: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4C8F: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4C97: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4C9F: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4CA7: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4CAF: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4CB7: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4CBF: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4CC7: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4CCF: 00        L_4CCF           BYTE $00 $00 $00 $00 $00 $00 $3C $00
-4CD7: A2 00     L_4CD7           ldx #$00
-4CD9: AC D5 4C                   ldy $4CD5     ; L_4CCF+6
-4CDC: C0 3C                      cpy #$3C
-4CDE: 30 02                      bmi $4CE2     ; L_4CE2
-4CE0: A0 00                      ldy #$00
-4CE2: B9 41 4C  L_4CE2           lda $4C41,y   ; L_4C3F+2
-4CE5: F0 26                      beq $4D0D     ; L_4D0D
-4CE7: 85 ED                      sta $ED       ; EEXP
-4CE9: B9 40 4C                   lda $4C40,y   ; L_4C3F+1
-4CEC: 85 EC                      sta $EC       ; FRX
-4CEE: 8C D6 4C                   sty $4CD6     ; L_4CCF+7
-4CF1: A0 00                      ldy #$00
-4CF3: B1 EC                      lda ($EC),y   ; FRX
-4CF5: C9 11                      cmp #$11
-4CF7: F0 21                      beq $4D1A     ; L_4D1A
-4CF9: C9 91                      cmp #$91
-4CFB: F0 1D                      beq $4D1A     ; L_4D1A
-4CFD: 18                         clc
-4CFE: 69 02                      adc #$02
-4D00: 91 EC                      sta ($EC),y   ; FRX
-4D02: C8                         iny
-4D03: B1 EC                      lda ($EC),y   ; FRX
-4D05: 18                         clc
-4D06: 69 02                      adc #$02
-4D08: 91 EC                      sta ($EC),y   ; FRX
-4D0A: AC D6 4C                   ldy $4CD6     ; L_4CCF+7
-4D0D: C8        L_4D0D           iny
-4D0E: C8                         iny
-4D0F: C8                         iny
-4D10: C8                         iny
-4D11: E8                         inx
-4D12: E0 05                      cpx #$05
-4D14: D0 CC                      bne $4CE2     ; L_4CE2
-4D16: 8C D5 4C                   sty $4CD5     ; L_4CCF+6
-4D19: 60                         rts
-4D1A: AC D6 4C  L_4D1A           ldy $4CD6     ; L_4CCF+7
-4D1D: B9 43 4C                   lda $4C43,y   ; L_4C3F+4
-4D20: 85 E0                      sta $E0       ; FR1
-4D22: A0 00                      ldy #$00
-4D24: 91 EC                      sta ($EC),y   ; FRX
-4D26: C8                         iny
-4D27: 18                         clc
-4D28: 69 01                      adc #$01
-4D2A: 91 EC                      sta ($EC),y   ; FRX
-4D2C: AC D6 4C                   ldy $4CD6     ; L_4CCF+7
-4D2F: A9 00                      lda #$00
-4D31: 99 40 4C                   sta $4C40,y   ; L_4C3F+1
-4D34: 99 41 4C                   sta $4C41,y   ; L_4C3F+2
-4D37: 99 42 4C                   sta $4C42,y   ; L_4C3F+3
-4D3A: 99 43 4C                   sta $4C43,y   ; L_4C3F+4
-4D3D: A5 E0                      lda $E0       ; FR1
-4D3F: C9 9D                      cmp #$9D
-4D41: F0 CA                      beq $4D0D     ; L_4D0D
-4D43: C9 9E                      cmp #$9E
-4D45: F0 C6                      beq $4D0D     ; L_4D0D
-4D47: 4C 91 4D                   jmp $4D91     ; L_4D91
-4D4A: A2 30     L_4D4A           ldx #$30
-4D4C: A0 9B                      ldy #$9B
-4D4E: 86 EC                      stx $EC       ; FRX
-4D50: 84 ED                      sty $ED       ; EEXP
-4D52: A0 6A                      ldy #$6A
-4D54: 86 EE                      stx $EE       ; NSIGN
-4D56: 84 EF                      sty $EF       ; ESIGN
-4D58: A2 00                      ldx #$00
-4D5A: A0 00     L_4D5A           ldy #$00
-4D5C: B1 EC     L_4D5C           lda ($EC),y   ; FRX
-4D5E: C9 01                      cmp #$01
-4D60: F0 09                      beq $4D6B     ; L_4D6B
-4D62: C9 9D                      cmp #$9D
-4D64: F0 05                      beq $4D6B     ; L_4D6B
-4D66: A9 00                      lda #$00
-4D68: 4C 74 4D                   jmp $4D74     ; L_4D74
-4D6B: AD 00 40  L_4D6B           lda $4000     ; L_3FFD+3
-4D6E: 4A                         lsr
-4D6F: 4A                         lsr
-4D70: 4A                         lsr
-4D71: 18                         clc
-4D72: 69 02                      adc #$02
-4D74: 91 EE     L_4D74           sta ($EE),y   ; NSIGN
-4D76: C8                         iny
-4D77: C8                         iny
-4D78: C0 1A                      cpy #$1A
-4D7A: D0 E0                      bne $4D5C     ; L_4D5C
-4D7C: A5 EC                      lda $EC       ; FRX
-4D7E: 18                         clc
-4D7F: 69 28                      adc #$28
-4D81: 85 EC                      sta $EC       ; FRX
-4D83: 85 EE                      sta $EE       ; NSIGN
-4D85: 90 04                      bcc $4D8B     ; L_4D8B
-4D87: E6 ED                      inc $ED       ; EEXP
-4D89: E6 EF                      inc $EF       ; ESIGN
-4D8B: E8        L_4D8B           inx
-4D8C: E0 12                      cpx #$12
-4D8E: D0 CA                      bne $4D5A     ; L_4D5A
-4D90: 60                         rts
-4D91: A5 ED     L_4D91           lda $ED       ; EEXP
-4D93: 38                         sec
-4D94: E9 31                      sbc #$31
-4D96: 85 E1                      sta $E1       ; FR1+1
-4D98: A5 EC                      lda $EC       ; FRX
-4D9A: 85 E0                      sta $E0       ; FR1
-4D9C: A0 00                      ldy #$00
-4D9E: B1 E0                      lda ($E0),y   ; FR1
-4DA0: 38                         sec
-4DA1: E9 01                      sbc #$01
-4DA3: 91 E0                      sta ($E0),y   ; FR1
-4DA5: C9 01                      cmp #$01
-4DA7: F0 06                      beq $4DAF     ; L_4DAF
-4DA9: AC D6 4C                   ldy $4CD6     ; L_4CCF+7
-4DAC: 4C 0D 4D                   jmp $4D0D     ; L_4D0D
-4DAF: A9 03     L_4DAF           lda #$03
-4DB1: 91 EC                      sta ($EC),y   ; FRX
-4DB3: C8                         iny
-4DB4: A9 04                      lda #$04
-4DB6: 91 EC                      sta ($EC),y   ; FRX
-4DB8: AC D6 4C                   ldy $4CD6     ; L_4CCF+7
-4DBB: 4C 0D 4D                   jmp $4D0D     ; L_4D0D
-4DBE: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4DC6: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4DCE: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4DD6: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4DDE: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4DE6: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4DEE: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4DF6: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4DFE: 00        L_4DFE           BYTE $00 $00 $07 $69 $6A $00 $00 $00
-4E06: 7C        L_4E06           BYTE $7C $FE $FE $FE $7C $00 $00 $00
-4E0E: 06                         BYTE $06 $05 $06 $05 $06 $00 $00 $00
-4E16: 07                         BYTE $07 $00 $00 $07 $04 $07 $01 $00
-4E1E: 07                         BYTE $07 $00 $00 $00 $07 $04 $04 $00
-4E26: 07                         BYTE $07 $04 $06 $04 $07 $00 $00 $00
-4E2E: 00                         BYTE $00 $06 $05 $05 $05 $06 $00 $00
-4E36: 04                         BYTE $04 $04 $04 $04 $07 $00 $00 $00
-4E3E: 04        L_4E3E           BYTE $04 $04 $00 $00 $07 $05 $07 $E6
-4E46: F4                         BYTE $F4 $B2 $76 $76 $34 $08
-4E4C: AD 04 4E  L_4E4C           lda $4E04     ; L_4DFE+6
-4E4F: D0 2D                      bne $4E7E     ; L_4E7E
-4E51: B1 DE                      lda ($DE),y   ; FRE+4
-4E53: C9 01                      cmp #$01
-4E55: F0 27                      beq $4E7E     ; L_4E7E
-4E57: C9 02                      cmp #$02
-4E59: F0 23                      beq $4E7E     ; L_4E7E
-4E5B: C9 9D                      cmp #$9D
-4E5D: F0 1F                      beq $4E7E     ; L_4E7E
-4E5F: C9 9E                      cmp #$9E
-4E61: F0 1B                      beq $4E7E     ; L_4E7E
-4E63: C9 09                      cmp #$09
-4E65: F0 17                      beq $4E7E     ; L_4E7E
-4E67: 30 0D                      bmi $4E76     ; L_4E76
-4E69: C9 12                      cmp #$12
-4E6B: F0 11                      beq $4E7E     ; L_4E7E
-4E6D: 10 07                      bpl $4E76     ; L_4E76
-4E6F: 4C 7E 4E                   jmp $4E7E     ; L_4E7E
-4E72: 06 08     L_4E72           asl $08       ; WARMST
-4E74: 08        L_4E74           php
-4E75: 00        L_4E75           brk
-4E76: AD 00 4E  L_4E76           lda $4E00     ; L_4DFE+2
-4E79: F0 04                      beq $4E7F     ; L_4E7F
-4E7B: CE 00 4E                   dec $4E00     ; L_4DFE+2
-4E7E: 60        L_4E7E           rts
-4E7F: 8E 73 4E  L_4E7F           stx $4E73     ; L_4E72+1
-4E82: 8C 74 4E                   sty $4E74     ; L_4E74
-4E85: A5 03                      lda $03       ; CASINI+1
-4E87: 18                         clc
-4E88: 0A                         asl
-4E89: 0A                         asl
-4E8A: 18                         clc
-4E8B: 69 07                      adc #$07
-4E8D: A8                         tay
-4E8E: A5 00                      lda $00       ; LNFLG
-4E90: 18                         clc
-4E91: 0A                         asl
-4E92: 0A                         asl
-4E93: 18                         clc
-4E94: 69 4C                      adc #$4C
-4E96: 8D 03 D0                   sta $D003     ; HPOSP3
-4E99: 18                         clc
-4E9A: 69 01                      adc #$01
-4E9C: 8D 05 D0                   sta $D005     ; HPOSM1
-4E9F: 8D 01 4E                   sta $4E01     ; L_4DFE+3
-4EA2: 18                         clc
-4EA3: 69 02                      adc #$02
-4EA5: 8D 04 D0                   sta $D004     ; HPOSM0
-4EA8: 8C 02 4E                   sty $4E02     ; L_4DFE+4
-4EAB: A2 00                      ldx #$00
-4EAD: BD 05 4E  L_4EAD           lda $4E05,x   ; L_4DFE+7
-4EB0: 99 80 6F                   sta $6F80,y
-4EB3: C8                         iny
-4EB4: E8                         inx
-4EB5: E0 07                      cpx #$07
-4EB7: D0 F4                      bne $4EAD     ; L_4EAD
-4EB9: A9 01                      lda #$01
-4EBB: 8D 6F 02                   sta $026F     ; GPRIOR
-4EBE: AD 0B D4  L_4EBE           lda $D40B     ; VCOUNT
-4EC1: 29 07                      and #$07
-4EC3: C9 07                      cmp #$07
-4EC5: F0 F7                      beq $4EBE     ; L_4EBE
-4EC7: 8D FE 7F                   sta $7FFE
-4ECA: 18                         clc
-4ECB: 0A                         asl
-4ECC: 0A                         asl
-4ECD: 0A                         asl
-4ECE: AA                         tax
-4ECF: 18                         clc
-4ED0: 69 06                      adc #$06
-4ED2: 8D 72 4E                   sta $4E72     ; L_4E72
-4ED5: AC 02 4E                   ldy $4E02     ; L_4DFE+4
-4ED8: BD 0D 4E  L_4ED8           lda $4E0D,x   ; L_4E06+7
-4EDB: 99 80 6D                   sta $6D80,y
-4EDE: C8                         iny
-4EDF: E8                         inx
-4EE0: EC 72 4E                   cpx $4E72     ; L_4E72
-4EE3: D0 F3                      bne $4ED8     ; L_4ED8
-4EE5: AE FE 7F                   ldx $7FFE
-4EE8: BD 45 4E                   lda $4E45,x   ; L_4E3E+7
-4EEB: 8D C3 02                   sta $02C3     ; PCOLR3
-4EEE: A9 01                      lda #$01
-4EF0: 8D 04 4E                   sta $4E04     ; L_4DFE+6
-4EF3: AE 73 4E                   ldx $4E73     ; L_4E72+1
-4EF6: AC 74 4E                   ldy $4E74     ; L_4E74
-4EF9: 60                         rts
-4EFA: 8E 73 4E  L_4EFA           stx $4E73     ; L_4E72+1
-4EFD: 8C 74 4E                   sty $4E74     ; L_4E74
-4F00: A9 0D                      lda #$0D
-4F02: 8D 5C 4F                   sta $4F5C     ; L_4F5B+1
-4F05: 8D 79 4F                   sta $4F79     ; L_4F78+1
-4F08: 8D 80 4F                   sta $4F80     ; L_4F7F+1
-4F0B: 8D 84 4F                   sta $4F84     ; L_4F83+1
-4F0E: 8D 92 4F                   sta $4F92     ; L_4F91+1
-4F11: AD 02 50                   lda $5002
-4F14: EA                         nop
-4F15: EA                         nop
-4F16: AD 04 4E                   lda $4E04     ; L_4DFE+6
-4F19: F0 7E                      beq $4F99     ; L_4F99
-4F1B: EE 75 4E                   inc $4E75     ; L_4E75
-4F1E: AD 75 4E                   lda $4E75     ; L_4E75
-4F21: C9 02                      cmp #$02
-4F23: 90 74                      bcc $4F99     ; L_4F99
-4F25: A9 00                      lda #$00
-4F27: 8D 75 4E                   sta $4E75     ; L_4E75
-4F2A: AD FE 7F                   lda $7FFE
-4F2D: 18                         clc
-4F2E: 0A                         asl
-4F2F: 0A                         asl
-4F30: 0A                         asl
-4F31: 18                         clc
-4F32: 6D 5C 4F                   adc $4F5C     ; L_4F5B+1
-4F35: 8D 5C 4F                   sta $4F5C     ; L_4F5B+1
-4F38: 8D 79 4F                   sta $4F79     ; L_4F78+1
-4F3B: 8D 80 4F                   sta $4F80     ; L_4F7F+1
-4F3E: 8D 84 4F                   sta $4F84     ; L_4F83+1
-4F41: 8D 92 4F                   sta $4F92     ; L_4F91+1
-4F44: A2 00                      ldx #$00
-4F46: AC 02 4E                   ldy $4E02     ; L_4DFE+4
-4F49: C0 6A                      cpy #$6A
-4F4B: B0 4D                      bcs $4F9A     ; L_4F9A
-4F4D: C8                         iny
-4F4E: 8C 02 4E                   sty $4E02     ; L_4DFE+4
-4F51: BD 05 4E  L_4F51           lda $4E05,x   ; L_4DFE+7
-4F54: 99 80 6F                   sta $6F80,y
-4F57: E0 06                      cpx #$06
-4F59: B0 06                      bcs $4F61     ; L_4F61
-4F5B: BD 0D 4E  L_4F5B           lda $4E0D,x   ; L_4E06+7
-4F5E: 99 80 6D                   sta $6D80,y
-4F61: C8        L_4F61           iny
-4F62: E8                         inx
-4F63: E0 09                      cpx #$09
-4F65: D0 EA                      bne $4F51     ; L_4F51
-4F67: EE BE 4F                   inc $4FBE     ; L_4FBE
-4F6A: AD BE 4F                   lda $4FBE     ; L_4FBE
-4F6D: C9 03                      cmp #$03
-4F6F: 90 28                      bcc $4F99     ; L_4F99
-4F71: A9 00                      lda #$00
-4F73: 8D BE 4F                   sta $4FBE     ; L_4FBE
-4F76: A0 07                      ldy #$07
-4F78: B9 0D 4E  L_4F78           lda $4E0D,y   ; L_4E06+7
-4F7B: 8D 04 4E                   sta $4E04     ; L_4DFE+6
-4F7E: 88                         dey
-4F7F: B9 0D 4E  L_4F7F           lda $4E0D,y   ; L_4E06+7
-4F82: C8                         iny
-4F83: 99 0D 4E  L_4F83           sta $4E0D,y   ; L_4E06+7
-4F86: 88                         dey
-4F87: 88                         dey
-4F88: C0 00                      cpy #$00
-4F8A: D0 F3                      bne $4F7F     ; L_4F7F
-4F8C: A0 01                      ldy #$01
-4F8E: AD 04 4E                   lda $4E04     ; L_4DFE+6
-4F91: 99 0D 4E  L_4F91           sta $4E0D,y   ; L_4E06+7
-4F94: A9 01                      lda #$01
-4F96: 8D 04 4E                   sta $4E04     ; L_4DFE+6
-4F99: 60        L_4F99           rts
-4F9A: A2 00     L_4F9A           ldx #$00
-4F9C: 8E 04 4E                   stx $4E04     ; L_4DFE+6
-4F9F: AC 02 4E                   ldy $4E02     ; L_4DFE+4
-4FA2: 88                         dey
-4FA3: 88                         dey
-4FA4: A9 00     L_4FA4           lda #$00
-4FA6: 99 80 6D                   sta $6D80,y
-4FA9: 99 80 6F                   sta $6F80,y
-4FAC: C8                         iny
-4FAD: E8                         inx
-4FAE: E0 0C                      cpx #$0C
-4FB0: D0 F2                      bne $4FA4     ; L_4FA4
-4FB2: AD 0B D4                   lda $D40B     ; VCOUNT
-4FB5: 29 07                      and #$07
-4FB7: 18                         clc
-4FB8: 69 03                      adc #$03
-4FBA: 8D 00 4E                   sta $4E00     ; L_4DFE+2
-4FBD: 60                         rts
-4FBE: 01        L_4FBE           BYTE $01 $00 $00 $00 $00 $00 $00 $00
-4FC6: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4FCE: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4FD6: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4FDE: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4FE6: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4FEE: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4FF6: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4FFE: 00                         BYTE $00 $00
 
 
 ; BLOCK 2 Arkanoid.xex
@@ -5393,21 +4922,21 @@
 4BA5: 85 02                      sta $02       ; CASINI
 4BA7: A2 00                      ldx #$00
 4BA9: A0 00                      ldy #$00
-4BAB: B9 40 4C  L_4BAB           lda $4C40,y   ; L_4C3F+1
+4BAB: B9 40 4C  L_4BAB           lda $4C40,y   ; L_4C40
 4BAE: 18                         clc
-4BAF: 79 41 4C                   adc $4C41,y   ; L_4C3F+2
+4BAF: 79 41 4C                   adc $4C41,y   ; L_4C41
 4BB2: D0 1E                      bne $4BD2     ; L_4BD2
 4BB4: A5 00                      lda $00       ; LNFLG
-4BB6: 99 40 4C                   sta $4C40,y   ; L_4C3F+1
+4BB6: 99 40 4C                   sta $4C40,y   ; L_4C40
 4BB9: A5 01                      lda $01       ; NGFLAG
-4BBB: 99 41 4C                   sta $4C41,y   ; L_4C3F+2
+4BBB: 99 41 4C                   sta $4C41,y   ; L_4C41
 4BBE: AD 00 40                   lda $4000     ; L_3FFD+3
 4BC1: 4A                         lsr
 4BC2: 4A                         lsr
 4BC3: 4A                         lsr
 4BC4: 18                         clc
 4BC5: 69 02                      adc #$02
-4BC7: 99 42 4C                   sta $4C42,y   ; L_4C3F+3
+4BC7: 99 42 4C                   sta $4C42,y   ; L_4C42
 4BCA: A5 02                      lda $02       ; CASINI
 4BCC: 20 53 2A                   jsr $2A53     ; L_2A53
 4BCF: 4C DE 4B                   jmp $4BDE     ; L_4BDE
@@ -5433,7 +4962,7 @@
 4BF3: AC 02 4A                   ldy $4A02     ; L_4A01+1
 4BF6: 60                         rts
 4BF7: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4BFF: 00        L_4BFF           BYTE $00 $00 $00 $00 $00 $00 $00 $00
+4BFF: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
 4C07: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
 4C0F: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
 4C17: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
@@ -5441,7 +4970,7 @@
 4C27: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
 4C2F: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
 4C37: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4C3F: 00        L_4C3F           BYTE $00 $00 $00 $00 $00 $00 $00 $00
+4C3F: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
 4C47: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
 4C4F: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
 4C57: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
@@ -5459,18 +4988,18 @@
 4CB7: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
 4CBF: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
 4CC7: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4CCF: 00        L_4CCF           BYTE $00 $00 $00 $00 $00 $00 $3C $00
+4CCF: 00                         BYTE $00 $00 $00 $00 $00 $00 $3C $00
 4CD7: A2 00     L_4CD7           ldx #$00
-4CD9: AC D5 4C                   ldy $4CD5     ; L_4CCF+6
+4CD9: AC D5 4C                   ldy $4CD5     ; L_4CD5
 4CDC: C0 3C                      cpy #$3C
 4CDE: 30 02                      bmi $4CE2     ; L_4CE2
 4CE0: A0 00                      ldy #$00
-4CE2: B9 41 4C  L_4CE2           lda $4C41,y   ; L_4C3F+2
+4CE2: B9 41 4C  L_4CE2           lda $4C41,y   ; L_4C41
 4CE5: F0 26                      beq $4D0D     ; L_4D0D
 4CE7: 85 ED                      sta $ED       ; EEXP
-4CE9: B9 40 4C                   lda $4C40,y   ; L_4C3F+1
+4CE9: B9 40 4C                   lda $4C40,y   ; L_4C40
 4CEC: 85 EC                      sta $EC       ; FRX
-4CEE: 8C D6 4C                   sty $4CD6     ; L_4CCF+7
+4CEE: 8C D6 4C                   sty $4CD6     ; L_4CD6
 4CF1: A0 00                      ldy #$00
 4CF3: B1 EC                      lda ($EC),y   ; FRX
 4CF5: C9 11                      cmp #$11
@@ -5485,7 +5014,7 @@
 4D05: 18                         clc
 4D06: 69 02                      adc #$02
 4D08: 91 EC                      sta ($EC),y   ; FRX
-4D0A: AC D6 4C                   ldy $4CD6     ; L_4CCF+7
+4D0A: AC D6 4C                   ldy $4CD6     ; L_4CD6
 4D0D: C8        L_4D0D           iny
 4D0E: C8                         iny
 4D0F: C8                         iny
@@ -5493,10 +5022,10 @@
 4D11: E8                         inx
 4D12: E0 05                      cpx #$05
 4D14: D0 CC                      bne $4CE2     ; L_4CE2
-4D16: 8C D5 4C                   sty $4CD5     ; L_4CCF+6
+4D16: 8C D5 4C                   sty $4CD5     ; L_4CD5
 4D19: 60                         rts
-4D1A: AC D6 4C  L_4D1A           ldy $4CD6     ; L_4CCF+7
-4D1D: B9 43 4C                   lda $4C43,y   ; L_4C3F+4
+4D1A: AC D6 4C  L_4D1A           ldy $4CD6     ; L_4CD6
+4D1D: B9 43 4C                   lda $4C43,y   ; L_4C43
 4D20: 85 E0                      sta $E0       ; FR1
 4D22: A0 00                      ldy #$00
 4D24: 91 EC                      sta ($EC),y   ; FRX
@@ -5504,12 +5033,12 @@
 4D27: 18                         clc
 4D28: 69 01                      adc #$01
 4D2A: 91 EC                      sta ($EC),y   ; FRX
-4D2C: AC D6 4C                   ldy $4CD6     ; L_4CCF+7
+4D2C: AC D6 4C                   ldy $4CD6     ; L_4CD6
 4D2F: A9 00                      lda #$00
-4D31: 99 40 4C                   sta $4C40,y   ; L_4C3F+1
-4D34: 99 41 4C                   sta $4C41,y   ; L_4C3F+2
-4D37: 99 42 4C                   sta $4C42,y   ; L_4C3F+3
-4D3A: 99 43 4C                   sta $4C43,y   ; L_4C3F+4
+4D31: 99 40 4C                   sta $4C40,y   ; L_4C40
+4D34: 99 41 4C                   sta $4C41,y   ; L_4C41
+4D37: 99 42 4C                   sta $4C42,y   ; L_4C42
+4D3A: 99 43 4C                   sta $4C43,y   ; L_4C43
 4D3D: A5 E0                      lda $E0       ; FR1
 4D3F: C9 9D                      cmp #$9D
 4D41: F0 CA                      beq $4D0D     ; L_4D0D
@@ -5568,14 +5097,14 @@
 4DA3: 91 E0                      sta ($E0),y   ; FR1
 4DA5: C9 01                      cmp #$01
 4DA7: F0 06                      beq $4DAF     ; L_4DAF
-4DA9: AC D6 4C                   ldy $4CD6     ; L_4CCF+7
+4DA9: AC D6 4C                   ldy $4CD6     ; L_4CD6
 4DAC: 4C 0D 4D                   jmp $4D0D     ; L_4D0D
 4DAF: A9 03     L_4DAF           lda #$03
 4DB1: 91 EC                      sta ($EC),y   ; FRX
 4DB3: C8                         iny
 4DB4: A9 04                      lda #$04
 4DB6: 91 EC                      sta ($EC),y   ; FRX
-4DB8: AC D6 4C                   ldy $4CD6     ; L_4CCF+7
+4DB8: AC D6 4C                   ldy $4CD6     ; L_4CD6
 4DBB: 4C 0D 4D                   jmp $4D0D     ; L_4D0D
 4DBE: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
 4DC6: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
@@ -5585,18 +5114,18 @@
 4DE6: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
 4DEE: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
 4DF6: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-4DFE: 00        L_4DFE           BYTE $00 $00 $07 $69 $6A $00 $00 $00
-4E06: 7C        L_4E06           BYTE $7C $FE $FE $FE $7C $00 $00 $00
+4DFE: 00                         BYTE $00 $00 $07 $69 $6A $00 $00 $00
+4E06: 7C                         BYTE $7C $FE $FE $FE $7C $00 $00 $00
 4E0E: 06                         BYTE $06 $05 $06 $05 $06 $00 $00 $00
 4E16: 07                         BYTE $07 $00 $00 $07 $04 $07 $01 $00
 4E1E: 07                         BYTE $07 $00 $00 $00 $07 $04 $04 $00
 4E26: 07                         BYTE $07 $04 $06 $04 $07 $00 $00 $00
 4E2E: 00                         BYTE $00 $06 $05 $05 $05 $06 $00 $00
 4E36: 04                         BYTE $04 $04 $04 $04 $07 $00 $00 $00
-4E3E: 04        L_4E3E           BYTE $04 $04 $00 $00 $07 $05 $07 $E6
+4E3E: 04                         BYTE $04 $04 $00 $00 $07 $05 $07 $E6
 4E46: F4                         BYTE $F4 $B2 $76 $76 $34
 4E4B: 08                         php
-4E4C: AD 04 4E  L_4E4C           lda $4E04     ; L_4DFE+6
+4E4C: AD 04 4E  L_4E4C           lda $4E04     ; L_4E04
 4E4F: D0 2D                      bne $4E7E     ; L_4E7E
 4E51: B1 DE                      lda ($DE),y   ; FRE+4
 4E53: C9 01                      cmp #$01
@@ -5617,11 +5146,11 @@
 4E72: 06 08     L_4E72           asl $08       ; WARMST
 4E74: 08        L_4E74           php
 4E75: 00        L_4E75           brk
-4E76: AD 00 4E  L_4E76           lda $4E00     ; L_4DFE+2
+4E76: AD 00 4E  L_4E76           lda $4E00     ; L_4E00
 4E79: F0 04                      beq $4E7F     ; L_4E7F
-4E7B: CE 00 4E                   dec $4E00     ; L_4DFE+2
+4E7B: CE 00 4E                   dec $4E00     ; L_4E00
 4E7E: 60        L_4E7E           rts
-4E7F: 8E 73 4E  L_4E7F           stx $4E73     ; L_4E72+1
+4E7F: 8E 73 4E  L_4E7F           stx $4E73     ; L_4E73
 4E82: 8C 74 4E                   sty $4E74     ; L_4E74
 4E85: A5 03                      lda $03       ; CASINI+1
 4E87: 18                         clc
@@ -5640,13 +5169,13 @@
 4E99: 18                         clc
 4E9A: 69 01                      adc #$01
 4E9C: 8D 05 D0                   sta $D005     ; HPOSM1
-4E9F: 8D 01 4E                   sta $4E01     ; L_4DFE+3
+4E9F: 8D 01 4E                   sta $4E01     ; L_4E01
 4EA2: 18                         clc
 4EA3: 69 02                      adc #$02
 4EA5: 8D 04 D0                   sta $D004     ; HPOSM0
-4EA8: 8C 02 4E                   sty $4E02     ; L_4DFE+4
+4EA8: 8C 02 4E                   sty $4E02     ; L_4E02
 4EAB: A2 00                      ldx #$00
-4EAD: BD 05 4E  L_4EAD           lda $4E05,x   ; L_4DFE+7
+4EAD: BD 05 4E  L_4EAD           lda $4E05,x   ; L_4E05
 4EB0: 99 80 6F                   sta $6F80,y   ; L_6F7A+6
 4EB3: C8                         iny
 4EB4: E8                         inx
@@ -5667,33 +5196,33 @@
 4ECF: 18                         clc
 4ED0: 69 06                      adc #$06
 4ED2: 8D 72 4E                   sta $4E72     ; L_4E72
-4ED5: AC 02 4E                   ldy $4E02     ; L_4DFE+4
-4ED8: BD 0D 4E  L_4ED8           lda $4E0D,x   ; L_4E06+7
+4ED5: AC 02 4E                   ldy $4E02     ; L_4E02
+4ED8: BD 0D 4E  L_4ED8           lda $4E0D,x   ; L_4E0D
 4EDB: 99 80 6D                   sta $6D80,y   ; L_6D7A+6
 4EDE: C8                         iny
 4EDF: E8                         inx
 4EE0: EC 72 4E                   cpx $4E72     ; L_4E72
 4EE3: D0 F3                      bne $4ED8     ; L_4ED8
 4EE5: AE FE 7F                   ldx $7FFE     ; L_7FFA+4
-4EE8: BD 45 4E                   lda $4E45,x   ; L_4E3E+7
+4EE8: BD 45 4E                   lda $4E45,x   ; L_4E45
 4EEB: 8D C3 02                   sta $02C3     ; PCOLR3
 4EEE: A9 01                      lda #$01
-4EF0: 8D 04 4E                   sta $4E04     ; L_4DFE+6
-4EF3: AE 73 4E                   ldx $4E73     ; L_4E72+1
+4EF0: 8D 04 4E                   sta $4E04     ; L_4E04
+4EF3: AE 73 4E                   ldx $4E73     ; L_4E73
 4EF6: AC 74 4E                   ldy $4E74     ; L_4E74
 4EF9: 60                         rts
-4EFA: 8E 73 4E  L_4EFA           stx $4E73     ; L_4E72+1
+4EFA: 8E 73 4E  L_4EFA           stx $4E73     ; L_4E73
 4EFD: 8C 74 4E                   sty $4E74     ; L_4E74
 4F00: A9 0D                      lda #$0D
-4F02: 8D 5C 4F                   sta $4F5C     ; L_4F5B+1
-4F05: 8D 79 4F                   sta $4F79     ; L_4F78+1
-4F08: 8D 80 4F                   sta $4F80     ; L_4F7F+1
-4F0B: 8D 84 4F                   sta $4F84     ; L_4F83+1
-4F0E: 8D 92 4F                   sta $4F92     ; L_4F91+1
+4F02: 8D 5C 4F                   sta $4F5C     ; L_4F5C
+4F05: 8D 79 4F                   sta $4F79     ; L_4F79
+4F08: 8D 80 4F                   sta $4F80     ; L_4F80
+4F0B: 8D 84 4F                   sta $4F84     ; L_4F84
+4F0E: 8D 92 4F                   sta $4F92     ; L_4F92
 4F11: AD 02 50                   lda $5002     ; L_4FFE+4
 4F14: EA                         nop
 4F15: EA                         nop
-4F16: AD 04 4E                   lda $4E04     ; L_4DFE+6
+4F16: AD 04 4E                   lda $4E04     ; L_4E04
 4F19: F0 7E                      beq $4F99     ; L_4F99
 4F1B: EE 75 4E                   inc $4E75     ; L_4E75
 4F1E: AD 75 4E                   lda $4E75     ; L_4E75
@@ -5707,23 +5236,23 @@
 4F2F: 0A                         asl
 4F30: 0A                         asl
 4F31: 18                         clc
-4F32: 6D 5C 4F                   adc $4F5C     ; L_4F5B+1
-4F35: 8D 5C 4F                   sta $4F5C     ; L_4F5B+1
-4F38: 8D 79 4F                   sta $4F79     ; L_4F78+1
-4F3B: 8D 80 4F                   sta $4F80     ; L_4F7F+1
-4F3E: 8D 84 4F                   sta $4F84     ; L_4F83+1
-4F41: 8D 92 4F                   sta $4F92     ; L_4F91+1
+4F32: 6D 5C 4F                   adc $4F5C     ; L_4F5C
+4F35: 8D 5C 4F                   sta $4F5C     ; L_4F5C
+4F38: 8D 79 4F                   sta $4F79     ; L_4F79
+4F3B: 8D 80 4F                   sta $4F80     ; L_4F80
+4F3E: 8D 84 4F                   sta $4F84     ; L_4F84
+4F41: 8D 92 4F                   sta $4F92     ; L_4F92
 4F44: A2 00                      ldx #$00
-4F46: AC 02 4E                   ldy $4E02     ; L_4DFE+4
+4F46: AC 02 4E                   ldy $4E02     ; L_4E02
 4F49: C0 6A                      cpy #$6A
 4F4B: B0 4D                      bcs $4F9A     ; L_4F9A
 4F4D: C8                         iny
-4F4E: 8C 02 4E                   sty $4E02     ; L_4DFE+4
-4F51: BD 05 4E  L_4F51           lda $4E05,x   ; L_4DFE+7
+4F4E: 8C 02 4E                   sty $4E02     ; L_4E02
+4F51: BD 05 4E  L_4F51           lda $4E05,x   ; L_4E05
 4F54: 99 80 6F                   sta $6F80,y   ; L_6F7A+6
 4F57: E0 06                      cpx #$06
 4F59: B0 06                      bcs $4F61     ; L_4F61
-4F5B: BD 0D 4E  L_4F5B           lda $4E0D,x   ; L_4E06+7
+4F5B: BD 0D 4E                   lda $4E0D,x   ; L_4E0D
 4F5E: 99 80 6D                   sta $6D80,y   ; L_6D7A+6
 4F61: C8        L_4F61           iny
 4F62: E8                         inx
@@ -5736,25 +5265,25 @@
 4F71: A9 00                      lda #$00
 4F73: 8D BE 4F                   sta $4FBE     ; L_4FBE
 4F76: A0 07                      ldy #$07
-4F78: B9 0D 4E  L_4F78           lda $4E0D,y   ; L_4E06+7
-4F7B: 8D 04 4E                   sta $4E04     ; L_4DFE+6
+4F78: B9 0D 4E                   lda $4E0D,y   ; L_4E0D
+4F7B: 8D 04 4E                   sta $4E04     ; L_4E04
 4F7E: 88                         dey
-4F7F: B9 0D 4E  L_4F7F           lda $4E0D,y   ; L_4E06+7
+4F7F: B9 0D 4E  L_4F7F           lda $4E0D,y   ; L_4E0D
 4F82: C8                         iny
-4F83: 99 0D 4E  L_4F83           sta $4E0D,y   ; L_4E06+7
+4F83: 99 0D 4E                   sta $4E0D,y   ; L_4E0D
 4F86: 88                         dey
 4F87: 88                         dey
 4F88: C0 00                      cpy #$00
 4F8A: D0 F3                      bne $4F7F     ; L_4F7F
 4F8C: A0 01                      ldy #$01
-4F8E: AD 04 4E                   lda $4E04     ; L_4DFE+6
-4F91: 99 0D 4E  L_4F91           sta $4E0D,y   ; L_4E06+7
+4F8E: AD 04 4E                   lda $4E04     ; L_4E04
+4F91: 99 0D 4E                   sta $4E0D,y   ; L_4E0D
 4F94: A9 01                      lda #$01
-4F96: 8D 04 4E                   sta $4E04     ; L_4DFE+6
+4F96: 8D 04 4E                   sta $4E04     ; L_4E04
 4F99: 60        L_4F99           rts
 4F9A: A2 00     L_4F9A           ldx #$00
-4F9C: 8E 04 4E                   stx $4E04     ; L_4DFE+6
-4F9F: AC 02 4E                   ldy $4E02     ; L_4DFE+4
+4F9C: 8E 04 4E                   stx $4E04     ; L_4E04
+4F9F: AC 02 4E                   ldy $4E02     ; L_4E02
 4FA2: 88                         dey
 4FA3: 88                         dey
 4FA4: A9 00     L_4FA4           lda #$00
@@ -5768,7 +5297,7 @@
 4FB5: 29 07                      and #$07
 4FB7: 18                         clc
 4FB8: 69 03                      adc #$03
-4FBA: 8D 00 4E                   sta $4E00     ; L_4DFE+2
+4FBA: 8D 00 4E                   sta $4E00     ; L_4E00
 4FBD: 60                         rts
 4FBE: 01        L_4FBE           BYTE $01 $00 $00 $00 $00 $00 $00 $00
 4FC6: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
@@ -5779,9 +5308,9 @@
 4FEE: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
 4FF6: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
 4FFE: 00        L_4FFE           BYTE $00 $00 $01 $EA $00
-5003: AD 04 4E                   lda $4E04     ; L_4DFE+6
+5003: AD 04 4E                   lda $4E04     ; L_4E04
 5006: F0 0D                      beq $5015     ; L_5015
-5008: AD 01 4E                   lda $4E01     ; L_4DFE+3
+5008: AD 01 4E                   lda $4E01     ; L_4E01
 500B: 38                         sec
 500C: E9 2C                      sbc #$2C
 500E: CD 09 44                   cmp $4409     ; L_4405+4
@@ -5797,7 +5326,7 @@
 5024: 30 03                      bmi $5029     ; L_5029
 5026: 4C 15 50                   jmp $5015     ; L_5015
 5029: 8D 00 50  L_5029           sta $5000     ; L_4FFE+2
-502C: AD 02 4E                   lda $4E02     ; L_4DFE+4
+502C: AD 02 4E                   lda $4E02     ; L_4E02
 502F: C9 63                      cmp #$63
 5031: 30 E2                      bmi $5015     ; L_5015
 5033: C9 66                      cmp #$66
@@ -5814,7 +5343,7 @@
 504D: F0 05                      beq $5054     ; L_5054
 504F: 30 03                      bmi $5054     ; L_5054
 5051: 4C 15 50                   jmp $5015     ; L_5015
-5054: AC 02 4E  L_5054           ldy $4E02     ; L_4DFE+4
+5054: AC 02 4E  L_5054           ldy $4E02     ; L_4E02
 5057: 88                         dey
 5058: 88                         dey
 5059: A2 00                      ldx #$00
@@ -5838,7 +5367,7 @@
 508B: AD 0B 44                   lda $440B     ; L_4405+6
 508E: F0 03                      beq $5093     ; L_5093
 5090: 4C 3D 52                   jmp $523D     ; L_523D
-5093: AD 03 4E  L_5093           lda $4E03     ; L_4DFE+5
+5093: AD 03 4E  L_5093           lda $4E03     ; L_4E03
 5096: F0 17                      beq $50AF     ; L_50AF
 5098: C9 01                      cmp #$01
 509A: F0 4F                      beq $50EB     ; L_50EB
@@ -5857,7 +5386,7 @@
 50B8: 4C F0 51  L_50B8           jmp $51F0     ; L_51F0
 50BB: 4C 7D 51  L_50BB           jmp $517D     ; L_517D
 50BE: 4C 1B 52  L_50BE           jmp $521B     ; L_521B
-50C1: AD 03 4E  L_50C1           lda $4E03     ; L_4DFE+5
+50C1: AD 03 4E  L_50C1           lda $4E03     ; L_4E03
 50C4: F0 15                      beq $50DB     ; L_50DB
 50C6: C9 01                      cmp #$01
 50C8: F0 14                      beq $50DE     ; L_50DE
@@ -6323,21 +5852,21 @@
 54E0: 85 02                      sta $02       ; CASINI
 54E2: A2 00                      ldx #$00
 54E4: A0 00                      ldy #$00
-54E6: B9 41 4C  L_54E6           lda $4C41,y   ; L_4C3F+2
+54E6: B9 41 4C  L_54E6           lda $4C41,y   ; L_4C41
 54E9: D0 37                      bne $5522     ; L_5522
 54EB: A5 04                      lda $04       ; RAMLO
-54ED: 99 40 4C                   sta $4C40,y   ; L_4C3F+1
+54ED: 99 40 4C                   sta $4C40,y   ; L_4C40
 54F0: A5 05                      lda $05       ; RAMLO+1
-54F2: 99 41 4C                   sta $4C41,y   ; L_4C3F+2
+54F2: 99 41 4C                   sta $4C41,y   ; L_4C41
 54F5: AD 00 40                   lda $4000     ; L_3FFD+3
 54F8: 4A                         lsr
 54F9: 4A                         lsr
 54FA: 4A                         lsr
 54FB: 18                         clc
 54FC: 69 02                      adc #$02
-54FE: 99 42 4C                   sta $4C42,y   ; L_4C3F+3
+54FE: 99 42 4C                   sta $4C42,y   ; L_4C42
 5501: A5 02                      lda $02       ; CASINI
-5503: 99 43 4C                   sta $4C43,y   ; L_4C3F+4
+5503: 99 43 4C                   sta $4C43,y   ; L_4C43
 5506: A9 01                      lda #$01
 5508: 8D 81 52                   sta $5281     ; L_5280+1
 550B: A0 00                      ldy #$00
@@ -6533,12 +6062,12 @@
 5702: EA                         nop
 5703: 20 B0 2C                   jsr $2CB0     ; L_2CB0
 5706: A9 00                      lda #$00
-5708: 8D 04 4E                   sta $4E04     ; L_4DFE+6
+5708: 8D 04 4E                   sta $4E04     ; L_4E04
 570B: AD 0B D4                   lda $D40B     ; VCOUNT
 570E: 29 07                      and #$07
 5710: 18                         clc
 5711: 69 02                      adc #$02
-5713: 8D 00 4E                   sta $4E00     ; L_4DFE+2
+5713: 8D 00 4E                   sta $4E00     ; L_4E00
 5716: A2 00                      ldx #$00
 5718: 8A                         txa
 5719: 20 83 2C                   jsr $2C83     ; L_2C83
@@ -9185,7 +8714,7 @@
 8F1E: 69 10                      adc #$10
 8F20: 8D 7D 9F                   sta $9F7D
 8F23: A9 00                      lda #$00
-8F25: 8D 04 4E                   sta $4E04     ; L_4DFE+6
+8F25: 8D 04 4E                   sta $4E04     ; L_4E04
 8F28: 8D 02 50                   sta $5002     ; L_4FFE+4
 8F2B: 60                         rts
 8F2C: A9 00     L_8F2C           lda #$00
