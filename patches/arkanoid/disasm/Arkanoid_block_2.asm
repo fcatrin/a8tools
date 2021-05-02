@@ -1573,7 +1573,7 @@ L_59B3           stx L_57B8+7
                  sta L_57C0+4
                  rts
                  ldx L_57E8
-                 lda L_3C23+2
+                 lda TIMER_MAYBE
                  nop
                  nop
                  lda L_57B0+6,x
@@ -3934,7 +3934,7 @@ L_8F81           brk
                  cmp #$70
                  bpl L_8F91
 L_8F8E           jmp L_3800
-L_8F91           lda L_3C23+2
+L_8F91           lda TIMER_MAYBE
                  beq L_8F91
                  jsr L_283D
                  cmp #$83

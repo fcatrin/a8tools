@@ -171,8 +171,8 @@
 150E: D0 F5                      bne $1505     ; L_1505
 1510: A2 D8                      ldx #$D8
 1512: A0 14                      ldy #$14
-1514: 8E 22 3C                   stx $3C22     ; L_3C1B+7
-1517: 8C 23 3C                   sty $3C23     ; L_3C23
+1514: 8E 22 3C                   stx $3C22     ; BRICK_COLORS_L
+1517: 8C 23 3C                   sty $3C23     ; BRICK_COLORS_H
 151A: A9 10                      lda #$10
 151C: 8D F4 02                   sta $02F4     ; CHBAS
 151F: A2 E6                      ldx #$E6
@@ -353,15 +353,15 @@
 1688: A9 B4                      lda #$B4
 168A: 8D 71 50                   sta $5071
 168D: 4C E4 1C                   jmp $1CE4     ; L_1CE4
-1690: AD 24 3C  L_1690           lda $3C24     ; L_3C23+1
+1690: AD 24 3C  L_1690           lda $3C24     ; ROW_INDEX
 1693: C9 1C                      cmp #$1C
 1695: 30 0D                      bmi $16A4     ; L_16A4
 1697: 20 FD 46                   jsr $46FD     ; L_46FD
-169A: AD 24 3C                   lda $3C24     ; L_3C23+1
+169A: AD 24 3C                   lda $3C24     ; ROW_INDEX
 169D: C9 2A                      cmp #$2A
 169F: 30 03                      bmi $16A4     ; L_16A4
 16A1: 20 83 17                   jsr $1783     ; L_1783
-16A4: AD 25 3C  L_16A4           lda $3C25     ; L_3C23+2
+16A4: AD 25 3C  L_16A4           lda $3C25     ; TIMER_MAYBE
 16A7: F0 E7                      beq $1690     ; L_1690
 16A9: 20 CB 44                   jsr $44CB     ; L_44CB
 16AC: 20 F1 44                   jsr $44F1     ; L_44F1
@@ -2928,9 +2928,9 @@
 3943: 29 80                      and #$80
 3945: F0 01                      beq $3948     ; L_3948
 3947: E8                         inx
-3948: AD 22 3C  L_3948           lda $3C22     ; L_3C1B+7
+3948: AD 22 3C  L_3948           lda $3C22     ; BRICK_COLORS_L
 394B: 8D 55 39                   sta $3955     ; L_3954+1
-394E: AD 23 3C                   lda $3C23     ; L_3C23
+394E: AD 23 3C                   lda $3C23     ; BRICK_COLORS_H
 3951: 8D 56 39                   sta $3956     ; L_3954+2
 3954: BD 4C 7B  L_3954           lda $7B4C,x
 3957: 29 F0     L_3957           and #$F0
@@ -3176,8 +3176,8 @@
 3C03: 84                         BYTE $84 $84 $84 $84 $84 $84 $84 $84
 3C0B: 84                         BYTE $84 $84 $84 $84 $84 $84 $84 $84
 3C13: 84                         BYTE $84 $84 $84 $84 $84 $84 $84 $84
-3C1B: 84        L_3C1B           BYTE $84 $04 $84 $02 $41 $00 $92 $00
-3C23: 00        L_3C23           BYTE $00 $00 $00
+3C1B: 84                         BYTE $84 $04 $84 $02 $41 $00 $92 $00
+3C23: 00        BRICK_COLORS_H   BYTE $00 $00 $00
 3C26: AD 31 02  L_3C26           lda $0231     ; SDLSTH
 3C29: C9 3C                      cmp #$3C
 3C2B: F0 39                      beq $3C66     ; L_3C66
@@ -3187,9 +3187,9 @@
 3C34: 8C 31 02                   sty $0231     ; SDLSTH
 3C37: A2 00                      ldx #$00
 3C39: A0 7B                      ldy #$7B
-3C3B: 8E 22 3C                   stx $3C22     ; L_3C1B+7
-3C3E: 8C 23 3C                   sty $3C23     ; L_3C23
-3C41: 8E 24 3C                   stx $3C24     ; L_3C23+1
+3C3B: 8E 22 3C                   stx $3C22     ; BRICK_COLORS_L
+3C3E: 8C 23 3C                   sty $3C23     ; BRICK_COLORS_H
+3C41: 8E 24 3C                   stx $3C24     ; ROW_INDEX
 3C44: 8A                         txa
 3C45: 9D 00 9B  L_3C45           sta $9B00,x
 3C48: 9D 00 9C                   sta $9C00,x
@@ -3218,16 +3218,16 @@
 3C6B: 48                         pha
 3C6C: AD 0B D4                   lda $D40B     ; VCOUNT
 3C6F: C9 F2                      cmp #$F2
-3C71: 10 05                      bpl $3C78     ; L_3C78
+3C71: 10 05                      bpl $3C78     ; USE_GFX_SET
 3C73: A9 8C                      lda #$8C
 3C75: 8D 09 D4                   sta $D409     ; CHBASE
-3C78: AD 24 3C  L_3C78           lda $3C24     ; L_3C23+1
+3C78: AD 24 3C  USE_GFX_SET      lda $3C24     ; ROW_INDEX
 3C7B: A8                         tay
 3C7C: 18                         clc
 3C7D: 69 02                      adc #$02
-3C7F: 8D 24 3C                   sta $3C24     ; L_3C23+1
-3C82: AE 22 3C                   ldx $3C22     ; L_3C1B+7
-3C85: AD 23 3C                   lda $3C23     ; L_3C23
+3C7F: 8D 24 3C                   sta $3C24     ; ROW_INDEX
+3C82: AE 22 3C                   ldx $3C22     ; BRICK_COLORS_L
+3C85: AD 23 3C                   lda $3C23     ; BRICK_COLORS_H
 3C88: 86 DA                      stx $DA       ; ROW_COLOR_L
 3C8A: 85 DB                      sta $DB       ; ROW_COLOR_H
 3C8C: C0 30                      cpy #$30
@@ -3235,7 +3235,7 @@
 3C90: C0 34                      cpy #$34
 3C92: F0 44                      beq $3CD8     ; SET_SCORE_COLORS
 
-  Set colors for each row
+  Set colors for each brick row
 
 3C94: B1 DA                      lda ($DA),y   ; ROW_COLOR_L
 3C96: 8D 18 D0                   sta $D018     ; COLPF2
@@ -3245,15 +3245,15 @@
 3C9F: 88                         dey
 3CA0: C0 00                      cpy #$00
 3CA2: D0 03                      bne $3CA7     ; L_3CA7
-3CA4: 8C 25 3C                   sty $3C25     ; L_3C23+2
+3CA4: 8C 25 3C                   sty $3C25     ; TIMER_MAYBE
 3CA7: C0 32     L_3CA7           cpy #$32
 3CA9: F0 25                      beq $3CD0     ; L_3CD0
-3CAB: 20 F3 3C  L_3CAB           jsr $3CF3     ; L_3CF3
+3CAB: 20 F3 3C  DLI_EXIT         jsr $3CF3     ; CHECK_LAST_KEY
 3CAE: 29 04                      and #$04
-3CB0: D0 06                      bne $3CB8     ; L_3CB8
+3CB0: D0 06                      bne $3CB8     ; NO_NEW_KEY
 3CB2: AD 09 D2                   lda $D209     ; KBCODE
 3CB5: 8D FC 02                   sta $02FC     ; CH
-3CB8: A9 00     L_3CB8           lda #$00
+3CB8: A9 00     NO_NEW_KEY       lda #$00
 3CBA: 85 10                      sta $10       ; POKMSK
 3CBC: 8D 0E D2                   sta $D20E     ; IRQEN
 3CBF: 68                         pla
@@ -3264,22 +3264,22 @@
 3CC4: 40                         rti
 3CC5: A9 1F     SET_SHIP_COLORS  lda #$1F
 3CC7: 8D 18 D0                   sta $D018     ; COLPF2
-3CCA: EE 25 3C                   inc $3C25     ; L_3C23+2
-3CCD: 4C AB 3C                   jmp $3CAB     ; L_3CAB
+3CCA: EE 25 3C                   inc $3C25     ; TIMER_MAYBE
+3CCD: 4C AB 3C                   jmp $3CAB     ; DLI_EXIT
 3CD0: A9 00     L_3CD0           lda #$00
 3CD2: 8D 18 D0                   sta $D018     ; COLPF2
-3CD5: 4C AB 3C                   jmp $3CAB     ; L_3CAB
+3CD5: 4C AB 3C                   jmp $3CAB     ; DLI_EXIT
 3CD8: A9 0F     SET_SCORE_COLORS lda #$0F
 3CDA: 8D 16 D0                   sta $D016     ; COLPF0
 3CDD: 8D 17 D0                   sta $D017     ; COLPF1
 3CE0: A9 00                      lda #$00
-3CE2: 8D 24 3C                   sta $3C24     ; L_3C23+1
+3CE2: 8D 24 3C                   sta $3C24     ; ROW_INDEX
 3CE5: A9 8C                      lda #$8C
 3CE7: 8D 09 D4                   sta $D409     ; CHBASE
-3CEA: 4C AB 3C                   jmp $3CAB     ; L_3CAB
-3CED: 4C AB 3C                   jmp $3CAB     ; L_3CAB
+3CEA: 4C AB 3C                   jmp $3CAB     ; DLI_EXIT
+3CED: 4C AB 3C                   jmp $3CAB     ; DLI_EXIT
 3CF0: 3C                         BYTE $3C $00 $00
-3CF3: A9 00     L_3CF3           lda #$00
+3CF3: A9 00     CHECK_LAST_KEY   lda #$00
 3CF5: 8D BE 02                   sta $02BE     ; SHFLOK
 3CF8: AD 0F D2                   lda $D20F     ; SKSTAT
 3CFB: 60                         rts
@@ -3995,8 +3995,8 @@
 4341: 4C 1F 43                   jmp $431F     ; L_431F
 4344: A6 DC     L_4344           ldx $DC       ; FRE+2
 4346: A4 DD                      ldy $DD       ; FRE+3
-4348: 8E 22 3C                   stx $3C22     ; L_3C1B+7
-434B: 8C 23 3C                   sty $3C23     ; L_3C23
+4348: 8E 22 3C                   stx $3C22     ; BRICK_COLORS_L
+434B: 8C 23 3C                   sty $3C23     ; BRICK_COLORS_H
 434E: A2 30                      ldx #$30
 4350: A0 9B                      ldy #$9B
 4352: 86 DC                      stx $DC       ; FRE+2
@@ -4199,7 +4199,7 @@
 44E3: 85 DE                      sta $DE       ; FRE+4
 44E5: 90 02                      bcc $44E9     ; L_44E9
 44E7: E6 DF                      inc $DF       ; FRE+5
-44E9: AD 25 3C  L_44E9           lda $3C25     ; L_3C23+2
+44E9: AD 25 3C  L_44E9           lda $3C25     ; TIMER_MAYBE
 44EC: EA                         nop
 44ED: EA                         nop
 44EE: 4C B0 44                   jmp $44B0     ; L_44B0
@@ -4225,7 +4225,7 @@
 451E: C9 1C                      cmp #$1C
 4520: 30 03                      bmi $4525     ; L_4525
 4522: 20 FD 46                   jsr $46FD     ; L_46FD
-4525: AD 25 3C  L_4525           lda $3C25     ; L_3C23+2
+4525: AD 25 3C  L_4525           lda $3C25     ; TIMER_MAYBE
 4528: F0 F1                      beq $451B     ; L_4517+4
 452A: 20 CB 44                   jsr $44CB     ; L_44CB
 452D: 20 C7 59                   jsr $59C7
@@ -4428,7 +4428,7 @@
 4713: 4C F7 48                   jmp $48F7     ; L_48F7
 4716: A9 00     L_4716           lda #$00
 4718: 9D F0 46                   sta $46F0,x   ; L_46F0
-471B: AD 25 3C                   lda $3C25     ; L_3C23+2
+471B: AD 25 3C                   lda $3C25     ; TIMER_MAYBE
 471E: 8A                         txa
 471F: 18                         clc
 4720: 0A                         asl
@@ -6414,7 +6414,7 @@
 59C3: 8D C4 57                   sta $57C4     ; L_57C0+4
 59C6: 60                         rts
 59C7: AE E8 57                   ldx $57E8     ; L_57E8
-59CA: AD 25 3C                   lda $3C25     ; L_3C23+2
+59CA: AD 25 3C                   lda $3C25     ; TIMER_MAYBE
 59CD: EA                         nop
 59CE: EA                         nop
 59CF: BD B6 57                   lda $57B6,x   ; L_57B0+6
@@ -8775,7 +8775,7 @@
 8F8A: C9 70                      cmp #$70
 8F8C: 10 03                      bpl $8F91     ; L_8F91
 8F8E: 4C 00 38  L_8F8E           jmp $3800     ; L_3800
-8F91: AD 25 3C  L_8F91           lda $3C25     ; L_3C23+2
+8F91: AD 25 3C  L_8F91           lda $3C25     ; TIMER_MAYBE
 8F94: F0 FB                      beq $8F91     ; L_8F91
 8F96: 20 3D 28                   jsr $283D     ; L_283D
 8F99: C9 83                      cmp #$83

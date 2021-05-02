@@ -172,8 +172,8 @@ L_1505           lda L_1408,x
                  bne L_1505
                  ldx #$D8
                  ldy #$14
-                 stx L_3C1B+7
-                 sty L_3C23
+                 stx BRICK_COLORS_L
+                 sty BRICK_COLORS_H
                  lda #$10
                  sta CHBAS
                  ldx #$E6
@@ -354,15 +354,15 @@ L_1680           jsr L_2C03+5
                  lda #$B4
                  sta $5071
                  jmp L_1CE4
-L_1690           lda L_3C23+1
+L_1690           lda ROW_INDEX
                  cmp #$1C
                  bmi L_16A4
                  jsr L_46FD
-                 lda L_3C23+1
+                 lda ROW_INDEX
                  cmp #$2A
                  bmi L_16A4
                  jsr L_1783
-L_16A4           lda L_3C23+2
+L_16A4           lda TIMER_MAYBE
                  beq L_1690
                  jsr L_44CB
                  jsr L_44F1
@@ -2929,9 +2929,9 @@ L_3930           tax
                  and #$80
                  beq L_3948
                  inx
-L_3948           lda L_3C1B+7
+L_3948           lda BRICK_COLORS_L
                  sta L_3954+1
-                 lda L_3C23
+                 lda BRICK_COLORS_H
                  sta L_3954+2
 L_3954           lda $7B4C,x
 L_3957           and #$F0
@@ -3177,8 +3177,8 @@ L_3BE9           ldx L_3BB0+1
                  .byte $84, $84, $84, $84, $84, $84, $84, $84
                  .byte $84, $84, $84, $84, $84, $84, $84, $84
                  .byte $84, $84, $84, $84, $84, $84, $84, $84
-L_3C1B           .byte $84, $04, $84, $02, $41, $00, $92, $00
-L_3C23           .byte $00, $00, $00
+                 .byte $84, $04, $84, $02, $41, $00, $92, $00
+BRICK_COLORS_H   .byte $00, $00, $00
 L_3C26           lda SDLSTH
                  cmp #$3C
                  beq L_3C66
@@ -3188,9 +3188,9 @@ L_3C26           lda SDLSTH
                  sty SDLSTH
                  ldx #$00
                  ldy #$7B
-                 stx L_3C1B+7
-                 sty L_3C23
-                 stx L_3C23+1
+                 stx BRICK_COLORS_L
+                 sty BRICK_COLORS_H
+                 stx ROW_INDEX
                  txa
 L_3C45           sta $9B00,x
                  sta $9C00,x
@@ -3219,16 +3219,16 @@ DLI              pha
                  pha
                  lda VCOUNT
                  cmp #$F2
-                 bpl L_3C78
+                 bpl USE_GFX_SET
                  lda #$8C
                  sta CHBASE
-L_3C78           lda L_3C23+1
+USE_GFX_SET      lda ROW_INDEX
                  tay
                  clc
                  adc #$02
-                 sta L_3C23+1
-                 ldx L_3C1B+7
-                 lda L_3C23
+                 sta ROW_INDEX
+                 ldx BRICK_COLORS_L
+                 lda BRICK_COLORS_H
                  stx ROW_COLOR_L
                  sta ROW_COLOR_H
                  cpy #$30
@@ -3236,7 +3236,7 @@ L_3C78           lda L_3C23+1
                  cpy #$34
                  beq SET_SCORE_COLORS
 
-;  Set colors for each row
+;  Set colors for each brick row
 
                  lda (ROW_COLOR_L),y
                  sta COLPF2
@@ -3246,15 +3246,15 @@ L_3C78           lda L_3C23+1
                  dey
                  cpy #$00
                  bne L_3CA7
-                 sty L_3C23+2
+                 sty TIMER_MAYBE
 L_3CA7           cpy #$32
                  beq L_3CD0
-L_3CAB           jsr L_3CF3
+DLI_EXIT         jsr CHECK_LAST_KEY
                  and #$04
-                 bne L_3CB8
+                 bne NO_NEW_KEY
                  lda KBCODE
                  sta CH
-L_3CB8           lda #$00
+NO_NEW_KEY       lda #$00
                  sta POKMSK
                  sta IRQEN
                  pla
@@ -3265,22 +3265,22 @@ L_3CB8           lda #$00
                  rti
 SET_SHIP_COLORS  lda #$1F
                  sta COLPF2
-                 inc L_3C23+2
-                 jmp L_3CAB
+                 inc TIMER_MAYBE
+                 jmp DLI_EXIT
 L_3CD0           lda #$00
                  sta COLPF2
-                 jmp L_3CAB
+                 jmp DLI_EXIT
 SET_SCORE_COLORS lda #$0F
                  sta COLPF0
                  sta COLPF1
                  lda #$00
-                 sta L_3C23+1
+                 sta ROW_INDEX
                  lda #$8C
                  sta CHBASE
-                 jmp L_3CAB
-                 jmp L_3CAB
+                 jmp DLI_EXIT
+                 jmp DLI_EXIT
                  .byte $3C, $00, $00
-L_3CF3           lda #$00
+CHECK_LAST_KEY   lda #$00
                  sta SHFLOK
                  lda SKSTAT
                  rts
@@ -3996,8 +3996,8 @@ L_4340           inx
                  jmp L_431F
 L_4344           ldx FRE+2
                  ldy FRE+3
-                 stx L_3C1B+7
-                 sty L_3C23
+                 stx BRICK_COLORS_L
+                 sty BRICK_COLORS_H
                  ldx #$30
                  ldy #$9B
                  stx FRE+2
@@ -4200,7 +4200,7 @@ L_44CB           lda L_4405+3
                  sta FRE+4
                  bcc L_44E9
                  inc FRE+5
-L_44E9           lda L_3C23+2
+L_44E9           lda TIMER_MAYBE
                  nop
                  nop
                  jmp L_44B0
@@ -4226,7 +4226,7 @@ L_4517           .byte $01, $20, $0C, $40, $AD, $24, $3C
                  cmp #$1C
                  bmi L_4525
                  jsr L_46FD
-L_4525           lda L_3C23+2
+L_4525           lda TIMER_MAYBE
                  beq L_4517+4
                  jsr L_44CB
                  jsr $59C7
@@ -4429,7 +4429,7 @@ L_4708           lda L_46F0,x
                  jmp L_48F7
 L_4716           lda #$00
                  sta L_46F0,x
-                 lda L_3C23+2
+                 lda TIMER_MAYBE
                  txa
                  clc
                  asl
