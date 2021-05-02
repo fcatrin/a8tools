@@ -3,6 +3,7 @@ package xtvapps.atari.disasm.mapper;
 import java.util.ArrayList;
 import java.util.List;
 
+import xtvapps.atari.Log;
 import xtvapps.atari.disasm.mapper.Section.SectionType;
 
 public class Block {
@@ -23,15 +24,31 @@ public class Block {
 	}
 	
 	public void addSection(Section section) {
+		if (!sections.isEmpty()) {
+			sections.get(sections.size()-1).lastAddr = section.addr - 1;
+		}
 		sections.add(section);
 	}
 	
-	public SectionType getSectionType(int addr) {
-		SectionType sectionType = SectionType.Code;
+	public Section getSection(int addr) {
+		Section selectedSection = null;
 		for(Section section : sections) {
-			if (addr >= section.addr) sectionType = section.sectionType;
+			if (addr >= section.addr) selectedSection =  section;
 		}
-		return sectionType;
+		return selectedSection;
+	}
+	
+	public SectionType getSectionType(int addr) {
+		Section section = getSection(addr);
+		if (section!=null) return section.sectionType;
+
+		return SectionType.Code;
+	}
+	
+	public int getSectionLastAddr(int addr) {
+		Section section = getSection(addr);
+		if (section!=null) return section.lastAddr;
+		return 0x10000;
 	}
 	
 	public int getLastAddr() {

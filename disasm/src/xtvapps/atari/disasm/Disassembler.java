@@ -12,6 +12,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import xtvapps.atari.Log;
 import xtvapps.atari.disasm.Processor.Sym;
 import xtvapps.atari.disasm.mapper.Mapper;
 import xtvapps.atari.disasm.mapper.Section.SectionType;
@@ -160,6 +161,7 @@ public class Disassembler {
 			if (sectionType == SectionType.Byte) {
 				if (offset > lastAddr) break;
 				if (mapper.getSectionType(blockIndex, offset) != SectionType.Byte) break;
+				if (offset > mapper.getSectionLastAddr(blockIndex, addr)) break;
 			}
 
 			String byteValue = String.format("$%02X", getMemory(offset)); 

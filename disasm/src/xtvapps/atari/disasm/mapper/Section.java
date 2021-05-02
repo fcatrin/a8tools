@@ -5,14 +5,15 @@ public class Section {
 
 	public SectionType sectionType;
 	public int addr;
+	public int lastAddr = 0x10000;
 	
 	public Section(SectionType sectionType, int addr) {
 		this.sectionType = sectionType;
 		this.addr = addr;
 	}
-
+	
 	@Override
 	public String toString() {
-		return String.format("section: %s addr %04X", sectionType.name(), addr);
+		return String.format("section: %s addr %04X - %04X", sectionType.name(), addr, lastAddr);
 	}
 }

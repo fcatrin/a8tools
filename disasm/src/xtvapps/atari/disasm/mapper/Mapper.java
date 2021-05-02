@@ -43,6 +43,14 @@ public class Mapper {
 		return sectionType;
 	}
 	
+	public int getSectionLastAddr(int blockIndex, int addr) {
+		Block block = blocks.get(blockIndex);
+		if (block != null) {
+			return block.getSectionLastAddr(addr);
+		}		
+		return 0x10000;
+	}
+	
 	public int getLastAddr(int blockIndex) {
 		Block block = blocks.get(blockIndex);
 		return block.getLastAddr();
