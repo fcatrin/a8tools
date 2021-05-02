@@ -172,8 +172,8 @@ L_1505           lda L_1408,x
                  bne L_1505
                  ldx #$D8
                  ldy #$14
-                 stx BRICK_COLORS_L
-                 sty BRICK_COLORS_H
+                 stx BRICK_COLORS
+                 sty L_3C23
                  lda #$10
                  sta CHBAS
                  ldx #$E6
@@ -184,8 +184,8 @@ L_1505           lda L_1408,x
                  sta COLOR2
                  ldx #$2E
                  ldy #$9B
-                 stx FRE+4
-                 sty FRE+5
+                 stx MASK_ADDR
+                 sty MASK_ADDR+1
                  lda #$38
                  sta FPTR2+1
                  ldx #$00
@@ -194,7 +194,7 @@ L_1505           lda L_1408,x
                  stx FLPTR+1
 L_1542           ldy #$00
 L_1544           lda FPTR2+1
-                 sta (FRE+4),y
+                 sta (MASK_ADDR),y
                  inc FPTR2+1
                  iny
                  inc FLPTR
@@ -223,72 +223,72 @@ L_1544           lda FPTR2+1
                  bne L_1544
                  lda #$00
                  sta FPTR2
-                 lda FRE+4
+                 lda MASK_ADDR
                  clc
                  adc #$78
-                 sta FRE+4
+                 sta MASK_ADDR
                  bcc L_1583
-                 inc FRE+5
+                 inc MASK_ADDR+1
 L_1583           inc FLPTR+1
                  lda FLPTR+1
                  cmp #$09
                  bne L_1542
                  ldx #$2E
                  ldy #$9B
-                 stx FRE+4
-                 sty FRE+5
+                 stx MASK_ADDR
+                 sty MASK_ADDR+1
                  ldx #$00
 L_1595           ldy #$00
                  lda #$0C
                  sta L_14D8,x
                  sta L_14E0,x
                  lda #$2E
-                 sta (FRE+4),y
+                 sta (MASK_ADDR),y
                  iny
                  lda #$2F
-                 sta (FRE+4),y
+                 sta (MASK_ADDR),y
                  ldy #$1C
                  lda #$30
-                 sta (FRE+4),y
+                 sta (MASK_ADDR),y
                  iny
                  lda #$31
-                 sta (FRE+4),y
-                 lda FRE+4
+                 sta (MASK_ADDR),y
+                 lda MASK_ADDR
                  clc
                  adc #$28
-                 sta FRE+4
+                 sta MASK_ADDR
                  bcc L_15BE
-                 inc FRE+5
+                 inc MASK_ADDR+1
 L_15BE           inx
                  cpx #$1A
                  bne L_1595
                  ldx #$01
                  ldy #$9C
-                 stx FRE+4
-                 sty FRE+5
+                 stx MASK_ADDR
+                 sty MASK_ADDR+1
                  ldx #$60
                  ldy #$14
-                 stx FRE+2
+                 stx SHIP_ADDR
                  .byte $80, $DD
                  ldx #$00
 L_15D5           ldy #$00
-L_15D7           lda (FRE+2),y
-                 sta (FRE+4),y
+L_15D7           lda (SHIP_ADDR),y
+                 sta (MASK_ADDR),y
                  iny
                  cpy #$0A
                  bne L_15D7
-                 lda FRE+4
+                 lda MASK_ADDR
                  clc
                  adc #$28
-                 sta FRE+4
+                 sta MASK_ADDR
                  bcc L_15EB
-                 inc FRE+5
-L_15EB           lda FRE+2
+                 inc MASK_ADDR+1
+L_15EB           lda SHIP_ADDR
                  clc
                  adc #$0A
-                 sta FRE+2
+                 sta SHIP_ADDR
                  bcc L_15F6
-                 inc FRE+3
+                 inc SHIP_ADDR+1
 L_15F6           inx
                  cpx #$0C
                  bne L_15D5
@@ -447,11 +447,11 @@ L_17B3           lda L_176D+2
 L_17C8           lda #$00
                  sta L_16FD+4
                  lda L_16FD+5
-                 sta FRE+2
+                 sta SHIP_ADDR
                  lda L_16FD+6
-                 sta FRE+3
+                 sta SHIP_ADDR+1
                  ldy #$00
-L_17D9           lda (FRE+2),y
+L_17D9           lda (SHIP_ADDR),y
                  sta L_1358,y
                  iny
                  cpy #$10
@@ -478,49 +478,49 @@ L_1809           lda L_4405+4
                  stx L_177D+5
                  tax
                  lda L_1745+2,x
-                 sta FRE+4
-                 sta FRE+2
-                 stx FRE+3
+                 sta MASK_ADDR
+                 sta SHIP_ADDR
+                 stx SHIP_ADDR+1
                  ldx L_177D+5
                  lda #$0B
-                 sta FRE+5
+                 sta MASK_ADDR+1
                  lda #$01
                  sta L_1765+4,x
                  sta L_1765+7,x
                  sta L_176D+2,x
-                 lda FRE+4
+                 lda MASK_ADDR
                  bne L_183E
                  lda #$7F
                  sta L_1765+7,x
                  lda #$01
                  sta L_1765+4,x
                  jmp L_1877
-L_183E           cmp FRE+5
+L_183E           cmp MASK_ADDR+1
                  bpl L_185A
-L_1842           lda FRE+5
+L_1842           lda MASK_ADDR+1
                  sec
-                 sbc FRE+4
-                 sta FRE+5
+                 sbc MASK_ADDR
+                 sta MASK_ADDR+1
                  inc L_1765+7,x
-                 lda FRE+5
-                 cmp FRE+4
+                 lda MASK_ADDR+1
+                 cmp MASK_ADDR
                  bpl L_1842
                  lda #$01
                  sta L_1765+4,x
                  jmp L_1877
-L_185A           lda FRE+5
+L_185A           lda MASK_ADDR+1
                  sta L_177D+5
 L_185F           lda L_177D+5
                  clc
-                 adc FRE+5
+                 adc MASK_ADDR+1
                  sta L_177D+5
                  inc L_1765+4,x
-                 lda FRE+4
+                 lda MASK_ADDR
                  cmp L_177D+5
                  bpl L_185F
                  lda #$01
                  sta L_1765+7,x
-L_1877           lda FRE+3
+L_1877           lda SHIP_ADDR+1
                  cmp #$12
                  bmi L_1885
                  lda L_1765+4,x
@@ -528,18 +528,18 @@ L_1877           lda FRE+3
                  sta L_1765+4,x
 L_1885           lda #$80
                  ldy #$6E
-                 sta FRE+2
-                 sty FRE+3
+                 sta SHIP_ADDR
+                 sty SHIP_ADDR+1
                  txa
                  tay
 L_188F           cpy #$00
                  beq L_18A2
-                 lda FRE+2
+                 lda SHIP_ADDR
                  clc
                  adc #$80
-                 sta FRE+2
+                 sta SHIP_ADDR
                  bcc L_189E
-                 inc FRE+3
+                 inc SHIP_ADDR+1
 L_189E           dey
                  jmp L_188F
 L_18A2           lda #$81
@@ -552,7 +552,7 @@ L_18A2           lda #$81
                  sta L_1775,x
                  ldx #$00
 L_18B7           lda L_1705+2,x
-                 sta (FRE+2),y
+                 sta (SHIP_ADDR),y
                  iny
                  inx
                  cpx #$08
@@ -561,18 +561,18 @@ L_18B7           lda L_1705+2,x
                  jmp L_1992
 L_18C8           lda #$80
                  ldy #$6E
-                 sta FRE+2
-                 sty FRE+3
+                 sta SHIP_ADDR
+                 sty SHIP_ADDR+1
                  txa
                  tay
 L_18D2           cpy #$00
                  beq L_18E5
-                 lda FRE+2
+                 lda SHIP_ADDR
                  clc
                  adc #$80
-                 sta FRE+2
+                 sta SHIP_ADDR
                  bcc L_18E1
-                 inc FRE+3
+                 inc SHIP_ADDR+1
 L_18E1           dey
                  jmp L_18D2
 L_18E5           lda L_1775,x
@@ -587,7 +587,7 @@ L_18E5           lda L_1775,x
                  stx L_177D+5
                  ldx #$00
                  txa
-L_1901           sta (FRE+2),y
+L_1901           sta (SHIP_ADDR),y
                  iny
                  inx
                  cpx #$08
@@ -626,7 +626,7 @@ L_1955           lda #$00
                  lda L_1775,x
                  tay
                  lda #$00
-                 sta (FRE+2),y
+                 sta (SHIP_ADDR),y
                  iny
                  tya
                  sta L_1775,x
@@ -646,7 +646,7 @@ L_1955           lda #$00
                  jsr L_1A13
                  ldx #$00
 L_1987           lda L_172D+2,x
-                 sta (FRE+2),y
+                 sta (SHIP_ADDR),y
                  iny
                  inx
                  cpx #$08
@@ -680,11 +680,11 @@ L_19BE           lda #$00
                  bcs L_19D1
                  dec L_16FD+6
 L_19D1           lda L_16FD+5
-                 sta FRE+2
+                 sta SHIP_ADDR
                  lda L_16FD+6
-                 sta FRE+3
+                 sta SHIP_ADDR+1
                  ldy #$00
-L_19DD           lda (FRE+2),y
+L_19DD           lda (SHIP_ADDR),y
                  sta L_1358,y
                  iny
                  cpy #$10
@@ -738,7 +738,7 @@ L_1A6A           brk
 L_1A6B           sty L_1A69
                  lda #$00
                  sta L_1A68
-                 lda (FRE+4),y
+                 lda (MASK_ADDR),y
                  cmp #$2E
                  beq L_1A94
                  cmp #$2F
@@ -749,7 +749,7 @@ L_1A6B           sty L_1A69
                  beq L_1A94
                  ldx #$13
 L_1A87           txa
-                 cmp (FRE+4),y
+                 cmp (MASK_ADDR),y
                  beq L_1A94
                  inx
                  cpx #$1D
@@ -759,7 +759,7 @@ L_1A94           lda #$01
                  sta L_1A68
                  rts
 L_1A9A           ldy L_1A69
-                 lda (FRE+4),y
+                 lda (MASK_ADDR),y
                  and #$80
                  bne L_1AB6
                  lda #$03
@@ -778,7 +778,7 @@ L_1AB7           stx L_1A6A
                  ldx L_1A6A
                  lda L_1A68
                  bne L_1AD1
-                 ldx FRE+2
+                 ldx SHIP_ADDR
                  jmp L_48A1
 L_1AD1           jsr L_4A8D
                  ldx L_1A6A
@@ -788,7 +788,7 @@ L_1ADA           stx L_1A6A
                  cmp #$20
                  bne L_1AF1
                  jsr L_1A6B
-                 ldx FRE+2
+                 ldx SHIP_ADDR
                  lda L_1A68
                  bne L_1AF1
                  jmp L_47D4
@@ -798,7 +798,7 @@ L_1AF1           jsr L_4A8D
                  cmp #$75
                  bmi L_1B0F+1
                  cmp #$90
-L_1B00           ora (LNFLG,x)
+L_1B00           ora (DST,x)
 L_1B02           lda L_1A66
                  cmp #$0F
                  bpl L_1B0F
@@ -894,8 +894,8 @@ L_1C00           inx
                  inx
                  cpx #$1C
                  bne L_1BE9
-                 stx FRE+2
-                 sty FRE+3
+                 stx SHIP_ADDR
+                 sty SHIP_ADDR+1
                  ldx #$00
 L_1C0C           ldy #$00
 L_1C0E           iny
@@ -903,8 +903,8 @@ L_1C0E           iny
                  inx
                  cpx #$14
                  bne L_1C0C
-                 ldx FRE+2
-                 ldy FRE+3
+                 ldx SHIP_ADDR
+                 ldy SHIP_ADDR+1
                  lda L_14F8+2
                  bne L_1BE7
                  lda #$03
@@ -922,8 +922,8 @@ L_1C37           lda #$7E
                  sta $6E80,y
                  sta $6F00,y
                  iny
-                 stx FRE+2
-                 sty FRE+3
+                 stx SHIP_ADDR
+                 sty SHIP_ADDR+1
                  ldx #$00
 L_1C49           ldy #$00
 L_1C4B           iny
@@ -931,14 +931,14 @@ L_1C4B           iny
                  inx
                  cpx #$1C
                  bne L_1C49
-                 ldx FRE+2
-                 ldy FRE+3
-                 lda FRE+4
+                 ldx SHIP_ADDR
+                 ldy SHIP_ADDR+1
+                 lda MASK_ADDR
                  clc
                  adc #$28
-                 sta FRE+4
+                 sta MASK_ADDR
                  bcc L_1C62
-                 inc FRE+5
+                 inc MASK_ADDR+1
 L_1C62           inx
                  cpx #$28
                  bne L_1C37
@@ -1502,21 +1502,21 @@ L_28F9           jmp L_494A
                  brk
                  brk
                  brk
-L_2900           lda FRE+4
+L_2900           lda MASK_ADDR
                  sta ZTEMP4+1
-                 lda FRE+5
+                 lda MASK_ADDR+1
                  sta ZTEMP3
-                 lda FRE+5
+                 lda MASK_ADDR+1
                  sta FLPTR+1
-                 lda FRE+4
+                 lda MASK_ADDR
                  sec
                  sbc #$2A
                  sta FLPTR
                  bcs L_2917
                  dec FLPTR+1
-L_2917           lda FRE+5
+L_2917           lda MASK_ADDR+1
                  sta FPTR2+1
-                 lda FRE+4
+                 lda MASK_ADDR
                  sec
                  sbc #$02
                  sta FPTR2
@@ -1618,27 +1618,27 @@ L_29D5           dey
                  rts
 L_29D7           brk
 L_29D8           brk
-                 lda CASINI+1
+                 lda SRC+1
                  sta ZTEMP3
                  sta FLPTR+1
-                 lda CASINI
+                 lda SRC
                  sta ZTEMP4+1
                  sec
                  sbc #$2A
                  sta FLPTR
                  bcs L_29EC
                  dec FLPTR+1
-L_29EC           lda CASINI+1
+L_29EC           lda SRC+1
                  sta FPTR2+1
-                 lda CASINI
+                 lda SRC
                  sec
                  sbc #$02
                  sta FPTR2
                  bcs L_29FB
                  dec FPTR2+1
 L_29FB           jsr L_2926
-                 ldx FRE+2
-                 ldy FRE+3
+                 ldx SHIP_ADDR
+                 ldy SHIP_ADDR+1
                  rts
                  .byte $45, $20, $54, $4F, $20, $55, $4E, $4C
 L_2A0B           .byte $4F, $43, $4B, $3F, $9B, $AD, $52, $25
@@ -1648,19 +1648,19 @@ L_2A20           ldy #$00
                  ldx #$00
 L_2A24           lda L_4C41,y
                  beq L_2A47
-                 sta FRE+5
+                 sta MASK_ADDR+1
                  lda L_4C40,y
-                 sta FRE+4
+                 sta MASK_ADDR
                  lda L_4C43,y
-                 sta FRE+2
+                 sta SHIP_ADDR
                  sty L_2A1B+4
                  ldy #$00
-                 lda FRE+2
-                 sta (FRE+4),y
+                 lda SHIP_ADDR
+                 sta (MASK_ADDR),y
                  iny
                  clc
                  adc #$01
-                 sta (FRE+4),y
+                 sta (MASK_ADDR),y
                  ldy L_2A1B+4
 L_2A47           inx
                  iny
@@ -1752,46 +1752,46 @@ L_2AEF           rts
 L_2B00           jsr L_43D5
 L_2B03           nop
                  jmp L_2FE0
-L_2B07           stx FRE+2
-                 sty FRE+3
+L_2B07           stx SHIP_ADDR
+                 sty SHIP_ADDR+1
                  ldx #$80
                  ldy #$8A
-                 stx FRE+4
-                 sty FRE+5
+                 stx MASK_ADDR
+                 sty MASK_ADDR+1
                  ldx #$00
 L_2B15           ldy #$00
-L_2B17           lda (FRE+2),y
+L_2B17           lda (SHIP_ADDR),y
                  and #$CC
-                 sta (FRE+4),y
+                 sta (MASK_ADDR),y
                  iny
-                 lda (FRE+2),y
+                 lda (SHIP_ADDR),y
                  and #$33
-                 sta (FRE+4),y
+                 sta (MASK_ADDR),y
                  iny
                  cpy #$08
                  bne L_2B17
-                 lda FRE+2
+                 lda SHIP_ADDR
                  clc
                  adc #$08
-                 sta FRE+2
+                 sta SHIP_ADDR
                  bcc L_2B34
-                 inc FRE+3
-L_2B34           lda FRE+4
+                 inc SHIP_ADDR+1
+L_2B34           lda MASK_ADDR
                  clc
                  adc #$08
-                 sta FRE+4
+                 sta MASK_ADDR
                  bcc L_2B3F
-                 inc FRE+5
+                 inc MASK_ADDR+1
 L_2B3F           inx
                  cpx #$10
                  bne L_2B15
                  ldx #$30
                  ldy #$9B
-                 stx FRE+2
-                 sty FRE+3
+                 stx SHIP_ADDR
+                 sty SHIP_ADDR+1
                  ldx #$00
 L_2B4E           ldy #$00
-L_2B50           lda (FRE+2),y
+L_2B50           lda (SHIP_ADDR),y
                  and #$7F
                  cmp #$01
                  beq L_2B6B
@@ -1811,7 +1811,7 @@ L_2B6B           sty FPTR2+1
                  adc #$29
                  tay
                  ldx #$00
-L_2B76           lda (FRE+2),y
+L_2B76           lda (SHIP_ADDR),y
                  and #$7F
                  cmp #$38
                  bmi L_2B87
@@ -1819,7 +1819,7 @@ L_2B76           lda (FRE+2),y
                  bpl L_2B87
                  clc
                  adc #$18
-                 sta (FRE+2),y
+                 sta (SHIP_ADDR),y
 L_2B87           iny
                  inx
                  cpx #$02
@@ -1830,12 +1830,12 @@ L_2B91           iny
                  iny
                  cpy #$1A
                  bne L_2B50
-                 lda FRE+2
+                 lda SHIP_ADDR
                  clc
                  adc #$28
-                 sta FRE+2
+                 sta SHIP_ADDR
                  bcc L_2BA2
-                 inc FRE+3
+                 inc SHIP_ADDR+1
 L_2BA2           inx
                  cpx #$13
                  bne L_2B4E
@@ -1853,24 +1853,24 @@ L_2BBA           inx
                  bne L_2BA9
                  ldx #$58
                  ldy #$9B
-                 stx FRE+2
-                 sty FRE+3
+                 stx SHIP_ADDR
+                 sty SHIP_ADDR+1
                  ldx #$00
                  ldy #$00
-L_2BCB           lda (FRE+2),y
+L_2BCB           lda (SHIP_ADDR),y
                  cmp #$38
                  bmi L_2BDA
                  cmp #$48
                  bpl L_2BDA
                  clc
                  adc #$18
-                 sta (FRE+2),y
-L_2BDA           lda FRE+2
+                 sta (SHIP_ADDR),y
+L_2BDA           lda SHIP_ADDR
                  clc
                  adc #$28
-                 sta FRE+2
+                 sta SHIP_ADDR
                  bcc L_2BE5
-                 inc FRE+3
+                 inc SHIP_ADDR+1
 L_2BE5           inx
                  cpx #$19
                  bne L_2BCB
@@ -1899,12 +1899,12 @@ L_2C2E           rts
 L_2C2F           ldx L_367B+4
                  stx L_3533+3
                  lda L_3523+5,x
-                 sta FRE+2
+                 sta SHIP_ADDR
                  lda L_3523+6,x
-                 sta FRE+3
+                 sta SHIP_ADDR+1
                  ldy #$00
                  lda #$04
-                 sta (FRE+2),y
+                 sta (SHIP_ADDR),y
                  lda L_367B+5
                  clc
                  adc #$11
@@ -1991,31 +1991,31 @@ L_2D00           lda #$04
                  jsr L_400F
 L_2D26           ldx #$00
                  ldy #$20
-                 stx FRE+2
-                 sty FRE+3
+                 stx SHIP_ADDR
+                 sty SHIP_ADDR+1
                  ldx #$30
                  ldy #$9B
-                 stx FRE+4
-                 sty FRE+5
+                 stx MASK_ADDR
+                 sty MASK_ADDR+1
                  ldx #$00
 L_2D38           ldy #$00
-L_2D3A           lda (FRE+4),y
-                 sta (FRE+2),y
+L_2D3A           lda (MASK_ADDR),y
+                 sta (SHIP_ADDR),y
                  iny
                  cpy #$1A
                  bne L_2D3A
-                 lda FRE+2
+                 lda SHIP_ADDR
                  clc
                  adc #$28
-                 sta FRE+2
+                 sta SHIP_ADDR
                  bcc L_2D4E
-                 inc FRE+3
-L_2D4E           lda FRE+4
+                 inc SHIP_ADDR+1
+L_2D4E           lda MASK_ADDR
                  clc
                  adc #$28
-                 sta FRE+4
+                 sta MASK_ADDR
                  bcc L_2D59
-                 inc FRE+5
+                 inc MASK_ADDR+1
 L_2D59           inx
                  cpx #$13
                  bne L_2D38
@@ -2101,35 +2101,35 @@ L_2E1A           lda L_2E03+1
                  sta L_2DFB+6
 L_2E30           ldx #$00
                  ldy #$20
-                 stx FRE+2
-                 sty FRE+3
+                 stx SHIP_ADDR
+                 sty SHIP_ADDR+1
                  ldx #$00
                  ldy #$6D
-                 stx FRE+4
-                 sty FRE+5
+                 stx MASK_ADDR
+                 sty MASK_ADDR+1
                  ldx #$30
                  ldy #$9B
                  stx FLPTR
                  sty FLPTR+1
                  ldx #$00
 L_2E4A           ldy #$00
-L_2E4C           lda (FRE+2),y
+L_2E4C           lda (SHIP_ADDR),y
                  sta FPTR2+1
                  lda (FLPTR),y
-                 sta (FRE+2),y
+                 sta (SHIP_ADDR),y
                  lda FPTR2+1
-                 sta (FRE+4),y
+                 sta (MASK_ADDR),y
                  iny
                  cpy #$1A
                  bne L_2E4C
-                 lda FRE+4
+                 lda MASK_ADDR
                  clc
                  adc #$28
-                 sta FRE+4
-                 sta FRE+2
+                 sta MASK_ADDR
+                 sta SHIP_ADDR
                  bcc L_2E6C
-                 inc FRE+5
-                 inc FRE+3
+                 inc MASK_ADDR+1
+                 inc SHIP_ADDR+1
 L_2E6C           lda FLPTR
                  clc
                  adc #$28
@@ -2179,31 +2179,31 @@ L_2ED7           jsr L_42F9
                  jsr L_4D4A
 L_2EDD           ldx #$00
                  ldy #$6D
-                 stx FRE+2
-                 sty FRE+3
+                 stx SHIP_ADDR
+                 sty SHIP_ADDR+1
                  ldx #$30
                  ldy #$9B
-                 stx FRE+4
-                 sty FRE+5
+                 stx MASK_ADDR
+                 sty MASK_ADDR+1
                  ldx #$00
 L_2EEF           ldy #$00
-L_2EF1           lda (FRE+2),y
-                 sta (FRE+4),y
+L_2EF1           lda (SHIP_ADDR),y
+                 sta (MASK_ADDR),y
                  iny
                  cpy #$1A
                  bne L_2EF1
-                 lda FRE+2
+                 lda SHIP_ADDR
                  clc
                  adc #$28
-                 sta FRE+2
+                 sta SHIP_ADDR
                  bcc L_2F05
-                 inc FRE+3
-L_2F05           lda FRE+4
+                 inc SHIP_ADDR+1
+L_2F05           lda MASK_ADDR
                  clc
                  adc #$28
-                 sta FRE+4
+                 sta MASK_ADDR
                  bcc L_2F10
-                 inc FRE+5
+                 inc MASK_ADDR+1
 L_2F10           inx
                  cpx #$13
                  bne L_2EEF
@@ -2249,8 +2249,8 @@ L_2FB0           jsr L_2800
                  rts
 L_2FB9           ldx #$CC
                  ldy #$2F
-                 stx CASINI
-                 sty CASINI+1
+                 stx SRC
+                 sty SRC+1
                  stx DOSVEC
                  sty DOSVEC+1
                  stx DOSINI
@@ -2401,27 +2401,27 @@ L_3256           lda L_31F3
                  jsr L_44F1
                  ldx #$03
                  ldy #$30
-                 stx FRE+2
-                 sty FRE+3
+                 stx SHIP_ADDR
+                 sty SHIP_ADDR+1
 L_3294           ldx #$C8
                  ldy #$6C
-                 stx FRE+4
-                 sty FRE+5
+                 stx MASK_ADDR
+                 sty MASK_ADDR+1
                  ldx #$00
                  stx COLOR2
 L_32A1           ldy #$00
-L_32A3           lda (FRE+2),y
-                 sta (FRE+4),y
+L_32A3           lda (SHIP_ADDR),y
+                 sta (MASK_ADDR),y
                  iny
                  cpy #$0F
                  bne L_32A3
-                 inc FRE+5
-                 lda FRE+2
+                 inc MASK_ADDR+1
+                 lda SHIP_ADDR
                  clc
                  adc #$0F
-                 sta FRE+2
+                 sta SHIP_ADDR
                  bcc L_32B9
-                 inc FRE+3
+                 inc SHIP_ADDR+1
 L_32B9           inx
                  cpx #$04
                  bne L_32A1
@@ -2463,31 +2463,31 @@ L_32C2           iny
                  jmp L_3353
 L_331B           ldx #$00
                  ldy #$6D
-                 stx FRE+2
-                 sty FRE+3
+                 stx SHIP_ADDR
+                 sty SHIP_ADDR+1
                  ldx #$30
                  ldy #$9B
-                 stx FRE+4
-                 sty FRE+5
+                 stx MASK_ADDR
+                 sty MASK_ADDR+1
                  ldx #$00
 L_332D           ldy #$00
-L_332F           lda (FRE+2),y
-L_3331           sta (FRE+4),y
+L_332F           lda (SHIP_ADDR),y
+L_3331           sta (MASK_ADDR),y
                  iny
                  cpy #$1A
                  bne L_332F
-                 lda FRE+4
+                 lda MASK_ADDR
                  clc
                  adc #$28
-                 sta FRE+4
+                 sta MASK_ADDR
                  bcc L_3343
-                 inc FRE+5
+                 inc MASK_ADDR+1
 L_3343           tya
                  clc
-                 adc FRE+2
-                 sta FRE+2
+                 adc SHIP_ADDR
+                 sta SHIP_ADDR
                  bcc L_334D
-                 inc FRE+3
+                 inc SHIP_ADDR+1
 L_334D           inx
                  cpx #$13
                  bne L_332D
@@ -2547,7 +2547,7 @@ L_33CA           sta $9F60,x
                  cpx #$28
                  bne L_33CA
                  ldx #$00
-                 stx FRE+3
+                 stx SHIP_ADDR+1
 L_33D6           lda L_31E3,x
                  sta $9F6C,x
                  inx
@@ -2565,8 +2565,8 @@ L_33F3           iny
                  bne L_33F3
                  inx
                  bne L_33F1
-                 inc FRE+3
-                 lda FRE+3
+                 inc SHIP_ADDR+1
+                 lda SHIP_ADDR+1
                  cmp #$06
                  bne L_33EF
                  lda L_2DFB+5
@@ -2716,38 +2716,38 @@ L_36C2           lda #$00
                  sta CHBAS
                  ldx #$37
                  ldy #$35
-                 stx FRE+2
-                 sty FRE+3
+                 stx SHIP_ADDR
+                 sty SHIP_ADDR+1
                  ldx #$40
                  ldy #$9C
-                 stx FRE+4
-                 sty FRE+5
+                 stx MASK_ADDR
+                 sty MASK_ADDR+1
                  lda #$07
                  ldy #$4A
                  ldx #$37
                  jsr L_1F00
 L_36F1           ldy #$00
-L_36F3           lda (FRE+2),y
+L_36F3           lda (SHIP_ADDR),y
                  cmp #$0A
                  beq L_3703
                  cmp #$0B
                  beq L_371C
-                 sta (FRE+4),y
+                 sta (MASK_ADDR),y
                  iny
                  jmp L_36F3
 L_3703           iny
                  tya
                  clc
-                 adc FRE+2
-                 sta FRE+2
+                 adc SHIP_ADDR
+                 sta SHIP_ADDR
                  bcc L_370E
-                 inc FRE+3
-L_370E           lda FRE+4
+                 inc SHIP_ADDR+1
+L_370E           lda MASK_ADDR
                  clc
                  adc #$28
-                 sta FRE+4
+                 sta MASK_ADDR
                  bcc L_3719
-                 inc FRE+5
+                 inc MASK_ADDR+1
 L_3719           jmp L_36F1
 L_371C           lda #$04
                  jsr L_2C2F
@@ -2865,15 +2865,15 @@ L_3814           ldx L_3FFD+3
 L_3822           inc L_3FFD+3
                  lda #$00
                  sta L_38FE+2
-                 sta FRE+3
+                 sta SHIP_ADDR+1
 L_382C           ldx #$00
 L_382E           ldy #$00
 L_3830           iny
                  bne L_3830
                  inx
                  bne L_382E
-                 inc FRE+3
-                 lda FRE+3
+                 inc SHIP_ADDR+1
+                 lda SHIP_ADDR+1
                  cmp #$02
                  bne L_382C
                  ldx #$00
@@ -2913,11 +2913,11 @@ L_38FE           .byte $FF, $55, $00, $00, $28, $A0, $0B, $B0
                  sta L_39B0
                  stx L_38FE+3
                  sty L_38FE+4
-                 lda CASINI+1
+                 lda SRC+1
                  clc
                  asl
 L_3930           tax
-                 lda (FRE+4),y
+                 lda (MASK_ADDR),y
                  cmp #$05
                  beq L_3985
                  cmp #$06
@@ -2929,9 +2929,9 @@ L_3930           tax
                  and #$80
                  beq L_3948
                  inx
-L_3948           lda BRICK_COLORS_L
+L_3948           lda BRICK_COLORS
                  sta L_3954+1
-                 lda BRICK_COLORS_H
+                 lda L_3C23
                  sta L_3954+2
 L_3954           lda $7B4C,x
 L_3957           and #$F0
@@ -3006,41 +3006,41 @@ L_3A4E           lda L_3A00,x
                  cpx #$0E
                  bne L_3A4E
                  lda L_3FFD+3
-                 sta FRE+4
-                 inc FRE+4
+                 sta MASK_ADDR
+                 inc MASK_ADDR
                  lda #$20
                  sta L_3A38
                  ldy #$00
-                 sty FRE+5
-L_3A69           lda FRE+4
+                 sty MASK_ADDR+1
+L_3A69           lda MASK_ADDR
                  sec
                  sbc #$0A
-                 sta FRE+4
+                 sta MASK_ADDR
                  beq L_3A77
                  bcs L_3A77
                  jmp L_3A7E
-L_3A77           inc FRE+5
+L_3A77           inc MASK_ADDR+1
                  ldy #$01
                  jmp L_3A69
 L_3A7E           clc
                  adc #$0A
-                 sta FRE+4
+                 sta MASK_ADDR
                  ldx #$00
                  lda #$20
                  cpy #$00
                  beq L_3A94
-                 lda FRE+5
+                 lda MASK_ADDR+1
                  clc
                  adc #$10
                  sta $9F75,x
                  inx
 L_3A94           sta L_3A38
-                 lda FRE+4
+                 lda MASK_ADDR
                  clc
                  adc #$10
                  sta $9F75,x
                  sta L_3A38+1
-                 stx FRE+2
+                 stx SHIP_ADDR
                  lda #$2E
                  sta SDMCTL
                  ldx #$00
@@ -3050,30 +3050,30 @@ L_3AAD           iny
                  inx
                  cpx #$F0
                  bne L_3AAB
-                 lda FRE+2
+                 lda SHIP_ADDR
                  clc
                  adc #$0D
                  tax
                  clc
                  adc #$06
-                 sta FRE+2
+                 sta SHIP_ADDR
                  ldy #$0E
 L_3AC2           lda L_3A00,y
                  sta $9F6A,x
                  inx
                  iny
-                 cpx FRE+2
+                 cpx SHIP_ADDR
                  bne L_3AC2
                  lda #$00
-                 sta FRE+3
+                 sta SHIP_ADDR+1
 L_3AD2           ldx #$00
 L_3AD4           ldy #$00
 L_3AD6           iny
                  bne L_3AD6
                  inx
                  bne L_3AD4
-                 inc FRE+3
-                 lda FRE+3
+                 inc SHIP_ADDR+1
+                 lda SHIP_ADDR+1
                  cmp #$03
                  bne L_3AD2
                  ldx #$00
@@ -3178,7 +3178,7 @@ L_3BE9           ldx L_3BB0+1
                  .byte $84, $84, $84, $84, $84, $84, $84, $84
                  .byte $84, $84, $84, $84, $84, $84, $84, $84
                  .byte $84, $04, $84, $02, $41, $00, $92, $00
-BRICK_COLORS_H   .byte $00, $00, $00
+L_3C23           .byte $00, $00, $00
 L_3C26           lda SDLSTH
                  cmp #$3C
                  beq L_3C66
@@ -3188,8 +3188,8 @@ L_3C26           lda SDLSTH
                  sty SDLSTH
                  ldx #$00
                  ldy #$7B
-                 stx BRICK_COLORS_L
-                 sty BRICK_COLORS_H
+                 stx BRICK_COLORS
+                 sty L_3C23
                  stx ROW_INDEX
                  txa
 L_3C45           sta $9B00,x
@@ -3227,10 +3227,10 @@ USE_GFX_SET      lda ROW_INDEX
                  clc
                  adc #$02
                  sta ROW_INDEX
-                 ldx BRICK_COLORS_L
-                 lda BRICK_COLORS_H
-                 stx ROW_COLOR_L
-                 sta ROW_COLOR_H
+                 ldx BRICK_COLORS
+                 lda L_3C23
+                 stx word
+                 sta FRE+1
                  cpy #$30
                  beq SET_SHIP_COLORS
                  cpy #$34
@@ -3238,10 +3238,10 @@ USE_GFX_SET      lda ROW_INDEX
 
 ;  Set colors for each brick row
 
-                 lda (ROW_COLOR_L),y
+                 lda (word),y
                  sta COLPF2
                  iny
-                 lda (ROW_COLOR_L),y
+                 lda (word),y
                  sta COLPF3
                  dey
                  cpy #$00
@@ -3386,9 +3386,9 @@ L_3DC1           lda #$00
                  sta L_3DAB,x
                  sta L_3DAB+3,x
                  lda $5C6F
-                 sta FRE+4
+                 sta MASK_ADDR
                  jsr L_3F93
-                 lda FRE+4
+                 lda MASK_ADDR
                  sta $5C6F
                  lda L_3FFD+3
                  and #$03
@@ -3411,8 +3411,8 @@ L_3E0D           rts
                  bcc L_3E0D
                  ldx #$00
                  ldy #$01
-                 stx FRE+3
-L_3E1E           lda (FRE+4),y
+                 stx SHIP_ADDR+1
+L_3E1E           lda (MASK_ADDR),y
                  cmp #$37
                  bmi L_3E37
                  cmp #$60
@@ -3428,20 +3428,20 @@ L_3E1E           lda (FRE+4),y
                  rts
 L_3E37           ldx #$00
                  ldy #$04
-                 inc FRE+3
-                 lda FRE+3
+                 inc SHIP_ADDR+1
+                 lda SHIP_ADDR+1
                  cmp #$02
                  bne L_3E1E
                  lda $5DD3
-                 sta FRE+5
+                 sta MASK_ADDR+1
                  lda $5DD2
                  sec
                  sbc #$28
-                 sta FRE+4
+                 sta MASK_ADDR
                  bcs L_3E54
-                 dec FRE+5
+                 dec MASK_ADDR+1
 L_3E54           ldy #$02
-L_3E56           lda (FRE+4),y
+L_3E56           lda (MASK_ADDR),y
                  cmp #$37
                  bpl L_3E5F
 L_3E5C           jmp $5F30
@@ -3464,14 +3464,14 @@ L_3E80           ldx $57E8
                  lda $5DDF,x
                  bne L_3EE2
                  lda $5DD2
-                 sta FRE+4
+                 sta MASK_ADDR
                  lda $5DD3
-                 sta FRE+5
+                 sta MASK_ADDR+1
                  ldy #$01
                  ldx #$00
-                 stx FRE+3
-                 stx FRE+2
-L_3E9A           lda (FRE+4),y
+                 stx SHIP_ADDR+1
+                 stx SHIP_ADDR
+L_3E9A           lda (MASK_ADDR),y
                  cmp #$37
                  bmi L_3EB3
                  cmp #$60
@@ -3484,14 +3484,14 @@ L_3E9A           lda (FRE+4),y
                  cpx $5DDB
                  bne L_3E9A
                  sty FR0+5
-                 inc FRE+2
-L_3EB3           inc FRE+3
+                 inc SHIP_ADDR
+L_3EB3           inc SHIP_ADDR+1
                  ldy #$04
                  ldx #$00
-                 lda FRE+3
+                 lda SHIP_ADDR+1
                  cmp #$02
                  bne L_3E9A
-                 lda FRE+2
+                 lda SHIP_ADDR
                  beq L_3EE2
                  ldy #$04
                  ldx $57E8
@@ -3517,16 +3517,16 @@ L_3EE2           ldx $57E8
                  and #$07
                  bne L_3F1F
                  lda $5DD3
-                 sta FRE+5
+                 sta MASK_ADDR+1
                  lda $5DD2
                  sec
                  sbc #$28
-                 sta FRE+4
+                 sta MASK_ADDR
                  bcs L_3F04
-                 dec FRE+5
+                 dec MASK_ADDR+1
 L_3F04           ldx #$00
                  ldy #$02
-L_3F08           lda (FRE+4),y
+L_3F08           lda (MASK_ADDR),y
                  cmp #$37
                  bpl L_3F11
                  jmp L_3FBB
@@ -3561,15 +3561,15 @@ L_3F4A           tya
 L_3F4E           rts
                  ldx $57E8
                  lda $5DD2
-                 sta FRE+4
+                 sta MASK_ADDR
                  lda $5DD3
-                 sta FRE+5
+                 sta MASK_ADDR+1
                  ldy #$51
                  lda $5DD4,x
                  cmp #$04
                  beq L_3F67
                  ldy #$54
-L_3F67           lda (FRE+4),y
+L_3F67           lda (MASK_ADDR),y
                  cmp #$37
                  bmi L_3F74
                  cmp #$60
@@ -3727,30 +3727,30 @@ L_407D           lda $5C00,x
                  sta L_3FFD+4
                  ldx #$00
                  ldy #$90
-                 stx FRE+2
-                 sty FRE+3
+                 stx SHIP_ADDR
+                 sty SHIP_ADDR+1
 L_412D           cpx L_3FFD+4
                  beq L_4141
-                 lda FRE+2
+                 lda SHIP_ADDR
                  clc
                  adc #$80
-                 sta FRE+2
+                 sta SHIP_ADDR
                  bcc L_413D
-                 inc FRE+3
+                 inc SHIP_ADDR+1
 L_413D           inx
                  jmp L_412D
 L_4141           ldy #$00
-L_4143           lda (FRE+2),y
+L_4143           lda (SHIP_ADDR),y
                  sta $89C0,y
                  iny
                  cpy #$80
                  bne L_4143
                  ldx #$07
                  ldy #$9B
-                 stx FRE+2
-                 sty FRE+3
+                 stx SHIP_ADDR
+                 sty SHIP_ADDR+1
                  lda #$38
-                 sta FRE+4
+                 sta MASK_ADDR
                  ldx #$00
 L_415B           ldy #$00
 L_415D           stx L_3FFD+4
@@ -3760,12 +3760,12 @@ L_415D           stx L_3FFD+4
 L_4167           tya
                  clc
                  adc #$04
-                 sta FRE+5
-L_416D           lda FRE+4
-                 sta (FRE+2),y
+                 sta MASK_ADDR+1
+L_416D           lda MASK_ADDR
+                 sta (SHIP_ADDR),y
                  iny
-                 inc FRE+4
-                 cpy FRE+5
+                 inc MASK_ADDR
+                 cpy MASK_ADDR+1
                  bne L_416D
                  dey
                  dey
@@ -3781,22 +3781,22 @@ L_416D           lda FRE+4
                  ldx L_3FFD+4
                  ldy L_3FFD+5
                  lda #$38
-                 sta FRE+4
-                 lda FRE+2
+                 sta MASK_ADDR
+                 lda SHIP_ADDR
                  clc
                  adc #$04
-                 sta FRE+2
+                 sta SHIP_ADDR
                  bcc L_419B
-                 inc FRE+3
+                 inc SHIP_ADDR+1
 L_419B           iny
                  cpy #$07
                  bne L_415D
-                 lda FRE+2
+                 lda SHIP_ADDR
                  clc
                  adc #$84
-                 sta FRE+2
+                 sta SHIP_ADDR
                  bcc L_41AB
-                 inc FRE+3
+                 inc SHIP_ADDR+1
 L_41AB           inx
                  cpx #$07
                  bne L_415B
@@ -3827,63 +3827,63 @@ L_41C7           lda #$17
                  stx $9B23
                  ldx #$2E
                  ldy #$9B
-                 stx FRE+2
-                 sty FRE+3
+                 stx SHIP_ADDR
+                 sty SHIP_ADDR+1
                  ldx #$00
 L_41F1           ldy #$00
                  lda #$22
-                 sta (FRE+2),y
+                 sta (SHIP_ADDR),y
                  iny
                  lda #$23
-                 sta (FRE+2),y
+                 sta (SHIP_ADDR),y
                  ldy #$28
                  lda #$24
-                 sta (FRE+2),y
+                 sta (SHIP_ADDR),y
                  iny
                  lda #$25
-                 sta (FRE+2),y
+                 sta (SHIP_ADDR),y
                  ldy #$50
                  lda #$26
-                 sta (FRE+2),y
+                 sta (SHIP_ADDR),y
                  iny
                  lda #$27
-                 sta (FRE+2),y
+                 sta (SHIP_ADDR),y
                  ldy #$78
                  lda #$28
-                 sta (FRE+2),y
+                 sta (SHIP_ADDR),y
                  iny
                  lda #$29
-                 sta (FRE+2),y
+                 sta (SHIP_ADDR),y
                  ldy #$1C
                  lda #$2A
-                 sta (FRE+2),y
+                 sta (SHIP_ADDR),y
                  iny
                  lda #$2B
-                 sta (FRE+2),y
+                 sta (SHIP_ADDR),y
                  ldy #$44
                  lda #$2C
-                 sta (FRE+2),y
+                 sta (SHIP_ADDR),y
                  iny
                  lda #$2D
-                 sta (FRE+2),y
+                 sta (SHIP_ADDR),y
                  ldy #$6C
                  lda #$2E
-                 sta (FRE+2),y
+                 sta (SHIP_ADDR),y
                  iny
                  lda #$2F
-                 sta (FRE+2),y
+                 sta (SHIP_ADDR),y
                  ldy #$94
                  lda #$30
-                 sta (FRE+2),y
+                 sta (SHIP_ADDR),y
                  iny
                  lda #$31
-                 sta (FRE+2),y
-                 lda FRE+2
+                 sta (SHIP_ADDR),y
+                 lda SHIP_ADDR
                  clc
                  adc #$A0
-                 sta FRE+2
+                 sta SHIP_ADDR
                  bcc L_4254
-                 inc FRE+3
+                 inc SHIP_ADDR+1
 L_4254           inx
                  cpx #$07
                  bne L_41F1
@@ -3959,53 +3959,53 @@ L_42C3           lda #$00
                  rts
 L_42F9           ldx #$00
                  ldy #$7B
-                 stx FRE+2
-                 sty FRE+3
+                 stx SHIP_ADDR
+                 sty SHIP_ADDR+1
                  ldy #$70
-                 stx FRE+4
-                 sty FRE+5
+                 stx MASK_ADDR
+                 sty MASK_ADDR+1
                  ldx #$00
 L_4309           cpx L_3FFD+3
                  beq L_431D
-                 lda FRE+2
+                 lda SHIP_ADDR
                  clc
                  adc #$26
-                 sta FRE+2
+                 sta SHIP_ADDR
                  bcc L_4319
-                 inc FRE+3
+                 inc SHIP_ADDR+1
 L_4319           inx
                  jmp L_4309
 L_431D           ldx #$00
 L_431F           cpx L_3FFD+3
                  beq L_4344
                  ldy #$00
-L_4326           lda (FRE+4),y
+L_4326           lda (MASK_ADDR),y
                  cmp #$FF
                  beq L_4330
                  iny
                  jmp L_4326
 L_4330           iny
                  sty L_3FFD+4
-                 lda FRE+4
+                 lda MASK_ADDR
                  clc
                  adc L_3FFD+4
-                 sta FRE+4
+                 sta MASK_ADDR
                  bcc L_4340
-                 inc FRE+5
+                 inc MASK_ADDR+1
 L_4340           inx
                  jmp L_431F
-L_4344           ldx FRE+2
-                 ldy FRE+3
-                 stx BRICK_COLORS_L
-                 sty BRICK_COLORS_H
+L_4344           ldx SHIP_ADDR
+                 ldy SHIP_ADDR+1
+                 stx BRICK_COLORS
+                 sty L_3C23
                  ldx #$30
                  ldy #$9B
-                 stx FRE+2
-                 sty FRE+3
+                 stx SHIP_ADDR
+                 sty SHIP_ADDR+1
                  ldx #$00
                  stx L_3FFD+6
 L_435B           ldy #$00
-                 lda (FRE+4),y
+                 lda (MASK_ADDR),y
                  cmp #$FF
                  beq L_43D4
                  sta L_3FFD+4
@@ -4027,26 +4027,26 @@ L_437D           ldy #$00
                  and #$E0
                  beq L_4397
                  lda L_3FFD+5
-                 sta (FRE+2),y
+                 sta (SHIP_ADDR),y
                  inc L_3FFD+5
                  iny
                  lda L_3FFD+5
-                 sta (FRE+2),y
+                 sta (SHIP_ADDR),y
                  dec L_3FFD+5
-L_4397           lda FRE+2
+L_4397           lda SHIP_ADDR
                  clc
                  adc #$02
-                 sta FRE+2
+                 sta SHIP_ADDR
                  bcc L_43A2
-                 inc FRE+3
+                 inc SHIP_ADDR+1
 L_43A2           dex
                  cpx #$00
                  bne L_437D
-                 lda FRE+4
+                 lda MASK_ADDR
                  cmp #$FF
                  bne L_43AF
-                 inc FRE+5
-L_43AF           inc FRE+4
+                 inc MASK_ADDR+1
+L_43AF           inc MASK_ADDR
                  lda L_3FFD+4
                  and #$1F
                  clc
@@ -4056,12 +4056,12 @@ L_43AF           inc FRE+4
                  bne L_435B
                  lda #$00
                  sta L_3FFD+6
-                 lda FRE+2
+                 lda SHIP_ADDR
                  clc
                  adc #$0E
-                 sta FRE+2
+                 sta SHIP_ADDR
                  bcc L_43D1
-                 inc FRE+3
+                 inc SHIP_ADDR+1
 L_43D1           jmp L_435B
 L_43D4           rts
 L_43D5           ldx #$00
@@ -4078,13 +4078,13 @@ L_43E5           .byte $02, $03, $01, $00, $00, $00, $00, $00
 L_43FD           .byte $00, $00, $00, $3F, $3C, $3D, $3E, $3F
 L_4405           .byte $3C, $3D, $3E, $48, $48, $1A, $00, $00
                  .byte $00
-L_440E           and #$FC
+DRAW_SHOP_FULL   and #$FC
                  lsr
                  lsr
                  lda L_4405+6
                  clc
                  adc #$80
-                 sta FRE+3
+                 sta SHIP_ADDR+1
                  lda L_4405+6
                  and #$07
                  clc
@@ -4093,7 +4093,7 @@ L_440E           and #$FC
                  asl
                  asl
                  lda #$00
-                 sta FRE+2
+                 sta SHIP_ADDR
                  lda L_4405+4
                  and #$03
                  clc
@@ -4104,16 +4104,16 @@ L_440E           and #$FC
                  asl
                  asl
                  clc
-                 adc FRE+2
-                 sta FRE+2
+                 adc SHIP_ADDR
+                 sta SHIP_ADDR
                  bcc L_443D
-                 inc FRE+3
+                 inc SHIP_ADDR+1
 L_443D           ldx #$40
 L_443F           ldy #$8A
-                 stx LNFLG
-                 sty NGFLAG
+                 stx DST
+                 sty DST+1
                  ldx #$00
-L_4447           lda L_43FD+3,x
+DRAW_SHIP        lda L_43FD+3,x
                  and #$E0
                  lsr
                  lsr
@@ -4122,38 +4122,38 @@ L_4447           lda L_43FD+3,x
                  lsr
                  clc
 L_4452           adc #$88
-                 sta CASINI+1
+                 sta SRC+1
                  lda L_43FD+3,x
                  and #$1F
                  asl
                  asl
                  asl
-                 sta CASINI
+                 sta SRC
                  ldy #$00
-L_4462           lda FRE+2
-                 sta FRE+4
-                 lda FRE+3
+MASK_SHIP        lda SHIP_ADDR
+                 sta MASK_ADDR
+                 lda SHIP_ADDR+1
                  clc
                  adc #$04
-                 sta FRE+5
-                 lda (CASINI),y
-                 and (FRE+4),y
-                 ora (FRE+2),y
-                 sta (LNFLG),y
+                 sta MASK_ADDR+1
+                 lda (SRC),y
+                 and (MASK_ADDR),y
+                 ora (SHIP_ADDR),y
+                 sta (DST),y
                  iny
                  cpy #$08
-                 bne L_4462
-                 lda FRE+2
+                 bne MASK_SHIP
+                 lda SHIP_ADDR
                  clc
                  adc #$08
-                 sta FRE+2
-                 lda LNFLG
+                 sta SHIP_ADDR
+                 lda DST
                  clc
                  adc #$08
-                 sta LNFLG
+                 sta DST
                  inx
                  cpx #$08
-                 bne L_4447
+                 bne DRAW_SHIP
                  rts
 L_448E           lda L_4405+4
                  sta L_4405+3
@@ -4163,14 +4163,14 @@ L_448E           lda L_4405+4
                  sta L_4405+5
                  ldx #$E8
                  ldy #$9E
-                 stx FRE+4
-                 sty FRE+5
-                 lda FRE+4
+                 stx MASK_ADDR
+                 sty MASK_ADDR+1
+                 lda MASK_ADDR
                  clc
                  adc L_4405+5
-                 sta FRE+4
+                 sta MASK_ADDR
                  bcc L_44AF
-                 inc FRE+5
+                 inc MASK_ADDR+1
 L_44AF           rts
 L_44B0           ldy #$00
 L_44B2           lda L_4405+3
@@ -4179,7 +4179,7 @@ L_44B2           lda L_4405+3
                  cmp #$22
                  bcs L_44C2
                  lda L_43FD+3,y
-                 sta (FRE+4),y
+                 sta (MASK_ADDR),y
 L_44C2           inc L_4405+3
                  iny
                  cpy #$08
@@ -4192,14 +4192,14 @@ L_44CB           lda L_4405+3
                  sta L_4405+3
                  ldx #$E8
                  ldy #$9E
-                 stx FRE+4
-                 sty FRE+5
-                 lda FRE+4
+                 stx MASK_ADDR
+                 sty MASK_ADDR+1
+                 lda MASK_ADDR
                  clc
                  adc L_4405+3
-                 sta FRE+4
+                 sta MASK_ADDR
                  bcc L_44E9
-                 inc FRE+5
+                 inc MASK_ADDR+1
 L_44E9           lda TIMER_MAYBE
                  nop
                  nop
@@ -4211,12 +4211,12 @@ L_44F6           lda L_4405+5
                  bcc L_450C
                  cmp #$22
                  bcs L_450C
-                 lda (FRE+4),y
+                 lda (MASK_ADDR),y
                  sta L_43FD+3,y
                  tya
                  clc
                  adc #$48
-                 sta (FRE+4),y
+                 sta (MASK_ADDR),y
 L_450C           inc L_4405+5
                  iny
                  cpy #$08
@@ -4284,7 +4284,7 @@ L_4571           sty L_454C+2
 L_45AE           ldx L_454A
                  ldy L_454B
                  lda L_454C
-                 jmp L_440E
+                 jmp DRAW_SHOP_FULL
                  lda STICK0
                  sta L_4517
                  cmp #$0B
@@ -4317,13 +4317,13 @@ L_45FF           .byte $00, $00, $00, $40, $A0, $40, $00, $00
 L_4607           .byte $00, $84, $00, $00, $63, $00, $00
 L_460E           txa
                  sta L_4607
-                 sta FRE+4
+                 sta MASK_ADDR
                  and #$FE
                  lsr
                  clc
                  adc #$6E
-                 sta FRE+5
-                 lda FRE+4
+                 sta MASK_ADDR+1
+                 lda MASK_ADDR
                  and #$01
                  clc
                  asl
@@ -4352,7 +4352,7 @@ L_4642           and #$7F
                  sta L_4607+4,x
                  ldx #$00
 L_464A           lda L_45FF+1,x
-L_464D           sta (FRE+4),y
+L_464D           sta (MASK_ADDR),y
                  iny
                  inx
                  cpx #$06
@@ -4375,7 +4375,7 @@ L_4670           lda L_4607+1,x
 L_4677           asl
                  clc
                  adc #$01
-                 sta FRE+4
+                 sta MASK_ADDR
                  rts
                  jmp L_2AB0
 L_4681           sta FR2+5
@@ -4455,11 +4455,11 @@ L_474B           lda L_46C8+1,x
                  sta L_46D8+7
                  ldy L_46D0+5
                  lda L_46C0,y
-                 sta FRE+4
+                 sta MASK_ADDR
                  sta L_46D0+6
                  iny
                  lda L_46C0,y
-                 sta FRE+5
+                 sta MASK_ADDR+1
                  sta L_46D0+7
                  ldy L_46D8+7
                  iny
@@ -4480,7 +4480,7 @@ L_4779           lda #$00
                  jmp L_4795
 L_4791           ldy #$01
                  ldx #$01
-L_4795           lda (FRE+4),y
+L_4795           lda (MASK_ADDR),y
                  cmp #$60
                  bmi L_47A2
                  cmp #$7B
@@ -4555,10 +4555,10 @@ L_4838           lda #$00
                  ldy L_46D0+5
                  ldx L_46D0+4
                  lda L_46D0+6
-                 sta FRE+4
+                 sta MASK_ADDR
                  iny
                  lda L_46D0+7
-                 sta FRE+5
+                 sta MASK_ADDR+1
                  ldx L_46D0+4
                  lda L_46C0+6,x
                  and #$03
@@ -4570,7 +4570,7 @@ L_4838           lda #$00
                  jmp L_4868
 L_4864           ldy #$28
                  ldx #$04
-L_4868           lda (FRE+4),y
+L_4868           lda (MASK_ADDR),y
                  cmp #$60
                  bmi L_4875
                  cmp #$7B
@@ -4639,7 +4639,7 @@ L_48F7           ldx L_46F8+4
 L_4900           inx
                  stx L_46F8+4
                  rts
-L_4905           stx FRE+2
+L_4905           stx SHIP_ADDR
                  ldx L_46D0+4
                  jmp L_28CC
                  cmp #$02
@@ -4647,7 +4647,7 @@ L_4905           stx FRE+2
 L_4911           lda L_4607+1,x
                  and #$03
                  beq L_491D
-L_4918           ldx FRE+2
+L_4918           ldx SHIP_ADDR
                  jmp L_48A1
 L_491D           jmp L_1A60
 L_4920           lda L_46C0+6,x
@@ -4656,7 +4656,7 @@ L_4920           lda L_46C0+6,x
                  lda #$00
                  sta L_46D8+4,x
                  jmp L_48E4
-L_4930           stx FRE+2
+L_4930           stx SHIP_ADDR
                  ldx L_46D0+4
                  jmp L_28E5
                  cmp #$04
@@ -4665,7 +4665,7 @@ L_493C           lda L_4607+4,x
                  and #$03
                  cmp #$03
                  beq L_494A
-L_4945           ldx FRE+2
+L_4945           ldx SHIP_ADDR
                  jmp L_47D4
 L_494A           jmp L_1A63
 L_494D           lda L_46C0+6,x
@@ -4786,7 +4786,7 @@ L_4A89           sty L_4A01
 L_4A8C           rts
 L_4A8D           sta L_49F9+7
                  sty L_4A01+1
-                 lda (FRE+4),y
+                 lda (MASK_ADDR),y
                  beq L_4A8C
                  cmp #$9D
                  beq L_4AB5
@@ -4804,7 +4804,7 @@ L_4A8D           sta L_49F9+7
                  beq L_4AB5
                  bcs L_4A8C
 L_4AB5           jsr L_4AE0
-                 lda (FRE+4),y
+                 lda (MASK_ADDR),y
                  cmp #$09
                  beq L_4A8C
                  cmp #$0A
@@ -4817,27 +4817,27 @@ L_4AB5           jsr L_4AE0
                  bne L_4ACF
                  dey
 L_4ACF           lda L_4A01
-                 sta (FRE+4),y
+                 sta (MASK_ADDR),y
                  iny
                  lda FPTR2+1
-                 sta (FRE+4),y
+                 sta (MASK_ADDR),y
                  jsr L_2F37
                  ldy L_4A01+1
                  rts
 L_4AE0           lda #$00
-                 sta CASINI+1
+                 sta SRC+1
                  sta L_4A01
                  sta FPTR2+1
-                 lda FRE+4
-                 sta LNFLG
-                 lda FRE+5
-                 sta NGFLAG
+                 lda MASK_ADDR
+                 sta DST
+                 lda MASK_ADDR+1
+                 sta DST+1
                  tya
                  clc
-                 adc LNFLG
-                 sta LNFLG
+                 adc DST
+                 sta DST
                  bcc L_4AFB
-                 inc NGFLAG
-L_4AFB           lda NGFLAG
+                 inc DST+1
+L_4AFB           lda DST+1
                  cmp #$9B
                  bne L_4B0A

@@ -171,8 +171,8 @@
 150E: D0 F5                      bne $1505     ; L_1505
 1510: A2 D8                      ldx #$D8
 1512: A0 14                      ldy #$14
-1514: 8E 22 3C                   stx $3C22     ; BRICK_COLORS_L
-1517: 8C 23 3C                   sty $3C23     ; BRICK_COLORS_H
+1514: 8E 22 3C                   stx $3C22     ; BRICK_COLORS
+1517: 8C 23 3C                   sty $3C23     ; L_3C23
 151A: A9 10                      lda #$10
 151C: 8D F4 02                   sta $02F4     ; CHBAS
 151F: A2 E6                      ldx #$E6
@@ -183,8 +183,8 @@
 152B: 8D C6 02                   sta $02C6     ; COLOR2
 152E: A2 2E                      ldx #$2E
 1530: A0 9B                      ldy #$9B
-1532: 86 DE                      stx $DE       ; FRE+4
-1534: 84 DF                      sty $DF       ; FRE+5
+1532: 86 DE                      stx $DE       ; MASK_ADDR
+1534: 84 DF                      sty $DF       ; MASK_ADDR+1
 1536: A9 38                      lda #$38
 1538: 85 FF                      sta $FF       ; FPTR2+1
 153A: A2 00                      ldx #$00
@@ -193,7 +193,7 @@
 1540: 86 FD                      stx $FD       ; FLPTR+1
 1542: A0 00     L_1542           ldy #$00
 1544: A5 FF     L_1544           lda $FF       ; FPTR2+1
-1546: 91 DE                      sta ($DE),y   ; FRE+4
+1546: 91 DE                      sta ($DE),y   ; MASK_ADDR
 1548: E6 FF                      inc $FF       ; FPTR2+1
 154A: C8                         iny
 154B: E6 FC                      inc $FC       ; FLPTR
@@ -222,72 +222,72 @@
 1572: D0 D0                      bne $1544     ; L_1544
 1574: A9 00                      lda #$00
 1576: 85 FE                      sta $FE       ; FPTR2
-1578: A5 DE                      lda $DE       ; FRE+4
+1578: A5 DE                      lda $DE       ; MASK_ADDR
 157A: 18                         clc
 157B: 69 78                      adc #$78
-157D: 85 DE                      sta $DE       ; FRE+4
+157D: 85 DE                      sta $DE       ; MASK_ADDR
 157F: 90 02                      bcc $1583     ; L_1583
-1581: E6 DF                      inc $DF       ; FRE+5
+1581: E6 DF                      inc $DF       ; MASK_ADDR+1
 1583: E6 FD     L_1583           inc $FD       ; FLPTR+1
 1585: A5 FD                      lda $FD       ; FLPTR+1
 1587: C9 09                      cmp #$09
 1589: D0 B7                      bne $1542     ; L_1542
 158B: A2 2E                      ldx #$2E
 158D: A0 9B                      ldy #$9B
-158F: 86 DE                      stx $DE       ; FRE+4
-1591: 84 DF                      sty $DF       ; FRE+5
+158F: 86 DE                      stx $DE       ; MASK_ADDR
+1591: 84 DF                      sty $DF       ; MASK_ADDR+1
 1593: A2 00                      ldx #$00
 1595: A0 00     L_1595           ldy #$00
 1597: A9 0C                      lda #$0C
 1599: 9D D8 14                   sta $14D8,x   ; L_14D8
 159C: 9D E0 14                   sta $14E0,x   ; L_14E0
 159F: A9 2E                      lda #$2E
-15A1: 91 DE                      sta ($DE),y   ; FRE+4
+15A1: 91 DE                      sta ($DE),y   ; MASK_ADDR
 15A3: C8                         iny
 15A4: A9 2F                      lda #$2F
-15A6: 91 DE                      sta ($DE),y   ; FRE+4
+15A6: 91 DE                      sta ($DE),y   ; MASK_ADDR
 15A8: A0 1C                      ldy #$1C
 15AA: A9 30                      lda #$30
-15AC: 91 DE                      sta ($DE),y   ; FRE+4
+15AC: 91 DE                      sta ($DE),y   ; MASK_ADDR
 15AE: C8                         iny
 15AF: A9 31                      lda #$31
-15B1: 91 DE                      sta ($DE),y   ; FRE+4
-15B3: A5 DE                      lda $DE       ; FRE+4
+15B1: 91 DE                      sta ($DE),y   ; MASK_ADDR
+15B3: A5 DE                      lda $DE       ; MASK_ADDR
 15B5: 18                         clc
 15B6: 69 28                      adc #$28
-15B8: 85 DE                      sta $DE       ; FRE+4
+15B8: 85 DE                      sta $DE       ; MASK_ADDR
 15BA: 90 02                      bcc $15BE     ; L_15BE
-15BC: E6 DF                      inc $DF       ; FRE+5
+15BC: E6 DF                      inc $DF       ; MASK_ADDR+1
 15BE: E8        L_15BE           inx
 15BF: E0 1A                      cpx #$1A
 15C1: D0 D2                      bne $1595     ; L_1595
 15C3: A2 01                      ldx #$01
 15C5: A0 9C                      ldy #$9C
-15C7: 86 DE                      stx $DE       ; FRE+4
-15C9: 84 DF                      sty $DF       ; FRE+5
+15C7: 86 DE                      stx $DE       ; MASK_ADDR
+15C9: 84 DF                      sty $DF       ; MASK_ADDR+1
 15CB: A2 60                      ldx #$60
 15CD: A0 14                      ldy #$14
-15CF: 86 DC                      stx $DC       ; FRE+2
+15CF: 86 DC                      stx $DC       ; SHIP_ADDR
 15D1: 80                         BYTE $80 $DD
 15D3: A2 00                      ldx #$00
 15D5: A0 00     L_15D5           ldy #$00
-15D7: B1 DC     L_15D7           lda ($DC),y   ; FRE+2
-15D9: 91 DE                      sta ($DE),y   ; FRE+4
+15D7: B1 DC     L_15D7           lda ($DC),y   ; SHIP_ADDR
+15D9: 91 DE                      sta ($DE),y   ; MASK_ADDR
 15DB: C8                         iny
 15DC: C0 0A                      cpy #$0A
 15DE: D0 F7                      bne $15D7     ; L_15D7
-15E0: A5 DE                      lda $DE       ; FRE+4
+15E0: A5 DE                      lda $DE       ; MASK_ADDR
 15E2: 18                         clc
 15E3: 69 28                      adc #$28
-15E5: 85 DE                      sta $DE       ; FRE+4
+15E5: 85 DE                      sta $DE       ; MASK_ADDR
 15E7: 90 02                      bcc $15EB     ; L_15EB
-15E9: E6 DF                      inc $DF       ; FRE+5
-15EB: A5 DC     L_15EB           lda $DC       ; FRE+2
+15E9: E6 DF                      inc $DF       ; MASK_ADDR+1
+15EB: A5 DC     L_15EB           lda $DC       ; SHIP_ADDR
 15ED: 18                         clc
 15EE: 69 0A                      adc #$0A
-15F0: 85 DC                      sta $DC       ; FRE+2
+15F0: 85 DC                      sta $DC       ; SHIP_ADDR
 15F2: 90 02                      bcc $15F6     ; L_15F6
-15F4: E6 DD                      inc $DD       ; FRE+3
+15F4: E6 DD                      inc $DD       ; SHIP_ADDR+1
 15F6: E8        L_15F6           inx
 15F7: E0 0C                      cpx #$0C
 15F9: D0 DA                      bne $15D5     ; L_15D5
@@ -446,11 +446,11 @@
 17C8: A9 00     L_17C8           lda #$00
 17CA: 8D 01 17                   sta $1701     ; L_16FD+4
 17CD: AD 02 17                   lda $1702     ; L_16FD+5
-17D0: 85 DC                      sta $DC       ; FRE+2
+17D0: 85 DC                      sta $DC       ; SHIP_ADDR
 17D2: AD 03 17                   lda $1703     ; L_16FD+6
-17D5: 85 DD                      sta $DD       ; FRE+3
+17D5: 85 DD                      sta $DD       ; SHIP_ADDR+1
 17D7: A0 00                      ldy #$00
-17D9: B1 DC     L_17D9           lda ($DC),y   ; FRE+2
+17D9: B1 DC     L_17D9           lda ($DC),y   ; SHIP_ADDR
 17DB: 99 58 13                   sta $1358,y   ; L_1358
 17DE: C8                         iny
 17DF: C0 10                      cpy #$10
@@ -477,49 +477,49 @@
 180E: 8E 82 17                   stx $1782     ; L_177D+5
 1811: AA                         tax
 1812: BD 47 17                   lda $1747,x   ; L_1745+2
-1815: 85 DE                      sta $DE       ; FRE+4
-1817: 85 DC                      sta $DC       ; FRE+2
-1819: 86 DD                      stx $DD       ; FRE+3
+1815: 85 DE                      sta $DE       ; MASK_ADDR
+1817: 85 DC                      sta $DC       ; SHIP_ADDR
+1819: 86 DD                      stx $DD       ; SHIP_ADDR+1
 181B: AE 82 17                   ldx $1782     ; L_177D+5
 181E: A9 0B                      lda #$0B
-1820: 85 DF                      sta $DF       ; FRE+5
+1820: 85 DF                      sta $DF       ; MASK_ADDR+1
 1822: A9 01                      lda #$01
 1824: 9D 69 17                   sta $1769,x   ; L_1765+4
 1827: 9D 6C 17                   sta $176C,x   ; L_1765+7
 182A: 9D 6F 17                   sta $176F,x   ; L_176D+2
-182D: A5 DE                      lda $DE       ; FRE+4
+182D: A5 DE                      lda $DE       ; MASK_ADDR
 182F: D0 0D                      bne $183E     ; L_183E
 1831: A9 7F                      lda #$7F
 1833: 9D 6C 17                   sta $176C,x   ; L_1765+7
 1836: A9 01                      lda #$01
 1838: 9D 69 17                   sta $1769,x   ; L_1765+4
 183B: 4C 77 18                   jmp $1877     ; L_1877
-183E: C5 DF     L_183E           cmp $DF       ; FRE+5
+183E: C5 DF     L_183E           cmp $DF       ; MASK_ADDR+1
 1840: 10 18                      bpl $185A     ; L_185A
-1842: A5 DF     L_1842           lda $DF       ; FRE+5
+1842: A5 DF     L_1842           lda $DF       ; MASK_ADDR+1
 1844: 38                         sec
-1845: E5 DE                      sbc $DE       ; FRE+4
-1847: 85 DF                      sta $DF       ; FRE+5
+1845: E5 DE                      sbc $DE       ; MASK_ADDR
+1847: 85 DF                      sta $DF       ; MASK_ADDR+1
 1849: FE 6C 17                   inc $176C,x   ; L_1765+7
-184C: A5 DF                      lda $DF       ; FRE+5
-184E: C5 DE                      cmp $DE       ; FRE+4
+184C: A5 DF                      lda $DF       ; MASK_ADDR+1
+184E: C5 DE                      cmp $DE       ; MASK_ADDR
 1850: 10 F0                      bpl $1842     ; L_1842
 1852: A9 01                      lda #$01
 1854: 9D 69 17                   sta $1769,x   ; L_1765+4
 1857: 4C 77 18                   jmp $1877     ; L_1877
-185A: A5 DF     L_185A           lda $DF       ; FRE+5
+185A: A5 DF     L_185A           lda $DF       ; MASK_ADDR+1
 185C: 8D 82 17                   sta $1782     ; L_177D+5
 185F: AD 82 17  L_185F           lda $1782     ; L_177D+5
 1862: 18                         clc
-1863: 65 DF                      adc $DF       ; FRE+5
+1863: 65 DF                      adc $DF       ; MASK_ADDR+1
 1865: 8D 82 17                   sta $1782     ; L_177D+5
 1868: FE 69 17                   inc $1769,x   ; L_1765+4
-186B: A5 DE                      lda $DE       ; FRE+4
+186B: A5 DE                      lda $DE       ; MASK_ADDR
 186D: CD 82 17                   cmp $1782     ; L_177D+5
 1870: 10 ED                      bpl $185F     ; L_185F
 1872: A9 01                      lda #$01
 1874: 9D 6C 17                   sta $176C,x   ; L_1765+7
-1877: A5 DD     L_1877           lda $DD       ; FRE+3
+1877: A5 DD     L_1877           lda $DD       ; SHIP_ADDR+1
 1879: C9 12                      cmp #$12
 187B: 30 08                      bmi $1885     ; L_1885
 187D: BD 69 17                   lda $1769,x   ; L_1765+4
@@ -527,18 +527,18 @@
 1882: 9D 69 17                   sta $1769,x   ; L_1765+4
 1885: A9 80     L_1885           lda #$80
 1887: A0 6E                      ldy #$6E
-1889: 85 DC                      sta $DC       ; FRE+2
-188B: 84 DD                      sty $DD       ; FRE+3
+1889: 85 DC                      sta $DC       ; SHIP_ADDR
+188B: 84 DD                      sty $DD       ; SHIP_ADDR+1
 188D: 8A                         txa
 188E: A8                         tay
 188F: C0 00     L_188F           cpy #$00
 1891: F0 0F                      beq $18A2     ; L_18A2
-1893: A5 DC                      lda $DC       ; FRE+2
+1893: A5 DC                      lda $DC       ; SHIP_ADDR
 1895: 18                         clc
 1896: 69 80                      adc #$80
-1898: 85 DC                      sta $DC       ; FRE+2
+1898: 85 DC                      sta $DC       ; SHIP_ADDR
 189A: 90 02                      bcc $189E     ; L_189E
-189C: E6 DD                      inc $DD       ; FRE+3
+189C: E6 DD                      inc $DD       ; SHIP_ADDR+1
 189E: 88        L_189E           dey
 189F: 4C 8F 18                   jmp $188F     ; L_188F
 18A2: A9 81     L_18A2           lda #$81
@@ -551,7 +551,7 @@
 18B2: 9D 75 17                   sta $1775,x   ; L_1775
 18B5: A2 00                      ldx #$00
 18B7: BD 07 17  L_18B7           lda $1707,x   ; L_1705+2
-18BA: 91 DC                      sta ($DC),y   ; FRE+2
+18BA: 91 DC                      sta ($DC),y   ; SHIP_ADDR
 18BC: C8                         iny
 18BD: E8                         inx
 18BE: E0 08                      cpx #$08
@@ -560,18 +560,18 @@
 18C5: 4C 92 19                   jmp $1992     ; L_1992
 18C8: A9 80     L_18C8           lda #$80
 18CA: A0 6E                      ldy #$6E
-18CC: 85 DC                      sta $DC       ; FRE+2
-18CE: 84 DD                      sty $DD       ; FRE+3
+18CC: 85 DC                      sta $DC       ; SHIP_ADDR
+18CE: 84 DD                      sty $DD       ; SHIP_ADDR+1
 18D0: 8A                         txa
 18D1: A8                         tay
 18D2: C0 00     L_18D2           cpy #$00
 18D4: F0 0F                      beq $18E5     ; L_18E5
-18D6: A5 DC                      lda $DC       ; FRE+2
+18D6: A5 DC                      lda $DC       ; SHIP_ADDR
 18D8: 18                         clc
 18D9: 69 80                      adc #$80
-18DB: 85 DC                      sta $DC       ; FRE+2
+18DB: 85 DC                      sta $DC       ; SHIP_ADDR
 18DD: 90 02                      bcc $18E1     ; L_18E1
-18DF: E6 DD                      inc $DD       ; FRE+3
+18DF: E6 DD                      inc $DD       ; SHIP_ADDR+1
 18E1: 88        L_18E1           dey
 18E2: 4C D2 18                   jmp $18D2     ; L_18D2
 18E5: BD 75 17  L_18E5           lda $1775,x   ; L_1775
@@ -586,7 +586,7 @@
 18FB: 8E 82 17                   stx $1782     ; L_177D+5
 18FE: A2 00                      ldx #$00
 1900: 8A                         txa
-1901: 91 DC     L_1901           sta ($DC),y   ; FRE+2
+1901: 91 DC     L_1901           sta ($DC),y   ; SHIP_ADDR
 1903: C8                         iny
 1904: E8                         inx
 1905: E0 08                      cpx #$08
@@ -625,7 +625,7 @@
 195A: BD 75 17                   lda $1775,x   ; L_1775
 195D: A8                         tay
 195E: A9 00                      lda #$00
-1960: 91 DC                      sta ($DC),y   ; FRE+2
+1960: 91 DC                      sta ($DC),y   ; SHIP_ADDR
 1962: C8                         iny
 1963: 98                         tya
 1964: 9D 75 17                   sta $1775,x   ; L_1775
@@ -645,7 +645,7 @@
 1982: 20 13 1A                   jsr $1A13     ; L_1A13
 1985: A2 00                      ldx #$00
 1987: BD 2F 17  L_1987           lda $172F,x   ; L_172D+2
-198A: 91 DC                      sta ($DC),y   ; FRE+2
+198A: 91 DC                      sta ($DC),y   ; SHIP_ADDR
 198C: C8                         iny
 198D: E8                         inx
 198E: E0 08                      cpx #$08
@@ -679,11 +679,11 @@
 19CC: B0 03                      bcs $19D1     ; L_19D1
 19CE: CE 03 17                   dec $1703     ; L_16FD+6
 19D1: AD 02 17  L_19D1           lda $1702     ; L_16FD+5
-19D4: 85 DC                      sta $DC       ; FRE+2
+19D4: 85 DC                      sta $DC       ; SHIP_ADDR
 19D6: AD 03 17                   lda $1703     ; L_16FD+6
-19D9: 85 DD                      sta $DD       ; FRE+3
+19D9: 85 DD                      sta $DD       ; SHIP_ADDR+1
 19DB: A0 00                      ldy #$00
-19DD: B1 DC     L_19DD           lda ($DC),y   ; FRE+2
+19DD: B1 DC     L_19DD           lda ($DC),y   ; SHIP_ADDR
 19DF: 99 58 13                   sta $1358,y   ; L_1358
 19E2: C8                         iny
 19E3: C0 10                      cpy #$10
@@ -737,7 +737,7 @@
 1A6B: 8C 69 1A  L_1A6B           sty $1A69     ; L_1A69
 1A6E: A9 00                      lda #$00
 1A70: 8D 68 1A                   sta $1A68     ; L_1A68
-1A73: B1 DE                      lda ($DE),y   ; FRE+4
+1A73: B1 DE                      lda ($DE),y   ; MASK_ADDR
 1A75: C9 2E                      cmp #$2E
 1A77: F0 1B                      beq $1A94     ; L_1A94
 1A79: C9 2F                      cmp #$2F
@@ -748,7 +748,7 @@
 1A83: F0 0F                      beq $1A94     ; L_1A94
 1A85: A2 13                      ldx #$13
 1A87: 8A        L_1A87           txa
-1A88: D1 DE                      cmp ($DE),y   ; FRE+4
+1A88: D1 DE                      cmp ($DE),y   ; MASK_ADDR
 1A8A: F0 08                      beq $1A94     ; L_1A94
 1A8C: E8                         inx
 1A8D: E0 1D                      cpx #$1D
@@ -758,7 +758,7 @@
 1A96: 8D 68 1A                   sta $1A68     ; L_1A68
 1A99: 60                         rts
 1A9A: AC 69 1A  L_1A9A           ldy $1A69     ; L_1A69
-1A9D: B1 DE                      lda ($DE),y   ; FRE+4
+1A9D: B1 DE                      lda ($DE),y   ; MASK_ADDR
 1A9F: 29 80                      and #$80
 1AA1: D0 13                      bne $1AB6     ; L_1AB6
 1AA3: A9 03                      lda #$03
@@ -777,7 +777,7 @@
 1AC4: AE 6A 1A                   ldx $1A6A     ; L_1A6A
 1AC7: AD 68 1A                   lda $1A68     ; L_1A68
 1ACA: D0 05                      bne $1AD1     ; L_1AD1
-1ACC: A6 DC                      ldx $DC       ; FRE+2
+1ACC: A6 DC                      ldx $DC       ; SHIP_ADDR
 1ACE: 4C A1 48                   jmp $48A1     ; L_48A1
 1AD1: 20 8D 4A  L_1AD1           jsr $4A8D     ; L_4A8D
 1AD4: AE 6A 1A                   ldx $1A6A     ; L_1A6A
@@ -787,7 +787,7 @@
 1AE0: C9 20                      cmp #$20
 1AE2: D0 0D                      bne $1AF1     ; L_1AF1
 1AE4: 20 6B 1A                   jsr $1A6B     ; L_1A6B
-1AE7: A6 DC                      ldx $DC       ; FRE+2
+1AE7: A6 DC                      ldx $DC       ; SHIP_ADDR
 1AE9: AD 68 1A                   lda $1A68     ; L_1A68
 1AEC: D0 03                      bne $1AF1     ; L_1AF1
 1AEE: 4C D4 47                   jmp $47D4     ; L_47D4
@@ -797,7 +797,7 @@
 1AFA: C9 75                      cmp #$75
 1AFC: 30 12                      bmi $1B10     ; L_1B0F+1
 1AFE: C9 90                      cmp #$90
-1B00: 01 00     L_1B00           ora ($00,x)   ; LNFLG
+1B00: 01 00     L_1B00           ora ($00,x)   ; DST
 1B02: AD 66 1A  L_1B02           lda $1A66     ; L_1A66
 1B05: C9 0F                      cmp #$0F
 1B07: 10 06                      bpl $1B0F     ; L_1B0F
@@ -893,8 +893,8 @@
 1C01: E8                         inx
 1C02: E0 1C                      cpx #$1C
 1C04: D0 E3                      bne $1BE9     ; L_1BE9
-1C06: 86 DC                      stx $DC       ; FRE+2
-1C08: 84 DD                      sty $DD       ; FRE+3
+1C06: 86 DC                      stx $DC       ; SHIP_ADDR
+1C08: 84 DD                      sty $DD       ; SHIP_ADDR+1
 1C0A: A2 00                      ldx #$00
 1C0C: A0 00     L_1C0C           ldy #$00
 1C0E: C8        L_1C0E           iny
@@ -902,8 +902,8 @@
 1C11: E8                         inx
 1C12: E0 14                      cpx #$14
 1C14: D0 F6                      bne $1C0C     ; L_1C0C
-1C16: A6 DC                      ldx $DC       ; FRE+2
-1C18: A4 DD                      ldy $DD       ; FRE+3
+1C16: A6 DC                      ldx $DC       ; SHIP_ADDR
+1C18: A4 DD                      ldy $DD       ; SHIP_ADDR+1
 1C1A: AD FA 14                   lda $14FA     ; L_14F8+2
 1C1D: D0 C8                      bne $1BE7     ; L_1BE7
 1C1F: A9 03                      lda #$03
@@ -921,8 +921,8 @@
 1C3C: 99 80 6E                   sta $6E80,y
 1C3F: 99 00 6F                   sta $6F00,y
 1C42: C8                         iny
-1C43: 86 DC                      stx $DC       ; FRE+2
-1C45: 84 DD                      sty $DD       ; FRE+3
+1C43: 86 DC                      stx $DC       ; SHIP_ADDR
+1C45: 84 DD                      sty $DD       ; SHIP_ADDR+1
 1C47: A2 00                      ldx #$00
 1C49: A0 00     L_1C49           ldy #$00
 1C4B: C8        L_1C4B           iny
@@ -930,14 +930,14 @@
 1C4E: E8                         inx
 1C4F: E0 1C                      cpx #$1C
 1C51: D0 F6                      bne $1C49     ; L_1C49
-1C53: A6 DC                      ldx $DC       ; FRE+2
-1C55: A4 DD                      ldy $DD       ; FRE+3
-1C57: A5 DE                      lda $DE       ; FRE+4
+1C53: A6 DC                      ldx $DC       ; SHIP_ADDR
+1C55: A4 DD                      ldy $DD       ; SHIP_ADDR+1
+1C57: A5 DE                      lda $DE       ; MASK_ADDR
 1C59: 18                         clc
 1C5A: 69 28                      adc #$28
-1C5C: 85 DE                      sta $DE       ; FRE+4
+1C5C: 85 DE                      sta $DE       ; MASK_ADDR
 1C5E: 90 02                      bcc $1C62     ; L_1C62
-1C60: E6 DF                      inc $DF       ; FRE+5
+1C60: E6 DF                      inc $DF       ; MASK_ADDR+1
 1C62: E8        L_1C62           inx
 1C63: E0 28                      cpx #$28
 1C65: D0 D0                      bne $1C37     ; L_1C37
@@ -1501,21 +1501,21 @@
 28FD: 00                         brk
 28FE: 00                         brk
 28FF: 00                         brk
-2900: A5 DE     L_2900           lda $DE       ; FRE+4
+2900: A5 DE     L_2900           lda $DE       ; MASK_ADDR
 2902: 85 F8                      sta $F8       ; ZTEMP4+1
-2904: A5 DF                      lda $DF       ; FRE+5
+2904: A5 DF                      lda $DF       ; MASK_ADDR+1
 2906: 85 F9                      sta $F9       ; ZTEMP3
-2908: A5 DF                      lda $DF       ; FRE+5
+2908: A5 DF                      lda $DF       ; MASK_ADDR+1
 290A: 85 FD                      sta $FD       ; FLPTR+1
-290C: A5 DE                      lda $DE       ; FRE+4
+290C: A5 DE                      lda $DE       ; MASK_ADDR
 290E: 38                         sec
 290F: E9 2A                      sbc #$2A
 2911: 85 FC                      sta $FC       ; FLPTR
 2913: B0 02                      bcs $2917     ; L_2917
 2915: C6 FD                      dec $FD       ; FLPTR+1
-2917: A5 DF     L_2917           lda $DF       ; FRE+5
+2917: A5 DF     L_2917           lda $DF       ; MASK_ADDR+1
 2919: 85 FF                      sta $FF       ; FPTR2+1
-291B: A5 DE                      lda $DE       ; FRE+4
+291B: A5 DE                      lda $DE       ; MASK_ADDR
 291D: 38                         sec
 291E: E9 02                      sbc #$02
 2920: 85 FE                      sta $FE       ; FPTR2
@@ -1617,27 +1617,27 @@
 29D6: 60                         rts
 29D7: 00        L_29D7           brk
 29D8: 00        L_29D8           brk
-29D9: A5 03                      lda $03       ; CASINI+1
+29D9: A5 03                      lda $03       ; SRC+1
 29DB: 85 F9                      sta $F9       ; ZTEMP3
 29DD: 85 FD                      sta $FD       ; FLPTR+1
-29DF: A5 02                      lda $02       ; CASINI
+29DF: A5 02                      lda $02       ; SRC
 29E1: 85 F8                      sta $F8       ; ZTEMP4+1
 29E3: 38                         sec
 29E4: E9 2A                      sbc #$2A
 29E6: 85 FC                      sta $FC       ; FLPTR
 29E8: B0 02                      bcs $29EC     ; L_29EC
 29EA: C6 FD                      dec $FD       ; FLPTR+1
-29EC: A5 03     L_29EC           lda $03       ; CASINI+1
+29EC: A5 03     L_29EC           lda $03       ; SRC+1
 29EE: 85 FF                      sta $FF       ; FPTR2+1
-29F0: A5 02                      lda $02       ; CASINI
+29F0: A5 02                      lda $02       ; SRC
 29F2: 38                         sec
 29F3: E9 02                      sbc #$02
 29F5: 85 FE                      sta $FE       ; FPTR2
 29F7: B0 02                      bcs $29FB     ; L_29FB
 29F9: C6 FF                      dec $FF       ; FPTR2+1
 29FB: 20 26 29  L_29FB           jsr $2926     ; L_2926
-29FE: A6 DC                      ldx $DC       ; FRE+2
-2A00: A4 DD                      ldy $DD       ; FRE+3
+29FE: A6 DC                      ldx $DC       ; SHIP_ADDR
+2A00: A4 DD                      ldy $DD       ; SHIP_ADDR+1
 2A02: 60                         rts
 2A03: 45                         BYTE $45 $20 $54 $4F $20 $55 $4E $4C
 2A0B: 4F        L_2A0B           BYTE $4F $43 $4B $3F $9B $AD $52 $25
@@ -1647,19 +1647,19 @@
 2A22: A2 00                      ldx #$00
 2A24: B9 41 4C  L_2A24           lda $4C41,y   ; L_4C41
 2A27: F0 1E                      beq $2A47     ; L_2A47
-2A29: 85 DF                      sta $DF       ; FRE+5
+2A29: 85 DF                      sta $DF       ; MASK_ADDR+1
 2A2B: B9 40 4C                   lda $4C40,y   ; L_4C40
-2A2E: 85 DE                      sta $DE       ; FRE+4
+2A2E: 85 DE                      sta $DE       ; MASK_ADDR
 2A30: B9 43 4C                   lda $4C43,y   ; L_4C43
-2A33: 85 DC                      sta $DC       ; FRE+2
+2A33: 85 DC                      sta $DC       ; SHIP_ADDR
 2A35: 8C 1F 2A                   sty $2A1F     ; L_2A1B+4
 2A38: A0 00                      ldy #$00
-2A3A: A5 DC                      lda $DC       ; FRE+2
-2A3C: 91 DE                      sta ($DE),y   ; FRE+4
+2A3A: A5 DC                      lda $DC       ; SHIP_ADDR
+2A3C: 91 DE                      sta ($DE),y   ; MASK_ADDR
 2A3E: C8                         iny
 2A3F: 18                         clc
 2A40: 69 01                      adc #$01
-2A42: 91 DE                      sta ($DE),y   ; FRE+4
+2A42: 91 DE                      sta ($DE),y   ; MASK_ADDR
 2A44: AC 1F 2A                   ldy $2A1F     ; L_2A1B+4
 2A47: E8        L_2A47           inx
 2A48: C8                         iny
@@ -1751,46 +1751,46 @@
 2B00: 20 D5 43  L_2B00           jsr $43D5     ; L_43D5
 2B03: EA        L_2B03           nop
 2B04: 4C E0 2F                   jmp $2FE0     ; L_2FE0
-2B07: 86 DC     L_2B07           stx $DC       ; FRE+2
-2B09: 84 DD                      sty $DD       ; FRE+3
+2B07: 86 DC     L_2B07           stx $DC       ; SHIP_ADDR
+2B09: 84 DD                      sty $DD       ; SHIP_ADDR+1
 2B0B: A2 80                      ldx #$80
 2B0D: A0 8A                      ldy #$8A
-2B0F: 86 DE                      stx $DE       ; FRE+4
-2B11: 84 DF                      sty $DF       ; FRE+5
+2B0F: 86 DE                      stx $DE       ; MASK_ADDR
+2B11: 84 DF                      sty $DF       ; MASK_ADDR+1
 2B13: A2 00                      ldx #$00
 2B15: A0 00     L_2B15           ldy #$00
-2B17: B1 DC     L_2B17           lda ($DC),y   ; FRE+2
+2B17: B1 DC     L_2B17           lda ($DC),y   ; SHIP_ADDR
 2B19: 29 CC                      and #$CC
-2B1B: 91 DE                      sta ($DE),y   ; FRE+4
+2B1B: 91 DE                      sta ($DE),y   ; MASK_ADDR
 2B1D: C8                         iny
-2B1E: B1 DC                      lda ($DC),y   ; FRE+2
+2B1E: B1 DC                      lda ($DC),y   ; SHIP_ADDR
 2B20: 29 33                      and #$33
-2B22: 91 DE                      sta ($DE),y   ; FRE+4
+2B22: 91 DE                      sta ($DE),y   ; MASK_ADDR
 2B24: C8                         iny
 2B25: C0 08                      cpy #$08
 2B27: D0 EE                      bne $2B17     ; L_2B17
-2B29: A5 DC                      lda $DC       ; FRE+2
+2B29: A5 DC                      lda $DC       ; SHIP_ADDR
 2B2B: 18                         clc
 2B2C: 69 08                      adc #$08
-2B2E: 85 DC                      sta $DC       ; FRE+2
+2B2E: 85 DC                      sta $DC       ; SHIP_ADDR
 2B30: 90 02                      bcc $2B34     ; L_2B34
-2B32: E6 DD                      inc $DD       ; FRE+3
-2B34: A5 DE     L_2B34           lda $DE       ; FRE+4
+2B32: E6 DD                      inc $DD       ; SHIP_ADDR+1
+2B34: A5 DE     L_2B34           lda $DE       ; MASK_ADDR
 2B36: 18                         clc
 2B37: 69 08                      adc #$08
-2B39: 85 DE                      sta $DE       ; FRE+4
+2B39: 85 DE                      sta $DE       ; MASK_ADDR
 2B3B: 90 02                      bcc $2B3F     ; L_2B3F
-2B3D: E6 DF                      inc $DF       ; FRE+5
+2B3D: E6 DF                      inc $DF       ; MASK_ADDR+1
 2B3F: E8        L_2B3F           inx
 2B40: E0 10                      cpx #$10
 2B42: D0 D1                      bne $2B15     ; L_2B15
 2B44: A2 30                      ldx #$30
 2B46: A0 9B                      ldy #$9B
-2B48: 86 DC                      stx $DC       ; FRE+2
-2B4A: 84 DD                      sty $DD       ; FRE+3
+2B48: 86 DC                      stx $DC       ; SHIP_ADDR
+2B4A: 84 DD                      sty $DD       ; SHIP_ADDR+1
 2B4C: A2 00                      ldx #$00
 2B4E: A0 00     L_2B4E           ldy #$00
-2B50: B1 DC     L_2B50           lda ($DC),y   ; FRE+2
+2B50: B1 DC     L_2B50           lda ($DC),y   ; SHIP_ADDR
 2B52: 29 7F                      and #$7F
 2B54: C9 01                      cmp #$01
 2B56: F0 13                      beq $2B6B     ; L_2B6B
@@ -1810,7 +1810,7 @@
 2B71: 69 29                      adc #$29
 2B73: A8                         tay
 2B74: A2 00                      ldx #$00
-2B76: B1 DC     L_2B76           lda ($DC),y   ; FRE+2
+2B76: B1 DC     L_2B76           lda ($DC),y   ; SHIP_ADDR
 2B78: 29 7F                      and #$7F
 2B7A: C9 38                      cmp #$38
 2B7C: 30 09                      bmi $2B87     ; L_2B87
@@ -1818,7 +1818,7 @@
 2B80: 10 05                      bpl $2B87     ; L_2B87
 2B82: 18                         clc
 2B83: 69 18                      adc #$18
-2B85: 91 DC                      sta ($DC),y   ; FRE+2
+2B85: 91 DC                      sta ($DC),y   ; SHIP_ADDR
 2B87: C8        L_2B87           iny
 2B88: E8                         inx
 2B89: E0 02                      cpx #$02
@@ -1829,12 +1829,12 @@
 2B92: C8                         iny
 2B93: C0 1A                      cpy #$1A
 2B95: D0 B9                      bne $2B50     ; L_2B50
-2B97: A5 DC                      lda $DC       ; FRE+2
+2B97: A5 DC                      lda $DC       ; SHIP_ADDR
 2B99: 18                         clc
 2B9A: 69 28                      adc #$28
-2B9C: 85 DC                      sta $DC       ; FRE+2
+2B9C: 85 DC                      sta $DC       ; SHIP_ADDR
 2B9E: 90 02                      bcc $2BA2     ; L_2BA2
-2BA0: E6 DD                      inc $DD       ; FRE+3
+2BA0: E6 DD                      inc $DD       ; SHIP_ADDR+1
 2BA2: E8        L_2BA2           inx
 2BA3: E0 13                      cpx #$13
 2BA5: D0 A7                      bne $2B4E     ; L_2B4E
@@ -1852,24 +1852,24 @@
 2BBD: D0 EA                      bne $2BA9     ; L_2BA9
 2BBF: A2 58                      ldx #$58
 2BC1: A0 9B                      ldy #$9B
-2BC3: 86 DC                      stx $DC       ; FRE+2
-2BC5: 84 DD                      sty $DD       ; FRE+3
+2BC3: 86 DC                      stx $DC       ; SHIP_ADDR
+2BC5: 84 DD                      sty $DD       ; SHIP_ADDR+1
 2BC7: A2 00                      ldx #$00
 2BC9: A0 00                      ldy #$00
-2BCB: B1 DC     L_2BCB           lda ($DC),y   ; FRE+2
+2BCB: B1 DC     L_2BCB           lda ($DC),y   ; SHIP_ADDR
 2BCD: C9 38                      cmp #$38
 2BCF: 30 09                      bmi $2BDA     ; L_2BDA
 2BD1: C9 48                      cmp #$48
 2BD3: 10 05                      bpl $2BDA     ; L_2BDA
 2BD5: 18                         clc
 2BD6: 69 18                      adc #$18
-2BD8: 91 DC                      sta ($DC),y   ; FRE+2
-2BDA: A5 DC     L_2BDA           lda $DC       ; FRE+2
+2BD8: 91 DC                      sta ($DC),y   ; SHIP_ADDR
+2BDA: A5 DC     L_2BDA           lda $DC       ; SHIP_ADDR
 2BDC: 18                         clc
 2BDD: 69 28                      adc #$28
-2BDF: 85 DC                      sta $DC       ; FRE+2
+2BDF: 85 DC                      sta $DC       ; SHIP_ADDR
 2BE1: 90 02                      bcc $2BE5     ; L_2BE5
-2BE3: E6 DD                      inc $DD       ; FRE+3
+2BE3: E6 DD                      inc $DD       ; SHIP_ADDR+1
 2BE5: E8        L_2BE5           inx
 2BE6: E0 19                      cpx #$19
 2BE8: D0 E1                      bne $2BCB     ; L_2BCB
@@ -1898,12 +1898,12 @@
 2C2F: AE 7F 36  L_2C2F           ldx $367F     ; L_367B+4
 2C32: 8E 36 35                   stx $3536     ; L_3533+3
 2C35: BD 28 35                   lda $3528,x   ; L_3523+5
-2C38: 85 DC                      sta $DC       ; FRE+2
+2C38: 85 DC                      sta $DC       ; SHIP_ADDR
 2C3A: BD 29 35                   lda $3529,x   ; L_3523+6
-2C3D: 85 DD                      sta $DD       ; FRE+3
+2C3D: 85 DD                      sta $DD       ; SHIP_ADDR+1
 2C3F: A0 00                      ldy #$00
 2C41: A9 04                      lda #$04
-2C43: 91 DC                      sta ($DC),y   ; FRE+2
+2C43: 91 DC                      sta ($DC),y   ; SHIP_ADDR
 2C45: AD 80 36                   lda $3680     ; L_367B+5
 2C48: 18                         clc
 2C49: 69 11                      adc #$11
@@ -1990,31 +1990,31 @@
 2D23: 20 0F 40                   jsr $400F     ; L_400F
 2D26: A2 00     L_2D26           ldx #$00
 2D28: A0 20                      ldy #$20
-2D2A: 86 DC                      stx $DC       ; FRE+2
-2D2C: 84 DD                      sty $DD       ; FRE+3
+2D2A: 86 DC                      stx $DC       ; SHIP_ADDR
+2D2C: 84 DD                      sty $DD       ; SHIP_ADDR+1
 2D2E: A2 30                      ldx #$30
 2D30: A0 9B                      ldy #$9B
-2D32: 86 DE                      stx $DE       ; FRE+4
-2D34: 84 DF                      sty $DF       ; FRE+5
+2D32: 86 DE                      stx $DE       ; MASK_ADDR
+2D34: 84 DF                      sty $DF       ; MASK_ADDR+1
 2D36: A2 00                      ldx #$00
 2D38: A0 00     L_2D38           ldy #$00
-2D3A: B1 DE     L_2D3A           lda ($DE),y   ; FRE+4
-2D3C: 91 DC                      sta ($DC),y   ; FRE+2
+2D3A: B1 DE     L_2D3A           lda ($DE),y   ; MASK_ADDR
+2D3C: 91 DC                      sta ($DC),y   ; SHIP_ADDR
 2D3E: C8                         iny
 2D3F: C0 1A                      cpy #$1A
 2D41: D0 F7                      bne $2D3A     ; L_2D3A
-2D43: A5 DC                      lda $DC       ; FRE+2
+2D43: A5 DC                      lda $DC       ; SHIP_ADDR
 2D45: 18                         clc
 2D46: 69 28                      adc #$28
-2D48: 85 DC                      sta $DC       ; FRE+2
+2D48: 85 DC                      sta $DC       ; SHIP_ADDR
 2D4A: 90 02                      bcc $2D4E     ; L_2D4E
-2D4C: E6 DD                      inc $DD       ; FRE+3
-2D4E: A5 DE     L_2D4E           lda $DE       ; FRE+4
+2D4C: E6 DD                      inc $DD       ; SHIP_ADDR+1
+2D4E: A5 DE     L_2D4E           lda $DE       ; MASK_ADDR
 2D50: 18                         clc
 2D51: 69 28                      adc #$28
-2D53: 85 DE                      sta $DE       ; FRE+4
+2D53: 85 DE                      sta $DE       ; MASK_ADDR
 2D55: 90 02                      bcc $2D59     ; L_2D59
-2D57: E6 DF                      inc $DF       ; FRE+5
+2D57: E6 DF                      inc $DF       ; MASK_ADDR+1
 2D59: E8        L_2D59           inx
 2D5A: E0 13                      cpx #$13
 2D5C: D0 DA                      bne $2D38     ; L_2D38
@@ -2100,35 +2100,35 @@
 2E2D: 8D 01 2E                   sta $2E01     ; L_2DFB+6
 2E30: A2 00     L_2E30           ldx #$00
 2E32: A0 20                      ldy #$20
-2E34: 86 DC                      stx $DC       ; FRE+2
-2E36: 84 DD                      sty $DD       ; FRE+3
+2E34: 86 DC                      stx $DC       ; SHIP_ADDR
+2E36: 84 DD                      sty $DD       ; SHIP_ADDR+1
 2E38: A2 00                      ldx #$00
 2E3A: A0 6D                      ldy #$6D
-2E3C: 86 DE                      stx $DE       ; FRE+4
-2E3E: 84 DF                      sty $DF       ; FRE+5
+2E3C: 86 DE                      stx $DE       ; MASK_ADDR
+2E3E: 84 DF                      sty $DF       ; MASK_ADDR+1
 2E40: A2 30                      ldx #$30
 2E42: A0 9B                      ldy #$9B
 2E44: 86 FC                      stx $FC       ; FLPTR
 2E46: 84 FD                      sty $FD       ; FLPTR+1
 2E48: A2 00                      ldx #$00
 2E4A: A0 00     L_2E4A           ldy #$00
-2E4C: B1 DC     L_2E4C           lda ($DC),y   ; FRE+2
+2E4C: B1 DC     L_2E4C           lda ($DC),y   ; SHIP_ADDR
 2E4E: 85 FF                      sta $FF       ; FPTR2+1
 2E50: B1 FC                      lda ($FC),y   ; FLPTR
-2E52: 91 DC                      sta ($DC),y   ; FRE+2
+2E52: 91 DC                      sta ($DC),y   ; SHIP_ADDR
 2E54: A5 FF                      lda $FF       ; FPTR2+1
-2E56: 91 DE                      sta ($DE),y   ; FRE+4
+2E56: 91 DE                      sta ($DE),y   ; MASK_ADDR
 2E58: C8                         iny
 2E59: C0 1A                      cpy #$1A
 2E5B: D0 EF                      bne $2E4C     ; L_2E4C
-2E5D: A5 DE                      lda $DE       ; FRE+4
+2E5D: A5 DE                      lda $DE       ; MASK_ADDR
 2E5F: 18                         clc
 2E60: 69 28                      adc #$28
-2E62: 85 DE                      sta $DE       ; FRE+4
-2E64: 85 DC                      sta $DC       ; FRE+2
+2E62: 85 DE                      sta $DE       ; MASK_ADDR
+2E64: 85 DC                      sta $DC       ; SHIP_ADDR
 2E66: 90 04                      bcc $2E6C     ; L_2E6C
-2E68: E6 DF                      inc $DF       ; FRE+5
-2E6A: E6 DD                      inc $DD       ; FRE+3
+2E68: E6 DF                      inc $DF       ; MASK_ADDR+1
+2E6A: E6 DD                      inc $DD       ; SHIP_ADDR+1
 2E6C: A5 FC     L_2E6C           lda $FC       ; FLPTR
 2E6E: 18                         clc
 2E6F: 69 28                      adc #$28
@@ -2178,31 +2178,31 @@
 2EDA: 20 4A 4D                   jsr $4D4A     ; L_4D4A
 2EDD: A2 00     L_2EDD           ldx #$00
 2EDF: A0 6D                      ldy #$6D
-2EE1: 86 DC                      stx $DC       ; FRE+2
-2EE3: 84 DD                      sty $DD       ; FRE+3
+2EE1: 86 DC                      stx $DC       ; SHIP_ADDR
+2EE3: 84 DD                      sty $DD       ; SHIP_ADDR+1
 2EE5: A2 30                      ldx #$30
 2EE7: A0 9B                      ldy #$9B
-2EE9: 86 DE                      stx $DE       ; FRE+4
-2EEB: 84 DF                      sty $DF       ; FRE+5
+2EE9: 86 DE                      stx $DE       ; MASK_ADDR
+2EEB: 84 DF                      sty $DF       ; MASK_ADDR+1
 2EED: A2 00                      ldx #$00
 2EEF: A0 00     L_2EEF           ldy #$00
-2EF1: B1 DC     L_2EF1           lda ($DC),y   ; FRE+2
-2EF3: 91 DE                      sta ($DE),y   ; FRE+4
+2EF1: B1 DC     L_2EF1           lda ($DC),y   ; SHIP_ADDR
+2EF3: 91 DE                      sta ($DE),y   ; MASK_ADDR
 2EF5: C8                         iny
 2EF6: C0 1A                      cpy #$1A
 2EF8: D0 F7                      bne $2EF1     ; L_2EF1
-2EFA: A5 DC                      lda $DC       ; FRE+2
+2EFA: A5 DC                      lda $DC       ; SHIP_ADDR
 2EFC: 18                         clc
 2EFD: 69 28                      adc #$28
-2EFF: 85 DC                      sta $DC       ; FRE+2
+2EFF: 85 DC                      sta $DC       ; SHIP_ADDR
 2F01: 90 02                      bcc $2F05     ; L_2F05
-2F03: E6 DD                      inc $DD       ; FRE+3
-2F05: A5 DE     L_2F05           lda $DE       ; FRE+4
+2F03: E6 DD                      inc $DD       ; SHIP_ADDR+1
+2F05: A5 DE     L_2F05           lda $DE       ; MASK_ADDR
 2F07: 18                         clc
 2F08: 69 28                      adc #$28
-2F0A: 85 DE                      sta $DE       ; FRE+4
+2F0A: 85 DE                      sta $DE       ; MASK_ADDR
 2F0C: 90 02                      bcc $2F10     ; L_2F10
-2F0E: E6 DF                      inc $DF       ; FRE+5
+2F0E: E6 DF                      inc $DF       ; MASK_ADDR+1
 2F10: E8        L_2F10           inx
 2F11: E0 13                      cpx #$13
 2F13: D0 DA                      bne $2EEF     ; L_2EEF
@@ -2248,8 +2248,8 @@
 2FB8: 60                         rts
 2FB9: A2 CC     L_2FB9           ldx #$CC
 2FBB: A0 2F                      ldy #$2F
-2FBD: 86 02                      stx $02       ; CASINI
-2FBF: 84 03                      sty $03       ; CASINI+1
+2FBD: 86 02                      stx $02       ; SRC
+2FBF: 84 03                      sty $03       ; SRC+1
 2FC1: 86 0A                      stx $0A       ; DOSVEC
 2FC3: 84 0B                      sty $0B       ; DOSVEC+1
 2FC5: 86 0C                      stx $0C       ; DOSINI
@@ -2400,27 +2400,27 @@
 3289: 20 F1 44                   jsr $44F1     ; L_44F1
 328C: A2 03                      ldx #$03
 328E: A0 30                      ldy #$30
-3290: 86 DC                      stx $DC       ; FRE+2
-3292: 84 DD                      sty $DD       ; FRE+3
+3290: 86 DC                      stx $DC       ; SHIP_ADDR
+3292: 84 DD                      sty $DD       ; SHIP_ADDR+1
 3294: A2 C8     L_3294           ldx #$C8
 3296: A0 6C                      ldy #$6C
-3298: 86 DE                      stx $DE       ; FRE+4
-329A: 84 DF                      sty $DF       ; FRE+5
+3298: 86 DE                      stx $DE       ; MASK_ADDR
+329A: 84 DF                      sty $DF       ; MASK_ADDR+1
 329C: A2 00                      ldx #$00
 329E: 8E C6 02                   stx $02C6     ; COLOR2
 32A1: A0 00     L_32A1           ldy #$00
-32A3: B1 DC     L_32A3           lda ($DC),y   ; FRE+2
-32A5: 91 DE                      sta ($DE),y   ; FRE+4
+32A3: B1 DC     L_32A3           lda ($DC),y   ; SHIP_ADDR
+32A5: 91 DE                      sta ($DE),y   ; MASK_ADDR
 32A7: C8                         iny
 32A8: C0 0F                      cpy #$0F
 32AA: D0 F7                      bne $32A3     ; L_32A3
-32AC: E6 DF                      inc $DF       ; FRE+5
-32AE: A5 DC                      lda $DC       ; FRE+2
+32AC: E6 DF                      inc $DF       ; MASK_ADDR+1
+32AE: A5 DC                      lda $DC       ; SHIP_ADDR
 32B0: 18                         clc
 32B1: 69 0F                      adc #$0F
-32B3: 85 DC                      sta $DC       ; FRE+2
+32B3: 85 DC                      sta $DC       ; SHIP_ADDR
 32B5: 90 02                      bcc $32B9     ; L_32B9
-32B7: E6 DD                      inc $DD       ; FRE+3
+32B7: E6 DD                      inc $DD       ; SHIP_ADDR+1
 32B9: E8        L_32B9           inx
 32BA: E0 04                      cpx #$04
 32BC: D0 E3                      bne $32A1     ; L_32A1
@@ -2462,31 +2462,31 @@
 3318: 4C 53 33                   jmp $3353     ; L_3353
 331B: A2 00     L_331B           ldx #$00
 331D: A0 6D                      ldy #$6D
-331F: 86 DC                      stx $DC       ; FRE+2
-3321: 84 DD                      sty $DD       ; FRE+3
+331F: 86 DC                      stx $DC       ; SHIP_ADDR
+3321: 84 DD                      sty $DD       ; SHIP_ADDR+1
 3323: A2 30                      ldx #$30
 3325: A0 9B                      ldy #$9B
-3327: 86 DE                      stx $DE       ; FRE+4
-3329: 84 DF                      sty $DF       ; FRE+5
+3327: 86 DE                      stx $DE       ; MASK_ADDR
+3329: 84 DF                      sty $DF       ; MASK_ADDR+1
 332B: A2 00                      ldx #$00
 332D: A0 00     L_332D           ldy #$00
-332F: B1 DC     L_332F           lda ($DC),y   ; FRE+2
-3331: 91 DE     L_3331           sta ($DE),y   ; FRE+4
+332F: B1 DC     L_332F           lda ($DC),y   ; SHIP_ADDR
+3331: 91 DE     L_3331           sta ($DE),y   ; MASK_ADDR
 3333: C8                         iny
 3334: C0 1A                      cpy #$1A
 3336: D0 F7                      bne $332F     ; L_332F
-3338: A5 DE                      lda $DE       ; FRE+4
+3338: A5 DE                      lda $DE       ; MASK_ADDR
 333A: 18                         clc
 333B: 69 28                      adc #$28
-333D: 85 DE                      sta $DE       ; FRE+4
+333D: 85 DE                      sta $DE       ; MASK_ADDR
 333F: 90 02                      bcc $3343     ; L_3343
-3341: E6 DF                      inc $DF       ; FRE+5
+3341: E6 DF                      inc $DF       ; MASK_ADDR+1
 3343: 98        L_3343           tya
 3344: 18                         clc
-3345: 65 DC                      adc $DC       ; FRE+2
-3347: 85 DC                      sta $DC       ; FRE+2
+3345: 65 DC                      adc $DC       ; SHIP_ADDR
+3347: 85 DC                      sta $DC       ; SHIP_ADDR
 3349: 90 02                      bcc $334D     ; L_334D
-334B: E6 DD                      inc $DD       ; FRE+3
+334B: E6 DD                      inc $DD       ; SHIP_ADDR+1
 334D: E8        L_334D           inx
 334E: E0 13                      cpx #$13
 3350: D0 DB                      bne $332D     ; L_332D
@@ -2546,7 +2546,7 @@
 33CE: E0 28                      cpx #$28
 33D0: D0 F8                      bne $33CA     ; L_33CA
 33D2: A2 00                      ldx #$00
-33D4: 86 DD                      stx $DD       ; FRE+3
+33D4: 86 DD                      stx $DD       ; SHIP_ADDR+1
 33D6: BD E3 31  L_33D6           lda $31E3,x   ; L_31E3
 33D9: 9D 6C 9F                   sta $9F6C,x
 33DC: E8                         inx
@@ -2564,8 +2564,8 @@
 33F4: D0 FD                      bne $33F3     ; L_33F3
 33F6: E8                         inx
 33F7: D0 F8                      bne $33F1     ; L_33F1
-33F9: E6 DD                      inc $DD       ; FRE+3
-33FB: A5 DD                      lda $DD       ; FRE+3
+33F9: E6 DD                      inc $DD       ; SHIP_ADDR+1
+33FB: A5 DD                      lda $DD       ; SHIP_ADDR+1
 33FD: C9 06                      cmp #$06
 33FF: D0 EE                      bne $33EF     ; L_33EF
 3401: AD 00 2E                   lda $2E00     ; L_2DFB+5
@@ -2715,38 +2715,38 @@
 36D5: 8D F4 02                   sta $02F4     ; CHBAS
 36D8: A2 37                      ldx #$37
 36DA: A0 35                      ldy #$35
-36DC: 86 DC                      stx $DC       ; FRE+2
-36DE: 84 DD                      sty $DD       ; FRE+3
+36DC: 86 DC                      stx $DC       ; SHIP_ADDR
+36DE: 84 DD                      sty $DD       ; SHIP_ADDR+1
 36E0: A2 40                      ldx #$40
 36E2: A0 9C                      ldy #$9C
-36E4: 86 DE                      stx $DE       ; FRE+4
-36E6: 84 DF                      sty $DF       ; FRE+5
+36E4: 86 DE                      stx $DE       ; MASK_ADDR
+36E6: 84 DF                      sty $DF       ; MASK_ADDR+1
 36E8: A9 07                      lda #$07
 36EA: A0 4A                      ldy #$4A
 36EC: A2 37                      ldx #$37
 36EE: 20 00 1F                   jsr $1F00     ; L_1F00
 36F1: A0 00     L_36F1           ldy #$00
-36F3: B1 DC     L_36F3           lda ($DC),y   ; FRE+2
+36F3: B1 DC     L_36F3           lda ($DC),y   ; SHIP_ADDR
 36F5: C9 0A                      cmp #$0A
 36F7: F0 0A                      beq $3703     ; L_3703
 36F9: C9 0B                      cmp #$0B
 36FB: F0 1F                      beq $371C     ; L_371C
-36FD: 91 DE                      sta ($DE),y   ; FRE+4
+36FD: 91 DE                      sta ($DE),y   ; MASK_ADDR
 36FF: C8                         iny
 3700: 4C F3 36                   jmp $36F3     ; L_36F3
 3703: C8        L_3703           iny
 3704: 98                         tya
 3705: 18                         clc
-3706: 65 DC                      adc $DC       ; FRE+2
-3708: 85 DC                      sta $DC       ; FRE+2
+3706: 65 DC                      adc $DC       ; SHIP_ADDR
+3708: 85 DC                      sta $DC       ; SHIP_ADDR
 370A: 90 02                      bcc $370E     ; L_370E
-370C: E6 DD                      inc $DD       ; FRE+3
-370E: A5 DE     L_370E           lda $DE       ; FRE+4
+370C: E6 DD                      inc $DD       ; SHIP_ADDR+1
+370E: A5 DE     L_370E           lda $DE       ; MASK_ADDR
 3710: 18                         clc
 3711: 69 28                      adc #$28
-3713: 85 DE                      sta $DE       ; FRE+4
+3713: 85 DE                      sta $DE       ; MASK_ADDR
 3715: 90 02                      bcc $3719     ; L_3719
-3717: E6 DF                      inc $DF       ; FRE+5
+3717: E6 DF                      inc $DF       ; MASK_ADDR+1
 3719: 4C F1 36  L_3719           jmp $36F1     ; L_36F1
 371C: A9 04     L_371C           lda #$04
 371E: 20 2F 2C                   jsr $2C2F     ; L_2C2F
@@ -2864,15 +2864,15 @@
 3822: EE 00 40  L_3822           inc $4000     ; L_3FFD+3
 3825: A9 00                      lda #$00
 3827: 8D 00 39                   sta $3900     ; L_38FE+2
-382A: 85 DD                      sta $DD       ; FRE+3
+382A: 85 DD                      sta $DD       ; SHIP_ADDR+1
 382C: A2 00     L_382C           ldx #$00
 382E: A0 00     L_382E           ldy #$00
 3830: C8        L_3830           iny
 3831: D0 FD                      bne $3830     ; L_3830
 3833: E8                         inx
 3834: D0 F8                      bne $382E     ; L_382E
-3836: E6 DD                      inc $DD       ; FRE+3
-3838: A5 DD                      lda $DD       ; FRE+3
+3836: E6 DD                      inc $DD       ; SHIP_ADDR+1
+3838: A5 DD                      lda $DD       ; SHIP_ADDR+1
 383A: C9 02                      cmp #$02
 383C: D0 EE                      bne $382C     ; L_382C
 383E: A2 00                      ldx #$00
@@ -2912,11 +2912,11 @@
 3923: 8D B0 39                   sta $39B0     ; L_39B0
 3926: 8E 01 39                   stx $3901     ; L_38FE+3
 3929: 8C 02 39                   sty $3902     ; L_38FE+4
-392C: A5 03                      lda $03       ; CASINI+1
+392C: A5 03                      lda $03       ; SRC+1
 392E: 18                         clc
 392F: 0A                         asl
 3930: AA        L_3930           tax
-3931: B1 DE                      lda ($DE),y   ; FRE+4
+3931: B1 DE                      lda ($DE),y   ; MASK_ADDR
 3933: C9 05                      cmp #$05
 3935: F0 4E                      beq $3985     ; L_3985
 3937: C9 06                      cmp #$06
@@ -2928,9 +2928,9 @@
 3943: 29 80                      and #$80
 3945: F0 01                      beq $3948     ; L_3948
 3947: E8                         inx
-3948: AD 22 3C  L_3948           lda $3C22     ; BRICK_COLORS_L
+3948: AD 22 3C  L_3948           lda $3C22     ; BRICK_COLORS
 394B: 8D 55 39                   sta $3955     ; L_3954+1
-394E: AD 23 3C                   lda $3C23     ; BRICK_COLORS_H
+394E: AD 23 3C                   lda $3C23     ; L_3C23
 3951: 8D 56 39                   sta $3956     ; L_3954+2
 3954: BD 4C 7B  L_3954           lda $7B4C,x
 3957: 29 F0     L_3957           and #$F0
@@ -3005,41 +3005,41 @@
 3A55: E0 0E                      cpx #$0E
 3A57: D0 F5                      bne $3A4E     ; L_3A4E
 3A59: AD 00 40                   lda $4000     ; L_3FFD+3
-3A5C: 85 DE                      sta $DE       ; FRE+4
-3A5E: E6 DE                      inc $DE       ; FRE+4
+3A5C: 85 DE                      sta $DE       ; MASK_ADDR
+3A5E: E6 DE                      inc $DE       ; MASK_ADDR
 3A60: A9 20                      lda #$20
 3A62: 8D 38 3A                   sta $3A38     ; L_3A38
 3A65: A0 00                      ldy #$00
-3A67: 84 DF                      sty $DF       ; FRE+5
-3A69: A5 DE     L_3A69           lda $DE       ; FRE+4
+3A67: 84 DF                      sty $DF       ; MASK_ADDR+1
+3A69: A5 DE     L_3A69           lda $DE       ; MASK_ADDR
 3A6B: 38                         sec
 3A6C: E9 0A                      sbc #$0A
-3A6E: 85 DE                      sta $DE       ; FRE+4
+3A6E: 85 DE                      sta $DE       ; MASK_ADDR
 3A70: F0 05                      beq $3A77     ; L_3A77
 3A72: B0 03                      bcs $3A77     ; L_3A77
 3A74: 4C 7E 3A                   jmp $3A7E     ; L_3A7E
-3A77: E6 DF     L_3A77           inc $DF       ; FRE+5
+3A77: E6 DF     L_3A77           inc $DF       ; MASK_ADDR+1
 3A79: A0 01                      ldy #$01
 3A7B: 4C 69 3A                   jmp $3A69     ; L_3A69
 3A7E: 18        L_3A7E           clc
 3A7F: 69 0A                      adc #$0A
-3A81: 85 DE                      sta $DE       ; FRE+4
+3A81: 85 DE                      sta $DE       ; MASK_ADDR
 3A83: A2 00                      ldx #$00
 3A85: A9 20                      lda #$20
 3A87: C0 00                      cpy #$00
 3A89: F0 09                      beq $3A94     ; L_3A94
-3A8B: A5 DF                      lda $DF       ; FRE+5
+3A8B: A5 DF                      lda $DF       ; MASK_ADDR+1
 3A8D: 18                         clc
 3A8E: 69 10                      adc #$10
 3A90: 9D 75 9F                   sta $9F75,x
 3A93: E8                         inx
 3A94: 8D 38 3A  L_3A94           sta $3A38     ; L_3A38
-3A97: A5 DE                      lda $DE       ; FRE+4
+3A97: A5 DE                      lda $DE       ; MASK_ADDR
 3A99: 18                         clc
 3A9A: 69 10                      adc #$10
 3A9C: 9D 75 9F                   sta $9F75,x
 3A9F: 8D 39 3A                   sta $3A39     ; L_3A38+1
-3AA2: 86 DC                      stx $DC       ; FRE+2
+3AA2: 86 DC                      stx $DC       ; SHIP_ADDR
 3AA4: A9 2E                      lda #$2E
 3AA6: 8D 2F 02                   sta $022F     ; SDMCTL
 3AA9: A2 00                      ldx #$00
@@ -3049,30 +3049,30 @@
 3AB0: E8                         inx
 3AB1: E0 F0                      cpx #$F0
 3AB3: D0 F6                      bne $3AAB     ; L_3AAB
-3AB5: A5 DC                      lda $DC       ; FRE+2
+3AB5: A5 DC                      lda $DC       ; SHIP_ADDR
 3AB7: 18                         clc
 3AB8: 69 0D                      adc #$0D
 3ABA: AA                         tax
 3ABB: 18                         clc
 3ABC: 69 06                      adc #$06
-3ABE: 85 DC                      sta $DC       ; FRE+2
+3ABE: 85 DC                      sta $DC       ; SHIP_ADDR
 3AC0: A0 0E                      ldy #$0E
 3AC2: B9 00 3A  L_3AC2           lda $3A00,y   ; L_3A00
 3AC5: 9D 6A 9F                   sta $9F6A,x
 3AC8: E8                         inx
 3AC9: C8                         iny
-3ACA: E4 DC                      cpx $DC       ; FRE+2
+3ACA: E4 DC                      cpx $DC       ; SHIP_ADDR
 3ACC: D0 F4                      bne $3AC2     ; L_3AC2
 3ACE: A9 00                      lda #$00
-3AD0: 85 DD                      sta $DD       ; FRE+3
+3AD0: 85 DD                      sta $DD       ; SHIP_ADDR+1
 3AD2: A2 00     L_3AD2           ldx #$00
 3AD4: A0 00     L_3AD4           ldy #$00
 3AD6: C8        L_3AD6           iny
 3AD7: D0 FD                      bne $3AD6     ; L_3AD6
 3AD9: E8                         inx
 3ADA: D0 F8                      bne $3AD4     ; L_3AD4
-3ADC: E6 DD                      inc $DD       ; FRE+3
-3ADE: A5 DD                      lda $DD       ; FRE+3
+3ADC: E6 DD                      inc $DD       ; SHIP_ADDR+1
+3ADE: A5 DD                      lda $DD       ; SHIP_ADDR+1
 3AE0: C9 03                      cmp #$03
 3AE2: D0 EE                      bne $3AD2     ; L_3AD2
 3AE4: A2 00                      ldx #$00
@@ -3177,7 +3177,7 @@
 3C0B: 84                         BYTE $84 $84 $84 $84 $84 $84 $84 $84
 3C13: 84                         BYTE $84 $84 $84 $84 $84 $84 $84 $84
 3C1B: 84                         BYTE $84 $04 $84 $02 $41 $00 $92 $00
-3C23: 00        BRICK_COLORS_H   BYTE $00 $00 $00
+3C23: 00        L_3C23           BYTE $00 $00 $00
 3C26: AD 31 02  L_3C26           lda $0231     ; SDLSTH
 3C29: C9 3C                      cmp #$3C
 3C2B: F0 39                      beq $3C66     ; L_3C66
@@ -3187,8 +3187,8 @@
 3C34: 8C 31 02                   sty $0231     ; SDLSTH
 3C37: A2 00                      ldx #$00
 3C39: A0 7B                      ldy #$7B
-3C3B: 8E 22 3C                   stx $3C22     ; BRICK_COLORS_L
-3C3E: 8C 23 3C                   sty $3C23     ; BRICK_COLORS_H
+3C3B: 8E 22 3C                   stx $3C22     ; BRICK_COLORS
+3C3E: 8C 23 3C                   sty $3C23     ; L_3C23
 3C41: 8E 24 3C                   stx $3C24     ; ROW_INDEX
 3C44: 8A                         txa
 3C45: 9D 00 9B  L_3C45           sta $9B00,x
@@ -3226,10 +3226,10 @@
 3C7C: 18                         clc
 3C7D: 69 02                      adc #$02
 3C7F: 8D 24 3C                   sta $3C24     ; ROW_INDEX
-3C82: AE 22 3C                   ldx $3C22     ; BRICK_COLORS_L
-3C85: AD 23 3C                   lda $3C23     ; BRICK_COLORS_H
-3C88: 86 DA                      stx $DA       ; ROW_COLOR_L
-3C8A: 85 DB                      sta $DB       ; ROW_COLOR_H
+3C82: AE 22 3C                   ldx $3C22     ; BRICK_COLORS
+3C85: AD 23 3C                   lda $3C23     ; L_3C23
+3C88: 86 DA                      stx $DA       ; word
+3C8A: 85 DB                      sta $DB       ; FRE+1
 3C8C: C0 30                      cpy #$30
 3C8E: F0 35                      beq $3CC5     ; SET_SHIP_COLORS
 3C90: C0 34                      cpy #$34
@@ -3237,10 +3237,10 @@
 
   Set colors for each brick row
 
-3C94: B1 DA                      lda ($DA),y   ; ROW_COLOR_L
+3C94: B1 DA                      lda ($DA),y   ; word
 3C96: 8D 18 D0                   sta $D018     ; COLPF2
 3C99: C8                         iny
-3C9A: B1 DA                      lda ($DA),y   ; ROW_COLOR_L
+3C9A: B1 DA                      lda ($DA),y   ; word
 3C9C: 8D 19 D0                   sta $D019     ; COLPF3
 3C9F: 88                         dey
 3CA0: C0 00                      cpy #$00
@@ -3385,9 +3385,9 @@
 3DC9: 9D AB 3D                   sta $3DAB,x   ; L_3DAB
 3DCC: 9D AE 3D                   sta $3DAE,x   ; L_3DAB+3
 3DCF: AD 6F 5C                   lda $5C6F
-3DD2: 85 DE                      sta $DE       ; FRE+4
+3DD2: 85 DE                      sta $DE       ; MASK_ADDR
 3DD4: 20 93 3F                   jsr $3F93     ; L_3F93
-3DD7: A5 DE                      lda $DE       ; FRE+4
+3DD7: A5 DE                      lda $DE       ; MASK_ADDR
 3DD9: 8D 6F 5C                   sta $5C6F
 3DDC: AD 00 40                   lda $4000     ; L_3FFD+3
 3DDF: 29 03                      and #$03
@@ -3410,8 +3410,8 @@
 3E16: 90 F5                      bcc $3E0D     ; L_3E0D
 3E18: A2 00                      ldx #$00
 3E1A: A0 01                      ldy #$01
-3E1C: 86 DD                      stx $DD       ; FRE+3
-3E1E: B1 DE     L_3E1E           lda ($DE),y   ; FRE+4
+3E1C: 86 DD                      stx $DD       ; SHIP_ADDR+1
+3E1E: B1 DE     L_3E1E           lda ($DE),y   ; MASK_ADDR
 3E20: C9 37                      cmp #$37
 3E22: 30 13                      bmi $3E37     ; L_3E37
 3E24: C9 60                      cmp #$60
@@ -3427,20 +3427,20 @@
 3E36: 60                         rts
 3E37: A2 00     L_3E37           ldx #$00
 3E39: A0 04                      ldy #$04
-3E3B: E6 DD                      inc $DD       ; FRE+3
-3E3D: A5 DD                      lda $DD       ; FRE+3
+3E3B: E6 DD                      inc $DD       ; SHIP_ADDR+1
+3E3D: A5 DD                      lda $DD       ; SHIP_ADDR+1
 3E3F: C9 02                      cmp #$02
 3E41: D0 DB                      bne $3E1E     ; L_3E1E
 3E43: AD D3 5D                   lda $5DD3
-3E46: 85 DF                      sta $DF       ; FRE+5
+3E46: 85 DF                      sta $DF       ; MASK_ADDR+1
 3E48: AD D2 5D                   lda $5DD2
 3E4B: 38                         sec
 3E4C: E9 28                      sbc #$28
-3E4E: 85 DE                      sta $DE       ; FRE+4
+3E4E: 85 DE                      sta $DE       ; MASK_ADDR
 3E50: B0 02                      bcs $3E54     ; L_3E54
-3E52: C6 DF                      dec $DF       ; FRE+5
+3E52: C6 DF                      dec $DF       ; MASK_ADDR+1
 3E54: A0 02     L_3E54           ldy #$02
-3E56: B1 DE     L_3E56           lda ($DE),y   ; FRE+4
+3E56: B1 DE     L_3E56           lda ($DE),y   ; MASK_ADDR
 3E58: C9 37                      cmp #$37
 3E5A: 10 03                      bpl $3E5F     ; L_3E5F
 3E5C: 4C 30 5F  L_3E5C           jmp $5F30
@@ -3463,14 +3463,14 @@
 3E83: BD DF 5D                   lda $5DDF,x
 3E86: D0 5A                      bne $3EE2     ; L_3EE2
 3E88: AD D2 5D                   lda $5DD2
-3E8B: 85 DE                      sta $DE       ; FRE+4
+3E8B: 85 DE                      sta $DE       ; MASK_ADDR
 3E8D: AD D3 5D                   lda $5DD3
-3E90: 85 DF                      sta $DF       ; FRE+5
+3E90: 85 DF                      sta $DF       ; MASK_ADDR+1
 3E92: A0 01                      ldy #$01
 3E94: A2 00                      ldx #$00
-3E96: 86 DD                      stx $DD       ; FRE+3
-3E98: 86 DC                      stx $DC       ; FRE+2
-3E9A: B1 DE     L_3E9A           lda ($DE),y   ; FRE+4
+3E96: 86 DD                      stx $DD       ; SHIP_ADDR+1
+3E98: 86 DC                      stx $DC       ; SHIP_ADDR
+3E9A: B1 DE     L_3E9A           lda ($DE),y   ; MASK_ADDR
 3E9C: C9 37                      cmp #$37
 3E9E: 30 13                      bmi $3EB3     ; L_3EB3
 3EA0: C9 60                      cmp #$60
@@ -3483,14 +3483,14 @@
 3EAA: EC DB 5D                   cpx $5DDB
 3EAD: D0 EB                      bne $3E9A     ; L_3E9A
 3EAF: 84 D9                      sty $D9       ; FR0+5
-3EB1: E6 DC                      inc $DC       ; FRE+2
-3EB3: E6 DD     L_3EB3           inc $DD       ; FRE+3
+3EB1: E6 DC                      inc $DC       ; SHIP_ADDR
+3EB3: E6 DD     L_3EB3           inc $DD       ; SHIP_ADDR+1
 3EB5: A0 04                      ldy #$04
 3EB7: A2 00                      ldx #$00
-3EB9: A5 DD                      lda $DD       ; FRE+3
+3EB9: A5 DD                      lda $DD       ; SHIP_ADDR+1
 3EBB: C9 02                      cmp #$02
 3EBD: D0 DB                      bne $3E9A     ; L_3E9A
-3EBF: A5 DC                      lda $DC       ; FRE+2
+3EBF: A5 DC                      lda $DC       ; SHIP_ADDR
 3EC1: F0 1F                      beq $3EE2     ; L_3EE2
 3EC3: A0 04                      ldy #$04
 3EC5: AE E8 57                   ldx $57E8
@@ -3516,16 +3516,16 @@
 3EEF: 29 07                      and #$07
 3EF1: D0 2C                      bne $3F1F     ; L_3F1F
 3EF3: AD D3 5D                   lda $5DD3
-3EF6: 85 DF                      sta $DF       ; FRE+5
+3EF6: 85 DF                      sta $DF       ; MASK_ADDR+1
 3EF8: AD D2 5D                   lda $5DD2
 3EFB: 38                         sec
 3EFC: E9 28                      sbc #$28
-3EFE: 85 DE                      sta $DE       ; FRE+4
+3EFE: 85 DE                      sta $DE       ; MASK_ADDR
 3F00: B0 02                      bcs $3F04     ; L_3F04
-3F02: C6 DF                      dec $DF       ; FRE+5
+3F02: C6 DF                      dec $DF       ; MASK_ADDR+1
 3F04: A2 00     L_3F04           ldx #$00
 3F06: A0 02                      ldy #$02
-3F08: B1 DE     L_3F08           lda ($DE),y   ; FRE+4
+3F08: B1 DE     L_3F08           lda ($DE),y   ; MASK_ADDR
 3F0A: C9 37                      cmp #$37
 3F0C: 10 03                      bpl $3F11     ; L_3F11
 3F0E: 4C BB 3F                   jmp $3FBB     ; L_3FBB
@@ -3560,15 +3560,15 @@
 3F4E: 60        L_3F4E           rts
 3F4F: AE E8 57                   ldx $57E8
 3F52: AD D2 5D                   lda $5DD2
-3F55: 85 DE                      sta $DE       ; FRE+4
+3F55: 85 DE                      sta $DE       ; MASK_ADDR
 3F57: AD D3 5D                   lda $5DD3
-3F5A: 85 DF                      sta $DF       ; FRE+5
+3F5A: 85 DF                      sta $DF       ; MASK_ADDR+1
 3F5C: A0 51                      ldy #$51
 3F5E: BD D4 5D                   lda $5DD4,x
 3F61: C9 04                      cmp #$04
 3F63: F0 02                      beq $3F67     ; L_3F67
 3F65: A0 54                      ldy #$54
-3F67: B1 DE     L_3F67           lda ($DE),y   ; FRE+4
+3F67: B1 DE     L_3F67           lda ($DE),y   ; MASK_ADDR
 3F69: C9 37                      cmp #$37
 3F6B: 30 07                      bmi $3F74     ; L_3F74
 3F6D: C9 60                      cmp #$60
@@ -3726,30 +3726,30 @@
 4122: 8D 01 40                   sta $4001     ; L_3FFD+4
 4125: A2 00                      ldx #$00
 4127: A0 90                      ldy #$90
-4129: 86 DC                      stx $DC       ; FRE+2
-412B: 84 DD                      sty $DD       ; FRE+3
+4129: 86 DC                      stx $DC       ; SHIP_ADDR
+412B: 84 DD                      sty $DD       ; SHIP_ADDR+1
 412D: EC 01 40  L_412D           cpx $4001     ; L_3FFD+4
 4130: F0 0F                      beq $4141     ; L_4141
-4132: A5 DC                      lda $DC       ; FRE+2
+4132: A5 DC                      lda $DC       ; SHIP_ADDR
 4134: 18                         clc
 4135: 69 80                      adc #$80
-4137: 85 DC                      sta $DC       ; FRE+2
+4137: 85 DC                      sta $DC       ; SHIP_ADDR
 4139: 90 02                      bcc $413D     ; L_413D
-413B: E6 DD                      inc $DD       ; FRE+3
+413B: E6 DD                      inc $DD       ; SHIP_ADDR+1
 413D: E8        L_413D           inx
 413E: 4C 2D 41                   jmp $412D     ; L_412D
 4141: A0 00     L_4141           ldy #$00
-4143: B1 DC     L_4143           lda ($DC),y   ; FRE+2
+4143: B1 DC     L_4143           lda ($DC),y   ; SHIP_ADDR
 4145: 99 C0 89                   sta $89C0,y
 4148: C8                         iny
 4149: C0 80                      cpy #$80
 414B: D0 F6                      bne $4143     ; L_4143
 414D: A2 07                      ldx #$07
 414F: A0 9B                      ldy #$9B
-4151: 86 DC                      stx $DC       ; FRE+2
-4153: 84 DD                      sty $DD       ; FRE+3
+4151: 86 DC                      stx $DC       ; SHIP_ADDR
+4153: 84 DD                      sty $DD       ; SHIP_ADDR+1
 4155: A9 38                      lda #$38
-4157: 85 DE                      sta $DE       ; FRE+4
+4157: 85 DE                      sta $DE       ; MASK_ADDR
 4159: A2 00                      ldx #$00
 415B: A0 00     L_415B           ldy #$00
 415D: 8E 01 40  L_415D           stx $4001     ; L_3FFD+4
@@ -3759,12 +3759,12 @@
 4167: 98        L_4167           tya
 4168: 18                         clc
 4169: 69 04                      adc #$04
-416B: 85 DF                      sta $DF       ; FRE+5
-416D: A5 DE     L_416D           lda $DE       ; FRE+4
-416F: 91 DC                      sta ($DC),y   ; FRE+2
+416B: 85 DF                      sta $DF       ; MASK_ADDR+1
+416D: A5 DE     L_416D           lda $DE       ; MASK_ADDR
+416F: 91 DC                      sta ($DC),y   ; SHIP_ADDR
 4171: C8                         iny
-4172: E6 DE                      inc $DE       ; FRE+4
-4174: C4 DF                      cpy $DF       ; FRE+5
+4172: E6 DE                      inc $DE       ; MASK_ADDR
+4174: C4 DF                      cpy $DF       ; MASK_ADDR+1
 4176: D0 F5                      bne $416D     ; L_416D
 4178: 88                         dey
 4179: 88                         dey
@@ -3780,22 +3780,22 @@
 4186: AE 01 40                   ldx $4001     ; L_3FFD+4
 4189: AC 02 40                   ldy $4002     ; L_3FFD+5
 418C: A9 38                      lda #$38
-418E: 85 DE                      sta $DE       ; FRE+4
-4190: A5 DC                      lda $DC       ; FRE+2
+418E: 85 DE                      sta $DE       ; MASK_ADDR
+4190: A5 DC                      lda $DC       ; SHIP_ADDR
 4192: 18                         clc
 4193: 69 04                      adc #$04
-4195: 85 DC                      sta $DC       ; FRE+2
+4195: 85 DC                      sta $DC       ; SHIP_ADDR
 4197: 90 02                      bcc $419B     ; L_419B
-4199: E6 DD                      inc $DD       ; FRE+3
+4199: E6 DD                      inc $DD       ; SHIP_ADDR+1
 419B: C8        L_419B           iny
 419C: C0 07                      cpy #$07
 419E: D0 BD                      bne $415D     ; L_415D
-41A0: A5 DC                      lda $DC       ; FRE+2
+41A0: A5 DC                      lda $DC       ; SHIP_ADDR
 41A2: 18                         clc
 41A3: 69 84                      adc #$84
-41A5: 85 DC                      sta $DC       ; FRE+2
+41A5: 85 DC                      sta $DC       ; SHIP_ADDR
 41A7: 90 02                      bcc $41AB     ; L_41AB
-41A9: E6 DD                      inc $DD       ; FRE+3
+41A9: E6 DD                      inc $DD       ; SHIP_ADDR+1
 41AB: E8        L_41AB           inx
 41AC: E0 07                      cpx #$07
 41AE: D0 AB                      bne $415B     ; L_415B
@@ -3826,63 +3826,63 @@
 41E4: 8E 23 9B                   stx $9B23
 41E7: A2 2E                      ldx #$2E
 41E9: A0 9B                      ldy #$9B
-41EB: 86 DC                      stx $DC       ; FRE+2
-41ED: 84 DD                      sty $DD       ; FRE+3
+41EB: 86 DC                      stx $DC       ; SHIP_ADDR
+41ED: 84 DD                      sty $DD       ; SHIP_ADDR+1
 41EF: A2 00                      ldx #$00
 41F1: A0 00     L_41F1           ldy #$00
 41F3: A9 22                      lda #$22
-41F5: 91 DC                      sta ($DC),y   ; FRE+2
+41F5: 91 DC                      sta ($DC),y   ; SHIP_ADDR
 41F7: C8                         iny
 41F8: A9 23                      lda #$23
-41FA: 91 DC                      sta ($DC),y   ; FRE+2
+41FA: 91 DC                      sta ($DC),y   ; SHIP_ADDR
 41FC: A0 28                      ldy #$28
 41FE: A9 24                      lda #$24
-4200: 91 DC                      sta ($DC),y   ; FRE+2
+4200: 91 DC                      sta ($DC),y   ; SHIP_ADDR
 4202: C8                         iny
 4203: A9 25                      lda #$25
-4205: 91 DC                      sta ($DC),y   ; FRE+2
+4205: 91 DC                      sta ($DC),y   ; SHIP_ADDR
 4207: A0 50                      ldy #$50
 4209: A9 26                      lda #$26
-420B: 91 DC                      sta ($DC),y   ; FRE+2
+420B: 91 DC                      sta ($DC),y   ; SHIP_ADDR
 420D: C8                         iny
 420E: A9 27                      lda #$27
-4210: 91 DC                      sta ($DC),y   ; FRE+2
+4210: 91 DC                      sta ($DC),y   ; SHIP_ADDR
 4212: A0 78                      ldy #$78
 4214: A9 28                      lda #$28
-4216: 91 DC                      sta ($DC),y   ; FRE+2
+4216: 91 DC                      sta ($DC),y   ; SHIP_ADDR
 4218: C8                         iny
 4219: A9 29                      lda #$29
-421B: 91 DC                      sta ($DC),y   ; FRE+2
+421B: 91 DC                      sta ($DC),y   ; SHIP_ADDR
 421D: A0 1C                      ldy #$1C
 421F: A9 2A                      lda #$2A
-4221: 91 DC                      sta ($DC),y   ; FRE+2
+4221: 91 DC                      sta ($DC),y   ; SHIP_ADDR
 4223: C8                         iny
 4224: A9 2B                      lda #$2B
-4226: 91 DC                      sta ($DC),y   ; FRE+2
+4226: 91 DC                      sta ($DC),y   ; SHIP_ADDR
 4228: A0 44                      ldy #$44
 422A: A9 2C                      lda #$2C
-422C: 91 DC                      sta ($DC),y   ; FRE+2
+422C: 91 DC                      sta ($DC),y   ; SHIP_ADDR
 422E: C8                         iny
 422F: A9 2D                      lda #$2D
-4231: 91 DC                      sta ($DC),y   ; FRE+2
+4231: 91 DC                      sta ($DC),y   ; SHIP_ADDR
 4233: A0 6C                      ldy #$6C
 4235: A9 2E                      lda #$2E
-4237: 91 DC                      sta ($DC),y   ; FRE+2
+4237: 91 DC                      sta ($DC),y   ; SHIP_ADDR
 4239: C8                         iny
 423A: A9 2F                      lda #$2F
-423C: 91 DC                      sta ($DC),y   ; FRE+2
+423C: 91 DC                      sta ($DC),y   ; SHIP_ADDR
 423E: A0 94                      ldy #$94
 4240: A9 30                      lda #$30
-4242: 91 DC                      sta ($DC),y   ; FRE+2
+4242: 91 DC                      sta ($DC),y   ; SHIP_ADDR
 4244: C8                         iny
 4245: A9 31                      lda #$31
-4247: 91 DC                      sta ($DC),y   ; FRE+2
-4249: A5 DC                      lda $DC       ; FRE+2
+4247: 91 DC                      sta ($DC),y   ; SHIP_ADDR
+4249: A5 DC                      lda $DC       ; SHIP_ADDR
 424B: 18                         clc
 424C: 69 A0                      adc #$A0
-424E: 85 DC                      sta $DC       ; FRE+2
+424E: 85 DC                      sta $DC       ; SHIP_ADDR
 4250: 90 02                      bcc $4254     ; L_4254
-4252: E6 DD                      inc $DD       ; FRE+3
+4252: E6 DD                      inc $DD       ; SHIP_ADDR+1
 4254: E8        L_4254           inx
 4255: E0 07                      cpx #$07
 4257: D0 98                      bne $41F1     ; L_41F1
@@ -3958,53 +3958,53 @@
 42F8: 60                         rts
 42F9: A2 00     L_42F9           ldx #$00
 42FB: A0 7B                      ldy #$7B
-42FD: 86 DC                      stx $DC       ; FRE+2
-42FF: 84 DD                      sty $DD       ; FRE+3
+42FD: 86 DC                      stx $DC       ; SHIP_ADDR
+42FF: 84 DD                      sty $DD       ; SHIP_ADDR+1
 4301: A0 70                      ldy #$70
-4303: 86 DE                      stx $DE       ; FRE+4
-4305: 84 DF                      sty $DF       ; FRE+5
+4303: 86 DE                      stx $DE       ; MASK_ADDR
+4305: 84 DF                      sty $DF       ; MASK_ADDR+1
 4307: A2 00                      ldx #$00
 4309: EC 00 40  L_4309           cpx $4000     ; L_3FFD+3
 430C: F0 0F                      beq $431D     ; L_431D
-430E: A5 DC                      lda $DC       ; FRE+2
+430E: A5 DC                      lda $DC       ; SHIP_ADDR
 4310: 18                         clc
 4311: 69 26                      adc #$26
-4313: 85 DC                      sta $DC       ; FRE+2
+4313: 85 DC                      sta $DC       ; SHIP_ADDR
 4315: 90 02                      bcc $4319     ; L_4319
-4317: E6 DD                      inc $DD       ; FRE+3
+4317: E6 DD                      inc $DD       ; SHIP_ADDR+1
 4319: E8        L_4319           inx
 431A: 4C 09 43                   jmp $4309     ; L_4309
 431D: A2 00     L_431D           ldx #$00
 431F: EC 00 40  L_431F           cpx $4000     ; L_3FFD+3
 4322: F0 20                      beq $4344     ; L_4344
 4324: A0 00                      ldy #$00
-4326: B1 DE     L_4326           lda ($DE),y   ; FRE+4
+4326: B1 DE     L_4326           lda ($DE),y   ; MASK_ADDR
 4328: C9 FF                      cmp #$FF
 432A: F0 04                      beq $4330     ; L_4330
 432C: C8                         iny
 432D: 4C 26 43                   jmp $4326     ; L_4326
 4330: C8        L_4330           iny
 4331: 8C 01 40                   sty $4001     ; L_3FFD+4
-4334: A5 DE                      lda $DE       ; FRE+4
+4334: A5 DE                      lda $DE       ; MASK_ADDR
 4336: 18                         clc
 4337: 6D 01 40                   adc $4001     ; L_3FFD+4
-433A: 85 DE                      sta $DE       ; FRE+4
+433A: 85 DE                      sta $DE       ; MASK_ADDR
 433C: 90 02                      bcc $4340     ; L_4340
-433E: E6 DF                      inc $DF       ; FRE+5
+433E: E6 DF                      inc $DF       ; MASK_ADDR+1
 4340: E8        L_4340           inx
 4341: 4C 1F 43                   jmp $431F     ; L_431F
-4344: A6 DC     L_4344           ldx $DC       ; FRE+2
-4346: A4 DD                      ldy $DD       ; FRE+3
-4348: 8E 22 3C                   stx $3C22     ; BRICK_COLORS_L
-434B: 8C 23 3C                   sty $3C23     ; BRICK_COLORS_H
+4344: A6 DC     L_4344           ldx $DC       ; SHIP_ADDR
+4346: A4 DD                      ldy $DD       ; SHIP_ADDR+1
+4348: 8E 22 3C                   stx $3C22     ; BRICK_COLORS
+434B: 8C 23 3C                   sty $3C23     ; L_3C23
 434E: A2 30                      ldx #$30
 4350: A0 9B                      ldy #$9B
-4352: 86 DC                      stx $DC       ; FRE+2
-4354: 84 DD                      sty $DD       ; FRE+3
+4352: 86 DC                      stx $DC       ; SHIP_ADDR
+4354: 84 DD                      sty $DD       ; SHIP_ADDR+1
 4356: A2 00                      ldx #$00
 4358: 8E 03 40                   stx $4003     ; L_3FFD+6
 435B: A0 00     L_435B           ldy #$00
-435D: B1 DE                      lda ($DE),y   ; FRE+4
+435D: B1 DE                      lda ($DE),y   ; MASK_ADDR
 435F: C9 FF                      cmp #$FF
 4361: F0 71                      beq $43D4     ; L_43D4
 4363: 8D 01 40                   sta $4001     ; L_3FFD+4
@@ -4026,26 +4026,26 @@
 4382: 29 E0                      and #$E0
 4384: F0 11                      beq $4397     ; L_4397
 4386: AD 02 40                   lda $4002     ; L_3FFD+5
-4389: 91 DC                      sta ($DC),y   ; FRE+2
+4389: 91 DC                      sta ($DC),y   ; SHIP_ADDR
 438B: EE 02 40                   inc $4002     ; L_3FFD+5
 438E: C8                         iny
 438F: AD 02 40                   lda $4002     ; L_3FFD+5
-4392: 91 DC                      sta ($DC),y   ; FRE+2
+4392: 91 DC                      sta ($DC),y   ; SHIP_ADDR
 4394: CE 02 40                   dec $4002     ; L_3FFD+5
-4397: A5 DC     L_4397           lda $DC       ; FRE+2
+4397: A5 DC     L_4397           lda $DC       ; SHIP_ADDR
 4399: 18                         clc
 439A: 69 02                      adc #$02
-439C: 85 DC                      sta $DC       ; FRE+2
+439C: 85 DC                      sta $DC       ; SHIP_ADDR
 439E: 90 02                      bcc $43A2     ; L_43A2
-43A0: E6 DD                      inc $DD       ; FRE+3
+43A0: E6 DD                      inc $DD       ; SHIP_ADDR+1
 43A2: CA        L_43A2           dex
 43A3: E0 00                      cpx #$00
 43A5: D0 D6                      bne $437D     ; L_437D
-43A7: A5 DE                      lda $DE       ; FRE+4
+43A7: A5 DE                      lda $DE       ; MASK_ADDR
 43A9: C9 FF                      cmp #$FF
 43AB: D0 02                      bne $43AF     ; L_43AF
-43AD: E6 DF                      inc $DF       ; FRE+5
-43AF: E6 DE     L_43AF           inc $DE       ; FRE+4
+43AD: E6 DF                      inc $DF       ; MASK_ADDR+1
+43AF: E6 DE     L_43AF           inc $DE       ; MASK_ADDR
 43B1: AD 01 40                   lda $4001     ; L_3FFD+4
 43B4: 29 1F                      and #$1F
 43B6: 18                         clc
@@ -4055,12 +4055,12 @@
 43BF: D0 9A                      bne $435B     ; L_435B
 43C1: A9 00                      lda #$00
 43C3: 8D 03 40                   sta $4003     ; L_3FFD+6
-43C6: A5 DC                      lda $DC       ; FRE+2
+43C6: A5 DC                      lda $DC       ; SHIP_ADDR
 43C8: 18                         clc
 43C9: 69 0E                      adc #$0E
-43CB: 85 DC                      sta $DC       ; FRE+2
+43CB: 85 DC                      sta $DC       ; SHIP_ADDR
 43CD: 90 02                      bcc $43D1     ; L_43D1
-43CF: E6 DD                      inc $DD       ; FRE+3
+43CF: E6 DD                      inc $DD       ; SHIP_ADDR+1
 43D1: 4C 5B 43  L_43D1           jmp $435B     ; L_435B
 43D4: 60        L_43D4           rts
 43D5: A2 00     L_43D5           ldx #$00
@@ -4077,13 +4077,13 @@
 43FD: 00        L_43FD           BYTE $00 $00 $00 $3F $3C $3D $3E $3F
 4405: 3C        L_4405           BYTE $3C $3D $3E $48 $48 $1A $00 $00
 440D: 00                         BYTE $00
-440E: 29 FC     L_440E           and #$FC
+440E: 29 FC     DRAW_SHOP_FULL   and #$FC
 4410: 4A                         lsr
 4411: 4A                         lsr
 4412: AD 0B 44                   lda $440B     ; L_4405+6
 4415: 18                         clc
 4416: 69 80                      adc #$80
-4418: 85 DD                      sta $DD       ; FRE+3
+4418: 85 DD                      sta $DD       ; SHIP_ADDR+1
 441A: AD 0B 44                   lda $440B     ; L_4405+6
 441D: 29 07                      and #$07
 441F: 18                         clc
@@ -4092,7 +4092,7 @@
 4422: 0A                         asl
 4423: 0A                         asl
 4424: A9 00                      lda #$00
-4426: 85 DC                      sta $DC       ; FRE+2
+4426: 85 DC                      sta $DC       ; SHIP_ADDR
 4428: AD 09 44                   lda $4409     ; L_4405+4
 442B: 29 03                      and #$03
 442D: 18                         clc
@@ -4103,16 +4103,16 @@
 4432: 0A                         asl
 4433: 0A                         asl
 4434: 18                         clc
-4435: 65 DC                      adc $DC       ; FRE+2
-4437: 85 DC                      sta $DC       ; FRE+2
+4435: 65 DC                      adc $DC       ; SHIP_ADDR
+4437: 85 DC                      sta $DC       ; SHIP_ADDR
 4439: 90 02                      bcc $443D     ; L_443D
-443B: E6 DD                      inc $DD       ; FRE+3
+443B: E6 DD                      inc $DD       ; SHIP_ADDR+1
 443D: A2 40     L_443D           ldx #$40
 443F: A0 8A     L_443F           ldy #$8A
-4441: 86 00                      stx $00       ; LNFLG
-4443: 84 01                      sty $01       ; NGFLAG
+4441: 86 00                      stx $00       ; DST
+4443: 84 01                      sty $01       ; DST+1
 4445: A2 00                      ldx #$00
-4447: BD 00 44  L_4447           lda $4400,x   ; L_43FD+3
+4447: BD 00 44  DRAW_SHIP        lda $4400,x   ; L_43FD+3
 444A: 29 E0                      and #$E0
 444C: 4A                         lsr
 444D: 4A                         lsr
@@ -4121,38 +4121,38 @@
 4450: 4A                         lsr
 4451: 18                         clc
 4452: 69 88     L_4452           adc #$88
-4454: 85 03                      sta $03       ; CASINI+1
+4454: 85 03                      sta $03       ; SRC+1
 4456: BD 00 44                   lda $4400,x   ; L_43FD+3
 4459: 29 1F                      and #$1F
 445B: 0A                         asl
 445C: 0A                         asl
 445D: 0A                         asl
-445E: 85 02                      sta $02       ; CASINI
+445E: 85 02                      sta $02       ; SRC
 4460: A0 00                      ldy #$00
-4462: A5 DC     L_4462           lda $DC       ; FRE+2
-4464: 85 DE                      sta $DE       ; FRE+4
-4466: A5 DD                      lda $DD       ; FRE+3
+4462: A5 DC     MASK_SHIP        lda $DC       ; SHIP_ADDR
+4464: 85 DE                      sta $DE       ; MASK_ADDR
+4466: A5 DD                      lda $DD       ; SHIP_ADDR+1
 4468: 18                         clc
 4469: 69 04                      adc #$04
-446B: 85 DF                      sta $DF       ; FRE+5
-446D: B1 02                      lda ($02),y   ; CASINI
-446F: 31 DE                      and ($DE),y   ; FRE+4
-4471: 11 DC                      ora ($DC),y   ; FRE+2
-4473: 91 00                      sta ($00),y   ; LNFLG
+446B: 85 DF                      sta $DF       ; MASK_ADDR+1
+446D: B1 02                      lda ($02),y   ; SRC
+446F: 31 DE                      and ($DE),y   ; MASK_ADDR
+4471: 11 DC                      ora ($DC),y   ; SHIP_ADDR
+4473: 91 00                      sta ($00),y   ; DST
 4475: C8                         iny
 4476: C0 08                      cpy #$08
-4478: D0 E8                      bne $4462     ; L_4462
-447A: A5 DC                      lda $DC       ; FRE+2
+4478: D0 E8                      bne $4462     ; MASK_SHIP
+447A: A5 DC                      lda $DC       ; SHIP_ADDR
 447C: 18                         clc
 447D: 69 08                      adc #$08
-447F: 85 DC                      sta $DC       ; FRE+2
-4481: A5 00                      lda $00       ; LNFLG
+447F: 85 DC                      sta $DC       ; SHIP_ADDR
+4481: A5 00                      lda $00       ; DST
 4483: 18                         clc
 4484: 69 08                      adc #$08
-4486: 85 00                      sta $00       ; LNFLG
+4486: 85 00                      sta $00       ; DST
 4488: E8                         inx
 4489: E0 08                      cpx #$08
-448B: D0 BA                      bne $4447     ; L_4447
+448B: D0 BA                      bne $4447     ; DRAW_SHIP
 448D: 60                         rts
 448E: AD 09 44  L_448E           lda $4409     ; L_4405+4
 4491: 8D 08 44                   sta $4408     ; L_4405+3
@@ -4162,14 +4162,14 @@
 4498: 8D 0A 44                   sta $440A     ; L_4405+5
 449B: A2 E8                      ldx #$E8
 449D: A0 9E                      ldy #$9E
-449F: 86 DE                      stx $DE       ; FRE+4
-44A1: 84 DF                      sty $DF       ; FRE+5
-44A3: A5 DE                      lda $DE       ; FRE+4
+449F: 86 DE                      stx $DE       ; MASK_ADDR
+44A1: 84 DF                      sty $DF       ; MASK_ADDR+1
+44A3: A5 DE                      lda $DE       ; MASK_ADDR
 44A5: 18                         clc
 44A6: 6D 0A 44                   adc $440A     ; L_4405+5
-44A9: 85 DE                      sta $DE       ; FRE+4
+44A9: 85 DE                      sta $DE       ; MASK_ADDR
 44AB: 90 02                      bcc $44AF     ; L_44AF
-44AD: E6 DF                      inc $DF       ; FRE+5
+44AD: E6 DF                      inc $DF       ; MASK_ADDR+1
 44AF: 60        L_44AF           rts
 44B0: A0 00     L_44B0           ldy #$00
 44B2: AD 08 44  L_44B2           lda $4408     ; L_4405+3
@@ -4178,7 +4178,7 @@
 44B9: C9 22                      cmp #$22
 44BB: B0 05                      bcs $44C2     ; L_44C2
 44BD: B9 00 44                   lda $4400,y   ; L_43FD+3
-44C0: 91 DE                      sta ($DE),y   ; FRE+4
+44C0: 91 DE                      sta ($DE),y   ; MASK_ADDR
 44C2: EE 08 44  L_44C2           inc $4408     ; L_4405+3
 44C5: C8                         iny
 44C6: C0 08                      cpy #$08
@@ -4191,14 +4191,14 @@
 44D2: 8D 08 44                   sta $4408     ; L_4405+3
 44D5: A2 E8                      ldx #$E8
 44D7: A0 9E                      ldy #$9E
-44D9: 86 DE                      stx $DE       ; FRE+4
-44DB: 84 DF                      sty $DF       ; FRE+5
-44DD: A5 DE                      lda $DE       ; FRE+4
+44D9: 86 DE                      stx $DE       ; MASK_ADDR
+44DB: 84 DF                      sty $DF       ; MASK_ADDR+1
+44DD: A5 DE                      lda $DE       ; MASK_ADDR
 44DF: 18                         clc
 44E0: 6D 08 44                   adc $4408     ; L_4405+3
-44E3: 85 DE                      sta $DE       ; FRE+4
+44E3: 85 DE                      sta $DE       ; MASK_ADDR
 44E5: 90 02                      bcc $44E9     ; L_44E9
-44E7: E6 DF                      inc $DF       ; FRE+5
+44E7: E6 DF                      inc $DF       ; MASK_ADDR+1
 44E9: AD 25 3C  L_44E9           lda $3C25     ; TIMER_MAYBE
 44EC: EA                         nop
 44ED: EA                         nop
@@ -4210,12 +4210,12 @@
 44FB: 90 0F                      bcc $450C     ; L_450C
 44FD: C9 22                      cmp #$22
 44FF: B0 0B                      bcs $450C     ; L_450C
-4501: B1 DE                      lda ($DE),y   ; FRE+4
+4501: B1 DE                      lda ($DE),y   ; MASK_ADDR
 4503: 99 00 44                   sta $4400,y   ; L_43FD+3
 4506: 98                         tya
 4507: 18                         clc
 4508: 69 48                      adc #$48
-450A: 91 DE                      sta ($DE),y   ; FRE+4
+450A: 91 DE                      sta ($DE),y   ; MASK_ADDR
 450C: EE 0A 44  L_450C           inc $440A     ; L_4405+5
 450F: C8                         iny
 4510: C0 08                      cpy #$08
@@ -4283,7 +4283,7 @@
 45AE: AE 4A 45  L_45AE           ldx $454A     ; L_454A
 45B1: AC 4B 45                   ldy $454B     ; L_454B
 45B4: AD 4C 45                   lda $454C     ; L_454C
-45B7: 4C 0E 44                   jmp $440E     ; L_440E
+45B7: 4C 0E 44                   jmp $440E     ; DRAW_SHOP_FULL
 45BA: AD 78 02                   lda $0278     ; STICK0
 45BD: 8D 17 45                   sta $4517     ; L_4517
 45C0: C9 0B                      cmp #$0B
@@ -4316,13 +4316,13 @@
 4607: 00        L_4607           BYTE $00 $84 $00 $00 $63 $00 $00
 460E: 8A        L_460E           txa
 460F: 8D 07 46                   sta $4607     ; L_4607
-4612: 85 DE                      sta $DE       ; FRE+4
+4612: 85 DE                      sta $DE       ; MASK_ADDR
 4614: 29 FE                      and #$FE
 4616: 4A                         lsr
 4617: 18                         clc
 4618: 69 6E                      adc #$6E
-461A: 85 DF                      sta $DF       ; FRE+5
-461C: A5 DE                      lda $DE       ; FRE+4
+461A: 85 DF                      sta $DF       ; MASK_ADDR+1
+461C: A5 DE                      lda $DE       ; MASK_ADDR
 461E: 29 01                      and #$01
 4620: 18                         clc
 4621: 0A                         asl
@@ -4351,7 +4351,7 @@
 4645: 9D 0B 46                   sta $460B,x   ; L_4607+4
 4648: A2 00                      ldx #$00
 464A: BD 00 46  L_464A           lda $4600,x   ; L_45FF+1
-464D: 91 DE     L_464D           sta ($DE),y   ; FRE+4
+464D: 91 DE     L_464D           sta ($DE),y   ; MASK_ADDR
 464F: C8                         iny
 4650: E8                         inx
 4651: E0 06                      cpx #$06
@@ -4374,7 +4374,7 @@
 4677: 0A        L_4677           asl
 4678: 18                         clc
 4679: 69 01                      adc #$01
-467B: 85 DE                      sta $DE       ; FRE+4
+467B: 85 DE                      sta $DE       ; MASK_ADDR
 467D: 60                         rts
 467E: 4C B0 2A                   jmp $2AB0     ; L_2AB0
 4681: 85 EB     L_4681           sta $EB       ; FR2+5
@@ -4454,11 +4454,11 @@
 4750: 8D DF 46                   sta $46DF     ; L_46D8+7
 4753: AC D5 46                   ldy $46D5     ; L_46D0+5
 4756: B9 C0 46                   lda $46C0,y   ; L_46C0
-4759: 85 DE                      sta $DE       ; FRE+4
+4759: 85 DE                      sta $DE       ; MASK_ADDR
 475B: 8D D6 46                   sta $46D6     ; L_46D0+6
 475E: C8                         iny
 475F: B9 C0 46                   lda $46C0,y   ; L_46C0
-4762: 85 DF                      sta $DF       ; FRE+5
+4762: 85 DF                      sta $DF       ; MASK_ADDR+1
 4764: 8D D7 46                   sta $46D7     ; L_46D0+7
 4767: AC DF 46                   ldy $46DF     ; L_46D8+7
 476A: C8                         iny
@@ -4479,7 +4479,7 @@
 478E: 4C 95 47                   jmp $4795     ; L_4795
 4791: A0 01     L_4791           ldy #$01
 4793: A2 01                      ldx #$01
-4795: B1 DE     L_4795           lda ($DE),y   ; FRE+4
+4795: B1 DE     L_4795           lda ($DE),y   ; MASK_ADDR
 4797: C9 60                      cmp #$60
 4799: 30 07                      bmi $47A2     ; L_47A2
 479B: C9 7B                      cmp #$7B
@@ -4554,10 +4554,10 @@
 483D: AC D5 46                   ldy $46D5     ; L_46D0+5
 4840: AE D4 46                   ldx $46D4     ; L_46D0+4
 4843: AD D6 46                   lda $46D6     ; L_46D0+6
-4846: 85 DE                      sta $DE       ; FRE+4
+4846: 85 DE                      sta $DE       ; MASK_ADDR
 4848: C8                         iny
 4849: AD D7 46                   lda $46D7     ; L_46D0+7
-484C: 85 DF                      sta $DF       ; FRE+5
+484C: 85 DF                      sta $DF       ; MASK_ADDR+1
 484E: AE D4 46                   ldx $46D4     ; L_46D0+4
 4851: BD C6 46                   lda $46C6,x   ; L_46C0+6
 4854: 29 03                      and #$03
@@ -4569,7 +4569,7 @@
 4861: 4C 68 48                   jmp $4868     ; L_4868
 4864: A0 28     L_4864           ldy #$28
 4866: A2 04                      ldx #$04
-4868: B1 DE     L_4868           lda ($DE),y   ; FRE+4
+4868: B1 DE     L_4868           lda ($DE),y   ; MASK_ADDR
 486A: C9 60                      cmp #$60
 486C: 30 07                      bmi $4875     ; L_4875
 486E: C9 7B                      cmp #$7B
@@ -4638,7 +4638,7 @@
 4900: E8        L_4900           inx
 4901: 8E FC 46                   stx $46FC     ; L_46F8+4
 4904: 60                         rts
-4905: 86 DC     L_4905           stx $DC       ; FRE+2
+4905: 86 DC     L_4905           stx $DC       ; SHIP_ADDR
 4907: AE D4 46                   ldx $46D4     ; L_46D0+4
 490A: 4C CC 28                   jmp $28CC     ; L_28CC
 490D: C9 02                      cmp #$02
@@ -4646,7 +4646,7 @@
 4911: BD 08 46  L_4911           lda $4608,x   ; L_4607+1
 4914: 29 03                      and #$03
 4916: F0 05                      beq $491D     ; L_491D
-4918: A6 DC     L_4918           ldx $DC       ; FRE+2
+4918: A6 DC     L_4918           ldx $DC       ; SHIP_ADDR
 491A: 4C A1 48                   jmp $48A1     ; L_48A1
 491D: 4C 60 1A  L_491D           jmp $1A60     ; L_1A60
 4920: BD C6 46  L_4920           lda $46C6,x   ; L_46C0+6
@@ -4655,7 +4655,7 @@
 4928: A9 00                      lda #$00
 492A: 9D DC 46                   sta $46DC,x   ; L_46D8+4
 492D: 4C E4 48                   jmp $48E4     ; L_48E4
-4930: 86 DC     L_4930           stx $DC       ; FRE+2
+4930: 86 DC     L_4930           stx $DC       ; SHIP_ADDR
 4932: AE D4 46                   ldx $46D4     ; L_46D0+4
 4935: 4C E5 28                   jmp $28E5     ; L_28E5
 4938: C9 04                      cmp #$04
@@ -4664,7 +4664,7 @@
 493F: 29 03                      and #$03
 4941: C9 03                      cmp #$03
 4943: F0 05                      beq $494A     ; L_494A
-4945: A6 DC     L_4945           ldx $DC       ; FRE+2
+4945: A6 DC     L_4945           ldx $DC       ; SHIP_ADDR
 4947: 4C D4 47                   jmp $47D4     ; L_47D4
 494A: 4C 63 1A  L_494A           jmp $1A63     ; L_1A63
 494D: BD C6 46  L_494D           lda $46C6,x   ; L_46C0+6
@@ -4785,7 +4785,7 @@
 4A8C: 60        L_4A8C           rts
 4A8D: 8D 00 4A  L_4A8D           sta $4A00     ; L_49F9+7
 4A90: 8C 02 4A                   sty $4A02     ; L_4A01+1
-4A93: B1 DE                      lda ($DE),y   ; FRE+4
+4A93: B1 DE                      lda ($DE),y   ; MASK_ADDR
 4A95: F0 F5                      beq $4A8C     ; L_4A8C
 4A97: C9 9D                      cmp #$9D
 4A99: F0 1A                      beq $4AB5     ; L_4AB5
@@ -4803,7 +4803,7 @@
 4AB1: F0 02                      beq $4AB5     ; L_4AB5
 4AB3: B0 D7                      bcs $4A8C     ; L_4A8C
 4AB5: 20 E0 4A  L_4AB5           jsr $4AE0     ; L_4AE0
-4AB8: B1 DE                      lda ($DE),y   ; FRE+4
+4AB8: B1 DE                      lda ($DE),y   ; MASK_ADDR
 4ABA: C9 09                      cmp #$09
 4ABC: F0 CE                      beq $4A8C     ; L_4A8C
 4ABE: C9 0A                      cmp #$0A
@@ -4816,28 +4816,28 @@
 4ACC: D0 01                      bne $4ACF     ; L_4ACF
 4ACE: 88                         dey
 4ACF: AD 01 4A  L_4ACF           lda $4A01     ; L_4A01
-4AD2: 91 DE                      sta ($DE),y   ; FRE+4
+4AD2: 91 DE                      sta ($DE),y   ; MASK_ADDR
 4AD4: C8                         iny
 4AD5: A5 FF                      lda $FF       ; FPTR2+1
-4AD7: 91 DE                      sta ($DE),y   ; FRE+4
+4AD7: 91 DE                      sta ($DE),y   ; MASK_ADDR
 4AD9: 20 37 2F                   jsr $2F37     ; L_2F37
 4ADC: AC 02 4A                   ldy $4A02     ; L_4A01+1
 4ADF: 60                         rts
 4AE0: A9 00     L_4AE0           lda #$00
-4AE2: 85 03                      sta $03       ; CASINI+1
+4AE2: 85 03                      sta $03       ; SRC+1
 4AE4: 8D 01 4A                   sta $4A01     ; L_4A01
 4AE7: 85 FF                      sta $FF       ; FPTR2+1
-4AE9: A5 DE                      lda $DE       ; FRE+4
-4AEB: 85 00                      sta $00       ; LNFLG
-4AED: A5 DF                      lda $DF       ; FRE+5
-4AEF: 85 01                      sta $01       ; NGFLAG
+4AE9: A5 DE                      lda $DE       ; MASK_ADDR
+4AEB: 85 00                      sta $00       ; DST
+4AED: A5 DF                      lda $DF       ; MASK_ADDR+1
+4AEF: 85 01                      sta $01       ; DST+1
 4AF1: 98                         tya
 4AF2: 18                         clc
-4AF3: 65 00                      adc $00       ; LNFLG
-4AF5: 85 00                      sta $00       ; LNFLG
+4AF3: 65 00                      adc $00       ; DST
+4AF5: 85 00                      sta $00       ; DST
 4AF7: 90 02                      bcc $4AFB     ; L_4AFB
-4AF9: E6 01                      inc $01       ; NGFLAG
-4AFB: A5 01     L_4AFB           lda $01       ; NGFLAG
+4AF9: E6 01                      inc $01       ; DST+1
+4AFB: A5 01     L_4AFB           lda $01       ; DST+1
 4AFD: C9 9B                      cmp #$9B
 4AFF: D0 09                      bne $4B0A     ; L_4B0A
 
@@ -4845,27 +4845,27 @@
 ; BLOCK 2 Arkanoid.xex
 
 4B00: 09                         BYTE $09
-4B01: A5 00                      lda $00       ; LNFLG
+4B01: A5 00                      lda $00       ; DST
 4B03: C9 4E                      cmp #$4E
 4B05: B0 03                      bcs $4B0A     ; L_4B0A
 4B07: 4C 1A 4B                   jmp $4B1A     ; L_4B1A
-4B0A: E6 03     L_4B0A           inc $03       ; CASINI+1
-4B0C: A5 00                      lda $00       ; LNFLG
+4B0A: E6 03     L_4B0A           inc $03       ; SRC+1
+4B0C: A5 00                      lda $00       ; DST
 4B0E: 38                         sec
 4B0F: E9 28                      sbc #$28
-4B11: 85 00                      sta $00       ; LNFLG
+4B11: 85 00                      sta $00       ; DST
 4B13: B0 E6                      bcs $4AFB     ; L_4AFB
-4B15: C6 01                      dec $01       ; NGFLAG
+4B15: C6 01                      dec $01       ; DST+1
 4B17: 4C FB 4A                   jmp $4AFB     ; L_4AFB
-4B1A: A5 00     L_4B1A           lda $00       ; LNFLG
+4B1A: A5 00     L_4B1A           lda $00       ; DST
 4B1C: 38                         sec
 4B1D: E9 2F                      sbc #$2F
-4B1F: 85 00                      sta $00       ; LNFLG
-4B21: B1 DE                      lda ($DE),y   ; FRE+4
+4B1F: 85 00                      sta $00       ; DST
+4B21: B1 DE                      lda ($DE),y   ; MASK_ADDR
 4B23: 29 01                      and #$01
 4B25: D0 02                      bne $4B29     ; L_4B29
-4B27: C6 00                      dec $00       ; LNFLG
-4B29: A5 00     L_4B29           lda $00       ; LNFLG
+4B27: C6 00                      dec $00       ; DST
+4B29: A5 00     L_4B29           lda $00       ; DST
 4B2B: 29 03                      and #$03
 4B2D: 18                         clc
 4B2E: 69 38                      adc #$38
@@ -4878,7 +4878,7 @@
 4B3E: 18        L_4B3E           clc
 4B3F: 69 01                      adc #$01
 4B41: 85 FF                      sta $FF       ; FPTR2+1
-4B43: A5 03     L_4B43           lda $03       ; CASINI+1
+4B43: A5 03     L_4B43           lda $03       ; SRC+1
 4B45: 18                         clc
 4B46: 69 01                      adc #$01
 4B48: 29 03                      and #$03
@@ -4897,7 +4897,7 @@
 4B60: 4C 4B 4B                   jmp $4B4B     ; L_4B4B
 4B63: AC 02 4A  L_4B63           ldy $4A02     ; L_4A01+1
 4B66: 20 4C 4E                   jsr $4E4C     ; L_4E4C
-4B69: B1 DE                      lda ($DE),y   ; FRE+4
+4B69: B1 DE                      lda ($DE),y   ; MASK_ADDR
 4B6B: C9 01                      cmp #$01
 4B6D: F0 10                      beq $4B7F     ; L_4B7F
 4B6F: C9 02                      cmp #$02
@@ -4908,36 +4908,36 @@
 4B79: F0 04                      beq $4B7F     ; L_4B7F
 4B7B: 20 23 39                   jsr $3923     ; L_3923
 4B7E: 60                         rts
-4B7F: A5 DF     L_4B7F           lda $DF       ; FRE+5
-4B81: 85 01                      sta $01       ; NGFLAG
-4B83: A5 DE                      lda $DE       ; FRE+4
-4B85: 85 00                      sta $00       ; LNFLG
+4B7F: A5 DF     L_4B7F           lda $DF       ; MASK_ADDR+1
+4B81: 85 01                      sta $01       ; DST+1
+4B83: A5 DE                      lda $DE       ; MASK_ADDR
+4B85: 85 00                      sta $00       ; DST
 4B87: 98                         tya
 4B88: 18                         clc
-4B89: 65 00                      adc $00       ; LNFLG
-4B8B: 85 00                      sta $00       ; LNFLG
+4B89: 65 00                      adc $00       ; DST
+4B8B: 85 00                      sta $00       ; DST
 4B8D: 90 02                      bcc $4B91     ; L_4B91
-4B8F: E6 01                      inc $01       ; NGFLAG
-4B91: B1 DE     L_4B91           lda ($DE),y   ; FRE+4
+4B8F: E6 01                      inc $01       ; DST+1
+4B91: B1 DE     L_4B91           lda ($DE),y   ; MASK_ADDR
 4B93: 29 01                      and #$01
 4B95: D0 08                      bne $4B9F     ; L_4B9F
-4B97: A5 00                      lda $00       ; LNFLG
+4B97: A5 00                      lda $00       ; DST
 4B99: D0 02                      bne $4B9D     ; L_4B9D
-4B9B: C6 01                      dec $01       ; NGFLAG
-4B9D: C6 00     L_4B9D           dec $00       ; LNFLG
-4B9F: 86 DC     L_4B9F           stx $DC       ; FRE+2
+4B9B: C6 01                      dec $01       ; DST+1
+4B9D: C6 00     L_4B9D           dec $00       ; DST
+4B9F: 86 DC     L_4B9F           stx $DC       ; SHIP_ADDR
 4BA1: A0 00                      ldy #$00
-4BA3: B1 00                      lda ($00),y   ; LNFLG
-4BA5: 85 02                      sta $02       ; CASINI
+4BA3: B1 00                      lda ($00),y   ; DST
+4BA5: 85 02                      sta $02       ; SRC
 4BA7: A2 00                      ldx #$00
 4BA9: A0 00                      ldy #$00
 4BAB: B9 40 4C  L_4BAB           lda $4C40,y   ; L_4C40
 4BAE: 18                         clc
 4BAF: 79 41 4C                   adc $4C41,y   ; L_4C41
 4BB2: D0 1E                      bne $4BD2     ; L_4BD2
-4BB4: A5 00                      lda $00       ; LNFLG
+4BB4: A5 00                      lda $00       ; DST
 4BB6: 99 40 4C                   sta $4C40,y   ; L_4C40
-4BB9: A5 01                      lda $01       ; NGFLAG
+4BB9: A5 01                      lda $01       ; DST+1
 4BBB: 99 41 4C                   sta $4C41,y   ; L_4C41
 4BBE: AD 00 40                   lda $4000     ; L_3FFD+3
 4BC1: 4A                         lsr
@@ -4946,7 +4946,7 @@
 4BC4: 18                         clc
 4BC5: 69 02                      adc #$02
 4BC7: 99 42 4C                   sta $4C42,y   ; L_4C42
-4BCA: A5 02                      lda $02       ; CASINI
+4BCA: A5 02                      lda $02       ; SRC
 4BCC: 20 53 2A                   jsr $2A53     ; L_2A53
 4BCF: 4C DE 4B                   jmp $4BDE     ; L_4BDE
 4BD2: C8        L_4BD2           iny
@@ -4958,16 +4958,16 @@
 4BD9: D0 D0                      bne $4BAB     ; L_4BAB
 4BDB: 4C F1 4B                   jmp $4BF1     ; L_4BF1
 4BDE: A0 00     L_4BDE           ldy #$00
-4BE0: B1 00                      lda ($00),y   ; LNFLG
+4BE0: B1 00                      lda ($00),y   ; DST
 4BE2: 29 80                      and #$80
 4BE4: 09 09                      ora #$09
-4BE6: 91 00                      sta ($00),y   ; LNFLG
+4BE6: 91 00                      sta ($00),y   ; DST
 4BE8: C8                         iny
-4BE9: B1 00                      lda ($00),y   ; LNFLG
+4BE9: B1 00                      lda ($00),y   ; DST
 4BEB: 29 80                      and #$80
 4BED: 09 0A                      ora #$0A
-4BEF: 91 00                      sta ($00),y   ; LNFLG
-4BF1: A6 DC     L_4BF1           ldx $DC       ; FRE+2
+4BEF: 91 00                      sta ($00),y   ; DST
+4BF1: A6 DC     L_4BF1           ldx $DC       ; SHIP_ADDR
 4BF3: AC 02 4A                   ldy $4A02     ; L_4A01+1
 4BF6: 60                         rts
 4BF7: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
@@ -5136,7 +5136,7 @@
 4E4B: 08                         php
 4E4C: AD 04 4E  L_4E4C           lda $4E04     ; L_4E04
 4E4F: D0 2D                      bne $4E7E     ; L_4E7E
-4E51: B1 DE                      lda ($DE),y   ; FRE+4
+4E51: B1 DE                      lda ($DE),y   ; MASK_ADDR
 4E53: C9 01                      cmp #$01
 4E55: F0 27                      beq $4E7E     ; L_4E7E
 4E57: C9 02                      cmp #$02
@@ -5161,14 +5161,14 @@
 4E7E: 60        L_4E7E           rts
 4E7F: 8E 73 4E  L_4E7F           stx $4E73     ; L_4E73
 4E82: 8C 74 4E                   sty $4E74     ; L_4E74
-4E85: A5 03                      lda $03       ; CASINI+1
+4E85: A5 03                      lda $03       ; SRC+1
 4E87: 18                         clc
 4E88: 0A                         asl
 4E89: 0A                         asl
 4E8A: 18                         clc
 4E8B: 69 07                      adc #$07
 4E8D: A8                         tay
-4E8E: A5 00                      lda $00       ; LNFLG
+4E8E: A5 00                      lda $00       ; DST
 4E90: 18                         clc
 4E91: 0A                         asl
 4E92: 0A                         asl
@@ -5446,7 +5446,7 @@
 5130: C9 63                      cmp #$63
 5132: F0 02                      beq $5136     ; L_5136
 5134: A2 BF                      ldx #$BF
-5136: 86 DC     L_5136           stx $DC       ; FRE+2
+5136: 86 DC     L_5136           stx $DC       ; SHIP_ADDR
 5138: AD 09 44                   lda $4409     ; L_4405+4
 513B: 18                         clc
 513C: 69 30                      adc #$30
@@ -5459,7 +5459,7 @@
 514B: 4A                         lsr
 514C: 4A                         lsr
 514D: 18                         clc
-514E: 65 DC                      adc $DC       ; FRE+2
+514E: 65 DC                      adc $DC       ; SHIP_ADDR
 5150: 8D C0 46                   sta $46C0     ; L_46C0
 5153: 60        L_5153           rts
 5154: AD 70 50  L_5154           lda $5070     ; L_5070
@@ -5623,14 +5623,14 @@
 52F8: D0 04                      bne $52FE     ; L_52FE
 52FA: A0 00                      ldy #$00
 52FC: A9 6F                      lda #$6F
-52FE: 84 00     L_52FE           sty $00       ; LNFLG
-5300: 85 01                      sta $01       ; NGFLAG
+52FE: 84 00     L_52FE           sty $00       ; DST
+5300: 85 01                      sta $01       ; DST+1
 5302: BD 77 52                   lda $5277,x   ; L_5270+7
 5305: F0 42                      beq $5349     ; L_5349
 5307: C9 02                      cmp #$02
 5309: D0 12                      bne $531D     ; L_531D
 530B: 20 A7 55                   jsr $55A7     ; L_55A7
-530E: 86 DC                      stx $DC       ; FRE+2
+530E: 86 DC                      stx $DC       ; SHIP_ADDR
 5310: BD 60 55                   lda $5560,x   ; L_5560
 5313: C9 04                      cmp #$04
 5315: D0 03                      bne $531A     ; L_531A
@@ -5644,57 +5644,57 @@
 5324: 88                         dey
 5325: 98                         tya
 5326: 9D 7B 50                   sta $507B,x   ; L_5078+3
-5329: 86 DC                      stx $DC       ; FRE+2
+5329: 86 DC                      stx $DC       ; SHIP_ADDR
 532B: A2 00                      ldx #$00
 532D: BD 70 52  L_532D           lda $5270,x   ; L_5270
-5330: 91 00                      sta ($00),y   ; LNFLG
+5330: 91 00                      sta ($00),y   ; DST
 5332: E8                         inx
 5333: C8                         iny
 5334: E0 07                      cpx #$07
 5336: D0 F5                      bne $532D     ; L_532D
-5338: A6 DC                      ldx $DC       ; FRE+2
+5338: A6 DC                      ldx $DC       ; SHIP_ADDR
 533A: 20 52 53                   jsr $5352     ; L_5352
-533D: A6 DC                      ldx $DC       ; FRE+2
-533F: A5 DE                      lda $DE       ; FRE+4
+533D: A6 DC                      ldx $DC       ; SHIP_ADDR
+533F: A5 DE                      lda $DE       ; MASK_ADDR
 5341: 9D 7B 52                   sta $527B,x   ; L_5278+3
-5344: A5 DF                      lda $DF       ; FRE+5
+5344: A5 DF                      lda $DF       ; MASK_ADDR+1
 5346: 9D 7E 52                   sta $527E,x   ; L_5278+6
 5349: AD 38 55  L_5349           lda $5538     ; L_5538
 534C: 49 01                      eor #$01
 534E: 8D 38 55                   sta $5538     ; L_5538
 5351: 60                         rts
 5352: BD 7B 52  L_5352           lda $527B,x   ; L_5278+3
-5355: 85 DE                      sta $DE       ; FRE+4
+5355: 85 DE                      sta $DE       ; MASK_ADDR
 5357: BD 7E 52                   lda $527E,x   ; L_5278+6
-535A: 85 DF                      sta $DF       ; FRE+5
+535A: 85 DF                      sta $DF       ; MASK_ADDR+1
 535C: BD 7B 50                   lda $507B,x   ; L_5078+3
 535F: 29 03                      and #$03
 5361: D0 0B                      bne $536E     ; L_536E
-5363: A5 DE                      lda $DE       ; FRE+4
+5363: A5 DE                      lda $DE       ; MASK_ADDR
 5365: 38                         sec
 5366: E9 28                      sbc #$28
-5368: 85 DE                      sta $DE       ; FRE+4
+5368: 85 DE                      sta $DE       ; MASK_ADDR
 536A: B0 02                      bcs $536E     ; L_536E
-536C: C6 DF                      dec $DF       ; FRE+5
+536C: C6 DF                      dec $DF       ; MASK_ADDR+1
 536E: A0 00     L_536E           ldy #$00
 5370: 8C 81 52                   sty $5281     ; L_5280+1
-5373: 84 DD     L_5373           sty $DD       ; FRE+3
-5375: B1 DE                      lda ($DE),y   ; FRE+4
+5373: 84 DD     L_5373           sty $DD       ; SHIP_ADDR+1
+5375: B1 DE                      lda ($DE),y   ; MASK_ADDR
 5377: D0 26                      bne $539F     ; L_539F
-5379: A4 DD     L_5379           ldy $DD       ; FRE+3
+5379: A4 DD     L_5379           ldy $DD       ; SHIP_ADDR+1
 537B: C8                         iny
 537C: C0 02                      cpy #$02
 537E: D0 F3                      bne $5373     ; L_5373
 5380: AD 81 52                   lda $5281     ; L_5280+1
 5383: F0 0F                      beq $5394     ; L_5394
-5385: A6 DC                      ldx $DC       ; FRE+2
+5385: A6 DC                      ldx $DC       ; SHIP_ADDR
 5387: A9 02                      lda #$02
 5389: 9D 77 52                   sta $5277,x   ; L_5270+7
 538C: A9 00                      lda #$00
 538E: 9D 60 55                   sta $5560,x   ; L_5560
 5391: 9D 62 55                   sta $5562,x   ; L_5560+2
 5394: 60        L_5394           rts
-5395: A6 DC     L_5395           ldx $DC       ; FRE+2
+5395: A6 DC     L_5395           ldx $DC       ; SHIP_ADDR
 5397: A9 01                      lda #$01
 5399: 8D 81 52                   sta $5281     ; L_5280+1
 539C: 4C 79 53                   jmp $5379     ; L_5379
@@ -5756,19 +5756,19 @@
 5416: 18                         clc
 5417: 6D 80 52                   adc $5280     ; L_5280
 541A: 8D 80 52                   sta $5280     ; L_5280
-541D: A5 DE                      lda $DE       ; FRE+4
-541F: 85 02                      sta $02       ; CASINI
-5421: A5 DF                      lda $DF       ; FRE+5
-5423: 85 03                      sta $03       ; CASINI+1
-5425: A4 DD                      ldy $DD       ; FRE+3
-5427: B1 02                      lda ($02),y   ; CASINI
+541D: A5 DE                      lda $DE       ; MASK_ADDR
+541F: 85 02                      sta $02       ; SRC
+5421: A5 DF                      lda $DF       ; MASK_ADDR+1
+5423: 85 03                      sta $03       ; SRC+1
+5425: A4 DD                      ldy $DD       ; SHIP_ADDR+1
+5427: B1 02                      lda ($02),y   ; SRC
 5429: 29 01                      and #$01
 542B: D0 0B                      bne $5438     ; L_5438
 542D: CE 80 52                   dec $5280     ; L_5280
-5430: A5 02                      lda $02       ; CASINI
+5430: A5 02                      lda $02       ; SRC
 5432: D0 02                      bne $5436     ; L_5436
-5434: C6 03                      dec $03       ; CASINI+1
-5436: C6 02     L_5436           dec $02       ; CASINI
+5434: C6 03                      dec $03       ; SRC+1
+5436: C6 02     L_5436           dec $02       ; SRC
 5438: AD 80 52  L_5438           lda $5280     ; L_5280
 543B: 29 03                      and #$03
 543D: 18                         clc
@@ -5809,12 +5809,12 @@
 5477: 18                         clc
 5478: 65 05                      adc $05       ; RAMLO+1
 547A: 85 05                      sta $05       ; RAMLO+1
-547C: A4 DD                      ldy $DD       ; FRE+3
+547C: A4 DD                      ldy $DD       ; SHIP_ADDR+1
 547E: A5 04                      lda $04       ; RAMLO
-5480: 91 02                      sta ($02),y   ; CASINI
+5480: 91 02                      sta ($02),y   ; SRC
 5482: C8                         iny
 5483: A5 05                      lda $05       ; RAMLO+1
-5485: 91 02                      sta ($02),y   ; CASINI
+5485: 91 02                      sta ($02),y   ; SRC
 5487: 20 D9 29                   jsr $29D9     ; L_29D9
 548A: EA                         nop
 548B: A9 01                      lda #$01
@@ -5828,22 +5828,22 @@
 54A1: A8                         tay
 54A2: A2 00                      ldx #$00
 54A4: A9 00                      lda #$00
-54A6: 91 00     L_54A6           sta ($00),y   ; LNFLG
+54A6: 91 00     L_54A6           sta ($00),y   ; DST
 54A8: C8                         iny
 54A9: E8                         inx
 54AA: E0 06                      cpx #$06
 54AC: D0 F8                      bne $54A6     ; L_54A6
-54AE: A6 DC                      ldx $DC       ; FRE+2
+54AE: A6 DC                      ldx $DC       ; SHIP_ADDR
 54B0: 9D 79 50                   sta $5079,x   ; L_5078+1
 54B3: 9D 7B 50                   sta $507B,x   ; L_5078+3
 54B6: 60                         rts
-54B7: A5 DE     L_54B7           lda $DE       ; FRE+4
+54B7: A5 DE     L_54B7           lda $DE       ; MASK_ADDR
 54B9: 85 04                      sta $04       ; RAMLO
-54BB: A5 DF                      lda $DF       ; FRE+5
+54BB: A5 DF                      lda $DF       ; MASK_ADDR+1
 54BD: 85 05                      sta $05       ; RAMLO+1
 54BF: A9 01                      lda #$01
 54C1: 8D 81 52                   sta $5281     ; L_5280+1
-54C4: B1 DE                      lda ($DE),y   ; FRE+4
+54C4: B1 DE                      lda ($DE),y   ; MASK_ADDR
 54C6: 29 01                      and #$01
 54C8: D0 08                      bne $54D2     ; L_54D2
 54CA: A5 04                      lda $04       ; RAMLO
@@ -5858,7 +5858,7 @@
 54DA: E6 05                      inc $05       ; RAMLO+1
 54DC: A0 00     L_54DC           ldy #$00
 54DE: B1 04                      lda ($04),y   ; RAMLO
-54E0: 85 02                      sta $02       ; CASINI
+54E0: 85 02                      sta $02       ; SRC
 54E2: A2 00                      ldx #$00
 54E4: A0 00                      ldy #$00
 54E6: B9 41 4C  L_54E6           lda $4C41,y   ; L_4C41
@@ -5874,7 +5874,7 @@
 54FB: 18                         clc
 54FC: 69 02                      adc #$02
 54FE: 99 42 4C                   sta $4C42,y   ; L_4C42
-5501: A5 02                      lda $02       ; CASINI
+5501: A5 02                      lda $02       ; SRC
 5503: 99 43 4C                   sta $4C43,y   ; L_4C43
 5506: A9 01                      lda #$01
 5508: 8D 81 52                   sta $5281     ; L_5280+1
@@ -5887,8 +5887,8 @@
 5516: 18                         clc
 5517: 69 01                      adc #$01
 5519: 91 04                      sta ($04),y   ; RAMLO
-551B: A6 DC                      ldx $DC       ; FRE+2
-551D: A4 DD                      ldy $DD       ; FRE+3
+551B: A6 DC                      ldx $DC       ; SHIP_ADDR
+551D: A4 DD                      ldy $DD       ; SHIP_ADDR+1
 551F: 4C 79 53                   jmp $5379     ; L_5379
 5522: C8        L_5522           iny
 5523: C8                         iny
@@ -5897,8 +5897,8 @@
 5526: E8                         inx
 5527: E0 1E                      cpx #$1E
 5529: D0 BB                      bne $54E6     ; L_54E6
-552B: A6 DC                      ldx $DC       ; FRE+2
-552D: A4 DD                      ldy $DD       ; FRE+3
+552B: A6 DC                      ldx $DC       ; SHIP_ADDR
+552D: A4 DD                      ldy $DD       ; SHIP_ADDR+1
 552F: 4C 79 53                   jmp $5379     ; L_5379
 5532: 20 91 39  L_5532           jsr $3991     ; L_3991
 5535: 4C 79 53                   jmp $5379     ; L_5379
@@ -5939,7 +5939,7 @@
 55CE: 69 06                      adc #$06
 55D0: 8D 66 55                   sta $5566     ; L_5560+6
 55D3: BD 67 55  L_55D3           lda $5567,x   ; L_5560+7
-55D6: 91 00                      sta ($00),y   ; LNFLG
+55D6: 91 00                      sta ($00),y   ; DST
 55D8: C8                         iny
 55D9: E8                         inx
 55DA: EC 66 55                   cpx $5566     ; L_5560+6
@@ -5949,9 +5949,9 @@
 55E5: 60                         rts
 55E6: A2 00     L_55E6           ldx #$00
 55E8: A9 00                      lda #$00
-55EA: 85 00                      sta $00       ; LNFLG
+55EA: 85 00                      sta $00       ; DST
 55EC: A9 6E                      lda #$6E
-55EE: 85 01                      sta $01       ; NGFLAG
+55EE: 85 01                      sta $01       ; DST+1
 55F0: A9 00     L_55F0           lda #$00
 55F2: A0 00                      ldy #$00
 55F4: 18        L_55F4           clc
@@ -5959,11 +5959,11 @@
 55F8: C8                         iny
 55F9: C0 03                      cpy #$03
 55FB: D0 F7                      bne $55F4     ; L_55F4
-55FD: 85 03                      sta $03       ; CASINI+1
+55FD: 85 03                      sta $03       ; SRC+1
 55FF: BD 0B 46                   lda $460B,x   ; L_4607+4
 5602: C9 68                      cmp #$68
 5604: D0 22                      bne $5628     ; L_5628
-5606: A5 03                      lda $03       ; CASINI+1
+5606: A5 03                      lda $03       ; SRC+1
 5608: C9 01                      cmp #$01
 560A: F0 2D                      beq $5639     ; L_5639
 560C: A9 00                      lda #$00
@@ -5971,21 +5971,21 @@
 5611: 9D 00 D0                   sta $D000,x   ; HPOSP0
 5614: BD 0B 46                   lda $460B,x   ; L_4607+4
 5617: A8                         tay
-5618: 86 02                      stx $02       ; CASINI
+5618: 86 02                      stx $02       ; SRC
 561A: A2 00                      ldx #$00
 561C: A9 00     L_561C           lda #$00
-561E: 91 00                      sta ($00),y   ; LNFLG
+561E: 91 00                      sta ($00),y   ; DST
 5620: C8                         iny
 5621: E8                         inx
 5622: E0 06                      cpx #$06
 5624: D0 F6                      bne $561C     ; L_561C
-5626: A6 02                      ldx $02       ; CASINI
-5628: A5 00     L_5628           lda $00       ; LNFLG
+5626: A6 02                      ldx $02       ; SRC
+5628: A5 00     L_5628           lda $00       ; DST
 562A: 18                         clc
 562B: 69 80                      adc #$80
-562D: 85 00                      sta $00       ; LNFLG
+562D: 85 00                      sta $00       ; DST
 562F: 90 02                      bcc $5633     ; L_5633
-5631: E6 01                      inc $01       ; NGFLAG
+5631: E6 01                      inc $01       ; DST+1
 5633: E8        L_5633           inx
 5634: E0 03                      cpx #$03
 5636: D0 B8                      bne $55F0     ; L_55F0
@@ -6031,26 +6031,26 @@
 5691: B9 C0 46                   lda $46C0,y   ; L_46C0
 5694: 8D C1 46                   sta $46C1     ; L_46C0+1
 5697: A9 00                      lda #$00
-5699: 85 00                      sta $00       ; LNFLG
+5699: 85 00                      sta $00       ; DST
 569B: A9 6E                      lda #$6E
-569D: 85 01                      sta $01       ; NGFLAG
+569D: 85 01                      sta $01       ; DST+1
 569F: 8A                         txa
 56A0: A8                         tay
 56A1: C0 00     L_56A1           cpy #$00
 56A3: F0 0F                      beq $56B4     ; L_56B4
-56A5: A5 00                      lda $00       ; LNFLG
+56A5: A5 00                      lda $00       ; DST
 56A7: 18                         clc
 56A8: 69 80                      adc #$80
-56AA: 85 00                      sta $00       ; LNFLG
+56AA: 85 00                      sta $00       ; DST
 56AC: 90 02                      bcc $56B0     ; L_56B0
-56AE: E6 01                      inc $01       ; NGFLAG
+56AE: E6 01                      inc $01       ; DST+1
 56B0: 88        L_56B0           dey
 56B1: 4C A1 56                   jmp $56A1     ; L_56A1
 56B4: B9 0B 46  L_56B4           lda $460B,y   ; L_4607+4
 56B7: A8                         tay
 56B8: A2 00                      ldx #$00
 56BA: A9 00     L_56BA           lda #$00
-56BC: 91 00                      sta ($00),y   ; LNFLG
+56BC: 91 00                      sta ($00),y   ; DST
 56BE: C8                         iny
 56BF: E8                         inx
 56C0: E0 06                      cpx #$06
@@ -6182,9 +6182,9 @@
 581D: 90 03                      bcc $5822     ; L_5822
 581F: EE E4 57                   inc $57E4     ; L_57E0+4
 5822: A9 00     L_5822           lda #$00
-5824: 85 DE                      sta $DE       ; FRE+4
+5824: 85 DE                      sta $DE       ; MASK_ADDR
 5826: A9 60                      lda #$60
-5828: 85 DF                      sta $DF       ; FRE+5
+5828: 85 DF                      sta $DF       ; MASK_ADDR+1
 582A: BD B3 57                   lda $57B3,x   ; L_57B0+3
 582D: 29 07                      and #$07
 582F: 8D E0 57                   sta $57E0     ; L_57E0
@@ -6196,27 +6196,27 @@
 583E: AA                         tax
 583F: E0 00     L_583F           cpx #$00
 5841: F0 11                      beq $5854     ; L_5854
-5843: E6 DF                      inc $DF       ; FRE+5
-5845: A5 DE                      lda $DE       ; FRE+4
+5843: E6 DF                      inc $DF       ; MASK_ADDR+1
+5845: A5 DE                      lda $DE       ; MASK_ADDR
 5847: 18                         clc
 5848: 69 80                      adc #$80
-584A: 85 DE                      sta $DE       ; FRE+4
+584A: 85 DE                      sta $DE       ; MASK_ADDR
 584C: 90 02                      bcc $5850     ; L_5850
-584E: E6 DF                      inc $DF       ; FRE+5
+584E: E6 DF                      inc $DF       ; MASK_ADDR+1
 5850: CA        L_5850           dex
 5851: 4C 3F 58                   jmp $583F     ; L_583F
 5854: AE BF 57  L_5854           ldx $57BF     ; L_57B8+7
-5857: A5 DF                      lda $DF       ; FRE+5
+5857: A5 DF                      lda $DF       ; MASK_ADDR+1
 5859: 18                         clc
 585A: 6D E4 57                   adc $57E4     ; L_57E0+4
-585D: 85 DF                      sta $DF       ; FRE+5
-585F: A5 DE                      lda $DE       ; FRE+4
+585D: 85 DF                      sta $DF       ; MASK_ADDR+1
+585F: A5 DE                      lda $DE       ; MASK_ADDR
 5861: 18                         clc
 5862: 6D E3 57                   adc $57E3     ; L_57E0+3
-5865: 85 DE                      sta $DE       ; FRE+4
-5867: 90 02                      bcc $586B     ; L_586B
-5869: E6 DF                      inc $DF       ; FRE+5
-586B: 8A        L_586B           txa
+5865: 85 DE                      sta $DE       ; MASK_ADDR
+5867: 90 02                      bcc $586B     ; DRAW_ENEMY
+5869: E6 DF                      inc $DF       ; MASK_ADDR+1
+586B: 8A        DRAW_ENEMY       txa
 586C: 18                         clc
 586D: 0A                         asl
 586E: 0A                         asl
@@ -6224,9 +6224,9 @@
 5870: 0A                         asl
 5871: 0A                         asl
 5872: 0A                         asl
-5873: 85 DC                      sta $DC       ; FRE+2
+5873: 85 DC                      sta $DC       ; SHIP_ADDR
 5875: A9 8B                      lda #$8B
-5877: 85 DD                      sta $DD       ; FRE+3
+5877: 85 DD                      sta $DD       ; SHIP_ADDR+1
 5879: 8A                         txa
 587A: 18                         clc
 587B: EA                         nop
@@ -6234,12 +6234,12 @@
 587D: 0A                         asl
 587E: 0A                         asl
 587F: 18                         clc
-5880: 65 DC                      adc $DC       ; FRE+2
+5880: 65 DC                      adc $DC       ; SHIP_ADDR
 5882: 18                         clc
 5883: 69 00                      adc #$00
-5885: 85 DC                      sta $DC       ; FRE+2
+5885: 85 DC                      sta $DC       ; SHIP_ADDR
 5887: 90 02                      bcc $588B     ; L_588B
-5889: E6 DD                      inc $DD       ; FRE+3
+5889: E6 DD                      inc $DD       ; SHIP_ADDR+1
 588B: 8E BF 57  L_588B           stx $57BF     ; L_57B8+7
 588E: 8C C0 57                   sty $57C0     ; L_57C0
 5891: 8A                         txa
@@ -6256,12 +6256,12 @@
 58A1: A0 00     L_58A1           ldy #$00
 58A3: 8C E2 57                   sty $57E2     ; L_57E0+2
 58A6: 84 04                      sty $04       ; RAMLO
-58A8: A5 DE                      lda $DE       ; FRE+4
-58AA: 85 00                      sta $00       ; LNFLG
-58AC: A5 DF                      lda $DF       ; FRE+5
+58A8: A5 DE                      lda $DE       ; MASK_ADDR
+58AA: 85 00                      sta $00       ; DST
+58AC: A5 DF                      lda $DF       ; MASK_ADDR+1
 58AE: 18                         clc
 58AF: 69 32                      adc #$32
-58B1: 85 01                      sta $01       ; NGFLAG
+58B1: 85 01                      sta $01       ; DST+1
 58B3: BD C5 57  L_58B3           lda $57C5,x   ; L_57C0+5
 58B6: 29 7F                      and #$7F
 58B8: 29 E0                      and #$E0
@@ -6272,14 +6272,14 @@
 58BE: 4A                         lsr
 58BF: 18                         clc
 58C0: 69 88                      adc #$88
-58C2: 85 03                      sta $03       ; CASINI+1
+58C2: 85 03                      sta $03       ; SRC+1
 58C4: BD C5 57                   lda $57C5,x   ; L_57C0+5
 58C7: 29 7F                      and #$7F
 58C9: 29 1F                      and #$1F
 58CB: 0A                         asl
 58CC: 0A                         asl
 58CD: 0A                         asl
-58CE: 85 02                      sta $02       ; CASINI
+58CE: 85 02                      sta $02       ; SRC
 58D0: AD E2 57  L_58D0           lda $57E2     ; L_57E0+2
 58D3: CD E0 57                   cmp $57E0     ; L_57E0
 58D6: F0 18                      beq $58F0     ; L_58F0
@@ -6288,9 +6288,9 @@
 58DD: 98                         tya
 58DE: 29 07                      and #$07
 58E0: A8                         tay
-58E1: B1 02                      lda ($02),y   ; CASINI
+58E1: B1 02                      lda ($02),y   ; SRC
 58E3: AC C0 57                   ldy $57C0     ; L_57C0
-58E6: 91 DC                      sta ($DC),y   ; FRE+2
+58E6: 91 DC                      sta ($DC),y   ; SHIP_ADDR
 58E8: 4C 12 59                   jmp $5912     ; L_5912
 58EB: CD E1 57  L_58EB           cmp $57E1     ; L_57E0+1
 58EE: B0 EA                      bcs $58DA     ; L_58DA
@@ -6298,19 +6298,19 @@
 58F3: 98                         tya
 58F4: 29 07                      and #$07
 58F6: A8                         tay
-58F7: B1 02                      lda ($02),y   ; CASINI
+58F7: B1 02                      lda ($02),y   ; SRC
 58F9: A0 00                      ldy #$00
-58FB: 31 00                      and ($00),y   ; LNFLG
-58FD: 11 DE                      ora ($DE),y   ; FRE+4
+58FB: 31 00                      and ($00),y   ; DST
+58FD: 11 DE                      ora ($DE),y   ; MASK_ADDR
 58FF: AC C0 57                   ldy $57C0     ; L_57C0
-5902: 91 DC                      sta ($DC),y   ; FRE+2
-5904: A5 DE                      lda $DE       ; FRE+4
+5902: 91 DC                      sta ($DC),y   ; SHIP_ADDR
+5904: A5 DE                      lda $DE       ; MASK_ADDR
 5906: C9 FF                      cmp #$FF
 5908: D0 04                      bne $590E     ; L_590E
-590A: E6 DF                      inc $DF       ; FRE+5
-590C: E6 01                      inc $01       ; NGFLAG
-590E: E6 DE     L_590E           inc $DE       ; FRE+4
-5910: E6 00                      inc $00       ; LNFLG
+590A: E6 DF                      inc $DF       ; MASK_ADDR+1
+590C: E6 01                      inc $01       ; DST+1
+590E: E6 DE     L_590E           inc $DE       ; MASK_ADDR
+5910: E6 00                      inc $00       ; DST
 5912: C8        L_5912           iny
 5913: EE E2 57                   inc $57E2     ; L_57E0+2
 5916: C0 18                      cpy #$18
@@ -6322,12 +6322,12 @@
 5921: D0 AD                      bne $58D0     ; L_58D0
 5923: E8                         inx
 5924: 4C B3 58                   jmp $58B3     ; L_58B3
-5927: A5 DC     L_5927           lda $DC       ; FRE+2
+5927: A5 DC     L_5927           lda $DC       ; SHIP_ADDR
 5929: 18                         clc
 592A: 69 18                      adc #$18
-592C: 85 DC                      sta $DC       ; FRE+2
+592C: 85 DC                      sta $DC       ; SHIP_ADDR
 592E: 90 02                      bcc $5932     ; L_5932
-5930: E6 DD                      inc $DD       ; FRE+3
+5930: E6 DD                      inc $DD       ; SHIP_ADDR+1
 5932: EC C4 57  L_5932           cpx $57C4     ; L_57C0+4
 5935: F0 03                      beq $593A     ; L_593A
 5937: 4C A1 58                   jmp $58A1     ; L_58A1
@@ -6351,7 +6351,7 @@
 595E: 4A                         lsr
 595F: 4A                         lsr
 5960: 4A                         lsr
-5961: 85 DD                      sta $DD       ; FRE+3
+5961: 85 DD                      sta $DD       ; SHIP_ADDR+1
 5963: AD C0 57                   lda $57C0     ; L_57C0
 5966: 18                         clc
 5967: 0A                         asl
@@ -6359,7 +6359,7 @@
 5969: 0A                         asl
 596A: 0A                         asl
 596B: 0A                         asl
-596C: 85 DC                      sta $DC       ; FRE+2
+596C: 85 DC                      sta $DC       ; SHIP_ADDR
 596E: AD C0 57                   lda $57C0     ; L_57C0
 5971: 29 E0                      and #$E0
 5973: 4A                         lsr
@@ -6367,39 +6367,39 @@
 5975: 4A                         lsr
 5976: 4A                         lsr
 5977: 4A                         lsr
-5978: 85 DF                      sta $DF       ; FRE+5
+5978: 85 DF                      sta $DF       ; MASK_ADDR+1
 597A: AD C0 57                   lda $57C0     ; L_57C0
 597D: 18                         clc
 597E: 0A                         asl
 597F: 0A                         asl
 5980: 0A                         asl
-5981: 85 DE                      sta $DE       ; FRE+4
-5983: A5 DD                      lda $DD       ; FRE+3
+5981: 85 DE                      sta $DE       ; MASK_ADDR
+5983: A5 DD                      lda $DD       ; SHIP_ADDR+1
 5985: 18                         clc
-5986: 65 DF                      adc $DF       ; FRE+5
-5988: 85 DD                      sta $DD       ; FRE+3
-598A: A5 DC                      lda $DC       ; FRE+2
+5986: 65 DF                      adc $DF       ; MASK_ADDR+1
+5988: 85 DD                      sta $DD       ; SHIP_ADDR+1
+598A: A5 DC                      lda $DC       ; SHIP_ADDR
 598C: 18                         clc
-598D: 65 DE                      adc $DE       ; FRE+4
-598F: 85 DC                      sta $DC       ; FRE+2
+598D: 65 DE                      adc $DE       ; MASK_ADDR
+598F: 85 DC                      sta $DC       ; SHIP_ADDR
 5991: 90 02                      bcc $5995     ; L_5995
-5993: E6 DD                      inc $DD       ; FRE+3
-5995: A5 DD     L_5995           lda $DD       ; FRE+3
+5993: E6 DD                      inc $DD       ; SHIP_ADDR+1
+5995: A5 DD     L_5995           lda $DD       ; SHIP_ADDR+1
 5997: 18                         clc
 5998: 69 9A                      adc #$9A
-599A: 85 DD                      sta $DD       ; FRE+3
-599C: A5 DC                      lda $DC       ; FRE+2
+599A: 85 DD                      sta $DD       ; SHIP_ADDR+1
+599C: A5 DC                      lda $DC       ; SHIP_ADDR
 599E: 18                         clc
 599F: 6D C1 57                   adc $57C1     ; L_57C0+1
-59A2: 85 DC                      sta $DC       ; FRE+2
+59A2: 85 DC                      sta $DC       ; SHIP_ADDR
 59A4: 90 02                      bcc $59A8     ; L_59A8
-59A6: E6 DD                      inc $DD       ; FRE+3
-59A8: A5 DC     L_59A8           lda $DC       ; FRE+2
+59A6: E6 DD                      inc $DD       ; SHIP_ADDR+1
+59A8: A5 DC     L_59A8           lda $DC       ; SHIP_ADDR
 59AA: 18                         clc
 59AB: 69 8A                      adc #$8A
-59AD: 85 DC                      sta $DC       ; FRE+2
+59AD: 85 DC                      sta $DC       ; SHIP_ADDR
 59AF: 90 02                      bcc $59B3     ; L_59B3
-59B1: E6 DD                      inc $DD       ; FRE+3
+59B1: E6 DD                      inc $DD       ; SHIP_ADDR+1
 59B3: 8E BF 57  L_59B3           stx $57BF     ; L_57B8+7
 59B6: 8A                         txa
 59B7: 18                         clc
@@ -6428,10 +6428,10 @@
 59E5: ED EA 57                   sbc $57EA     ; L_57E8+2
 59E8: 8D EA 57                   sta $57EA     ; L_57E8+2
 59EB: A9 00                      lda #$00
-59ED: 85 DF                      sta $DF       ; FRE+5
+59ED: 85 DF                      sta $DF       ; MASK_ADDR+1
 59EF: A9 00     L_59EF           lda #$00
-59F1: 85 DE                      sta $DE       ; FRE+4
-59F3: A4 DF                      ldy $DF       ; FRE+5
+59F1: 85 DE                      sta $DE       ; MASK_ADDR
+59F3: A4 DF                      ldy $DF       ; MASK_ADDR+1
 59F5: AD C2 57  L_59F5           lda $57C2     ; L_57C0+2
 59F8: C9 06                      cmp #$06
 59FA: 90 14                      bcc $5A10     ; L_5A10
@@ -6443,15 +6443,15 @@
 5A07: C9 1E                      cmp #$1E
 5A09: B0 05                      bcs $5A10     ; L_5A10
 5A0B: BD C5 57                   lda $57C5,x   ; L_57C0+5
-5A0E: 91 DC                      sta ($DC),y   ; FRE+2
+5A0E: 91 DC                      sta ($DC),y   ; SHIP_ADDR
 5A10: EE C3 57  L_5A10           inc $57C3     ; L_57C0+3
 5A13: E8                         inx
 5A14: 98                         tya
 5A15: 18                         clc
 5A16: 69 28                      adc #$28
 5A18: A8                         tay
-5A19: E6 DE                      inc $DE       ; FRE+4
-5A1B: A5 DE                      lda $DE       ; FRE+4
+5A19: E6 DE                      inc $DE       ; MASK_ADDR
+5A1B: A5 DE                      lda $DE       ; MASK_ADDR
 5A1D: CD E9 57                   cmp $57E9     ; L_57E8+1
 5A20: D0 D3                      bne $59F5     ; L_59F5
 5A22: AD E9 57                   lda $57E9     ; L_57E8+1
@@ -6463,7 +6463,7 @@
 5A2E: ED E9 57                   sbc $57E9     ; L_57E8+1
 5A31: 8D C3 57                   sta $57C3     ; L_57C0+3
 5A34: EE C2 57                   inc $57C2     ; L_57C0+2
-5A37: E6 DF                      inc $DF       ; FRE+5
+5A37: E6 DF                      inc $DF       ; MASK_ADDR+1
 5A39: EC EA 57                   cpx $57EA     ; L_57E8+2
 5A3C: D0 B1                      bne $59EF     ; L_59EF
 5A3E: AE BF 57                   ldx $57BF     ; L_57B8+7
@@ -6481,26 +6481,26 @@
 5A60: 8D EA 57                   sta $57EA     ; L_57E8+2
 5A63: 8E C1 57                   stx $57C1     ; L_57C0+1
 5A66: A9 00                      lda #$00
-5A68: 85 DF                      sta $DF       ; FRE+5
+5A68: 85 DF                      sta $DF       ; MASK_ADDR+1
 5A6A: A9 00     L_5A6A           lda #$00
-5A6C: 85 DE                      sta $DE       ; FRE+4
-5A6E: A4 DF                      ldy $DF       ; FRE+5
-5A70: B1 DC     L_5A70           lda ($DC),y   ; FRE+2
+5A6C: 85 DE                      sta $DE       ; MASK_ADDR
+5A6E: A4 DF                      ldy $DF       ; MASK_ADDR+1
+5A70: B1 DC     L_5A70           lda ($DC),y   ; SHIP_ADDR
 5A72: 9D C5 57                   sta $57C5,x   ; L_57C0+5
 5A75: E8                         inx
 5A76: 98                         tya
 5A77: 18                         clc
 5A78: 69 28                      adc #$28
 5A7A: A8                         tay
-5A7B: E6 DE                      inc $DE       ; FRE+4
-5A7D: A5 DE                      lda $DE       ; FRE+4
+5A7B: E6 DE                      inc $DE       ; MASK_ADDR
+5A7D: A5 DE                      lda $DE       ; MASK_ADDR
 5A7F: CD E9 57                   cmp $57E9     ; L_57E8+1
 5A82: D0 EC                      bne $5A70     ; L_5A70
 5A84: AD E9 57                   lda $57E9     ; L_57E8+1
 5A87: C9 02                      cmp #$02
 5A89: D0 01                      bne $5A8C     ; L_5A8C
 5A8B: E8                         inx
-5A8C: E6 DF     L_5A8C           inc $DF       ; FRE+5
+5A8C: E6 DF     L_5A8C           inc $DF       ; MASK_ADDR+1
 5A8E: EC EA 57                   cpx $57EA     ; L_57E8+2
 5A91: D0 D7                      bne $5A6A     ; L_5A6A
 5A93: 8A                         txa
@@ -6510,10 +6510,10 @@
 5A98: 6D EB 57                   adc $57EB     ; L_57E8+3
 5A9B: AA                         tax
 5A9C: A9 00                      lda #$00
-5A9E: 85 DF                      sta $DF       ; FRE+5
+5A9E: 85 DF                      sta $DF       ; MASK_ADDR+1
 5AA0: A9 00     L_5AA0           lda #$00
-5AA2: 85 DE                      sta $DE       ; FRE+4
-5AA4: A4 DF                      ldy $DF       ; FRE+5
+5AA2: 85 DE                      sta $DE       ; MASK_ADDR
+5AA4: A4 DF                      ldy $DF       ; MASK_ADDR+1
 5AA6: AD C2 57  L_5AA6           lda $57C2     ; L_57C0+2
 5AA9: C9 06                      cmp #$06
 5AAB: 90 21                      bcc $5ACE     ; L_5ACE
@@ -6532,7 +6532,7 @@
 5AC7: 69 60                      adc #$60
 5AC9: 18                         clc
 5ACA: 65 04                      adc $04       ; RAMLO
-5ACC: 91 DC                      sta ($DC),y   ; FRE+2
+5ACC: 91 DC                      sta ($DC),y   ; SHIP_ADDR
 5ACE: EE C3 57  L_5ACE           inc $57C3     ; L_57C0+3
 5AD1: 98                         tya
 5AD2: 18                         clc
@@ -6540,8 +6540,8 @@
 5AD5: A8                         tay
 5AD6: E8                         inx
 5AD7: EE C1 57                   inc $57C1     ; L_57C0+1
-5ADA: E6 DE                      inc $DE       ; FRE+4
-5ADC: A5 DE                      lda $DE       ; FRE+4
+5ADA: E6 DE                      inc $DE       ; MASK_ADDR
+5ADC: A5 DE                      lda $DE       ; MASK_ADDR
 5ADE: CD E9 57                   cmp $57E9     ; L_57E8+1
 5AE1: D0 C3                      bne $5AA6     ; L_5AA6
 5AE3: AD E9 57                   lda $57E9     ; L_57E8+1
@@ -6554,7 +6554,7 @@
 5AF2: ED E9 57                   sbc $57E9     ; L_57E8+1
 5AF5: 8D C3 57                   sta $57C3     ; L_57C0+3
 5AF8: EE C2 57                   inc $57C2     ; L_57C0+2
-5AFB: E6 DF                      inc $DF       ; FRE+5
+5AFB: E6 DF                      inc $DF       ; MASK_ADDR+1
 5AFD: EC EA 57                   cpx $57EA     ; L_57E8+2
 5B00: D0 9E                      bne $5AA0     ; L_5AA0
 5B02: AE BF 57                   ldx $57BF     ; L_57B8+7
@@ -6601,7 +6601,7 @@
 5B88: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
 5B90: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
 5B98: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-5BA0: B1 DE                      lda ($DE),y   ; FRE+4
+5BA0: B1 DE                      lda ($DE),y   ; MASK_ADDR
 5BA2: C9 49                      cmp #$49
 5BA4: 10 03                      bpl $5BA9     ; L_5BA9
 5BA6: C9 37     L_5BA6           cmp #$37
@@ -6707,15 +6707,15 @@
 5D03: 0A                         asl
 5D04: 0A                         asl
 5D05: 0A                         asl
-5D06: 85 DE                      sta $DE       ; FRE+4
+5D06: 85 DE                      sta $DE       ; MASK_ADDR
 5D08: BD 6C 5C                   lda $5C6C,x   ; L_5C6C
 5D0B: 18                         clc
 5D0C: 0A                         asl
 5D0D: 0A                         asl
 5D0E: 0A                         asl
 5D0F: 18                         clc
-5D10: 65 DE                      adc $DE       ; FRE+4
-5D12: 86 DE                      stx $DE       ; FRE+4
+5D10: 65 DE                      adc $DE       ; MASK_ADDR
+5D12: 86 DE                      stx $DE       ; MASK_ADDR
 5D14: AA                         tax
 5D15: A0 90                      ldy #$90
 5D17: AD 6F 5C                   lda $5C6F     ; L_5C6C+3
@@ -6723,16 +6723,16 @@
 5D1C: D0 02                      bne $5D20     ; L_5D20
 5D1E: A0 A8                      ldy #$A8
 5D20: A9 89     L_5D20           lda #$89
-5D22: 84 DC                      sty $DC       ; FRE+2
-5D24: 85 DD                      sta $DD       ; FRE+3
+5D22: 84 DC                      sty $DC       ; SHIP_ADDR
+5D24: 85 DD                      sta $DD       ; SHIP_ADDR+1
 5D26: A0 00                      ldy #$00
 5D28: BD 00 5C  L_5D28           lda $5C00,x   ; L_5BFC+4
-5D2B: 91 DC                      sta ($DC),y   ; FRE+2
+5D2B: 91 DC                      sta ($DC),y   ; SHIP_ADDR
 5D2D: C8                         iny
 5D2E: E8                         inx
 5D2F: C0 18                      cpy #$18
 5D31: D0 F5                      bne $5D28     ; L_5D28
-5D33: A6 DE                      ldx $DE       ; FRE+4
+5D33: A6 DE                      ldx $DE       ; MASK_ADDR
 5D35: FE 6C 5C                   inc $5C6C,x   ; L_5C6C
 5D38: 60                         rts
 5D39: BD B3 57  L_5D39           lda $57B3,x   ; L_57B0+3
@@ -6748,8 +6748,8 @@
 5D50: A0 00                      ldy #$00
 5D52: 4C 56 5D                   jmp $5D56     ; L_5D56
 5D55: C8        L_5D55           iny
-5D56: 84 DE     L_5D56           sty $DE       ; FRE+4
-5D58: E4 DE                      cpx $DE       ; FRE+4
+5D56: 84 DE     L_5D56           sty $DE       ; MASK_ADDR
+5D58: E4 DE                      cpx $DE       ; MASK_ADDR
 5D5A: D0 03                      bne $5D5F     ; L_5D5F
 5D5C: FE B3 57                   inc $57B3,x   ; L_57B0+3
 5D5F: 60        L_5D5F           rts
@@ -6767,7 +6767,7 @@
 5D78: 0A                         asl
 5D79: 0A                         asl
 5D7A: 0A                         asl
-5D7B: 85 DE                      sta $DE       ; FRE+4
+5D7B: 85 DE                      sta $DE       ; MASK_ADDR
 5D7D: BD 6C 5C                   lda $5C6C,x   ; L_5C6C
 5D80: C9 FF                      cmp #$FF
 5D82: D0 0F                      bne $5D93     ; L_5D93
@@ -6782,8 +6782,8 @@
 5D95: 0A                         asl
 5D96: 0A                         asl
 5D97: 18                         clc
-5D98: 65 DE                      adc $DE       ; FRE+4
-5D9A: 86 DE                      stx $DE       ; FRE+4
+5D98: 65 DE                      adc $DE       ; MASK_ADDR
+5D9A: 86 DE                      stx $DE       ; MASK_ADDR
 5D9C: AA                         tax
 5D9D: A0 90                      ldy #$90
 5D9F: AD 6F 5C                   lda $5C6F     ; L_5C6C+3
@@ -6791,16 +6791,16 @@
 5DA4: D0 02                      bne $5DA8     ; L_5DA8
 5DA6: A0 A8                      ldy #$A8
 5DA8: A9 89     L_5DA8           lda #$89
-5DAA: 84 DC                      sty $DC       ; FRE+2
-5DAC: 85 DD                      sta $DD       ; FRE+3
+5DAA: 84 DC                      sty $DC       ; SHIP_ADDR
+5DAC: 85 DD                      sta $DD       ; SHIP_ADDR+1
 5DAE: A0 00                      ldy #$00
 5DB0: BD 00 5C  L_5DB0           lda $5C00,x   ; L_5BFC+4
-5DB3: 91 DC                      sta ($DC),y   ; FRE+2
+5DB3: 91 DC                      sta ($DC),y   ; SHIP_ADDR
 5DB5: C8                         iny
 5DB6: E8                         inx
 5DB7: C0 18                      cpy #$18
 5DB9: D0 F5                      bne $5DB0     ; L_5DB0
-5DBB: A6 DE                      ldx $DE       ; FRE+4
+5DBB: A6 DE                      ldx $DE       ; MASK_ADDR
 5DBD: 60                         rts
 5DBE: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
 5DC6: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
@@ -6945,11 +6945,11 @@
 5F00: D0 25                      bne $5F27     ; L_5F27
 5F02: A0 52                      ldy #$52
 5F04: AD D2 5D                   lda $5DD2     ; L_5DCE+4
-5F07: 85 DE                      sta $DE       ; FRE+4
+5F07: 85 DE                      sta $DE       ; MASK_ADDR
 5F09: AD D3 5D                   lda $5DD3     ; L_5DCE+5
-5F0C: 85 DF                      sta $DF       ; FRE+5
+5F0C: 85 DF                      sta $DF       ; MASK_ADDR+1
 5F0E: A2 00                      ldx #$00
-5F10: B1 DE     L_5F10           lda ($DE),y   ; FRE+4
+5F10: B1 DE     L_5F10           lda ($DE),y   ; MASK_ADDR
 5F12: C9 37                      cmp #$37
 5F14: B0 03                      bcs $5F19     ; L_5F19
 5F16: 4C 0E 3E  L_5F16           jmp $3E0E     ; L_3E0E
@@ -6981,11 +6981,11 @@
 5F54: A2 00                      ldx #$00
 5F56: A0 00                      ldy #$00
 5F58: AD D2 5D                   lda $5DD2     ; L_5DCE+4
-5F5B: 85 DE                      sta $DE       ; FRE+4
+5F5B: 85 DE                      sta $DE       ; MASK_ADDR
 5F5D: AD D3 5D                   lda $5DD3     ; L_5DCE+5
-5F60: 85 DF                      sta $DF       ; FRE+5
+5F60: 85 DF                      sta $DF       ; MASK_ADDR+1
 5F62: A0 01                      ldy #$01
-5F64: B1 DE     L_5F64           lda ($DE),y   ; FRE+4
+5F64: B1 DE     L_5F64           lda ($DE),y   ; MASK_ADDR
 5F66: C9 37                      cmp #$37
 5F68: 10 03                      bpl $5F6D     ; L_5F6D
 5F6A: 4C 00 3E  L_5F6A           jmp $3E00     ; L_3E00
@@ -7002,15 +7002,15 @@
 5F7F: DE B0 57  L_5F7F           dec $57B0,x   ; L_57B0
 5F82: 60                         rts
 5F83: AD D2 5D  L_5F83           lda $5DD2     ; L_5DCE+4
-5F86: 85 DE                      sta $DE       ; FRE+4
+5F86: 85 DE                      sta $DE       ; MASK_ADDR
 5F88: AD D3 5D                   lda $5DD3     ; L_5DCE+5
-5F8B: 85 DF                      sta $DF       ; FRE+5
+5F8B: 85 DF                      sta $DF       ; MASK_ADDR+1
 5F8D: BD B0 57                   lda $57B0,x   ; L_57B0
 5F90: 29 03                      and #$03
 5F92: D0 1C                      bne $5FB0     ; L_5FB0
 5F94: A0 04                      ldy #$04
 5F96: A2 00                      ldx #$00
-5F98: B1 DE     L_5F98           lda ($DE),y   ; FRE+4
+5F98: B1 DE     L_5F98           lda ($DE),y   ; MASK_ADDR
 5F9A: C9 37                      cmp #$37
 5F9C: 10 03                      bpl $5FA1     ; L_5FA1
 5F9E: 4C 00 3E  L_5F9E           jmp $3E00     ; L_3E00
@@ -8419,199 +8419,205 @@
 87E2: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
 87EA: 00                         BYTE $00 $00 $00 $00 $00 $0C $FF $3F
 87F2: 0F                         BYTE $0F $03 $03 $03 $0F $FF $FF $FF
-87FA: FF                         BYTE $FF $FF $FF $FF $FF $FF $00 $00
-8802: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $3F
-880A: 3F                         BYTE $3F $3F $3F $3F $3F $00 $00 $FC
-8812: FC                         BYTE $FC $FC $FC $FC $FC $00 $00 $3F
-881A: 3F                         BYTE $3F $3F $3F $3F $3F $00 $00 $FC
-8822: FC                         BYTE $FC $FC $FC $FC $FC $00 $00 $15
-882A: 15                         BYTE $15 $15 $15 $15 $15 $00 $00 $54
-8832: 54                         BYTE $54 $54 $54 $54 $54 $00 $00 $2A
-883A: 2A                         BYTE $2A $2A $2A $2A $2A $00 $00 $A8
-8842: A8                         BYTE $A8 $A8 $A8 $A8 $A8 $00 $00 $3F
-884A: 3F                         BYTE $3F $3F $3F $3F $3F $00 $00 $FC
-8852: FC                         BYTE $FC $FC $FC $FD $FD $15 $00 $3F
-885A: 3F                         BYTE $3F $3F $3F $3F $3F $01 $00 $FC
-8862: FC                         BYTE $FC $FD $FD $FD $FD $55 $00 $3F
-886A: 3F                         BYTE $3F $3F $3F $3F $3F $55 $00 $FD
-8872: FD                         BYTE $FD $FD $FD $FD $FD $55 $55 $7F
-887A: 7F                         BYTE $7F $7F $7F $7F $7F $55 $55 $FD
-8882: FD                         BYTE $FD $FD $FD $FD $FD $55 $55 $55
-888A: 55                         BYTE $55 $55 $55 $55 $55 $55 $55 $55
-8892: 55                         BYTE $55 $55 $55 $55 $55 $55 $00 $00
-889A: 00                         BYTE $00 $00 $01 $01 $01 $01 $00 $15
-88A2: 55                         BYTE $55 $50 $40 $4A $2A $28 $00 $54
-88AA: 55                         BYTE $55 $05 $01 $A1 $A8 $28 $00 $00
-88B2: 00                         BYTE $00 $00 $40 $40 $40 $40 $00 $55
-88BA: 55                         BYTE $55 $00 $00 $AA $AA $00 $02 $02
-88C2: 02                         BYTE $02 $02 $00 $00 $00 $00 $14 $15
-88CA: 85                         BYTE $85 $80 $A0 $AA $2A $00 $14 $54
-88D2: 52                         BYTE $52 $02 $0A $AA $A8 $00 $80 $80
-88DA: 80                         BYTE $80 $80 $00 $00 $00 $00 $00 $55
-88E2: 55                         BYTE $55 $00 $00 $AA $AA $00 $00 $3F
-88EA: 3F                         BYTE $3F $3F $3F $3F $3F $00 $00 $FC
-88F2: FC                         BYTE $FC $FC $FC $FC $FC $00 $00 $00
-88FA: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-8902: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-890A: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $01
-8912: 00                         BYTE $00 $01 $05 $05 $05 $05 $00 $28
-891A: 00                         BYTE $00 $28 $28 $28 $28 $28 $05 $00
-8922: 05                         BYTE $05 $00 $05 $00 $05 $00 $28 $00
-892A: 28                         BYTE $28 $00 $28 $00 $28 $00 $05 $05
-8932: 05                         BYTE $05 $05 $01 $00 $01 $00 $28 $28
-893A: 28                         BYTE $28 $28 $28 $00 $28 $00 $01 $01
-8942: 01                         BYTE $01 $01 $01 $01 $01 $01 $28 $28
-894A: 28                         BYTE $28 $28 $28 $28 $28 $28 $00 $14
-8952: 00                         BYTE $00 $14 $14 $14 $14 $14 $00 $80
-895A: 00                         BYTE $00 $80 $A0 $A0 $A0 $A0 $14 $00
-8962: 14                         BYTE $14 $00 $14 $00 $14 $00 $A0 $00
-896A: A0                         BYTE $A0 $00 $A0 $00 $A0 $00 $14 $14
-8972: 14                         BYTE $14 $14 $14 $00 $14 $00 $A0 $A0
-897A: A0                         BYTE $A0 $A0 $80 $00 $80 $00 $14 $14
-8982: 14                         BYTE $14 $14 $14 $14 $14 $14 $80 $80
-898A: 80                         BYTE $80 $80 $80 $80 $80 $80 $05 $15
-8992: 2A                         BYTE $2A $00 $00 $2A $2A $0A $00 $14
-899A: 28                         BYTE $28 $00 $00 $28 $28 $28 $50 $54
-89A2: A8                         BYTE $A8 $00 $00 $A8 $A8 $A0 $05 $15
-89AA: 2A                         BYTE $2A $00 $00 $2A $2A $0A $00 $14
-89B2: 28                         BYTE $28 $00 $00 $28 $28 $28 $50 $54
-89BA: A8                         BYTE $A8 $00 $00 $A8 $A8 $A0 $AA $AA
-89C2: A8                         BYTE $A8 $A8 $A2 $00 $A2 $A2 $0A $20
-89CA: 8A                         BYTE $8A $8A $A2 $A2 $08 $A0 $A2 $A2
-89D2: 00                         BYTE $00 $80 $80 $00 $00 $00 $A0 $02
-89DA: 02                         BYTE $02 $0A $0A $2A $20 $0A $A2 $A2
-89E2: 00                         BYTE $00 $80 $80 $00 $00 $00 $A0 $00
-89EA: 02                         BYTE $02 $02 $0A $0A $20 $0A $AA $AA
-89F2: A8                         BYTE $A8 $A8 $A2 $00 $A2 $A2 $0A $20
-89FA: 8A                         BYTE $8A $8A $A2 $A2 $08 $A0 $AA $AA
-8A02: A8                         BYTE $A8 $A8 $A2 $00 $A2 $A2 $0A $20
-8A0A: 8A                         BYTE $8A $8A $A2 $A2 $08 $A0 $A2 $A2
-8A12: 00                         BYTE $00 $80 $80 $00 $00 $00 $A0 $00
-8A1A: 02                         BYTE $02 $02 $0A $0A $20 $0A $A2 $A2
-8A22: 00                         BYTE $00 $80 $80 $00 $00 $00 $A0 $08
-8A2A: 02                         BYTE $02 $02 $0A $0A $20 $0A $AA $AA
-8A32: A8                         BYTE $A8 $A8 $A2 $00 $A2 $A2 $0A $20
-8A3A: 8A                         BYTE $8A $8A $A2 $A2 $08 $A0 $0A $20
-8A42: 8A                         BYTE $8A $8A $A2 $A2 $08 $A0 $A0 $A3
-8A4A: 0C                         BYTE $0C $83 $8F $0F $03 $00 $00 $C5
-8A52: 0F                         BYTE $0F $C5 $C5 $CF $C5 $00 $00 $55
-8A5A: FF                         BYTE $FF $55 $55 $FF $55 $00 $00 $53
-8A62: F0                         BYTE $F0 $53 $53 $F3 $53 $00 $22 $C2
-8A6A: 30                         BYTE $30 $C0 $F0 $F0 $C0 $00 $A0 $00
-8A72: 02                         BYTE $02 $02 $0A $0A $20 $0A $AA $AA
-8A7A: A8                         BYTE $A8 $A8 $A2 $00 $A2 $A2 $88 $22
-8A82: 88                         BYTE $88 $20 $80 $00 $80 $22 $08 $20
-8A8A: 88                         BYTE $88 $02 $80 $22 $08 $20 $80 $22
-8A92: 00                         BYTE $00 $00 $80 $00 $00 $00 $80 $02
-8A9A: 00                         BYTE $00 $02 $08 $22 $00 $02 $80 $22
-8AA2: 00                         BYTE $00 $00 $80 $00 $00 $00 $80 $00
-8AAA: 00                         BYTE $00 $02 $08 $02 $00 $02 $88 $22
-8AB2: 88                         BYTE $88 $20 $80 $00 $80 $22 $08 $20
-8ABA: 88                         BYTE $88 $02 $80 $22 $08 $20 $88 $22
-8AC2: 88                         BYTE $88 $20 $80 $00 $80 $22 $08 $20
-8ACA: 88                         BYTE $88 $02 $80 $22 $08 $20 $80 $22
-8AD2: 00                         BYTE $00 $00 $80 $00 $00 $00 $80 $00
-8ADA: 00                         BYTE $00 $02 $08 $02 $00 $02 $80 $22
-8AE2: 00                         BYTE $00 $00 $80 $00 $00 $00 $80 $00
-8AEA: 00                         BYTE $00 $02 $08 $02 $00 $02 $88 $22
-8AF2: 88                         BYTE $88 $20 $80 $00 $80 $22 $08 $20
-8AFA: 88                         BYTE $88 $02 $80 $22 $08 $20 $19 $19
-8B02: 25                         BYTE $25 $A8 $68 $98 $64 $14 $A0 $00
-8B0A: 02                         BYTE $02 $02 $0A $0A $20 $02 $05 $05
-8B12: 0A                         BYTE $0A $00 $00 $00 $00 $00 $A0 $00
-8B1A: 02                         BYTE $02 $42 $A2 $52 $68 $56 $66 $55
-8B22: 25                         BYTE $25 $16 $16 $8A $2A $96 $56 $96
-8B2A: 40                         BYTE $40 $00 $00 $00 $00 $00 $A0 $00
-8B32: 02                         BYTE $02 $02 $0A $0A $20 $0A $00 $80
-8B3A: 80                         BYTE $80 $00 $00 $00 $80 $80 $80 $00
-8B42: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $32
-8B4A: 32                         BYTE $32 $05 $06 $06 $05 $19 $19 $19
-8B52: 25                         BYTE $25 $AA $6A $9A $65 $15 $A2 $A2
-8B5A: 00                         BYTE $00 $80 $80 $00 $00 $00 $00 $00
-8B62: 00                         BYTE $00 $80 $80 $80 $80 $60 $A1 $63
-8B6A: A3                         BYTE $A3 $A8 $A8 $98 $58 $A1 $A0 $08
-8B72: 02                         BYTE $02 $02 $0A $0A $20 $0A $AA $AA
-8B7A: A8                         BYTE $A8 $A8 $A2 $00 $A2 $A2 $A2 $A2
-8B82: 00                         BYTE $00 $80 $80 $00 $00 $00 $AA $AA
-8B8A: A8                         BYTE $A8 $A8 $A2 $00 $A2 $A2 $00 $32
-8B92: 32                         BYTE $32 $05 $06 $06 $05 $19 $19 $19
-8B9A: 25                         BYTE $25 $AA $6A $9A $65 $15 $A2 $A2
-8BA2: 00                         BYTE $00 $80 $80 $00 $00 $00 $00 $00
-8BAA: 00                         BYTE $00 $80 $80 $80 $80 $60 $A1 $63
-8BB2: A3                         BYTE $A3 $A8 $A8 $98 $58 $A1 $A0 $08
-8BBA: 02                         BYTE $02 $02 $0A $0A $20 $0A $A2 $A2
-8BC2: 00                         BYTE $00 $80 $80 $00 $00 $00 $AA $AA
-8BCA: A8                         BYTE $A8 $A8 $A2 $00 $A2 $A2 $AA $AA
-8BD2: A8                         BYTE $A8 $A8 $A2 $00 $A2 $A2 $00 $00
-8BDA: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-8BE2: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-8BEA: 00        L_8BEA           BYTE $00 $00 $00 $00 $00 $00 $04 $11
-8BF2: 11        L_8BF2           BYTE $11 $04 $11 $11 $04 $11 $00 $00
-8BFA: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-8C02: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $1C
-8C0A: 22                         BYTE $22 $5D $51 $5D $22 $1C $00 $00
-8C12: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-8C1A: 06                         BYTE $06 $0C $18 $30 $60 $C0 $00 $08
-8C22: 0C                         BYTE $0C $7E $7F $7E $0C $08 $00 $00
-8C2A: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-8C32: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-8C3A: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-8C42: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-8C4A: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-8C52: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-8C5A: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-8C62: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-8C6A: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-8C72: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-8C7A: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $7C
-8C82: FE                         BYTE $FE $C6 $C6 $C6 $FE $7C $00 $38
-8C8A: 38                         BYTE $38 $18 $18 $18 $3C $3C $00 $FC
-8C92: FE                         BYTE $FE $CE $1C $38 $7E $FE $00 $7C
-8C9A: FE                         BYTE $FE $C6 $0C $C6 $FE $7C $00 $C0
-8CA2: C0                         BYTE $C0 $CC $FE $7E $0C $0C $00 $FE
-8CAA: FE                         BYTE $FE $C0 $7C $06 $FE $FC $00 $7C
-8CB2: FE                         BYTE $FE $C0 $FC $C6 $FE $7C $00 $FC
-8CBA: FE                         BYTE $FE $06 $06 $06 $06 $06 $00 $7C
-8CC2: FE                         BYTE $FE $C6 $7C $C6 $FE $7C $00 $7C
-8CCA: FE                         BYTE $FE $C6 $7E $06 $7E $7C $00 $00
-8CD2: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-8CDA: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-8CE2: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-8CEA: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-8CF2: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-8CFA: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
-8D02: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $FC
-8D0A: FE                         BYTE $FE $06 $DE $C6 $C6 $C6 $00 $FC
-8D12: FE                         BYTE $FE $06 $DC $C6 $C6 $FC $00 $FC
-8D1A: FE                         BYTE $FE $06 $C0 $C6 $FE $FC $00 $FC
-8D22: FE                         BYTE $FE $06 $C6 $C6 $FE $FC $00 $FE
-8D2A: FE                         BYTE $FE $00 $F0 $C0 $FE $FE $00 $FE
-8D32: FE                         BYTE $FE $00 $F0 $C0 $C0 $C0 $00 $FC
-8D3A: FE                         BYTE $FE $00 $CE $C6 $FE $FC $00 $C6
-8D42: C6                         BYTE $C6 $06 $DE $C6 $C6 $C6 $00 $3C
-8D4A: 3C                         BYTE $3C $00 $18 $18 $3C $3C $00 $1E
-8D52: 1E                         BYTE $1E $00 $06 $C6 $FE $7C $00 $C6
-8D5A: C6                         BYTE $C6 $0C $F8 $CC $C6 $C6 $00 $C0
-8D62: C0                         BYTE $C0 $00 $C0 $C0 $FE $FE $00 $EE
-8D6A: FE                         BYTE $FE $16 $D6 $C6 $C6 $C6 $00 $FC
-8D72: FE                         BYTE $FE $06 $C6 $C6 $C6 $C6 $00 $FC
-8D7A: FE                         BYTE $FE $06 $C6 $C6 $FE $7C $00 $FC
-8D82: FE                         BYTE $FE $06 $C6 $FC $E0 $E0 $00 $FC
-8D8A: FE                         BYTE $FE $06 $C6 $FE $7C $0E $00 $FC
-8D92: FE                         BYTE $FE $06 $FE $FC $CE $C6 $00 $FC
-8D9A: FE                         BYTE $FE $00 $FC $06 $FE $FC $00 $FE
-8DA2: FE                         BYTE $FE $00 $38 $38 $38 $38 $00 $C6
-8DAA: C6                         BYTE $C6 $06 $C6 $C6 $FE $7C $00 $C6
-8DB2: C6                         BYTE $C6 $06 $C6 $C6 $7C $38 $00 $C6
-8DBA: C6                         BYTE $C6 $06 $D6 $FE $FE $EE $00 $C6
-8DC2: C6                         BYTE $C6 $6C $38 $6C $C6 $C6 $00 $C6
-8DCA: C6                         BYTE $C6 $06 $EE $7C $38 $38 $00 $FE
-8DD2: FE                         BYTE $FE $00 $38 $70 $FE $FE $00 $00
-8DDA: 00                         BYTE $00 $00 $00 $00 $18 $18 $00 $66
-8DE2: 66                         BYTE $66 $66 $00 $00 $00 $00 $00 $18
-8DEA: 18                         BYTE $18 $18 $18 $18 $00 $18 $00 $7C
-8DF2: FE                         BYTE $FE $C6 $06 $0C $00 $0C $00 $10
-8DFA: 30                         BYTE $30 $7F $7F $30 $10 $00
+87FA: FF                         BYTE $FF $FF $FF $FF $FF $FF
+
+  Brick Charset
+
+8800: 00        CHARSET_BRICK    BYTE $00 $00 $00 $00 $00 $00 $00 $00
+8808: 00                         BYTE $00 $3F $3F $3F $3F $3F $3F $00
+8810: 00                         BYTE $00 $FC $FC $FC $FC $FC $FC $00
+8818: 00                         BYTE $00 $3F $3F $3F $3F $3F $3F $00
+8820: 00                         BYTE $00 $FC $FC $FC $FC $FC $FC $00
+8828: 00                         BYTE $00 $15 $15 $15 $15 $15 $15 $00
+8830: 00                         BYTE $00 $54 $54 $54 $54 $54 $54 $00
+8838: 00                         BYTE $00 $2A $2A $2A $2A $2A $2A $00
+8840: 00                         BYTE $00 $A8 $A8 $A8 $A8 $A8 $A8 $00
+8848: 00                         BYTE $00 $3F $3F $3F $3F $3F $3F $00
+8850: 00                         BYTE $00 $FC $FC $FC $FC $FD $FD $15
+8858: 00                         BYTE $00 $3F $3F $3F $3F $3F $3F $01
+8860: 00                         BYTE $00 $FC $FC $FD $FD $FD $FD $55
+8868: 00                         BYTE $00 $3F $3F $3F $3F $3F $3F $55
+8870: 00                         BYTE $00 $FD $FD $FD $FD $FD $FD $55
+8878: 55                         BYTE $55 $7F $7F $7F $7F $7F $7F $55
+8880: 55                         BYTE $55 $FD $FD $FD $FD $FD $FD $55
+8888: 55                         BYTE $55 $55 $55 $55 $55 $55 $55 $55
+8890: 55                         BYTE $55 $55 $55 $55 $55 $55 $55 $55
+8898: 00                         BYTE $00 $00 $00 $00 $01 $01 $01 $01
+88A0: 00                         BYTE $00 $15 $55 $50 $40 $4A $2A $28
+88A8: 00                         BYTE $00 $54 $55 $05 $01 $A1 $A8 $28
+88B0: 00                         BYTE $00 $00 $00 $00 $40 $40 $40 $40
+88B8: 00                         BYTE $00 $55 $55 $00 $00 $AA $AA $00
+88C0: 02                         BYTE $02 $02 $02 $02 $00 $00 $00 $00
+88C8: 14                         BYTE $14 $15 $85 $80 $A0 $AA $2A $00
+88D0: 14                         BYTE $14 $54 $52 $02 $0A $AA $A8 $00
+88D8: 80                         BYTE $80 $80 $80 $80 $00 $00 $00 $00
+88E0: 00                         BYTE $00 $55 $55 $00 $00 $AA $AA $00
+88E8: 00                         BYTE $00 $3F $3F $3F $3F $3F $3F $00
+88F0: 00                         BYTE $00 $FC $FC $FC $FC $FC $FC $00
+88F8: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
+8900: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
+8908: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
+8910: 00                         BYTE $00 $01 $00 $01 $05 $05 $05 $05
+8918: 00                         BYTE $00 $28 $00 $28 $28 $28 $28 $28
+8920: 05                         BYTE $05 $00 $05 $00 $05 $00 $05 $00
+8928: 28                         BYTE $28 $00 $28 $00 $28 $00 $28 $00
+8930: 05                         BYTE $05 $05 $05 $05 $01 $00 $01 $00
+8938: 28                         BYTE $28 $28 $28 $28 $28 $00 $28 $00
+8940: 01                         BYTE $01 $01 $01 $01 $01 $01 $01 $01
+8948: 28                         BYTE $28 $28 $28 $28 $28 $28 $28 $28
+8950: 00                         BYTE $00 $14 $00 $14 $14 $14 $14 $14
+8958: 00                         BYTE $00 $80 $00 $80 $A0 $A0 $A0 $A0
+8960: 14                         BYTE $14 $00 $14 $00 $14 $00 $14 $00
+8968: A0                         BYTE $A0 $00 $A0 $00 $A0 $00 $A0 $00
+8970: 14                         BYTE $14 $14 $14 $14 $14 $00 $14 $00
+8978: A0                         BYTE $A0 $A0 $A0 $A0 $80 $00 $80 $00
+8980: 14                         BYTE $14 $14 $14 $14 $14 $14 $14 $14
+8988: 80                         BYTE $80 $80 $80 $80 $80 $80 $80 $80
+8990: 05                         BYTE $05 $15 $2A $00 $00 $2A $2A $0A
+8998: 00                         BYTE $00 $14 $28 $00 $00 $28 $28 $28
+89A0: 50                         BYTE $50 $54 $A8 $00 $00 $A8 $A8 $A0
+89A8: 05                         BYTE $05 $15 $2A $00 $00 $2A $2A $0A
+89B0: 00                         BYTE $00 $14 $28 $00 $00 $28 $28 $28
+89B8: 50                         BYTE $50 $54 $A8 $00 $00 $A8 $A8 $A0
+89C0: AA                         BYTE $AA $AA $A8 $A8 $A2 $00 $A2 $A2
+89C8: 0A                         BYTE $0A $20 $8A $8A $A2 $A2 $08 $A0
+89D0: A2                         BYTE $A2 $A2 $00 $80 $80 $00 $00 $00
+89D8: A0                         BYTE $A0 $02 $02 $0A $0A $2A $20 $0A
+89E0: A2                         BYTE $A2 $A2 $00 $80 $80 $00 $00 $00
+89E8: A0                         BYTE $A0 $00 $02 $02 $0A $0A $20 $0A
+89F0: AA                         BYTE $AA $AA $A8 $A8 $A2 $00 $A2 $A2
+89F8: 0A                         BYTE $0A $20 $8A $8A $A2 $A2 $08 $A0
+8A00: AA                         BYTE $AA $AA $A8 $A8 $A2 $00 $A2 $A2
+8A08: 0A                         BYTE $0A $20 $8A $8A $A2 $A2 $08 $A0
+8A10: A2                         BYTE $A2 $A2 $00 $80 $80 $00 $00 $00
+8A18: A0                         BYTE $A0 $00 $02 $02 $0A $0A $20 $0A
+8A20: A2                         BYTE $A2 $A2 $00 $80 $80 $00 $00 $00
+8A28: A0                         BYTE $A0 $08 $02 $02 $0A $0A $20 $0A
+8A30: AA                         BYTE $AA $AA $A8 $A8 $A2 $00 $A2 $A2
+8A38: 0A                         BYTE $0A $20 $8A $8A $A2 $A2 $08 $A0
+8A40: 0A                         BYTE $0A $20 $8A $8A $A2 $A2 $08 $A0
+8A48: A0                         BYTE $A0 $A3 $0C $83 $8F $0F $03 $00
+8A50: 00                         BYTE $00 $C5 $0F $C5 $C5 $CF $C5 $00
+8A58: 00                         BYTE $00 $55 $FF $55 $55 $FF $55 $00
+8A60: 00                         BYTE $00 $53 $F0 $53 $53 $F3 $53 $00
+8A68: 22                         BYTE $22 $C2 $30 $C0 $F0 $F0 $C0 $00
+8A70: A0                         BYTE $A0 $00 $02 $02 $0A $0A $20 $0A
+8A78: AA                         BYTE $AA $AA $A8 $A8 $A2 $00 $A2 $A2
+8A80: 88                         BYTE $88 $22 $88 $20 $80 $00 $80 $22
+8A88: 08                         BYTE $08 $20 $88 $02 $80 $22 $08 $20
+8A90: 80                         BYTE $80 $22 $00 $00 $80 $00 $00 $00
+8A98: 80                         BYTE $80 $02 $00 $02 $08 $22 $00 $02
+8AA0: 80                         BYTE $80 $22 $00 $00 $80 $00 $00 $00
+8AA8: 80                         BYTE $80 $00 $00 $02 $08 $02 $00 $02
+8AB0: 88                         BYTE $88 $22 $88 $20 $80 $00 $80 $22
+8AB8: 08                         BYTE $08 $20 $88 $02 $80 $22 $08 $20
+8AC0: 88                         BYTE $88 $22 $88 $20 $80 $00 $80 $22
+8AC8: 08                         BYTE $08 $20 $88 $02 $80 $22 $08 $20
+8AD0: 80                         BYTE $80 $22 $00 $00 $80 $00 $00 $00
+8AD8: 80                         BYTE $80 $00 $00 $02 $08 $02 $00 $02
+8AE0: 80                         BYTE $80 $22 $00 $00 $80 $00 $00 $00
+8AE8: 80                         BYTE $80 $00 $00 $02 $08 $02 $00 $02
+8AF0: 88                         BYTE $88 $22 $88 $20 $80 $00 $80 $22
+8AF8: 08                         BYTE $08 $20 $88 $02 $80 $22 $08 $20
+8B00: 19                         BYTE $19 $19 $25 $A8 $68 $98 $64 $14
+8B08: A0                         BYTE $A0 $00 $02 $02 $0A $0A $20 $02
+8B10: 05                         BYTE $05 $05 $0A $00 $00 $00 $00 $00
+8B18: A0                         BYTE $A0 $00 $02 $42 $A2 $52 $68 $56
+8B20: 66                         BYTE $66 $55 $25 $16 $16 $8A $2A $96
+8B28: 56                         BYTE $56 $96 $40 $00 $00 $00 $00 $00
+8B30: A0                         BYTE $A0 $00 $02 $02 $0A $0A $20 $0A
+8B38: 00                         BYTE $00 $80 $80 $00 $00 $00 $80 $80
+8B40: 80                         BYTE $80 $00 $00 $00 $00 $00 $00 $00
+8B48: 00                         BYTE $00 $32 $32 $05 $06 $06 $05 $19
+8B50: 19                         BYTE $19 $19 $25 $AA $6A $9A $65 $15
+8B58: A2                         BYTE $A2 $A2 $00 $80 $80 $00 $00 $00
+8B60: 00                         BYTE $00 $00 $00 $80 $80 $80 $80 $60
+8B68: A1                         BYTE $A1 $63 $A3 $A8 $A8 $98 $58 $A1
+8B70: A0                         BYTE $A0 $08 $02 $02 $0A $0A $20 $0A
+8B78: AA                         BYTE $AA $AA $A8 $A8 $A2 $00 $A2 $A2
+8B80: A2                         BYTE $A2 $A2 $00 $80 $80 $00 $00 $00
+8B88: AA                         BYTE $AA $AA $A8 $A8 $A2 $00 $A2 $A2
+8B90: 00                         BYTE $00 $32 $32 $05 $06 $06 $05 $19
+8B98: 19                         BYTE $19 $19 $25 $AA $6A $9A $65 $15
+8BA0: A2                         BYTE $A2 $A2 $00 $80 $80 $00 $00 $00
+8BA8: 00                         BYTE $00 $00 $00 $80 $80 $80 $80 $60
+8BB0: A1                         BYTE $A1 $63 $A3 $A8 $A8 $98 $58 $A1
+8BB8: A0                         BYTE $A0 $08 $02 $02 $0A $0A $20 $0A
+8BC0: A2                         BYTE $A2 $A2 $00 $80 $80 $00 $00 $00
+8BC8: AA                         BYTE $AA $AA $A8 $A8 $A2 $00 $A2 $A2
+8BD0: AA                         BYTE $AA $AA $A8 $A8 $A2 $00 $A2 $A2
+8BD8: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
+8BE0: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
+8BE8: 00        L_8BE8           BYTE $00 $00 $00 $00 $00 $00 $00 $00
+8BF0: 04        L_8BF0           BYTE $04 $11 $11 $04 $11 $11 $04 $11
+8BF8: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
+
+  Text Charset
+
+8C00: 00        CHARSET_TEXT     BYTE $00 $00 $00 $00 $00 $00 $00 $00
+8C08: 00                         BYTE $00 $1C $22 $5D $51 $5D $22 $1C
+8C10: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
+8C18: 00                         BYTE $00 $00 $06 $0C $18 $30 $60 $C0
+8C20: 00                         BYTE $00 $08 $0C $7E $7F $7E $0C $08
+8C28: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
+8C30: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
+8C38: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
+8C40: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
+8C48: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
+8C50: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
+8C58: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
+8C60: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
+8C68: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
+8C70: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
+8C78: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
+8C80: 00                         BYTE $00 $7C $FE $C6 $C6 $C6 $FE $7C
+8C88: 00                         BYTE $00 $38 $38 $18 $18 $18 $3C $3C
+8C90: 00                         BYTE $00 $FC $FE $CE $1C $38 $7E $FE
+8C98: 00                         BYTE $00 $7C $FE $C6 $0C $C6 $FE $7C
+8CA0: 00                         BYTE $00 $C0 $C0 $CC $FE $7E $0C $0C
+8CA8: 00                         BYTE $00 $FE $FE $C0 $7C $06 $FE $FC
+8CB0: 00                         BYTE $00 $7C $FE $C0 $FC $C6 $FE $7C
+8CB8: 00                         BYTE $00 $FC $FE $06 $06 $06 $06 $06
+8CC0: 00                         BYTE $00 $7C $FE $C6 $7C $C6 $FE $7C
+8CC8: 00                         BYTE $00 $7C $FE $C6 $7E $06 $7E $7C
+8CD0: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
+8CD8: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
+8CE0: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
+8CE8: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
+8CF0: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
+8CF8: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
+8D00: 00                         BYTE $00 $00 $00 $00 $00 $00 $00 $00
+8D08: 00                         BYTE $00 $FC $FE $06 $DE $C6 $C6 $C6
+8D10: 00                         BYTE $00 $FC $FE $06 $DC $C6 $C6 $FC
+8D18: 00                         BYTE $00 $FC $FE $06 $C0 $C6 $FE $FC
+8D20: 00                         BYTE $00 $FC $FE $06 $C6 $C6 $FE $FC
+8D28: 00                         BYTE $00 $FE $FE $00 $F0 $C0 $FE $FE
+8D30: 00                         BYTE $00 $FE $FE $00 $F0 $C0 $C0 $C0
+8D38: 00                         BYTE $00 $FC $FE $00 $CE $C6 $FE $FC
+8D40: 00                         BYTE $00 $C6 $C6 $06 $DE $C6 $C6 $C6
+8D48: 00                         BYTE $00 $3C $3C $00 $18 $18 $3C $3C
+8D50: 00                         BYTE $00 $1E $1E $00 $06 $C6 $FE $7C
+8D58: 00                         BYTE $00 $C6 $C6 $0C $F8 $CC $C6 $C6
+8D60: 00                         BYTE $00 $C0 $C0 $00 $C0 $C0 $FE $FE
+8D68: 00                         BYTE $00 $EE $FE $16 $D6 $C6 $C6 $C6
+8D70: 00                         BYTE $00 $FC $FE $06 $C6 $C6 $C6 $C6
+8D78: 00                         BYTE $00 $FC $FE $06 $C6 $C6 $FE $7C
+8D80: 00                         BYTE $00 $FC $FE $06 $C6 $FC $E0 $E0
+8D88: 00                         BYTE $00 $FC $FE $06 $C6 $FE $7C $0E
+8D90: 00                         BYTE $00 $FC $FE $06 $FE $FC $CE $C6
+8D98: 00                         BYTE $00 $FC $FE $00 $FC $06 $FE $FC
+8DA0: 00                         BYTE $00 $FE $FE $00 $38 $38 $38 $38
+8DA8: 00                         BYTE $00 $C6 $C6 $06 $C6 $C6 $FE $7C
+8DB0: 00                         BYTE $00 $C6 $C6 $06 $C6 $C6 $7C $38
+8DB8: 00                         BYTE $00 $C6 $C6 $06 $D6 $FE $FE $EE
+8DC0: 00                         BYTE $00 $C6 $C6 $6C $38 $6C $C6 $C6
+8DC8: 00                         BYTE $00 $C6 $C6 $06 $EE $7C $38 $38
+8DD0: 00                         BYTE $00 $FE $FE $00 $38 $70 $FE $FE
+8DD8: 00                         BYTE $00 $00 $00 $00 $00 $00 $18 $18
+8DE0: 00                         BYTE $00 $66 $66 $66 $00 $00 $00 $00
+8DE8: 00                         BYTE $00 $18 $18 $18 $18 $18 $00 $18
+8DF0: 00                         BYTE $00 $7C $FE $C6 $06 $0C $00 $0C
+8DF8: 00                         BYTE $00 $10 $30 $7F $7F $30 $10 $00
 8E00: AD 7F 36                   lda $367F     ; L_367B+4
 8E03: F0 0B                      beq $8E10     ; L_8E10
 8E05: C9 06                      cmp #$06
@@ -8753,15 +8759,15 @@
 8F5F: A9 00                      lda #$00
 8F61: 8D 81 8F                   sta $8F81     ; L_8F81
 8F64: A2 00                      ldx #$00
-8F66: AD F7 8B                   lda $8BF7     ; L_8BF2+5
+8F66: AD F7 8B                   lda $8BF7     ; L_8BF0+7
 8F69: A8                         tay
 8F6A: A2 07                      ldx #$07
-8F6C: BD EF 8B  L_8F6C           lda $8BEF,x   ; L_8BEA+5
-8F6F: 9D F0 8B                   sta $8BF0,x   ; L_8BEA+6
+8F6C: BD EF 8B  L_8F6C           lda $8BEF,x   ; L_8BE8+7
+8F6F: 9D F0 8B                   sta $8BF0,x   ; L_8BF0
 8F72: CA                         dex
 8F73: D0 F7                      bne $8F6C     ; L_8F6C
 8F75: 98                         tya
-8F76: 8D F0 8B                   sta $8BF0     ; L_8BEA+6
+8F76: 8D F0 8B                   sta $8BF0     ; L_8BF0
 8F79: 68        L_8F79           pla
 8F7A: A8                         tay
 8F7B: 68                         pla

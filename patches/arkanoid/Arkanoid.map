@@ -110,6 +110,7 @@ code 5FC0
 byte 5FDE
 code 6C4A
 byte 6D72
+byte 8800
 byte 8c00
 code 8E00
 byte 8EEA
@@ -122,16 +123,20 @@ word 02E0
 label 31F4 LIVES
 label 3CD8 SET_SCORE_COLORS
 label 3CC5 SET_SHIP_COLORS
-label 00DA ROW_COLOR_L
-label 00DB ROW_COLOR_H
+label 00DA word ROW_COLOR
 label 3C78 USE_GFX_SET
 label 3CF3 CHECK_LAST_KEY
 label 3CB8 NO_NEW_KEY
-label 3C22 BRICK_COLORS_L
-label 3C23 BRICK_COLORS_H
+label 3C22 BRICK_COLORS word
 label 3CAB DLI_EXIT
 label 3C24 ROW_INDEX
 label 3C25 TIMER_MAYBE
+label 4462 MASK_SHIP
+
+label 0002 SRC word
+label 0000 DST word
+label 00DC SHIP_ADDR word
+label 00DE MASK_ADDR word
 
 comment 3C94 Set colors for each brick row
 comment 3C57 Setup DLI
@@ -139,8 +144,13 @@ comment 3C67 Display List Interrupt Service Routine
 label 3C67 DLI
 
 comment 8C00 Text Charset
+comment 8800 Brick Charset
+label 8C00 CHARSET_TEXT
+label 8800 CHARSET_BRICK
 
-
+label 586B DRAW_ENEMY
+label 4447 DRAW_SHIP
+label 440E DRAW_SHOP_FULL
 
 
 
