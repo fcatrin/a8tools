@@ -129,3 +129,5 @@ L_3E0E     = $3E0E
 L_4F5C     = $4F5C
 L_3E73     = $3E73
 LIVES      = $31F4
+ROW_COLOR_L = $00DA
+ROW_COLOR_H = $00DB

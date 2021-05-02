@@ -3199,6 +3199,9 @@ L_3C45           sta $9B00,x
                  sta $9F00,x
                  inx
                  bne L_3C45
+
+;  Setup DLI
+
                  ldx #$67
                  ldy #$3C
                  stx VDSLST
@@ -3206,7 +3209,10 @@ L_3C45           sta $9B00,x
                  lda #$C0
                  sta NMIEN
 L_3C66           rts
-                 pha
+
+;  Display List Interrupt Service Routine
+
+DLI              pha
                  tya
                  pha
                  txa
@@ -3223,16 +3229,19 @@ L_3C78           lda L_3C23+1
                  sta L_3C23+1
                  ldx L_3C1B+7
                  lda L_3C23
-                 stx FRE
-                 sta FRE+1
+                 stx ROW_COLOR_L
+                 sta ROW_COLOR_H
                  cpy #$30
-                 beq L_3CC5
+                 beq SET_SHIP_COLORS
                  cpy #$34
-                 beq L_3CD8
-                 lda (FRE),y
+                 beq SET_SCORE_COLORS
+
+;  Set colors for each row
+
+                 lda (ROW_COLOR_L),y
                  sta COLPF2
                  iny
-                 lda (FRE),y
+                 lda (ROW_COLOR_L),y
                  sta COLPF3
                  dey
                  cpy #$00
@@ -3254,14 +3263,14 @@ L_3CB8           lda #$00
                  tay
                  pla
                  rti
-L_3CC5           lda #$1F
+SET_SHIP_COLORS  lda #$1F
                  sta COLPF2
                  inc L_3C23+2
                  jmp L_3CAB
 L_3CD0           lda #$00
                  sta COLPF2
                  jmp L_3CAB
-L_3CD8           lda #$0F
+SET_SCORE_COLORS lda #$0F
                  sta COLPF0
                  sta COLPF1
                  lda #$00

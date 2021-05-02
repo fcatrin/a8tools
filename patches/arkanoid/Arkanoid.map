@@ -119,7 +119,15 @@ block 3
 word 02E0
 
 label 31F4 LIVES
+label 3CD8 SET_SCORE_COLORS
+label 3CC5 SET_SHIP_COLORS
+label 00DA ROW_COLOR_L
+label 00DB ROW_COLOR_H
 
+comment 3C94 Set colors for each row
+comment 3C57 Setup DLI
+comment 3C67 Display List Interrupt Service Routine
+label 3C67 DLI
 
 
 
