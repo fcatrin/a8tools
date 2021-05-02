@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="build" name="Build a8verifier">
+    <!--this file was created by Eclipse Runnable JAR Export Wizard-->
+    <!--ANT 1.7 is required                                        -->
+    <!--define folder properties-->
+    <property name="dir.buildfile" value="."/>
+    <property name="dir.workspace" value="."/>
+    <property name="dir.jarfile" value="${dir.workspace}/dist"/>
+    <target name="build">
+        <jar destfile="${dir.jarfile}/a8verifier.jar" filesetmanifest="mergewithoutmain">
+            <manifest>
+                <attribute name="Main-Class" value="xtvapps.atari.XexVerifier"/>
+                <attribute name="Class-Path" value="."/>
+            </manifest>
+            <fileset dir="${dir.buildfile}/bin"/>
+        </jar>
+    </target>
+</project>
