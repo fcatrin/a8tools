@@ -4078,8 +4078,8 @@ L_43E5           .byte $02, $03, $01, $00, $00, $00, $00, $00
 L_43FD           .byte $00, $00, $00, $3F, $3C, $3D, $3E, $3F
 L_4405           .byte $3C, $3D, $3E, $48, $48, $1A, $00, $00
                  .byte $00
-DRAW_SHOP_FULL   and #$FC
-                 lsr
+DRAW_SHOP_FULL   jmp new_sprite_routine
+                 
                  lsr
                  lda L_4405+6
                  clc
